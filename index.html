@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آرشیو روزنامه اطلاعات و مردم</title>
+    <title>بایگانی روزنامه‌های ایران</title>
     <style>
         /* CSS Variables for Light/Dark Mode */
         body {
@@ -47,7 +47,7 @@
         }
 
         body {
-            font-family: sans-serif; /* Persian fonts */
+            font-family: sans-serif; /* Changed to sans-serif as requested */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -84,12 +84,12 @@
             justify-content: center;
             gap: 20px;
             width: 100%;
-            max-width: 1200px; /* Max width for the container of both newspapers */
+            max-width: 760px; /* Adjusted max-width to fit two 330px images + padding + gap */
         }
         .newspaper-section {
             flex: 1;
-            min-width: 300px; /* Minimum width for each newspaper section */
-            max-width: 500px; /* Max width for each newspaper section */
+            min-width: 330px; /* Minimum width for each newspaper section */
+            max-width: 370px; /* Adjusted max-width (330px image + 2*20px padding) */
             text-align: center;
             background-color: var(--section-bg);
             padding: 20px;
@@ -109,6 +109,8 @@
             border: 1px solid var(--border-color);
             border-radius: 4px;
             cursor: pointer; /* Indicate clickable image */
+            margin: 0 auto; /* Center image within its container */
+            display: block; /* Ensure block display for margin auto to work */
         }
         .error-message {
             color: var(--error-color);
@@ -192,6 +194,7 @@
             display: block;
             border-radius: 4px;
             border: 1px solid var(--border-color);
+            margin: 0 auto; /* Center image within its container */
         }
         .lightbox-controls {
             display: flex;
@@ -245,7 +248,7 @@
     </style>
 </head>
 <body>
-    <h1>آرشیو روزنامه اطلاعات و مردم</h1>
+    <h1>بایگانی روزنامه‌های ایران</h1>
 
     <div class="controls">
         <label for="year">سال:</label>
@@ -280,12 +283,6 @@
             <img id="ettelaatNewspaperImage" src="" alt="تصویر روزنامه اطلاعات" class="newspaper-image">
             <p id="ettelaatStatusMessage" class="status-message" style="display: none;"></p>
             <p id="ettelaatErrorMessage" class="error-message" style="display: none;"></p>
-            <!-- <div id="ettelaatPaginationControls" class="pagination-controls">
-                <button id="ettelaatPrevPageButton">صفحه قبل</button>
-                <label for="mainPageNumberInput">صفحه:</label>
-                <input type="number" id="mainPageNumberInput" value="1" min="1">
-                <button id="ettelaatNextPageButton">صفحه بعد</button>
-            </div> -->
         </div>
 
         <div id="mardomSection" class="newspaper-section" style="display: none;">
@@ -293,12 +290,6 @@
             <img id="mardomNewspaperImage" src="" alt="تصویر روزنامه مردم" class="newspaper-image">
             <p id="mardomStatusMessage" class="status-message" style="display: none;"></p>
             <p id="mardomErrorMessage" class="error-message" style="display: none;"></p>
-            <!-- <div id="mardomPaginationControls" class="pagination-controls">
-                <button id="mardomPrevPageButton">صفحه قبل</button>
-                <label for="mardomPageNumberInput">صفحه:</label>
-                <input type="number" id="mardomPageNumberInput" value="1" min="1">
-                <button id="mardomNextPageButton">صفعه بعد</button>
-            </div> -->
         </div>
     </div>
     
@@ -350,7 +341,7 @@
             const mardomNewspaperImage = document.getElementById('mardomNewspaperImage');
             const mardomStatusMessage = document.getElementById('mardomStatusMessage');
             const mardomErrorMessage = document.getElementById('mardomErrorMessage');
-            const mardomPageNumberInput = document.getElementById('mardomPageNumberInput'); // This will be kept in sync with mainPageNumberInput
+            // const mardomPageNumberInput = document.getElementById('mardomPageNumberInput'); // Removed from HTML
 
             // Lightbox Elements
             const lightboxOverlay = document.getElementById('lightboxOverlay');
@@ -433,7 +424,6 @@
                 const newspaperStatusElement = document.getElementById(`${type}StatusMessage`);
                 const newspaperErrorElement = document.getElementById(`${type}ErrorMessage`);
                 const newspaperSection = document.getElementById(`${type}Section`);
-                // const paginationControls = document.getElementById(`${type}PaginationControls`); // Removed from main view
 
                 newspaperImgElement.style.display = 'none';
                 newspaperStatusElement.textContent = 'در حال بارگذاری...';
@@ -451,7 +441,6 @@
                         });
                         newspaperStatusElement.style.display = 'none';
                         newspaperImgElement.style.display = 'block';
-                        // paginationControls.style.display = 'flex'; // Removed from main view
                         paper.available = true;
                         return true; // Available
                     } else {
@@ -463,7 +452,6 @@
                     newspaperErrorElement.textContent = `تصویر برای ${paper.title} و صفحه ${page} یافت نشد.`;
                     newspaperErrorElement.style.display = 'block';
                     newspaperSection.style.display = 'none'; // Hide section if not available
-                    // paginationControls.style.display = 'none'; // Removed from main view
                     paper.available = false;
                     return false; // Not available
                 }
@@ -487,7 +475,6 @@
                 newspaperData.ettelaat.currentPage = targetPage;
                 newspaperData.mardom.currentPage = targetPage;
                 mainPageNumberInput.value = targetPage; // Ensure main input reflects the current page
-                // mardomPageNumberInput.value = targetPage; // This input is removed, no need to sync
 
                 const year = yearInput.value;
                 const month = pad(monthSelect.value);
@@ -521,13 +508,7 @@
                 } else {
                     mainErrorMessage.style.display = 'none';
                 }
-
-                // No main pagination buttons to update here.
             };
-
-            // No main pagination buttons, so these functions are no longer needed for the main view.
-            // const goToPreviousPage = (type) => { ... };
-            // const goToNextPage = (type) => { ... };
 
             // Event listeners for main date controls (reset page to 1 on date change)
             yearInput.addEventListener('change', () => loadImage('date'));
@@ -536,13 +517,6 @@
 
             // Event listener for main page number input
             mainPageNumberInput.addEventListener('change', () => loadImage('pageInput'));
-            // mardomPageNumberInput.addEventListener('change', () => { ... }); // This input is removed, no need to sync
-
-            // Event listeners for main pagination buttons (removed from HTML)
-            // ettelaatPrevPageButton.addEventListener('click', () => goToPreviousPage('ettelaat'));
-            // ettelaatNextPageButton.addEventListener('click', () => goToNextPage('ettelaat'));
-            // mardomPrevPageButton.addEventListener('click', () => goToPreviousPage('mardom'));
-            // mardomNextPageButton.addEventListener('click', () => goToNextPage('mardom'));
 
             // --- Lightbox Functions ---
             const openLightbox = async (type) => {
