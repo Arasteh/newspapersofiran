@@ -23,6 +23,10 @@
             --lightbox-button-bg: #007bff; /* Blue for lightbox buttons */
             --lightbox-button-hover-bg: #0056b3;
             --lightbox-close-button-color: #333;
+            --loading-popup-bg: rgba(255, 255, 255, 0.9);
+            --loading-popup-text: #333;
+            --spinner-border: #f3f3f3;
+            --spinner-border-top: #007bff;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -43,6 +47,10 @@
                 --lightbox-button-bg: #0056b3; /* Darker blue for dark mode */
                 --lightbox-button-hover-bg: #003d80;
                 --lightbox-close-button-color: #e0e0e0;
+                --loading-popup-bg: rgba(42, 42, 42, 0.9);
+                --loading-popup-text: #e0e0e0;
+                --spinner-border: #555;
+                --spinner-border-top: #66b3ff;
             }
         }
 
@@ -245,6 +253,76 @@
             cursor: pointer;
             color: var(--lightbox-close-button-color);
         }
+
+        .lightbox-links {
+            margin-top: 15px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .lightbox-links a {
+            padding: 8px 15px;
+            background-color: #4CAF50; /* Green for links */
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .lightbox-links a:hover {
+            background-color: #45a049;
+        }
+
+        /* Loading Pop-up Styles */
+        .loading-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001; /* Higher than lightbox overlay */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .loading-popup-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-popup-content {
+            background-color: var(--loading-popup-bg);
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            text-align: center;
+            color: var(--loading-popup-text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .spinner {
+            border: 4px solid var(--spinner-border);
+            border-top: 4px solid var(--spinner-border-top);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -312,6 +390,13 @@
         <input type="number" id="mainPageNumberInput" value="1" min="1">
     </div>
 
+    <div id="loadingPopupOverlay" class="loading-popup-overlay">
+        <div class="loading-popup-content">
+            <p>در حال جستجو...</p>
+            <div class="spinner"></div>
+        </div>
+    </div>
+
     <div id="lightboxOverlay" class="lightbox-overlay">
         <div class="lightbox-content">
             <button id="lightboxCloseButton" class="lightbox-close-button">&times;</button>
@@ -319,6 +404,11 @@
             <img id="lightboxImage" src="" alt="تصویر روزنامه در لایت‌باکس" class="lightbox-image">
             <p id="lightboxStatusMessage" class="status-message" style="display: none;"></p>
             <p id="lightboxErrorMessage" class="error-message" style="display: none;"></p>
+
+            <div class="lightbox-links">
+                <a id="downloadLink" href="#" target="_blank" style="display: none;">دانلود فایل اصلی</a>
+                <a id="viewLargeLink" href="#" target="_blank" style="display: none;">مشاهده تصویر بزرگتر</a>
+            </div>
 
             <div class="lightbox-controls">
                 <div class="page-nav">
@@ -367,6 +457,9 @@
 
             const mainPageNumberInput = document.getElementById('mainPageNumberInput'); 
 
+            // Loading Pop-up Elements
+            const loadingPopupOverlay = document.getElementById('loadingPopupOverlay');
+
             // Lightbox Elements
             const lightboxOverlay = document.getElementById('lightboxOverlay');
             const lightboxCloseButton = document.getElementById('lightboxCloseButton');
@@ -379,6 +472,9 @@
             const lightboxPageNumberInput = document.getElementById('lightboxPageNumberInput');
             const lightboxPrevNewspaperButton = document.getElementById('lightboxPrevNewspaperButton');
             const lightboxNextNewspaperButton = document.getElementById('lightboxNextNewspaperButton');
+            const downloadLink = document.getElementById('downloadLink');
+            const viewLargeLink = document.getElementById('viewLargeLink');
+
 
             // Global State
             let newspaperData = {
@@ -433,6 +529,14 @@
             };
             let currentLightboxNewspaperType = null; // 'ettelaat', 'mardom', 'kayhan', 'bakhtarEmrooz'
             let lightboxCurrentPage = 1; // Page number specific to lightbox view
+
+            // Store preloaded image objects to prevent garbage collection
+            let preloadedImages = {
+                prevPage: null,
+                nextPage: null,
+                prevNewspaper: null,
+                nextNewspaper: null
+            };
 
             // Function to pad numbers with a leading zero if they are single digit (e.g., 1 to 01)
             const pad = (num) => num.toString().padStart(2, '0');
@@ -522,6 +626,9 @@
 
                 if (source === 'date') {
                     targetPage = 1; // Reset page to 1 when date changes
+                    loadingPopupOverlay.classList.add('visible'); // Show loading pop-up
+                    mainStatusMessage.style.display = 'none'; // Hide initial status
+                    mainErrorMessage.style.display = 'none'; // Hide initial error
                 } else if (source === 'pageInput') {
                     // targetPage is already set from mainPageNumberInput value
                 }
@@ -542,15 +649,18 @@
                     mainErrorMessage.textContent = 'لطفا تاریخ کامل را وارد کنید.';
                     mainErrorMessage.style.display = 'block';
                     mainStatusMessage.style.display = 'none';
+                    loadingPopupOverlay.classList.remove('visible'); // Hide loading pop-up
                     Object.values(newspaperData).forEach(paper => {
                         paper.sectionElement.style.display = 'none';
                     });
                     return;
                 }
 
-                mainErrorMessage.style.display = 'none'; // Clear previous main errors
-                mainStatusMessage.textContent = 'در حال بارگذاری روزنامه‌ها...';
-                mainStatusMessage.style.display = 'block';
+                if (source !== 'date') { // Only show main status if not already showing pop-up
+                    mainErrorMessage.style.display = 'none'; // Clear previous main errors
+                    mainStatusMessage.textContent = 'در حال بارگذاری روزنامه‌ها...';
+                    mainStatusMessage.style.display = 'block';
+                }
 
                 // Load all newspapers concurrently
                 const loadPromises = Object.keys(newspaperData).map(type => 
@@ -559,6 +669,7 @@
                 const results = await Promise.all(loadPromises);
 
                 mainStatusMessage.style.display = 'none'; // Hide main loading message
+                loadingPopupOverlay.classList.remove('visible'); // Hide loading pop-up after all attempts
 
                 if (!results.some(loaded => loaded)) { // If none of the newspapers loaded
                     mainErrorMessage.textContent = `روزنامه‌ای برای تاریخ ${year}/${month}/${day} یافت نشد.`;
@@ -609,9 +720,11 @@
                 lightboxStatusMessage.style.display = 'block';
                 lightboxErrorMessage.style.display = 'none';
                 lightboxImage.style.display = 'none';
+                downloadLink.style.display = 'none'; // Hide links until image loads
+                viewLargeLink.style.display = 'none';
 
                 const fileName = `${paper.prefix}${year}${month}${day}.pdf`;
-                const width = 800; // Larger width for lightbox
+                const width = 800; // Larger width for lightbox display
                 const hash = calculateHash(fileName);
                 const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileName}/page${lightboxCurrentPage}-${width}px-${fileName}.jpg`;
 
@@ -625,16 +738,31 @@
                     lightboxStatusMessage.style.display = 'none';
                     lightboxImage.style.display = 'block';
                     lightboxErrorMessage.style.display = 'none';
+
+                    // Generate and show download/view large links
+                    const originalFileName = `${paper.prefix}${year}${month}${day}.pdf`;
+                    const originalFileHash = calculateHash(originalFileName);
+
+                    downloadLink.href = `https://upload.wikimedia.org/wikipedia/commons/${originalFileHash[0]}/${originalFileHash}/${originalFileName}?download`;
+                    downloadLink.style.display = 'inline-block';
+
+                    viewLargeLink.href = `https://upload.wikimedia.org/wikipedia/commons/thumb/${originalFileHash[0]}/${originalFileHash}/${originalFileName}/page${lightboxCurrentPage}-2048px-${originalFileName}.jpg`;
+                    viewLargeLink.style.display = 'inline-block';
+
                 } catch (error) {
                     lightboxStatusMessage.style.display = 'none';
                     lightboxImage.style.display = 'none';
                     lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${lightboxCurrentPage} یافت نشد.`;
                     lightboxErrorMessage.style.display = 'block';
+                    downloadLink.style.display = 'none';
+                    viewLargeLink.style.display = 'none';
                 }
 
                 // Update lightbox page navigation buttons
                 lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
                 lightboxNextPageButton.disabled = false; // Always enabled to allow trying next page
+                lightboxPrevPageButton.style.display = 'inline-block'; // Ensure buttons are visible
+                lightboxNextPageButton.style.display = 'inline-block';
 
                 // Update lightbox newspaper navigation buttons
                 const availableNewspapers = Object.keys(newspaperData).filter(key => newspaperData[key].available);
@@ -644,6 +772,55 @@
                 } else {
                     lightboxPrevNewspaperButton.style.display = 'none';
                     lightboxNextNewspaperButton.style.display = 'none';
+                }
+
+                // --- Image Preloading Logic ---
+                const preloadWidth = 800; // Same as lightbox display width for preloading
+
+                // Preload next page of current newspaper
+                const nextPageFileName = `${paper.prefix}${year}${month}${day}.pdf`;
+                const nextPageHash = calculateHash(nextPageFileName);
+                const nextPageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nextPageHash[0]}/${nextPageHash}/${nextPageFileName}/page${lightboxCurrentPage + 1}-${preloadWidth}px-${nextPageFileName}.jpg`;
+                preloadedImages.nextPage = new Image();
+                preloadedImages.nextPage.src = nextPageUrl;
+
+                // Preload previous page of current newspaper
+                if (lightboxCurrentPage > 1) {
+                    const prevPageFileName = `${paper.prefix}${year}${month}${day}.pdf`;
+                    const prevPageHash = calculateHash(prevPageFileName);
+                    const prevPageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${prevPageHash[0]}/${prevPageHash}/${prevPageFileName}/page${lightboxCurrentPage - 1}-${preloadWidth}px-${prevPageFileName}.jpg`;
+                    preloadedImages.prevPage = new Image();
+                    preloadedImages.prevPage.src = prevPageUrl;
+                } else {
+                    preloadedImages.prevPage = null;
+                }
+
+                // Preload next/previous newspaper (current page)
+                if (availableNewspapers.length > 1) {
+                    const currentIndex = availableNewspapers.indexOf(currentLightboxNewspaperType);
+
+                    // Next newspaper
+                    const nextIndex = (currentIndex + 1) % availableNewspapers.length;
+                    const nextNewspaperType = availableNewspapers[nextIndex];
+                    const nextPaper = newspaperData[nextNewspaperType];
+                    const nextFileName = `${nextPaper.prefix}${year}${month}${day}.pdf`;
+                    const nextHash = calculateHash(nextFileName);
+                    const nextNewspaperUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nextHash[0]}/${nextHash}/${nextFileName}/page${lightboxCurrentPage}-${preloadWidth}px-${nextFileName}.jpg`;
+                    preloadedImages.nextNewspaper = new Image();
+                    preloadedImages.nextNewspaper.src = nextNewspaperUrl;
+
+                    // Previous newspaper
+                    const prevIndex = (currentIndex - 1 + availableNewspapers.length) % availableNewspapers.length;
+                    const prevNewspaperType = availableNewspapers[prevIndex];
+                    const prevPaper = newspaperData[prevNewspaperType];
+                    const prevFileName = `${prevPaper.prefix}${year}${month}${day}.pdf`;
+                    const prevHash = calculateHash(prevFileName);
+                    const prevNewspaperUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${prevHash[0]}/${prevHash}/${prevFileName}/page${lightboxCurrentPage}-${preloadWidth}px-${prevFileName}.jpg`;
+                    preloadedImages.prevNewspaper = new Image();
+                    preloadedImages.prevNewspaper.src = prevNewspaperUrl;
+                } else {
+                    preloadedImages.prevNewspaper = null;
+                    preloadedImages.nextNewspaper = null;
                 }
             };
 
