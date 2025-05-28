@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آرشیو روزنامه اطلاعات</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .controls {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .controls label {
+            margin-left: 5px;
+        }
+        .controls select, .controls input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        /* The load button is removed for automatic loading, but keeping its style in case it's re-added */
+        #loadButton {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            display: none; /* Hide the button */
+        }
+        #loadButton:hover {
+            background-color: #0056b3;
+        }
+        .newspaper-display {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 90%;
+            overflow: hidden; /* Prevents image overflow */
+        }
+        .newspaper-display img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>آرشیو روزنامه اطلاعات</h1>
+
+    <div class="controls">
+        <label for="year">سال:</label>
+        <input type="number" id="year" value="1328" min="1300" max="1450">
+
+        <label for="month">ماه:</label>
+        <select id="month">
+            <option value="1">فروردین</option>
+            <option value="2">اردیبهشت</option>
+            <option value="3">خرداد</option>
+            <option value="4">تیر</option>
+            <option value="5">مرداد</option>
+            <option value="6">شهریور</option>
+            <option value="7">مهر</option>
+            <option value="8">آبان</option>
+            <option value="9">آذر</option>
+            <option value="10">دی</option>
+            <option value="11">بهمن</option>
+            <option value="12">اسفند</option>
+        </select>
+
+        <label for="day">روز:</label>
+        <input type="number" id="day" value="8" min="1" max="31">
+
+        </div>
+
+    <div class="newspaper-display">
+        <p id="statusMessage">در حال بارگذاری روزنامه...</p>
+        <img id="newspaperImage" src="" alt="تصویر روزنامه" style="display: none;">
+        <p id="errorMessage" class="error-message" style="display: none;"></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearInput = document.getElementById('year');
+            const monthSelect = document.getElementById('month');
+            const dayInput = document.getElementById('day');
+            const newspaperImage = document.getElementById('newspaperImage');
+            const statusMessage = document.getElementById('statusMessage');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Function to pad numbers with a leading zero if they are single digit (e.g., 1 to 01)
+            const pad = (num) => num.toString().padStart(2, '0');
+
+            // --- Start of MD5 Hashing Functions (Provided by user) ---
+            var MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()};
+            function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}
+            function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}
+            function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}
+            function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}
+            function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}
+            function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}
+            function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}
+            function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}
+            function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}
+            function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}
+            function bit_rol(d,_){return d<<_|d>>>32-_}
+            // --- End of MD5 Hashing Functions ---
+
+            // Function to calculate the Wikimedia Commons hash (first two characters of MD5)
+            const calculateHash = (filename) => {
+                const fullMd5 = MD5(filename); // Use the provided MD5 function
+                return fullMd5.substring(0, 2); // Get the first two characters of the MD5 hash
+            };
+
+            const loadImage = () => {
+                const year = yearInput.value;
+                const month = pad(monthSelect.value);
+                const day = pad(dayInput.value);
+
+                // Validate input fields
+                if (!year || !month || !day) {
+                    errorMessage.textContent = 'لطفا تاریخ کامل را وارد کنید.';
+                    errorMessage.style.display = 'block';
+                    newspaperImage.style.display = 'none';
+                    statusMessage.style.display = 'none';
+                    return;
+                }
+
+                errorMessage.style.display = 'none'; // Clear previous errors
+
+                // Construct the filename for the PDF in Wikimedia Commons
+                const fileName = `Ettelaat${year}${month}${day}.pdf`;
+                const width = 500; // Desired image width for the thumbnail, changed to 500px
+                const page = 1; // Assuming we are always loading the first page of the newspaper
+
+                // Generate the hash using the MD5 function
+                const hash = calculateHash(fileName); 
+
+                // Construct the full image URL based on the Wikimedia Commons thumbnail pattern
+                // Example: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Ettelaat13280118.pdf/page1-844px-Ettelaat13280118.pdf.jpg
+                // The hash structure is /hash[0]/hash/filename.pdf
+                const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileName}/page${page}-${width}px-${fileName}.jpg`;
+
+                statusMessage.textContent = 'در حال بارگذاری...'; // Loading message
+                statusMessage.style.display = 'block';
+                newspaperImage.style.display = 'none';
+
+                newspaperImage.src = imageUrl;
+
+                // Handle successful image load
+                newspaperImage.onload = () => {
+                    statusMessage.style.display = 'none';
+                    newspaperImage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                };
+
+                // Handle image load error (e.g., file not found or incorrect URL)
+                newspaperImage.onerror = () => {
+                    statusMessage.style.display = 'none';
+                    newspaperImage.style.display = 'none';
+                    errorMessage.textContent = `تصویری برای تاریخ ${year}/${month}/${day} یافت نشد. ممکن است فایل موجود نباشد یا آدرس آن اشتباه باشد.`;
+                    errorMessage.style.display = 'block';
+                };
+            };
+
+            // Automatically load the image after 2 seconds when the page is loaded
+            setTimeout(() => {
+                loadImage();
+            }, 2000); // 2000 milliseconds = 2 seconds
+
+            // Event listeners for date changes to automatically update the newspaper image
+            yearInput.addEventListener('change', loadImage);
+            monthSelect.addEventListener('change', loadImage);
+            dayInput.addEventListener('change', loadImage);
+        });
+    </script>
+</body>
+</html>
