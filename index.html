@@ -282,7 +282,7 @@
             <h2>روزنامه اطلاعات</h2>
             <img id="ettelaatNewspaperImage" src="" alt="تصویر روزنامه اطلاعات" class="newspaper-image">
             <p id="ettelaatStatusMessage" class="status-message" style="display: none;"></p>
-            <p id="ettelaatErrorMessage" class="error-message" style="display: none;"></p>
+            <p id="ettelaatErrorMessage" class="error-error-message" style="display: none;"></p>
         </div>
 
         <div id="mardomSection" class="newspaper-section" style="display: none;">
@@ -290,6 +290,20 @@
             <img id="mardomNewspaperImage" src="" alt="تصویر روزنامه مردم" class="newspaper-image">
             <p id="mardomStatusMessage" class="status-message" style="display: none;"></p>
             <p id="mardomErrorMessage" class="error-message" style="display: none;"></p>
+        </div>
+
+        <div id="kayhanSection" class="newspaper-section" style="display: none;">
+            <h2>روزنامه کیهان</h2>
+            <img id="kayhanNewspaperImage" src="" alt="تصویر روزنامه کیهان" class="newspaper-image">
+            <p id="kayhanStatusMessage" class="status-message" style="display: none;"></p>
+            <p id="kayhanErrorMessage" class="error-message" style="display: none;"></p>
+        </div>
+
+        <div id="bakhtarEmroozSection" class="newspaper-section" style="display: none;">
+            <h2>روزنامه باختر امروز</h2>
+            <img id="bakhtarEmroozNewspaperImage" src="" alt="تصویر روزنامه باختر امروز" class="newspaper-image">
+            <p id="bakhtarEmroozStatusMessage" class="status-message" style="display: none;"></p>
+            <p id="bakhtarEmroozErrorMessage" class="error-message" style="display: none;"></p>
         </div>
     </div>
     
@@ -329,19 +343,29 @@
             const mainErrorMessage = document.getElementById('mainErrorMessage');
             const mainStatusMessage = document.getElementById('mainStatusMessage');
 
-            // Ettelaat Elements
+            // Newspaper Section Elements
             const ettelaatSection = document.getElementById('ettelaatSection');
             const ettelaatNewspaperImage = document.getElementById('ettelaatNewspaperImage');
             const ettelaatStatusMessage = document.getElementById('ettelaatStatusMessage');
             const ettelaatErrorMessage = document.getElementById('ettelaatErrorMessage');
-            const mainPageNumberInput = document.getElementById('mainPageNumberInput'); // This will control both in main view
 
-            // Mardom Elements
             const mardomSection = document.getElementById('mardomSection');
             const mardomNewspaperImage = document.getElementById('mardomNewspaperImage');
             const mardomStatusMessage = document.getElementById('mardomStatusMessage');
             const mardomErrorMessage = document.getElementById('mardomErrorMessage');
-            // const mardomPageNumberInput = document.getElementById('mardomPageNumberInput'); // Removed from HTML
+
+            const kayhanSection = document.getElementById('kayhanSection');
+            const kayhanNewspaperImage = document.getElementById('kayhanNewspaperImage');
+            const kayhanStatusMessage = document.getElementById('kayhanStatusMessage');
+            const kayhanErrorMessage = document.getElementById('kayhanErrorMessage');
+
+            const bakhtarEmroozSection = document.getElementById('bakhtarEmroozSection');
+            const bakhtarEmroozNewspaperImage = document.getElementById('bakhtarEmroozNewspaperImage');
+            const bakhtarEmroozStatusMessage = document.getElementById('bakhtarEmroozStatusMessage');
+            const bakhtarEmroozErrorMessage = document.getElementById('bakhtarEmroozErrorMessage');
+
+
+            const mainPageNumberInput = document.getElementById('mainPageNumberInput'); 
 
             // Lightbox Elements
             const lightboxOverlay = document.getElementById('lightboxOverlay');
@@ -361,21 +385,53 @@
                 ettelaat: {
                     prefix: 'Ettelaat',
                     title: 'روزنامه اطلاعات',
-                    currentPage: 1, // This will be kept in sync with mainPageNumberInput
+                    currentPage: 1, 
                     available: false,
                     imageUrl: '',
-                    fileName: ''
+                    fileName: '',
+                    imageElement: ettelaatNewspaperImage,
+                    statusElement: ettelaatStatusMessage,
+                    errorElement: ettelaatErrorMessage,
+                    sectionElement: ettelaatSection
                 },
                 mardom: {
                     prefix: 'Mardom',
                     title: 'روزنامه مردم',
-                    currentPage: 1, // This will be kept in sync with mainPageNumberInput
+                    currentPage: 1, 
                     available: false,
                     imageUrl: '',
-                    fileName: ''
+                    fileName: '',
+                    imageElement: mardomNewspaperImage,
+                    statusElement: mardomStatusMessage,
+                    errorElement: mardomErrorMessage,
+                    sectionElement: mardomSection
+                },
+                kayhan: {
+                    prefix: 'Kayhan',
+                    title: 'روزنامه کیهان',
+                    currentPage: 1,
+                    available: false,
+                    imageUrl: '',
+                    fileName: '',
+                    imageElement: kayhanNewspaperImage,
+                    statusElement: kayhanStatusMessage,
+                    errorElement: kayhanErrorMessage,
+                    sectionElement: kayhanSection
+                },
+                bakhtarEmrooz: {
+                    prefix: 'BakhtarEmrooz',
+                    title: 'روزنامه باختر امروز',
+                    currentPage: 1,
+                    available: false,
+                    imageUrl: '',
+                    fileName: '',
+                    imageElement: bakhtarEmroozNewspaperImage,
+                    statusElement: bakhtarEmroozStatusMessage,
+                    errorElement: bakhtarEmroozErrorMessage,
+                    sectionElement: bakhtarEmroozSection
                 }
             };
-            let currentLightboxNewspaperType = null; // 'ettelaat' or 'mardom'
+            let currentLightboxNewspaperType = null; // 'ettelaat', 'mardom', 'kayhan', 'bakhtarEmrooz'
             let lightboxCurrentPage = 1; // Page number specific to lightbox view
 
             // Function to pad numbers with a leading zero if they are single digit (e.g., 1 to 01)
@@ -420,10 +476,10 @@
                 const hash = calculateHash(fileName);
                 const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileName}/page${page}-${width}px-${fileName}.jpg`;
 
-                const newspaperImgElement = document.getElementById(`${type}NewspaperImage`);
-                const newspaperStatusElement = document.getElementById(`${type}StatusMessage`);
-                const newspaperErrorElement = document.getElementById(`${type}ErrorMessage`);
-                const newspaperSection = document.getElementById(`${type}Section`);
+                const newspaperImgElement = paper.imageElement;
+                const newspaperStatusElement = paper.statusElement;
+                const newspaperErrorElement = paper.errorElement;
+                const newspaperSection = paper.sectionElement;
 
                 newspaperImgElement.style.display = 'none';
                 newspaperStatusElement.textContent = 'در حال بارگذاری...';
@@ -471,9 +527,10 @@
                 }
                 // 'navButton' source is for lightbox only, so no need to handle here for main view
 
-                // Update current page for both newspapers based on main control
-                newspaperData.ettelaat.currentPage = targetPage;
-                newspaperData.mardom.currentPage = targetPage;
+                // Update current page for all newspapers based on main control
+                Object.values(newspaperData).forEach(paper => {
+                    paper.currentPage = targetPage;
+                });
                 mainPageNumberInput.value = targetPage; // Ensure main input reflects the current page
 
                 const year = yearInput.value;
@@ -485,8 +542,9 @@
                     mainErrorMessage.textContent = 'لطفا تاریخ کامل را وارد کنید.';
                     mainErrorMessage.style.display = 'block';
                     mainStatusMessage.style.display = 'none';
-                    ettelaatSection.style.display = 'none';
-                    mardomSection.style.display = 'none';
+                    Object.values(newspaperData).forEach(paper => {
+                        paper.sectionElement.style.display = 'none';
+                    });
                     return;
                 }
 
@@ -494,15 +552,15 @@
                 mainStatusMessage.textContent = 'در حال بارگذاری روزنامه‌ها...';
                 mainStatusMessage.style.display = 'block';
 
-                // Load both newspapers concurrently
-                const [ettelaatLoaded, mardomLoaded] = await Promise.all([
-                    checkAndLoadNewspaper('ettelaat', year, month, day, newspaperData.ettelaat.currentPage),
-                    checkAndLoadNewspaper('mardom', year, month, day, newspaperData.mardom.currentPage)
-                ]);
+                // Load all newspapers concurrently
+                const loadPromises = Object.keys(newspaperData).map(type => 
+                    checkAndLoadNewspaper(type, year, month, day, newspaperData[type].currentPage)
+                );
+                const results = await Promise.all(loadPromises);
 
                 mainStatusMessage.style.display = 'none'; // Hide main loading message
 
-                if (!ettelaatLoaded && !mardomLoaded) {
+                if (!results.some(loaded => loaded)) { // If none of the newspapers loaded
                     mainErrorMessage.textContent = `روزنامه‌ای برای تاریخ ${year}/${month}/${day} یافت نشد.`;
                     mainErrorMessage.style.display = 'block';
                 } else {
@@ -618,6 +676,9 @@
             // Lightbox Event Listeners
             ettelaatNewspaperImage.addEventListener('click', () => openLightbox('ettelaat'));
             mardomNewspaperImage.addEventListener('click', () => openLightbox('mardom'));
+            kayhanNewspaperImage.addEventListener('click', () => openLightbox('kayhan'));
+            bakhtarEmroozNewspaperImage.addEventListener('click', () => openLightbox('bakhtarEmrooz'));
+
             lightboxCloseButton.addEventListener('click', closeLightbox);
             lightboxOverlay.addEventListener('click', (e) => {
                 if (e.target === lightboxOverlay) { // Close only if clicked on overlay, not content
