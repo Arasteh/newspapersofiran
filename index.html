@@ -6,7 +6,7 @@
     <title>آرشیو روزنامه اطلاعات</title>
     <style>
         body {
-            font-family: sans-serif;
+            font-family: sans-serif; /* Persian fonts */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -68,6 +68,33 @@
             color: red;
             margin-top: 10px;
         }
+        .pagination-controls {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pagination-controls button {
+            padding: 8px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        .pagination-controls button:hover {
+            background-color: #218838;
+        }
+        .pagination-controls button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .pagination-controls input[type="number"] {
+            width: 60px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -95,13 +122,19 @@
 
         <label for="day">روز:</label>
         <input type="number" id="day" value="8" min="1" max="31">
-
-        </div>
+    </div>
 
     <div class="newspaper-display">
         <p id="statusMessage">در حال بارگذاری روزنامه...</p>
         <img id="newspaperImage" src="" alt="تصویر روزنامه" style="display: none;">
         <p id="errorMessage" class="error-message" style="display: none;"></p>
+
+        <div class="pagination-controls">
+            <button id="prevPageButton">صفحه قبل</button>
+            <label for="pageNumberInput">صفحه:</label>
+            <input type="number" id="pageNumberInput" value="1" min="1">
+            <button id="nextPageButton">صفحه بعد</button>
+        </div>
     </div>
 
     <script>
@@ -112,6 +145,12 @@
             const newspaperImage = document.getElementById('newspaperImage');
             const statusMessage = document.getElementById('statusMessage');
             const errorMessage = document.getElementById('errorMessage');
+
+            const prevPageButton = document.getElementById('prevPageButton');
+            const nextPageButton = document.getElementById('nextPageButton');
+            const pageNumberInput = document.getElementById('pageNumberInput');
+
+            let currentPage = 1; // Current page number, initialized to 1
 
             // Function to pad numbers with a leading zero if they are single digit (e.g., 1 to 01)
             const pad = (num) => num.toString().padStart(2, '0');
@@ -131,13 +170,49 @@
             function bit_rol(d,_){return d<<_|d>>>32-_}
             // --- End of MD5 Hashing Functions ---
 
+            // Function to convert Persian digits to English digits
+            const persianToEnglishDigits = (str) => {
+                const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                return str.split('').map(char => {
+                    const index = persianNumbers.indexOf(char);
+                    return index !== -1 ? englishNumbers[index] : char;
+                }).join('');
+            };
+
             // Function to calculate the Wikimedia Commons hash (first two characters of MD5)
             const calculateHash = (filename) => {
                 const fullMd5 = MD5(filename); // Use the provided MD5 function
                 return fullMd5.substring(0, 2); // Get the first two characters of the MD5 hash
             };
 
-            const loadImage = () => {
+            // loadImage function now accepts a 'source' parameter to control page number logic
+            const loadImage = (source = 'initial') => {
+                let targetPage = currentPage; // Default to current global page
+
+                if (source === 'date') {
+                    // If date changed, reset page to 1
+                    targetPage = 1;
+                } else if (source === 'pageInput') {
+                    // If page input changed, read its value and parse it
+                    const inputPageValue = persianToEnglishDigits(pageNumberInput.value);
+                    const parsedInputPage = parseInt(inputPageValue, 10);
+                    
+                    if (!isNaN(parsedInputPage) && parsedInputPage >= 1) {
+                        targetPage = parsedInputPage;
+                    } else {
+                        // If input is invalid, revert to the current valid page and update the input field
+                        pageNumberInput.value = currentPage; 
+                        errorMessage.textContent = 'شماره صفحه نامعتبر است. به صفحه فعلی بازگشت.';
+                        errorMessage.style.display = 'block';
+                        // Do not return, continue with current valid page
+                    }
+                }
+                // For 'navButton' or 'initial', targetPage is already set or updated by navigation functions
+
+                currentPage = targetPage; // Update the global currentPage
+                pageNumberInput.value = currentPage; // Ensure input field reflects global currentPage
+
                 const year = yearInput.value;
                 const month = pad(monthSelect.value);
                 const day = pad(dayInput.value);
@@ -155,15 +230,13 @@
 
                 // Construct the filename for the PDF in Wikimedia Commons
                 const fileName = `Ettelaat${year}${month}${day}.pdf`;
-                const width = 500; // Desired image width for the thumbnail, changed to 500px
-                const page = 1; // Assuming we are always loading the first page of the newspaper
+                const width = 500; // Desired image width for the thumbnail
+                const page = currentPage; // Use the current page number
 
                 // Generate the hash using the MD5 function
                 const hash = calculateHash(fileName); 
 
                 // Construct the full image URL based on the Wikimedia Commons thumbnail pattern
-                // Example: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Ettelaat13280118.pdf/page1-844px-Ettelaat13280118.pdf.jpg
-                // The hash structure is /hash[0]/hash/filename.pdf
                 const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileName}/page${page}-${width}px-${fileName}.jpg`;
 
                 statusMessage.textContent = 'در حال بارگذاری...'; // Loading message
@@ -177,26 +250,53 @@
                     statusMessage.style.display = 'none';
                     newspaperImage.style.display = 'block';
                     errorMessage.style.display = 'none';
+                    // Enable/disable navigation buttons based on current page
+                    prevPageButton.disabled = currentPage <= 1;
+                    nextPageButton.disabled = false; // Always enable next to allow trying
                 };
 
                 // Handle image load error (e.g., file not found or incorrect URL)
                 newspaperImage.onerror = () => {
                     statusMessage.style.display = 'none';
                     newspaperImage.style.display = 'none';
-                    errorMessage.textContent = `تصویری برای تاریخ ${year}/${month}/${day} یافت نشد. ممکن است فایل موجود نباشد یا آدرس آن اشتباه باشد.`;
+                    errorMessage.textContent = `تصویری برای تاریخ ${year}/${month}/${day} و صفحه ${currentPage} یافت نشد. ممکن است فایل موجود نباشد یا آدرس آن اشتباه باشد.`;
                     errorMessage.style.display = 'block';
+                    nextPageButton.disabled = true; // If current page fails, next page might also fail
                 };
             };
 
-            // Automatically load the image after 2 seconds when the page is loaded
-            setTimeout(() => {
-                loadImage();
-            }, 2000); // 2000 milliseconds = 2 seconds
+            // Function to go to the previous page
+            const goToPreviousPage = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    pageNumberInput.value = currentPage; // Update input field
+                    loadImage('navButton'); // Load image for the new page
+                }
+            };
+
+            // Function to go to the next page
+            const goToNextPage = () => {
+                currentPage++;
+                pageNumberInput.value = currentPage; // Update input field
+                loadImage('navButton'); // Load image for the new page
+            };
 
             // Event listeners for date changes to automatically update the newspaper image
-            yearInput.addEventListener('change', loadImage);
-            monthSelect.addEventListener('change', loadImage);
-            dayInput.addEventListener('change', loadImage);
+            yearInput.addEventListener('change', () => loadImage('date'));
+            monthSelect.addEventListener('change', () => loadImage('date'));
+            dayInput.addEventListener('change', () => loadImage('date'));
+
+            // Event listener for page number input: update currentPage and then load image
+            pageNumberInput.addEventListener('change', () => loadImage('pageInput'));
+
+            // Event listeners for pagination controls
+            prevPageButton.addEventListener('click', goToPreviousPage);
+            nextPageButton.addEventListener('click', goToNextPage);
+            
+            // Automatically load the image after 2 seconds when the page is loaded
+            setTimeout(() => {
+                loadImage('initial'); // Initial load
+            }, 2000); // 2000 milliseconds = 2 seconds
         });
     </script>
 </body>
