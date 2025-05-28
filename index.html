@@ -206,15 +206,16 @@
         }
         .lightbox-controls {
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* Center all controls */
+            flex-wrap: wrap; /* Allow controls to wrap to next line if space is limited */
             width: 100%;
             margin-top: 15px;
-            gap: 10px;
+            gap: 10px; /* Space between control groups */
         }
         .lightbox-controls .page-nav, .lightbox-controls .newspaper-nav {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 5px; /* Space between buttons/input within a group */
         }
         .lightbox-controls button {
             padding: 10px 20px;
@@ -406,15 +407,15 @@
             <p id="lightboxErrorMessage" class="error-message" style="display: none;"></p>
 
             <div class="lightbox-links">
-                <a id="downloadLink" href="#" target="_blank" style="display: none;">دانلود فایل اصلی</a>
-                <a id="viewLargeLink" href="#" target="_blank" style="display: none;">مشاهده تصویر بزرگتر</a>
+                <a id="downloadLink" href="#" target="_blank" style="display: none;">دانلود روزنامه</a>
+                <a id="viewLargeLink" href="#" target="_blank" style="display: none;">تصویر بزرگتر</a>
             </div>
 
             <div class="lightbox-controls">
                 <div class="page-nav">
-                    <button id="lightboxPrevPageButton">صفحه قبل</button>
+                    <button id="lightboxPrevPageButton">&lt;</button>
                     <input type="number" id="lightboxPageNumberInput" value="1" min="1">
-                    <button id="lightboxNextPageButton">صفحه بعد</button>
+                    <button id="lightboxNextPageButton">&gt;</button>
                 </div>
                 <div class="newspaper-nav">
                     <button id="lightboxPrevNewspaperButton" style="display: none;">روزنامه قبل</button>
