@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آرشیو روزنامه اطلاعات</title>
+    <title>آرشیو روزنامه‌های ایران</title>
     <style>
         body {
             font-family: sans-serif; /* Persian fonts */
@@ -34,39 +34,49 @@
             border-radius: 4px;
             font-size: 16px;
         }
-        /* The load button is removed for automatic loading, but keeping its style in case it's re-added */
-        #loadButton {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            display: none; /* Hide the button */
+        .newspaper-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px; /* Max width for the container of both newspapers */
         }
-        #loadButton:hover {
-            background-color: #0056b3;
-        }
-        .newspaper-display {
+        .newspaper-section {
+            flex: 1;
+            min-width: 300px; /* Minimum width for each newspaper section */
+            max-width: 500px; /* Max width for each newspaper section */
             text-align: center;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            max-width: 90%;
-            overflow: hidden; /* Prevents image overflow */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .newspaper-display img {
+        .newspaper-section h2 {
+            margin-top: 0;
+            color: #555;
+        }
+        .newspaper-image {
             max-width: 100%;
             height: auto;
             border: 1px solid #ddd;
             border-radius: 4px;
+            cursor: pointer; /* Indicate clickable image */
         }
         .error-message {
             color: red;
             margin-top: 10px;
+            text-align: center;
+            width: 100%;
+        }
+        .status-message {
+            color: #007bff;
+            margin-top: 10px;
+            text-align: center;
+            width: 100%;
         }
         .pagination-controls {
             margin-top: 15px;
@@ -95,10 +105,97 @@
             width: 60px;
             text-align: center;
         }
+
+        /* Lightbox Styles */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .lightbox-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 80vh; /* Limit height to prevent overflow on tall images */
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+        .lightbox-controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 15px;
+            gap: 10px;
+        }
+        .lightbox-controls .page-nav, .lightbox-controls .newspaper-nav {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .lightbox-controls button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .lightbox-controls button:hover {
+            background-color: #0056b3;
+        }
+        .lightbox-controls button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .lightbox-controls input[type="number"] {
+            width: 70px;
+            text-align: center;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .lightbox-close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <h1>آرشیو روزنامه اطلاعات</h1>
+    <h1>آرشیو روزنامه اطلاعات و مردم</h1>
 
     <div class="controls">
         <label for="year">سال:</label>
@@ -124,16 +221,56 @@
         <input type="number" id="day" value="8" min="1" max="31">
     </div>
 
-    <div class="newspaper-display">
-        <p id="statusMessage">در حال بارگذاری روزنامه...</p>
-        <img id="newspaperImage" src="" alt="تصویر روزنامه" style="display: none;">
-        <p id="errorMessage" class="error-message" style="display: none;"></p>
+    <p id="mainErrorMessage" class="error-message" style="display: none;"></p>
+    <p id="mainStatusMessage" class="status-message">در حال بارگذاری روزنامه‌ها...</p>
 
-        <div class="pagination-controls">
-            <button id="prevPageButton">صفحه قبل</button>
-            <label for="pageNumberInput">صفحه:</label>
-            <input type="number" id="pageNumberInput" value="1" min="1">
-            <button id="nextPageButton">صفحه بعد</button>
+    <div class="newspaper-container">
+        <div id="ettelaatSection" class="newspaper-section" style="display: none;">
+            <h2>روزنامه اطلاعات</h2>
+            <img id="ettelaatNewspaperImage" src="" alt="تصویر روزنامه اطلاعات" class="newspaper-image">
+            <p id="ettelaatStatusMessage" class="status-message" style="display: none;"></p>
+            <p id="ettelaatErrorMessage" class="error-message" style="display: none;"></p>
+            <div id="ettelaatPaginationControls" class="pagination-controls">
+                <button id="ettelaatPrevPageButton">صفحه قبل</button>
+                <label for="mainPageNumberInput">صفحه:</label>
+                <input type="number" id="mainPageNumberInput" value="1" min="1">
+                <button id="ettelaatNextPageButton">صفحه بعد</button>
+            </div>
+        </div>
+
+        <div id="mardomSection" class="newspaper-section" style="display: none;">
+            <h2>روزنامه مردم</h2>
+            <img id="mardomNewspaperImage" src="" alt="تصویر روزنامه مردم" class="newspaper-image">
+            <p id="mardomStatusMessage" class="status-message" style="display: none;"></p>
+            <p id="mardomErrorMessage" class="error-message" style="display: none;"></p>
+            <div id="mardomPaginationControls" class="pagination-controls">
+                <button id="mardomPrevPageButton">صفحه قبل</button>
+                <label for="mardomPageNumberInput">صفحه:</label>
+                <input type="number" id="mardomPageNumberInput" value="1" min="1">
+                <button id="mardomNextPageButton">صفحه بعد</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="lightboxOverlay" class="lightbox-overlay">
+        <div class="lightbox-content">
+            <button id="lightboxCloseButton" class="lightbox-close-button">&times;</button>
+            <h2 id="lightboxNewspaperTitle"></h2>
+            <img id="lightboxImage" src="" alt="تصویر روزنامه در لایت‌باکس" class="lightbox-image">
+            <p id="lightboxStatusMessage" class="status-message" style="display: none;"></p>
+            <p id="lightboxErrorMessage" class="error-message" style="display: none;"></p>
+
+            <div class="lightbox-controls">
+                <div class="page-nav">
+                    <button id="lightboxPrevPageButton">صفحه قبل</button>
+                    <input type="number" id="lightboxPageNumberInput" value="1" min="1">
+                    <button id="lightboxNextPageButton">صفحه بعد</button>
+                </div>
+                <div class="newspaper-nav">
+                    <button id="lightboxPrevNewspaperButton" style="display: none;">روزنامه قبل</button>
+                    <button id="lightboxNextNewspaperButton" style="display: none;">روزنامه بعد</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -142,15 +279,62 @@
             const yearInput = document.getElementById('year');
             const monthSelect = document.getElementById('month');
             const dayInput = document.getElementById('day');
-            const newspaperImage = document.getElementById('newspaperImage');
-            const statusMessage = document.getElementById('statusMessage');
-            const errorMessage = document.getElementById('errorMessage');
+            
+            const mainErrorMessage = document.getElementById('mainErrorMessage');
+            const mainStatusMessage = document.getElementById('mainStatusMessage');
 
-            const prevPageButton = document.getElementById('prevPageButton');
-            const nextPageButton = document.getElementById('nextPageButton');
-            const pageNumberInput = document.getElementById('pageNumberInput');
+            // Ettelaat Elements
+            const ettelaatSection = document.getElementById('ettelaatSection');
+            const ettelaatNewspaperImage = document.getElementById('ettelaatNewspaperImage');
+            const ettelaatStatusMessage = document.getElementById('ettelaatStatusMessage');
+            const ettelaatErrorMessage = document.getElementById('ettelaatErrorMessage');
+            const ettelaatPrevPageButton = document.getElementById('ettelaatPrevPageButton');
+            const ettelaatNextPageButton = document.getElementById('ettelaatNextPageButton');
+            const mainPageNumberInput = document.getElementById('mainPageNumberInput'); // This will control both in main view
 
-            let currentPage = 1; // Current page number, initialized to 1
+            // Mardom Elements
+            const mardomSection = document.getElementById('mardomSection');
+            const mardomNewspaperImage = document.getElementById('mardomNewspaperImage');
+            const mardomStatusMessage = document.getElementById('mardomStatusMessage');
+            const mardomErrorMessage = document.getElementById('mardomErrorMessage');
+            const mardomPrevPageButton = document.getElementById('mardomPrevPageButton');
+            const mardomNextPageButton = document.getElementById('mardomNextPageButton');
+            const mardomPageNumberInput = document.getElementById('mardomPageNumberInput'); // This will be kept in sync with mainPageNumberInput
+
+            // Lightbox Elements
+            const lightboxOverlay = document.getElementById('lightboxOverlay');
+            const lightboxCloseButton = document.getElementById('lightboxCloseButton');
+            const lightboxNewspaperTitle = document.getElementById('lightboxNewspaperTitle');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxStatusMessage = document.getElementById('lightboxStatusMessage');
+            const lightboxErrorMessage = document.getElementById('lightboxErrorMessage');
+            const lightboxPrevPageButton = document.getElementById('lightboxPrevPageButton');
+            const lightboxNextPageButton = document.getElementById('lightboxNextPageButton');
+            const lightboxPageNumberInput = document.getElementById('lightboxPageNumberInput');
+            const lightboxPrevNewspaperButton = document.getElementById('lightboxPrevNewspaperButton');
+            const lightboxNextNewspaperButton = document.getElementById('lightboxNextNewspaperButton');
+
+            // Global State
+            let newspaperData = {
+                ettelaat: {
+                    prefix: 'Ettelaat',
+                    title: 'روزنامه اطلاعات',
+                    currentPage: 1, // This will be kept in sync with mainPageNumberInput
+                    available: false,
+                    imageUrl: '',
+                    fileName: ''
+                },
+                mardom: {
+                    prefix: 'Mardom',
+                    title: 'روزنامه مردم',
+                    currentPage: 1, // This will be kept in sync with mainPageNumberInput
+                    available: false,
+                    imageUrl: '',
+                    fileName: ''
+                }
+            };
+            let currentLightboxNewspaperType = null; // 'ettelaat' or 'mardom'
+            let lightboxCurrentPage = 1; // Page number specific to lightbox view
 
             // Function to pad numbers with a leading zero if they are single digit (e.g., 1 to 01)
             const pad = (num) => num.toString().padStart(2, '0');
@@ -186,113 +370,288 @@
                 return fullMd5.substring(0, 2); // Get the first two characters of the MD5 hash
             };
 
-            // loadImage function now accepts a 'source' parameter to control page number logic
-            const loadImage = (source = 'initial') => {
-                let targetPage = currentPage; // Default to current global page
+            // Helper function to load a single newspaper image
+            const checkAndLoadNewspaper = async (type, year, month, day, page) => {
+                const paper = newspaperData[type];
+                const fileName = `${paper.prefix}${year}${month}${day}.pdf`;
+                const width = 330; // Desired image width for thumbnails
+                const hash = calculateHash(fileName);
+                const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileName}/page${page}-${width}px-${fileName}.jpg`;
+
+                const newspaperImgElement = document.getElementById(`${type}NewspaperImage`);
+                const newspaperStatusElement = document.getElementById(`${type}StatusMessage`);
+                const newspaperErrorElement = document.getElementById(`${type}ErrorMessage`);
+                const newspaperSection = document.getElementById(`${type}Section`);
+                const paginationControls = document.getElementById(`${type}PaginationControls`);
+
+                newspaperImgElement.style.display = 'none';
+                newspaperStatusElement.textContent = 'در حال بارگذاری...';
+                newspaperStatusElement.style.display = 'block';
+                newspaperErrorElement.style.display = 'none';
+                newspaperSection.style.display = 'block'; // Show section while loading
+
+                try {
+                    const response = await fetch(imageUrl, { method: 'HEAD' }); // Use HEAD to check if image exists
+                    if (response.ok) {
+                        newspaperImgElement.src = imageUrl;
+                        await new Promise((resolve, reject) => {
+                            newspaperImgElement.onload = resolve;
+                            newspaperImgElement.onerror = reject;
+                        });
+                        newspaperStatusElement.style.display = 'none';
+                        newspaperImgElement.style.display = 'block';
+                        paginationControls.style.display = 'flex'; // Show pagination if available
+                        paper.available = true;
+                        return true; // Available
+                    } else {
+                        throw new Error('Image not found');
+                    }
+                } catch (error) {
+                    newspaperStatusElement.style.display = 'none';
+                    newspaperImgElement.style.display = 'none';
+                    newspaperErrorElement.textContent = `تصویر برای ${paper.title} و صفحه ${page} یافت نشد.`;
+                    newspaperErrorElement.style.display = 'block';
+                    newspaperSection.style.display = 'none'; // Hide section if not available
+                    paginationControls.style.display = 'none'; // Hide pagination if not available
+                    paper.available = false;
+                    return false; // Not available
+                }
+            };
+
+            // Main function to load newspaper images
+            const loadImage = async (source = 'initial') => {
+                let targetPage = parseInt(persianToEnglishDigits(mainPageNumberInput.value), 10);
+                if (isNaN(targetPage) || targetPage < 1) {
+                    targetPage = 1;
+                }
 
                 if (source === 'date') {
-                    // If date changed, reset page to 1
-                    targetPage = 1;
+                    targetPage = 1; // Reset page to 1 when date changes
                 } else if (source === 'pageInput') {
-                    // If page input changed, read its value and parse it
-                    const inputPageValue = persianToEnglishDigits(pageNumberInput.value);
-                    const parsedInputPage = parseInt(inputPageValue, 10);
-                    
-                    if (!isNaN(parsedInputPage) && parsedInputPage >= 1) {
-                        targetPage = parsedInputPage;
-                    } else {
-                        // If input is invalid, revert to the current valid page and update the input field
-                        pageNumberInput.value = currentPage; 
-                        errorMessage.textContent = 'شماره صفحه نامعتبر است. به صفحه فعلی بازگشت.';
-                        errorMessage.style.display = 'block';
-                        // Do not return, continue with current valid page
-                    }
+                    // targetPage is already set from mainPageNumberInput value
+                } else if (source === 'navButton') {
+                    // targetPage is already updated by goToPreviousPage/goToNextPage
                 }
-                // For 'navButton' or 'initial', targetPage is already set or updated by navigation functions
 
-                currentPage = targetPage; // Update the global currentPage
-                pageNumberInput.value = currentPage; // Ensure input field reflects global currentPage
+                // Update current page for both newspapers based on main control
+                newspaperData.ettelaat.currentPage = targetPage;
+                newspaperData.mardom.currentPage = targetPage;
+                mainPageNumberInput.value = targetPage; // Ensure main input reflects the current page
 
                 const year = yearInput.value;
                 const month = pad(monthSelect.value);
                 const day = pad(dayInput.value);
 
-                // Validate input fields
+                // Validate date inputs
                 if (!year || !month || !day) {
-                    errorMessage.textContent = 'لطفا تاریخ کامل را وارد کنید.';
-                    errorMessage.style.display = 'block';
-                    newspaperImage.style.display = 'none';
-                    statusMessage.style.display = 'none';
+                    mainErrorMessage.textContent = 'لطفا تاریخ کامل را وارد کنید.';
+                    mainErrorMessage.style.display = 'block';
+                    mainStatusMessage.style.display = 'none';
+                    ettelaatSection.style.display = 'none';
+                    mardomSection.style.display = 'none';
                     return;
                 }
 
-                errorMessage.style.display = 'none'; // Clear previous errors
+                mainErrorMessage.style.display = 'none'; // Clear previous main errors
+                mainStatusMessage.textContent = 'در حال بارگذاری روزنامه‌ها...';
+                mainStatusMessage.style.display = 'block';
 
-                // Construct the filename for the PDF in Wikimedia Commons
-                const fileName = `Ettelaat${year}${month}${day}.pdf`;
-                const width = 500; // Desired image width for the thumbnail
-                const page = currentPage; // Use the current page number
+                // Load both newspapers concurrently
+                const [ettelaatLoaded, mardomLoaded] = await Promise.all([
+                    checkAndLoadNewspaper('ettelaat', year, month, day, newspaperData.ettelaat.currentPage),
+                    checkAndLoadNewspaper('mardom', year, month, day, newspaperData.mardom.currentPage)
+                ]);
 
-                // Generate the hash using the MD5 function
-                const hash = calculateHash(fileName); 
+                mainStatusMessage.style.display = 'none'; // Hide main loading message
 
-                // Construct the full image URL based on the Wikimedia Commons thumbnail pattern
-                const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileName}/page${page}-${width}px-${fileName}.jpg`;
+                if (!ettelaatLoaded && !mardomLoaded) {
+                    mainErrorMessage.textContent = `روزنامه‌ای برای تاریخ ${year}/${month}/${day} یافت نشد.`;
+                    mainErrorMessage.style.display = 'block';
+                } else {
+                    mainErrorMessage.style.display = 'none';
+                }
 
-                statusMessage.textContent = 'در حال بارگذاری...'; // Loading message
-                statusMessage.style.display = 'block';
-                newspaperImage.style.display = 'none';
+                // Update pagination buttons for Ettelaat (main controls)
+                ettelaatPrevPageButton.disabled = newspaperData.ettelaat.currentPage <= 1;
+                ettelaatNextPageButton.disabled = false; // Always enabled to allow trying next page
 
-                newspaperImage.src = imageUrl;
+                // Update pagination buttons for Mardom (separate controls)
+                mardomPrevPageButton.disabled = newspaperData.mardom.currentPage <= 1;
+                mardomNextPageButton.disabled = false; // Always enabled to allow trying next page
 
-                // Handle successful image load
-                newspaperImage.onload = () => {
-                    statusMessage.style.display = 'none';
-                    newspaperImage.style.display = 'block';
-                    errorMessage.style.display = 'none';
-                    // Enable/disable navigation buttons based on current page
-                    prevPageButton.disabled = currentPage <= 1;
-                    nextPageButton.disabled = false; // Always enable next to allow trying
-                };
-
-                // Handle image load error (e.g., file not found or incorrect URL)
-                newspaperImage.onerror = () => {
-                    statusMessage.style.display = 'none';
-                    newspaperImage.style.display = 'none';
-                    errorMessage.textContent = `تصویری برای تاریخ ${year}/${month}/${day} و صفحه ${currentPage} یافت نشد. ممکن است فایل موجود نباشد یا آدرس آن اشتباه باشد.`;
-                    errorMessage.style.display = 'block';
-                    nextPageButton.disabled = true; // If current page fails, next page might also fail
-                };
+                // Keep Mardom page input in sync with main
+                mardomPageNumberInput.value = newspaperData.mardom.currentPage;
             };
 
-            // Function to go to the previous page
-            const goToPreviousPage = () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    pageNumberInput.value = currentPage; // Update input field
-                    loadImage('navButton'); // Load image for the new page
+            // --- Pagination Controls for Main View ---
+            const goToPreviousPage = (type) => {
+                if (newspaperData[type].currentPage > 1) {
+                    newspaperData[type].currentPage--;
+                    mainPageNumberInput.value = newspaperData[type].currentPage; // Update main input
+                    mardomPageNumberInput.value = newspaperData[type].currentPage; // Keep Mardom input in sync
+                    loadImage('navButton');
                 }
             };
 
-            // Function to go to the next page
-            const goToNextPage = () => {
-                currentPage++;
-                pageNumberInput.value = currentPage; // Update input field
-                loadImage('navButton'); // Load image for the new page
+            const goToNextPage = (type) => {
+                newspaperData[type].currentPage++;
+                mainPageNumberInput.value = newspaperData[type].currentPage; // Update main input
+                mardomPageNumberInput.value = newspaperData[type].currentPage; // Keep Mardom input in sync
+                loadImage('navButton');
             };
 
-            // Event listeners for date changes to automatically update the newspaper image
+            // Event listeners for main date controls (reset page to 1 on date change)
             yearInput.addEventListener('change', () => loadImage('date'));
             monthSelect.addEventListener('change', () => loadImage('date'));
             dayInput.addEventListener('change', () => loadImage('date'));
 
-            // Event listener for page number input: update currentPage and then load image
-            pageNumberInput.addEventListener('change', () => loadImage('pageInput'));
+            // Event listener for main page number input
+            mainPageNumberInput.addEventListener('change', () => loadImage('pageInput'));
+            mardomPageNumberInput.addEventListener('change', () => {
+                // If Mardom page input is changed directly, update main input and reload
+                mainPageNumberInput.value = mardomPageNumberInput.value;
+                loadImage('pageInput');
+            });
 
-            // Event listeners for pagination controls
-            prevPageButton.addEventListener('click', goToPreviousPage);
-            nextPageButton.addEventListener('click', goToNextPage);
-            
+            // Event listeners for main pagination buttons (controlling Ettelaat as primary)
+            ettelaatPrevPageButton.addEventListener('click', () => goToPreviousPage('ettelaat'));
+            ettelaatNextPageButton.addEventListener('click', () => goToNextPage('ettelaat'));
+
+            // Event listeners for Mardom pagination buttons (controlling Mardom)
+            mardomPrevPageButton.addEventListener('click', () => goToPreviousPage('mardom'));
+            mardomNextPageButton.addEventListener('click', () => goToNextPage('mardom'));
+
+            // --- Lightbox Functions ---
+            const openLightbox = async (type) => {
+                currentLightboxNewspaperType = type;
+                lightboxCurrentPage = newspaperData[type].currentPage; // Initialize lightbox page from main view
+
+                lightboxOverlay.classList.add('visible');
+                await updateLightboxContent();
+            };
+
+            const closeLightbox = () => {
+                lightboxOverlay.classList.remove('visible');
+                currentLightboxNewspaperType = null;
+            };
+
+            const updateLightboxContent = async () => {
+                const type = currentLightboxNewspaperType;
+                const paper = newspaperData[type];
+                const year = yearInput.value;
+                const month = pad(monthSelect.value);
+                const day = pad(dayInput.value);
+
+                lightboxNewspaperTitle.textContent = paper.title;
+                lightboxPageNumberInput.value = lightboxCurrentPage;
+
+                lightboxStatusMessage.textContent = 'در حال بارگذاری...';
+                lightboxStatusMessage.style.display = 'block';
+                lightboxErrorMessage.style.display = 'none';
+                lightboxImage.style.display = 'none';
+
+                const fileName = `${paper.prefix}${year}${month}${day}.pdf`;
+                const width = 800; // Larger width for lightbox
+                const hash = calculateHash(fileName);
+                const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileName}/page${lightboxCurrentPage}-${width}px-${fileName}.jpg`;
+
+                lightboxImage.src = imageUrl;
+
+                try {
+                    await new Promise((resolve, reject) => {
+                        lightboxImage.onload = resolve;
+                        lightboxImage.onerror = reject;
+                    });
+                    lightboxStatusMessage.style.display = 'none';
+                    lightboxImage.style.display = 'block';
+                    lightboxErrorMessage.style.display = 'none';
+                } catch (error) {
+                    lightboxStatusMessage.style.display = 'none';
+                    lightboxImage.style.display = 'none';
+                    lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${lightboxCurrentPage} یافت نشد.`;
+                    lightboxErrorMessage.style.display = 'block';
+                }
+
+                // Update lightbox page navigation buttons
+                lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
+                lightboxNextPageButton.disabled = false; // Always enabled to allow trying next page
+
+                // Update lightbox newspaper navigation buttons
+                const availableNewspapers = Object.keys(newspaperData).filter(key => newspaperData[key].available);
+                if (availableNewspapers.length > 1) {
+                    lightboxPrevNewspaperButton.style.display = 'inline-block';
+                    lightboxNextNewspaperButton.style.display = 'inline-block';
+                } else {
+                    lightboxPrevNewspaperButton.style.display = 'none';
+                    lightboxNextNewspaperButton.style.display = 'none';
+                }
+            };
+
+            const lightboxGoToPage = (direction) => {
+                if (direction === 'prev' && lightboxCurrentPage > 1) {
+                    lightboxCurrentPage--;
+                } else if (direction === 'next') {
+                    lightboxCurrentPage++;
+                }
+                updateLightboxContent();
+            };
+
+            const lightboxChangeNewspaper = (direction) => {
+                const availableNewspapers = Object.keys(newspaperData).filter(key => newspaperData[key].available);
+                if (availableNewspapers.length <= 1) return; // No other newspaper to switch to
+
+                const currentIndex = availableNewspapers.indexOf(currentLightboxNewspaperType);
+                let newIndex;
+                if (direction === 'prev') {
+                    newIndex = (currentIndex - 1 + availableNewspapers.length) % availableNewspapers.length;
+                } else {
+                    newIndex = (currentIndex + 1) % availableNewspapers.length;
+                }
+                currentLightboxNewspaperType = availableNewspapers[newIndex];
+                lightboxCurrentPage = newspaperData[currentLightboxNewspaperType].currentPage; // Reset lightbox page to the new newspaper's current page
+                updateLightboxContent();
+            };
+
+            // Lightbox Event Listeners
+            ettelaatNewspaperImage.addEventListener('click', () => openLightbox('ettelaat'));
+            mardomNewspaperImage.addEventListener('click', () => openLightbox('mardom'));
+            lightboxCloseButton.addEventListener('click', closeLightbox);
+            lightboxOverlay.addEventListener('click', (e) => {
+                if (e.target === lightboxOverlay) { // Close only if clicked on overlay, not content
+                    closeLightbox();
+                }
+            });
+
+            lightboxPrevPageButton.addEventListener('click', () => lightboxGoToPage('prev'));
+            lightboxNextPageButton.addEventListener('click', () => lightboxGoToPage('next'));
+            lightboxPageNumberInput.addEventListener('change', () => {
+                const inputPageValue = persianToEnglishDigits(lightboxPageNumberInput.value);
+                const parsedInputPage = parseInt(inputPageValue, 10);
+                if (!isNaN(parsedInputPage) && parsedInputPage >= 1) {
+                    lightboxCurrentPage = parsedInputPage;
+                    updateLightboxContent();
+                } else {
+                    // Revert to current valid page if input is invalid
+                    lightboxPageNumberInput.value = lightboxCurrentPage;
+                }
+            });
+
+            lightboxPrevNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('prev'));
+            lightboxNextNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('next'));
+
+            // Keyboard navigation for lightbox
+            document.addEventListener('keydown', (e) => {
+                if (lightboxOverlay.classList.contains('visible')) {
+                    if (e.key === 'ArrowLeft') {
+                        lightboxGoToPage('prev');
+                    } else if (e.key === 'ArrowRight') {
+                        lightboxGoToPage('next');
+                    } else if (e.key === 'Escape') {
+                        closeLightbox();
+                    }
+                }
+            });
+
             // Automatically load the image after 2 seconds when the page is loaded
             setTimeout(() => {
                 loadImage('initial'); // Initial load
