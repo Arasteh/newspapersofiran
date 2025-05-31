@@ -854,10 +854,11 @@
 
                 const fullFileNameWithPdf = `${fileNameBase}.pdf`; // Full filename including .pdf
                 const hash = getWikimediaHash(fullFileNameWithPdf); // Hash is based on the full filename (UTF-8)
-                const encodedFileNameForUrl = encodeURIComponent(fullFileNameWithPdf.replace(/ /g, '_')); // URL-encoded filename for path segments
+                // For URL path, replace spaces with underscores. Browser will handle URI encoding of non-ASCII chars.
+                const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_'); 
                 
                 const width = 330; // Desired image width for thumbnails
-                const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${encodedFileNameForUrl}/page${page}-${width}px-${encodedFileNameForUrl}.jpg`;
+                const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${page}-${width}px-${fileNameForUrlPath}.jpg`;
 
                 const newspaperImgElement = paper.imageElement;
                 const newspaperStatusElement = paper.statusElement;
@@ -943,7 +944,6 @@
                 if (source !== 'date') { // Only show main status if not already showing pop-up
                     mainErrorMessage.style.display = 'none'; // Clear previous main errors
                     mainStatusMessage.textContent = 'در حال بارگذاری روزنامه‌ها...';
-                    mainStatusMessage.style.display = 'block';
                 }
 
                 // Load all newspapers concurrently
@@ -1063,10 +1063,10 @@
 
                 const fullFileNameWithPdf = `${fileNameBase}.pdf`; // Full filename including .pdf
                 const hash = getWikimediaHash(fullFileNameWithPdf); // Hash is based on the full filename (UTF-8)
-                const encodedFileNameForUrl = encodeURIComponent(fullFileNameWithPdf.replace(/ /g, '_')); // URL-encoded filename for path segments
+                const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_'); // For URL path, replace spaces with underscores. Browser will handle URI encoding of non-ASCII chars.
                 
                 const width = 800; // Larger width for lightbox display
-                const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${encodedFileNameForUrl}/page${lightboxCurrentPage}-${width}px-${encodedFileNameForUrl}.jpg`;
+                const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${lightboxCurrentPage}-${width}px-${fileNameForUrlPath}.jpg`;
 
                 lightboxImage.src = imageUrl;
 
@@ -1080,10 +1080,10 @@
                     lightboxErrorMessage.style.display = 'none';
 
                     // Generate and show download/view large links
-                    downloadLink.href = `https://upload.wikimedia.org/wikipedia/commons/${hash[0]}/${hash}/${encodedFileNameForUrl}?download`;
+                    downloadLink.href = `https://upload.wikimedia.org/wikipedia/commons/${hash[0]}/${hash}/${fileNameForUrlPath}?download`;
                     downloadLink.style.display = 'inline-block';
 
-                    viewLargeLink.href = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${encodedFileNameForUrl}/page${lightboxCurrentPage}-2048px-${encodedFileNameForUrl}.jpg`;
+                    viewLargeLink.href = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${lightboxCurrentPage}-2048px-${fileNameForUrlPath}.jpg`;
                     viewLargeLink.style.display = 'inline-block';
 
                 } catch (error) {
@@ -1118,8 +1118,8 @@
                 // Preload next page of current newspaper
                 const nextPageFullFileName = `${fileNameBase}.pdf`;
                 const nextPageHash = getWikimediaHash(nextPageFullFileName);
-                const nextPageEncodedFileName = encodeURIComponent(nextPageFullFileName.replace(/ /g, '_'));
-                const nextPageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nextPageHash[0]}/${nextPageHash}/${nextPageEncodedFileName}/page${lightboxCurrentPage + 1}-${preloadWidth}px-${nextPageEncodedFileName}.jpg`;
+                const nextPageFileNameForUrlPath = nextPageFullFileName.replace(/ /g, '_');
+                const nextPageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nextPageHash[0]}/${nextPageHash}/${nextPageFileNameForUrlPath}/page${lightboxCurrentPage + 1}-${preloadWidth}px-${nextPageFileNameForUrlPath}.jpg`;
                 preloadedImages.nextPage = new Image();
                 preloadedImages.nextPage.src = nextPageUrl;
 
@@ -1127,8 +1127,8 @@
                 if (lightboxCurrentPage > 1) {
                     const prevPageFullFileName = `${fileNameBase}.pdf`;
                     const prevPageHash = getWikimediaHash(prevPageFullFileName);
-                    const prevPageEncodedFileName = encodeURIComponent(prevPageFullFileName.replace(/ /g, '_'));
-                    const prevPageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${prevPageHash[0]}/${prevPageHash}/${prevPageEncodedFileName}/page${lightboxCurrentPage - 1}-${preloadWidth}px-${prevPageEncodedFileName}.jpg`;
+                    const prevPageFileNameForUrlPath = prevPageFullFileName.replace(/ /g, '_');
+                    const prevPageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${prevPageHash[0]}/${prevPageHash}/${prevPageFileNameForUrlPath}/page${lightboxCurrentPage - 1}-${preloadWidth}px-${prevPageFileNameForUrlPath}.jpg`;
                     preloadedImages.prevPage = new Image();
                     preloadedImages.prevPage.src = prevPageUrl;
                 } else {
@@ -1157,8 +1157,8 @@
                     if (nextFileNameBase) {
                         const nextFullFileName = `${nextFileNameBase}.pdf`;
                         const nextHash = getWikimediaHash(nextFullFileName);
-                        const nextEncodedFileName = encodeURIComponent(nextFullFileName.replace(/ /g, '_'));
-                        const nextNewspaperUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nextHash[0]}/${nextHash}/${nextEncodedFileName}/page${lightboxCurrentPage}-${preloadWidth}px-${nextEncodedFileName}.jpg`;
+                        const nextFileNameForUrlPath = nextFullFileName.replace(/ /g, '_');
+                        const nextNewspaperUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nextHash[0]}/${nextHash}/${nextFileNameForUrlPath}/page${lightboxCurrentPage}-${preloadWidth}px-${nextFileNameForUrlPath}.jpg`;
                         preloadedImages.nextNewspaper = new Image();
                         preloadedImages.nextNewspaper.src = nextNewspaperUrl;
                     } else {
@@ -1183,8 +1183,8 @@
                     if (prevFileNameBase) {
                         const prevFullFileName = `${prevFileNameBase}.pdf`;
                         const prevHash = getWikimediaHash(prevFullFileName);
-                        const prevEncodedFileName = encodeURIComponent(prevFullFileName.replace(/ /g, '_'));
-                        const prevNewspaperUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${prevHash[0]}/${prevHash}/${prevEncodedFileName}/page${lightboxCurrentPage}-${preloadWidth}px-${prevEncodedFileName}.jpg`;
+                        const prevFileNameForUrlPath = prevFullFileName.replace(/ /g, '_');
+                        const prevNewspaperUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${prevHash[0]}/${prevHash}/${prevFileNameForUrlPath}/page${lightboxCurrentPage}-${preloadWidth}px-${prevFileNameForUrlPath}.jpg`;
                         preloadedImages.prevNewspaper = new Image();
                         preloadedImages.prevNewspaper.src = prevNewspaperUrl;
                     } else {
