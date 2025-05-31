@@ -532,7 +532,7 @@
             const ettelaatErrorMessage = document.getElementById('ettelaatErrorMessage');
 
             const mardomSection = document.getElementById('mardomSection');
-            const mardomNewspaperImage = document = document.getElementById('mardomNewspaperImage');
+            const mardomNewspaperImage = document.getElementById('mardomNewspaperImage');
             const mardomStatusMessage = document.getElementById('mardomStatusMessage');
             const mardomErrorMessage = document.getElementById('mardomErrorMessage');
 
@@ -759,7 +759,7 @@
                         newspaperStatusElement.style.display = 'none';
                         newspaperImgElement.style.display = 'none';
                         newspaperErrorElement.textContent = `تصویر برای ${paper.title} و صفحه ${page} یافت نشد.`;
-                        paper.errorElement.style.display = 'block';
+                        newspaperErrorElement.style.display = 'block';
                         paper.sectionElement.style.display = 'none'; // Hide section if not available
                         paper.available = false;
                         resolve(false);
@@ -1166,7 +1166,6 @@
                 loadingPopupOverlay.classList.remove('visible');
                 mainStatusMessage.style.display = 'none';
                 // Hide all newspaper sections for database-driven papers if database loading fails
-                // This loop needs to be after dbNewspapersData is populated (or not)
                 Object.values(newspaperData).forEach(paper => {
                     if (paper.type === 'database') {
                         paper.sectionElement.style.display = 'none';
