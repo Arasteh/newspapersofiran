@@ -239,7 +239,7 @@
             text-align: center;
             padding: 8px;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 44px;
             font-size: 16px;
             background-color: var(--control-bg); /* Ensure input background matches control */
             color: var(--text-color); /* Ensure input text color matches body text */
@@ -324,33 +324,91 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Calendar Selection Styles */
+        .calendar-selection {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+        .calendar-selection label {
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            background-color: var(--control-bg);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .calendar-selection input[type="radio"] {
+            display: none; /* Hide default radio button */
+        }
+        .calendar-selection input[type="radio"]:checked + label {
+            background-color: var(--button-bg);
+            color: white;
+            border-color: var(--button-bg);
+        }
     </style>
 </head>
 <body>
     <h1>بایگانی روزنامه‌های ایران</h1>
 
     <div class="controls">
-        <label for="year">سال:</label>
-        <input type="number" id="year" value="1358" min="1300" max="1450">
+        <div class="calendar-selection">
+            <input type="radio" id="shamsiCalendar" name="calendar" value="shamsi" checked>
+            <label for="shamsiCalendar">شمسی</label>
+            <input type="radio" id="hijriCalendar" name="calendar" value="hijri">
+            <label for="hijriCalendar">قمری</label>
+        </div>
 
-        <label for="month">ماه:</label>
-        <select id="month">
-            <option value="1">فروردین</option>
-            <option value="2">اردیبهشت</option>
-            <option value="3">خرداد</option>
-            <option value="4">تیر</option>
-            <option value="5">مرداد</option>
-            <option value="6">شهریور</option>
-            <option value="7">مهر</option>
-            <option value="8">آبان</option>
-            <option value="9">آذر</option>
-            <option value="10">دی</option>
-            <option value="11">بهمن</option>
-            <option value="12">اسفند</option>
-        </select>
+        <div id="shamsiDateControls">
+            <label for="shamsiYear">سال:</label>
+            <input type="number" id="shamsiYear" value="1358" min="1300" max="1450">
 
-        <label for="day">روز:</label>
-        <input type="number" id="day" value="15" min="1" max="31">
+            <label for="shamsiMonth">ماه:</label>
+            <select id="shamsiMonth">
+                <option value="1">فروردین</option>
+                <option value="2">اردیبهشت</option>
+                <option value="3">خرداد</option>
+                <option value="4">تیر</option>
+                <option value="5">مرداد</option>
+                <option value="6">شهریور</option>
+                <option value="7">مهر</option>
+                <option value="8">آبان</option>
+                <option value="9">آذر</option>
+                <option value="10">دی</option>
+                <option value="11">بهمن</option>
+                <option value="12">اسفند</option>
+            </select>
+
+            <label for="shamsiDay">روز:</label>
+            <input type="number" id="shamsiDay" value="15" min="1" max="31">
+        </div>
+
+        <div id="hijriDateControls" style="display: none;">
+            <label for="hijriYear">سال قمری:</label>
+            <input type="number" id="hijriYear" value="1325" min="1300" max="1500">
+
+            <label for="hijriMonth">ماه قمری:</label>
+            <select id="hijriMonth">
+                <option value="1">محرم</option>
+                <option value="2">صفر</option>
+                <option value="3">ربیع‌الاول</option>
+                <option value="4">ربیع‌الثانی</option>
+                <option value="5">جمادی‌الاول</option>
+                <option value="6">جمادی‌الثانی</option>
+                <option value="7">رجب</option>
+                <option value="8">شعبان</option>
+                <option value="9">رمضان</option>
+                <option value="10">شوال</option>
+                <option value="11">ذی‌القعده</option>
+                <option value="12">ذی‌الحجه</option>
+            </select>
+
+            <label for="hijriDay">روز قمری:</label>
+            <input type="number" id="hijriDay" value="21" min="1" max="30">
+        </div>
     </div>
 
     <p id="mainErrorMessage" class="error-message" style="display: none;"></p>
@@ -383,6 +441,27 @@
             <img id="bakhtarEmroozNewspaperImage" src="" alt="تصویر روزنامه باختر امروز" class="newspaper-image">
             <p id="bakhtarEmroozStatusMessage" class="status-message" style="display: none;"></p>
             <p id="bakhtarEmroozErrorMessage" class="error-message" style="display: none;"></p>
+        </div>
+
+        <div id="raadSection" class="newspaper-section" style="display: none;">
+            <h2>روزنامه رعد</h2>
+            <img id="raadNewspaperImage" src="" alt="تصویر روزنامه رعد" class="newspaper-image">
+            <p id="raadStatusMessage" class="status-message" style="display: none;"></p>
+            <p id="raadErrorMessage" class="error-message" style="display: none;"></p>
+        </div>
+
+        <div id="iranSection" class="newspaper-section" style="display: none;">
+            <h2>روزنامه ایران</h2>
+            <img id="iranNewspaperImage" src="" alt="تصویر روزنامه ایران" class="newspaper-image">
+            <p id="iranStatusMessage" class="status-message" style="display: none;"></p>
+            <p id="iranErrorMessage" class="error-message" style="display: none;"></p>
+        </div>
+
+        <div id="Q134006001Section" class="newspaper-section" style="display: none;">
+            <h2>روزنامه خورشید</h2>
+            <img id="Q134006001NewspaperImage" src="" alt="تصویر روزنامه خورشید" class="newspaper-image">
+            <p id="Q134006001StatusMessage" class="status-message" style="display: none;"></p>
+            <p id="Q134006001ErrorMessage" class="error-message" style="display: none;"></p>
         </div>
     </div>
     
@@ -426,15 +505,27 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const yearInput = document.getElementById('year');
-            const monthSelect = document.getElementById('month');
-            const dayInput = document.getElementById('day');
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Calendar Selection Elements
+            const shamsiCalendarRadio = document.getElementById('shamsiCalendar');
+            const hijriCalendarRadio = document.getElementById('hijriCalendar');
+            const shamsiDateControls = document.getElementById('shamsiDateControls');
+            const hijriDateControls = document.getElementById('hijriDateControls');
+
+            // Shamsi Date Inputs
+            const shamsiYearInput = document.getElementById('shamsiYear');
+            const shamsiMonthSelect = document.getElementById('shamsiMonth');
+            const shamsiDayInput = document.getElementById('shamsiDay');
+
+            // Hijri Date Inputs
+            const hijriYearInput = document.getElementById('hijriYear');
+            const hijriMonthSelect = document.getElementById('hijriMonth');
+            const hijriDayInput = document.getElementById('hijriDay');
             
             const mainErrorMessage = document.getElementById('mainErrorMessage');
             const mainStatusMessage = document.getElementById('mainStatusMessage');
 
-            // Newspaper Section Elements
+            // Newspaper Section Elements - Formula-based
             const ettelaatSection = document.getElementById('ettelaatSection');
             const ettelaatNewspaperImage = document.getElementById('ettelaatNewspaperImage');
             const ettelaatStatusMessage = document.getElementById('ettelaatStatusMessage');
@@ -454,6 +545,22 @@
             const bakhtarEmroozNewspaperImage = document.getElementById('bakhtarEmroozNewspaperImage');
             const bakhtarEmroozStatusMessage = document.getElementById('bakhtarEmroozStatusMessage');
             const bakhtarEmroozErrorMessage = document.getElementById('bakhtarEmroozErrorMessage');
+
+            // Newspaper Section Elements - Database-driven (placeholders)
+            const raadSection = document.getElementById('raadSection');
+            const raadNewspaperImage = document.getElementById('raadNewspaperImage');
+            const raadStatusMessage = document.getElementById('raadStatusMessage');
+            const raadErrorMessage = document.getElementById('raadErrorMessage');
+
+            const iranSection = document.getElementById('iranSection');
+            const iranNewspaperImage = document.getElementById('iranNewspaperImage');
+            const iranStatusMessage = document.getElementById('iranStatusMessage');
+            const iranErrorMessage = document.getElementById('iranErrorMessage');
+
+            const khorshidSection = document.getElementById('Q134006001Section'); // Using Wikidata ID as element ID
+            const khorshidNewspaperImage = document.getElementById('Q134006001NewspaperImage');
+            const khorshidStatusMessage = document.getElementById('Q134006001StatusMessage');
+            const khorshidErrorMessage = document.getElementById('Q134006001ErrorMessage');
 
 
             const mainPageNumberInput = document.getElementById('mainPageNumberInput'); 
@@ -478,57 +585,61 @@
 
 
             // Global State
+            let currentCalendarMode = 'shamsi'; // 'shamsi' or 'hijri'
+            let dbNewspapersData = []; // To store data loaded from db.json
+
             let newspaperData = {
                 ettelaat: {
+                    type: 'formula', // New property to distinguish formula-based from database-based
                     prefix: 'Ettelaat',
                     title: 'روزنامه اطلاعات',
                     currentPage: 1, 
                     available: false,
-                    imageUrl: '',
-                    fileName: '',
                     imageElement: ettelaatNewspaperImage,
                     statusElement: ettelaatStatusMessage,
                     errorElement: ettelaatErrorMessage,
-                    sectionElement: ettelaatSection
+                    sectionElement: ettelaatSection,
+                    calendar_type: 'shamsi' // Assume formula-based are shamsi
                 },
                 mardom: {
+                    type: 'formula',
                     prefix: 'Mardom',
                     title: 'روزنامه مردم',
                     currentPage: 1, 
                     available: false,
-                    imageUrl: '',
-                    fileName: '',
                     imageElement: mardomNewspaperImage,
                     statusElement: mardomStatusMessage,
                     errorElement: mardomErrorMessage,
-                    sectionElement: mardomSection
+                    sectionElement: mardomSection,
+                    calendar_type: 'shamsi'
                 },
                 kayhan: {
+                    type: 'formula',
                     prefix: 'Kayhan',
                     title: 'روزنامه کیهان',
                     currentPage: 1,
                     available: false,
-                    imageUrl: '',
-                    fileName: '',
                     imageElement: kayhanNewspaperImage,
                     statusElement: kayhanStatusMessage,
                     errorElement: kayhanErrorMessage,
-                    sectionElement: kayhanSection
+                    sectionElement: kayhanSection,
+                    calendar_type: 'shamsi'
                 },
                 bakhtarEmrooz: {
+                    type: 'formula',
                     prefix: 'BakhtarEmrooz',
                     title: 'روزنامه باختر امروز',
                     currentPage: 1,
                     available: false,
-                    imageUrl: '',
-                    fileName: '',
                     imageElement: bakhtarEmroozNewspaperImage,
                     statusElement: bakhtarEmroozStatusMessage,
                     errorElement: bakhtarEmroozErrorMessage,
-                    sectionElement: bakhtarEmroozSection
+                    sectionElement: bakhtarEmroozSection,
+                    calendar_type: 'shamsi'
                 }
+                // Database-driven newspapers will be added dynamically after loading JSON
             };
-            let currentLightboxNewspaperType = null; // 'ettelaat', 'mardom', 'kayhan', 'bakhtarEmrooz'
+            let currentLightboxNewspaperType = null; // 'ettelaat', 'mardom', 'kayhan', 'bakhtarEmrooz', 'raad', 'iran', 'Q134006001'
             let lightboxCurrentPage = 1; // Page number specific to lightbox view
 
             // Store preloaded image objects to prevent garbage collection
@@ -576,7 +687,44 @@
             // Helper function to load a single newspaper image
             const checkAndLoadNewspaper = async (type, year, month, day, page) => {
                 const paper = newspaperData[type];
-                const fileName = `${paper.prefix}${year}${month}${day}.pdf`;
+                let fileNameBase;
+                let maxPages = null; // Default to unknown max pages
+
+                // Determine if this newspaper should be loaded based on calendar mode
+                if (paper.type === 'formula') {
+                    if (currentCalendarMode !== 'shamsi') {
+                        paper.sectionElement.style.display = 'none';
+                        paper.available = false;
+                        return false;
+                    }
+                    fileNameBase = `${paper.prefix}${year}${month}${day}`;
+                } else if (paper.type === 'database') {
+                    // Check if this database newspaper should be loaded based on selected calendar mode
+                    if (paper.calendar_type !== currentCalendarMode) {
+                        paper.sectionElement.style.display = 'none';
+                        paper.available = false;
+                        return false;
+                    }
+
+                    const foundIssue = paper.issues.find(issue => 
+                        issue.year == year && issue.month == month && issue.day == day
+                    );
+                    if (foundIssue) {
+                        fileNameBase = foundIssue.filename_base;
+                        maxPages = foundIssue.pages || null; // Use pages from DB if available
+                    } else {
+                        // No matching issue found in DB for this date
+                        paper.imageElement.style.display = 'none';
+                        paper.statusElement.style.display = 'none';
+                        paper.errorElement.textContent = `شماره‌ای برای ${paper.title} در تاریخ ${year}/${month}/${day} یافت نشد.`;
+                        paper.errorElement.style.display = 'block';
+                        paper.sectionElement.style.display = 'none';
+                        paper.available = false;
+                        return false;
+                    }
+                }
+
+                const fileName = `${fileNameBase}.pdf`; // Append .pdf for hash calculation and URL
                 const width = 330; // Desired image width for thumbnails
                 const hash = calculateHash(fileName);
                 const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileName}/page${page}-${width}px-${fileName}.jpg`;
@@ -603,6 +751,8 @@
                         newspaperStatusElement.style.display = 'none';
                         newspaperImgElement.style.display = 'block';
                         paper.available = true;
+                        paper.fileNameBase = fileNameBase; // Store for lightbox links
+                        paper.maxPages = maxPages; // Store max pages for lightbox
                         return true; // Available
                     } else {
                         throw new Error('Image not found');
@@ -620,6 +770,18 @@
 
             // Main function to load newspaper images
             const loadImage = async (source = 'initial') => {
+                let year, month, day;
+
+                if (currentCalendarMode === 'shamsi') {
+                    year = shamsiYearInput.value;
+                    month = pad(shamsiMonthSelect.value);
+                    day = pad(shamsiDayInput.value);
+                } else { // hijri
+                    year = hijriYearInput.value;
+                    month = pad(hijriMonthSelect.value);
+                    day = pad(hijriDayInput.value);
+                }
+
                 let targetPage = parseInt(persianToEnglishDigits(mainPageNumberInput.value), 10);
                 if (isNaN(targetPage) || targetPage < 1) {
                     targetPage = 1;
@@ -640,10 +802,6 @@
                     paper.currentPage = targetPage;
                 });
                 mainPageNumberInput.value = targetPage; // Ensure main input reflects the current page
-
-                const year = yearInput.value;
-                const month = pad(monthSelect.value);
-                const day = pad(dayInput.value);
 
                 // Validate date inputs
                 if (!year || !month || !day) {
@@ -673,17 +831,35 @@
                 loadingPopupOverlay.classList.remove('visible'); // Hide loading pop-up after all attempts
 
                 if (!results.some(loaded => loaded)) { // If none of the newspapers loaded
-                    mainErrorMessage.textContent = `روزنامه‌ای برای تاریخ ${year}/${month}/${day} یافت نشد.`;
-                    mainErrorMessage.style.display = 'block';
+                    mainErrorMessage.textContent = `روزنامه‌ای برای این تاریخ یافت نشد.`; // Simplified error message
                 } else {
                     mainErrorMessage.style.display = 'none';
                 }
             };
 
+            // Event listeners for calendar mode selection
+            shamsiCalendarRadio.addEventListener('change', () => {
+                currentCalendarMode = 'shamsi';
+                shamsiDateControls.style.display = 'flex';
+                hijriDateControls.style.display = 'none';
+                loadImage('date'); // Reload with new calendar
+            });
+
+            hijriCalendarRadio.addEventListener('change', () => {
+                currentCalendarMode = 'hijri';
+                shamsiDateControls.style.display = 'none';
+                hijriDateControls.style.display = 'flex';
+                loadImage('date'); // Reload with new calendar
+            });
+
             // Event listeners for main date controls (reset page to 1 on date change)
-            yearInput.addEventListener('change', () => loadImage('date'));
-            monthSelect.addEventListener('change', () => loadImage('date'));
-            dayInput.addEventListener('change', () => loadImage('date'));
+            shamsiYearInput.addEventListener('change', () => loadImage('date'));
+            shamsiMonthSelect.addEventListener('change', () => loadImage('date'));
+            shamsiDayInput.addEventListener('change', () => loadImage('date'));
+
+            hijriYearInput.addEventListener('change', () => loadImage('date'));
+            hijriMonthSelect.addEventListener('change', () => loadImage('date'));
+            hijriDayInput.addEventListener('change', () => loadImage('date'));
 
             // Event listener for main page number input
             mainPageNumberInput.addEventListener('change', () => loadImage('pageInput'));
@@ -705,16 +881,31 @@
             const updateLightboxContent = async () => {
                 const type = currentLightboxNewspaperType;
                 const paper = newspaperData[type];
-                const year = yearInput.value;
-                const month = pad(monthSelect.value);
-                const day = pad(dayInput.value);
+                
+                let year, month, day;
+                if (currentCalendarMode === 'shamsi') {
+                    year = shamsiYearInput.value;
+                    month = pad(shamsiMonthSelect.value);
+                    day = pad(shamsiDayInput.value);
+                } else { // hijri
+                    year = hijriYearInput.value;
+                    month = pad(hijriMonthSelect.value);
+                    day = pad(hijriDayInput.value);
+                }
 
                 // Format date for lightbox title
-                const monthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
-                const persianMonthName = monthNames[parseInt(month) - 1];
-                const persianDate = `${day} ${persianMonthName} ${year}`;
+                let formattedDate;
+                if (currentCalendarMode === 'shamsi') {
+                    const monthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
+                    const persianMonthName = monthNames[parseInt(month) - 1];
+                    formattedDate = `${day} ${persianMonthName} ${year}`;
+                } else { // hijri
+                    const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
+                    const hijriMonthName = hijriMonthNames[parseInt(month) - 1];
+                    formattedDate = `${day} ${hijriMonthName} ${year} (قمری)`;
+                }
                 
-                lightboxNewspaperTitle.textContent = `${paper.title} - ${persianDate} - صفحه: ${lightboxCurrentPage}`;
+                lightboxNewspaperTitle.textContent = `${paper.title} - ${formattedDate} - صفحه: ${lightboxCurrentPage}`;
                 lightboxPageNumberInput.value = lightboxCurrentPage;
 
                 lightboxStatusMessage.textContent = 'در حال بارگذاری...';
@@ -724,7 +915,28 @@
                 downloadLink.style.display = 'none'; // Hide links until image loads
                 viewLargeLink.style.display = 'none';
 
-                const fileName = `${paper.prefix}${year}${month}${day}.pdf`;
+                let fileNameBase;
+                let maxPages = null;
+
+                if (paper.type === 'formula') {
+                    fileNameBase = `${paper.prefix}${year}${month}${day}`;
+                } else if (paper.type === 'database') {
+                    const foundIssue = paper.issues.find(issue => 
+                        issue.year == year && issue.month == month && issue.day == day
+                    );
+                    if (foundIssue) {
+                        fileNameBase = foundIssue.filename_base;
+                        maxPages = foundIssue.pages || null;
+                    } else {
+                        lightboxStatusMessage.style.display = 'none';
+                        lightboxImage.style.display = 'none';
+                        lightboxErrorMessage.textContent = `شماره‌ای برای ${paper.title} در تاریخ ${formattedDate} یافت نشد.`;
+                        lightboxErrorMessage.style.display = 'block';
+                        return;
+                    }
+                }
+
+                const fileName = `${fileNameBase}.pdf`; // Append .pdf for hash calculation and URL
                 const width = 800; // Larger width for lightbox display
                 const hash = calculateHash(fileName);
                 const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileName}/page${lightboxCurrentPage}-${width}px-${fileName}.jpg`;
@@ -741,13 +953,10 @@
                     lightboxErrorMessage.style.display = 'none';
 
                     // Generate and show download/view large links
-                    const originalFileName = `${paper.prefix}${year}${month}${day}.pdf`;
-                    const originalFileHash = calculateHash(originalFileName);
-
-                    downloadLink.href = `https://upload.wikimedia.org/wikipedia/commons/${originalFileHash[0]}/${originalFileHash}/${originalFileName}?download`;
+                    downloadLink.href = `https://upload.wikimedia.org/wikipedia/commons/${hash[0]}/${hash}/${fileName}?download`;
                     downloadLink.style.display = 'inline-block';
 
-                    viewLargeLink.href = `https://upload.wikimedia.org/wikipedia/commons/thumb/${originalFileHash[0]}/${originalFileHash}/${originalFileName}/page${lightboxCurrentPage}-2048px-${originalFileName}.jpg`;
+                    viewLargeLink.href = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileName}/page${lightboxCurrentPage}-2048px-${fileName}.jpg`;
                     viewLargeLink.style.display = 'inline-block';
 
                 } catch (error) {
@@ -761,7 +970,8 @@
 
                 // Update lightbox page navigation buttons
                 lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
-                lightboxNextPageButton.disabled = false; // Always enabled to allow trying next page
+                // If maxPages is known, disable next button if current page is max page
+                lightboxNextPageButton.disabled = (maxPages !== null && lightboxCurrentPage >= maxPages);
                 lightboxPrevPageButton.style.display = 'inline-block'; // Ensure buttons are visible
                 lightboxNextPageButton.style.display = 'inline-block';
 
@@ -779,17 +989,13 @@
                 const preloadWidth = 800; // Same as lightbox display width for preloading
 
                 // Preload next page of current newspaper
-                const nextPageFileName = `${paper.prefix}${year}${month}${day}.pdf`;
-                const nextPageHash = calculateHash(nextPageFileName);
-                const nextPageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nextPageHash[0]}/${nextPageHash}/${nextPageFileName}/page${lightboxCurrentPage + 1}-${preloadWidth}px-${nextPageFileName}.jpg`;
+                const nextPageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileName}/page${lightboxCurrentPage + 1}-${preloadWidth}px-${fileName}.jpg`;
                 preloadedImages.nextPage = new Image();
                 preloadedImages.nextPage.src = nextPageUrl;
 
                 // Preload previous page of current newspaper
                 if (lightboxCurrentPage > 1) {
-                    const prevPageFileName = `${paper.prefix}${year}${month}${day}.pdf`;
-                    const prevPageHash = calculateHash(prevPageFileName);
-                    const prevPageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${prevPageHash[0]}/${prevPageHash}/${prevPageFileName}/page${lightboxCurrentPage - 1}-${preloadWidth}px-${prevPageFileName}.jpg`;
+                    const prevPageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileName}/page${lightboxCurrentPage - 1}-${preloadWidth}px-${fileName}.jpg`;
                     preloadedImages.prevPage = new Image();
                     preloadedImages.prevPage.src = prevPageUrl;
                 } else {
@@ -804,21 +1010,52 @@
                     const nextIndex = (currentIndex + 1) % availableNewspapers.length;
                     const nextNewspaperType = availableNewspapers[nextIndex];
                     const nextPaper = newspaperData[nextNewspaperType];
-                    const nextFileName = `${nextPaper.prefix}${year}${month}${day}.pdf`;
-                    const nextHash = calculateHash(nextFileName);
-                    const nextNewspaperUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nextHash[0]}/${nextHash}/${nextFileName}/page${lightboxCurrentPage}-${preloadWidth}px-${nextFileName}.jpg`;
-                    preloadedImages.nextNewspaper = new Image();
-                    preloadedImages.nextNewspaper.src = nextNewspaperUrl;
+                    
+                    let nextFileNameBase;
+                    if (nextPaper.type === 'formula') {
+                        nextFileNameBase = `${nextPaper.prefix}${year}${month}${day}`;
+                    } else if (nextPaper.type === 'database') {
+                        const nextFoundIssue = nextPaper.issues.find(issue => 
+                            issue.year == year && issue.month == month && issue.day == day
+                        );
+                        nextFileNameBase = nextFoundIssue ? nextFoundIssue.filename_base : null;
+                    }
+
+                    if (nextFileNameBase) {
+                        const nextFileName = `${nextFileNameBase}.pdf`;
+                        const nextHash = calculateHash(nextFileName);
+                        const nextNewspaperUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nextHash[0]}/${nextHash}/${nextFileName}/page${lightboxCurrentPage}-${preloadWidth}px-${nextFileName}.jpg`;
+                        preloadedImages.nextNewspaper = new Image();
+                        preloadedImages.nextNewspaper.src = nextNewspaperUrl;
+                    } else {
+                        preloadedImages.nextNewspaper = null;
+                    }
 
                     // Previous newspaper
                     const prevIndex = (currentIndex - 1 + availableNewspapers.length) % availableNewspapers.length;
                     const prevNewspaperType = availableNewspapers[prevIndex];
                     const prevPaper = newspaperData[prevNewspaperType];
-                    const prevFileName = `${prevPaper.prefix}${year}${month}${day}.pdf`;
-                    const prevHash = calculateHash(prevFileName);
-                    const prevNewspaperUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${prevHash[0]}/${prevHash}/${prevFileName}/page${lightboxCurrentPage}-${preloadWidth}px-${prevFileName}.jpg`;
-                    preloadedImages.prevNewspaper = new Image();
-                    preloadedImages.prevNewspaper.src = prevNewspaperUrl;
+
+                    let prevFileNameBase;
+                    if (prevPaper.type === 'formula') {
+                        prevFileNameBase = `${prevPaper.prefix}${year}${month}${day}`;
+                    } else if (prevPaper.type === 'database') {
+                        const prevFoundIssue = prevPaper.issues.find(issue => 
+                            issue.year == year && issue.month == month && issue.day == day
+                        );
+                        prevFileNameBase = prevFoundIssue ? prevFoundIssue.filename_base : null;
+                    }
+
+                    if (prevFileNameBase) {
+                        const prevFileName = `${prevFileNameBase}.pdf`;
+                        const prevHash = calculateHash(prevFileName);
+                        const prevNewspaperUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${prevHash[0]}/${prevHash}/${prevFileName}/page${lightboxCurrentPage}-${preloadWidth}px-${prevFileName}.jpg`;
+                        preloadedImages.prevNewspaper = new Image();
+                        preloadedImages.prevNewspaper.src = prevNewspaperUrl;
+                    } else {
+                        preloadedImages.prevNewspaper = null;
+                    }
+
                 } else {
                     preloadedImages.prevNewspaper = null;
                     preloadedImages.nextNewspaper = null;
@@ -826,9 +1063,14 @@
             };
 
             const lightboxGoToPage = (direction) => {
+                const currentPaper = newspaperData[currentLightboxNewspaperType];
                 if (direction === 'prev' && lightboxCurrentPage > 1) {
                     lightboxCurrentPage--;
                 } else if (direction === 'next') {
+                    // If maxPages is known, prevent going beyond it
+                    if (currentPaper.maxPages !== null && lightboxCurrentPage >= currentPaper.maxPages) {
+                        return; // Do not increment if already at max page
+                    }
                     lightboxCurrentPage++;
                 }
                 updateLightboxContent();
@@ -856,6 +1098,11 @@
             mardomNewspaperImage.addEventListener('click', () => openLightbox('mardom'));
             kayhanNewspaperImage.addEventListener('click', () => openLightbox('kayhan'));
             bakhtarEmroozNewspaperImage.addEventListener('click', () => openLightbox('bakhtarEmrooz'));
+            // Add listeners for new database-driven newspapers
+            iranNewspaperImage.addEventListener('click', () => openLightbox('iran'));
+            raadNewspaperImage.addEventListener('click', () => openLightbox('raad'));
+            khorshidNewspaperImage.addEventListener('click', () => openLightbox('Q134006001')); // Listener for Khorshid
+
 
             lightboxCloseButton.addEventListener('click', closeLightbox);
             lightboxOverlay.addEventListener('click', (e) => {
@@ -891,6 +1138,57 @@
                     } else if (e.key === 'Escape') {
                         closeLightbox();
                     }
+                }
+            });
+
+            // --- Initial Load of Database and UI ---
+            try {
+                const response = await fetch('db.json'); // Changed from newspaper_db.json to db.json
+                if (response.ok) {
+                    dbNewspapersData = await response.json();
+                    console.log("db.json loaded from file.");
+                } else {
+                    // If db.json not found or fails, don't use embedded data, just log and proceed
+                    throw new Error(`Failed to load db.json from file: ${response.statusText}.`);
+                }
+            } catch (error) {
+                console.error("Error loading db.json:", error);
+                // Set a generic error message if database fails to load
+                mainErrorMessage.textContent = "روزنامه‌ای برای این تاریخ یافت نشد.";
+                mainErrorMessage.style.display = 'block';
+                loadingPopupOverlay.classList.remove('visible');
+                mainStatusMessage.style.display = 'none';
+                // Hide all newspaper sections if database loading fails
+                Object.values(newspaperData).forEach(paper => {
+                    paper.sectionElement.style.display = 'none';
+                });
+                return; // Stop execution if database fails to load
+            }
+
+            // Dynamically add database-driven newspapers to newspaperData
+            dbNewspapersData.forEach(dbPaper => {
+                const paperId = dbPaper.id;
+                // Ensure HTML elements for these dynamic newspapers exist before adding to newspaperData
+                const imageElement = document.getElementById(`${paperId}NewspaperImage`);
+                const statusElement = document.getElementById(`${paperId}StatusMessage`);
+                const errorElement = document.getElementById(`${paperId}ErrorMessage`);
+                const sectionElement = document.getElementById(`${paperId}Section`);
+
+                if (imageElement && statusElement && errorElement && sectionElement) {
+                    newspaperData[paperId] = {
+                        type: 'database',
+                        title: dbPaper.title,
+                        currentPage: 1,
+                        available: false,
+                        imageElement: imageElement,
+                        statusElement: statusElement,
+                        errorElement: errorElement,
+                        sectionElement: sectionElement,
+                        issues: dbPaper.issues, // Link to the issues from JSON
+                        calendar_type: dbPaper.calendar_type // Get calendar type from DB
+                    };
+                } else {
+                    console.warn(`HTML elements for newspaper '${dbPaper.title}' (ID: ${paperId}) not found. Skipping dynamic addition.`);
                 }
             });
 
