@@ -349,6 +349,32 @@
             color: white;
             border-color: var(--button-bg);
         }
+        .newspapers-filter {
+    margin: 15px 0;
+    padding: 10px;
+    background-color: var(--control-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 760px;
+}
+
+.newspaper-filter-item {
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: var(--section-bg);
+    transition: all 0.3s ease;
+}
+
+.newspaper-filter-item.available {
+    font-weight: bold;
+    background-color: var(--button-bg);
+    color: white;
+}
     </style>
 </head>
 <body>
@@ -409,6 +435,8 @@
             <label for="hijriDay">روز قمری:</label>
             <input type="number" id="hijriDay" value="21" min="1" max="30">
         </div>
+    </div>
+    <div id="newspapersFilter" class="newspapers-filter">
     </div>
 
     <p id="mainErrorMessage" class="error-message" style="display: none;"></p>
@@ -754,6 +782,7 @@
                         paper.fileNameBase = fileNameBase; // Store for lightbox links (original base name)
                         paper.maxPages = maxPages; // Store max pages for lightbox
                         resolve(true);
+                        updateNewspapersFilter(); // Update filter list after loading
                     };
                     newspaperImgElement.onerror = () => {
                         newspaperStatusElement.style.display = 'none';
@@ -763,11 +792,28 @@
                         paper.sectionElement.style.display = 'none'; // Hide section if not available
                         paper.available = false;
                         resolve(false);
+                        updateNewspapersFilter(); // Update filter list after loading
                     };
                     newspaperImgElement.src = imageUrl; // Start loading the image
                 });
             };
 
+            // Function to update newspapers filter list
+const updateNewspapersFilter = () => {
+    const filterContainer = document.getElementById('newspapersFilter');
+    filterContainer.innerHTML = ''; // Clear previous items
+    
+    Object.entries(newspaperData).forEach(([type, paper]) => {
+        const filterItem = document.createElement('div');
+        filterItem.className = `newspaper-filter-item ${paper.available ? 'available' : ''}`;
+        filterItem.textContent = paper.title;
+        
+        // Only show available newspapers (remove this line if you want to show all)
+        if (paper.available) {
+            filterContainer.appendChild(filterItem);
+        }
+    });
+};
             // Main function to load newspaper images
             const loadImage = async (source = 'initial') => {
                 let year, month, day;
@@ -792,6 +838,7 @@
                     loadingPopupOverlay.classList.add('visible'); // Show loading pop-up
                     mainStatusMessage.style.display = 'none'; // Hide initial status
                     mainErrorMessage.style.display = 'none'; // Hide initial error
+                    updateNewspapersFilter(); // Update filter list after loading
                 } else if (source === 'pageInput') {
                     // targetPage is already set from mainPageNumberInput value
                 }
