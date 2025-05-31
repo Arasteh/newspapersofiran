@@ -532,7 +532,7 @@
             const ettelaatErrorMessage = document.getElementById('ettelaatErrorMessage');
 
             const mardomSection = document.getElementById('mardomSection');
-            const mardomNewspaperImage = document.getElementById('mardomNewspaperImage');
+            const mardomNewspaperImage = document = document.getElementById('mardomNewspaperImage');
             const mardomStatusMessage = document.getElementById('mardomStatusMessage');
             const mardomErrorMessage = document.getElementById('mardomErrorMessage');
 
@@ -653,146 +653,20 @@
             // Function to pad numbers with a leading zero if they are single digit (e.g., 1 to 01)
             const pad = (num) => num.toString().padStart(2, '0');
 
-            // --- Start of UTF-8 aware MD5 Hashing Functions ---
-            // This is a simplified, self-contained MD5 implementation that correctly handles UTF-8 strings.
-            function calculateMD5Hash(str) {
-                const utf8 = new TextEncoder().encode(str);
-                const len = utf8.length;
-
-                let A = 0x67452301, B = 0xEFCDAB89, C = 0x98BADCFE, D = 0x10325476;
-
-                const F = (x, y, z) => (x & y) | (~x & z);
-                const G = (x, y, z) => (x & z) | (y & ~z);
-                const H = (x, y, z) => x ^ y ^ z;
-                const I = (x, y, z) => y ^ (x | ~z);
-
-                const rotateLeft = (a, b) => (a << b) | (a >>> (32 - b));
-
-                // processBlock now takes the DataView as an argument
-                const processBlock = (currentView, chunkOffset) => {
-                    const words = new Uint32Array(16);
-                    for (let i = 0; i < 16; i++) {
-                        // Ensure the offset is within the bounds of the DataView's buffer
-                        // getUint32 reads 4 bytes, so check up to offset + 3
-                        if (chunkOffset + i * 4 + 3 < currentView.byteLength) {
-                            words[i] = currentView.getUint32(chunkOffset + i * 4, true); // Little-endian
-                        } else {
-                            words[i] = 0; // Pad with zeros if out of bounds
-                        }
-                    }
-
-                    let a = A, b = B, c = C, d = D;
-
-                    // Round 1
-                    a = (rotateLeft(a + F(b, c, d) + words[0] + 0xD76AA478, 7) + b) | 0;
-                    d = (rotateLeft(d + F(a, b, c) + words[1] + 0xE8C7B756, 12) + a) | 0;
-                    c = (rotateLeft(c + F(d, a, b) + words[2] + 0x242070DB, 17) + d) | 0;
-                    b = (rotateLeft(b + F(c, d, a) + words[3] + 0xC1BDCEEE, 22) + c) | 0;
-                    a = (rotateLeft(a + F(b, c, d) + words[4] + 0xF57C0FAF, 7) + b) | 0;
-                    d = (rotateLeft(d + F(a, b, c) + words[5] + 0x4787C62A, 12) + a) | 0;
-                    c = (rotateLeft(c + F(d, a, b) + words[6] + 0xA8304613, 17) + d) | 0;
-                    b = (rotateLeft(b + F(c, d, a) + words[7] + 0xFD469501, 22) + c) | 0;
-                    a = (rotateLeft(a + F(b, c, d) + words[8] + 0x698098D8, 7) + b) | 0;
-                    d = (rotateLeft(d + F(a, b, c) + words[9] + 0x8B44F7AF, 12) + a) | 0;
-                    c = (rotateLeft(c + F(d, a, b) + words[10] + 0xFFFF5BB1, 17) + d) | 0;
-                    b = (rotateLeft(b + F(c, d, a) + words[11] + 0x895CD7BE, 22) + c) | 0;
-                    a = (rotateLeft(a + F(b, c, d) + words[12] + 0x6B901122, 7) + b) | 0;
-                    d = (rotateLeft(d + F(a, b, c) + words[13] + 0xFD987193, 12) + a) | 0;
-                    c = (rotateLeft(c + F(d, a, b) + words[14] + 0xA679438E, 17) + d) | 0;
-                    b = (rotateLeft(b + F(c, d, a) + words[15] + 0x49B40821, 22) + c) | 0;
-
-                    // Round 2
-                    a = (rotateLeft(a + G(b, c, d) + words[1] + 0xF61E2562, 5) + b) | 0;
-                    d = (rotateLeft(d + G(a, b, c) + words[6] + 0xC040B340, 9) + a) | 0;
-                    c = (rotateLeft(c + G(d, a, b) + words[11] + 0x265E5A51, 14) + d) | 0;
-                    b = (rotateLeft(b + G(c, d, a) + words[0] + 0xE9B6C7AA, 20) + c) | 0;
-                    a = (rotateLeft(a + G(b, c, d) + words[5] + 0xD62F105D, 5) + b) | 0;
-                    d = (rotateLeft(d + G(a, b, c) + words[10] + 0x02441453, 9) + a) | 0;
-                    c = (rotateLeft(c + G(d, a, b) + words[15] + 0xD8A1E681, 14) + d) | 0;
-                    b = (rotateLeft(b + G(c, d, a) + words[4] + 0xE7D3FBC8, 20) + c) | 0;
-                    a = (rotateLeft(a + G(b, c, d) + words[9] + 0x21E1CDE6, 5) + b) | 0;
-                    d = (rotateLeft(d + G(a, b, c) + words[14] + 0xC33707D6, 9) + a) | 0;
-                    c = (rotateLeft(c + G(d, a, b) + words[3] + 0xF4D50D87, 14) + d) | 0;
-                    b = (rotateLeft(b + G(c, d, a) + words[8] + 0x455A14ED, 20) + c) | 0;
-                    a = (rotateLeft(a + G(b, c, d) + words[13] + 0xA9E3E905, 5) + b) | 0;
-                    d = (rotateLeft(d + G(a, b, c) + words[2] + 0xFCEFA3F8, 9) + a) | 0;
-                    c = (rotateLeft(c + G(d, a, b) + words[7] + 0x676F02D9, 14) + d) | 0;
-                    b = (rotateLeft(b + G(c, d, a) + words[12] + 0x8D2A4C8A, 20) + c) | 0;
-
-                    // Round 3
-                    a = (rotateLeft(a + H(b, c, d) + words[5] + 0xFFFA3942, 4) + b) | 0;
-                    d = (rotateLeft(d + H(a, b, c) + words[8] + 0x8771F681, 11) + a) | 0;
-                    c = (rotateLeft(c + H(d, a, b) + words[11] + 0x6D9D6122, 16) + d) | 0;
-                    b = (rotateLeft(b + H(c, d, a) + words[14] + 0xFDE5380C, 23) + c) | 0;
-                    a = (rotateLeft(a + H(b, c, d) + words[1] + 0xA4BEEA44, 4) + b) | 0;
-                    d = (rotateLeft(d + H(a, b, c) + words[4] + 0x4BDECFA9, 11) + a) | 0;
-                    c = (rotateLeft(c + H(d, a, b) + words[7] + 0xF6BB4B60, 16) + d) | 0;
-                    b = (rotateLeft(b + H(c, d, a) + words[10] + 0xBEBFBC70, 23) + c) | 0;
-                    a = (rotateLeft(a + H(b, c, d) + words[13] + 0x289B7EC6, 4) + b) | 0;
-                    d = (rotateLeft(d + H(a, b, c) + words[0] + 0xEAA127FA, 11) + a) | 0;
-                    c = (rotateLeft(c + H(d, a, b) + words[3] + 0xD4EF3085, 16) + d) | 0;
-                    b = (rotateLeft(b + H(c, d, a) + words[6] + 0x04881D05, 23) + c) | 0;
-                    a = (rotateLeft(a + H(b, c, d) + words[9] + 0xD9D4D039, 4) + b) | 0;
-                    d = (rotateLeft(d + H(a, b, c) + words[12] + 0xE6DB99E5, 11) + a) | 0;
-                    c = (rotateLeft(c + H(d, a, b) + words[15] + 0x1FA27CF8, 16) + d) | 0;
-                    b = (rotateLeft(b + I(c, d, a) + words[2] + 0xC4AC5665, 23) + c) | 0;
-
-                    // Round 4
-                    a = (rotateLeft(a + I(b, c, d) + words[0] + 0xF4292244, 6) + b) | 0;
-                    d = (rotateLeft(d + I(a, b, c) + words[7] + 0x432AFF97, 10) + a) | 0;
-                    c = (rotateLeft(c + I(d, a, b) + words[14] + 0xAB9423A7, 15) + d) | 0;
-                    b = (rotateLeft(b + I(c, d, a) + words[5] + 0xFC93A039, 21) + c) | 0;
-                    a = (rotateLeft(a + I(b, c, d) + words[12] + 0x655B59C3, 6) + b) | 0;
-                    d = (rotateLeft(d + I(a, b, c) + words[3] + 0x8F0CCC92, 10) + a) | 0;
-                    c = (rotateLeft(c + I(d, a, b) + words[10] + 0xFFEFF47D, 15) + d) | 0;
-                    b = (rotateLeft(b + I(c, d, a) + words[1] + 0x85845DD1, 21) + c) | 0;
-                    a = (rotateLeft(a + I(b, c, d) + words[8] + 0x6FA87E4F, 6) + b) | 0;
-                    d = (rotateLeft(d + I(a, b, c) + words[15] + 0xFE2CE6E0, 10) + a) | 0;
-                    c = (rotateLeft(c + I(d, a, b) + words[6] + 0xA3014314, 15) + d) | 0;
-                    b = (rotateLeft(b + I(c, d, a) + words[13] + 0x4E0811A1, 21) + c) | 0;
-                    a = (rotateLeft(a + I(b, c, d) + words[4] + 0xF7537E82, 6) + b) | 0;
-                    d = (rotateLeft(d + I(a, b, c) + words[11] + 0xBD3AF235, 10) + a) | 0;
-                    c = (rotateLeft(c + I(d, a, b) + words[2] + 0x2AD7D2BB, 15) + d) | 0;
-                    b = (rotateLeft(b + I(c, d, a) + words[9] + 0xEB86D391, 21) + c) | 0;
-
-                    A = (A + a) | 0;
-                    B = (B + b) | 0;
-                    C = (C + c) | 0;
-                    D = (D + d) | 0;
-                };
-
-                const pad = (data) => {
-                    const padded = new Uint8Array(((len + 8 >> 6) + 1) * 64);
-                    padded.set(data);
-                    padded[len] = 0x80;
-                    const bits = len * 8;
-                    // Append length in bits (little-endian)
-                    padded[padded.length - 8] = bits & 0xFF;
-                    padded[padded.length - 7] = (bits >>> 8) & 0xFF;
-                    padded[padded.length - 6] = (bits >>> 16) & 0xFF;
-                    padded[padded.length - 5] = (bits >>> 24) & 0xFF;
-                    return padded;
-                };
-
-                const paddedUtf8 = pad(utf8);
-                // Create DataView from the *padded* buffer
-                const viewForBlocks = new DataView(paddedUtf8.buffer); 
-                
-                // Reset A, B, C, D for each hash calculation
-                A = 0x67452301; B = 0xEFCDAB89; C = 0x98BADCFE; D = 0x10325476;
-
-                for (let i = 0; i < paddedUtf8.length / 64; i++) {
-                    processBlock(viewForBlocks, i * 64); // Pass DataView and offset to processBlock
-                }
-
-                const result = new Uint32Array([A, B, C, D]);
-                let hex = '';
-                for (let i = 0; i < result.length; i++) {
-                    hex += (result[i] >>> 0).toString(16).padStart(8, '0');
-                }
-                return hex;
-            }
-            // --- End of UTF-8 aware MD5 Hashing Functions ---
+            // --- Start of MD5 Hashing Functions (Provided by user from index (24).html) ---
+            var MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()};
+            function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}
+            function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}
+            function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}
+            function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}
+            function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}
+            function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}
+            function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}
+            function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}
+            function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}
+            function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}
+            function bit_rol(d,_){return d<<_|d>>>32-_}
+            // --- End of MD5 Hashing Functions ---
 
             // Function to convert Persian digits to English digits
             const persianToEnglishDigits = (str) => {
@@ -808,7 +682,7 @@
             const getWikimediaHash = (filename) => {
                 // Replace spaces with underscores for hash calculation, as per Wikimedia's behavior
                 const filenameForHash = filename.replace(/ /g, '_'); 
-                const fullMd5 = calculateMD5Hash(filenameForHash); // Use the UTF-8 aware MD5 function
+                const fullMd5 = MD5(filenameForHash); // Use the provided MD5 function
                 return fullMd5.substring(0, 2); // Get the first two characters of the MD5 hash
             };
 
@@ -1301,8 +1175,6 @@
             }
 
             // Dynamically add database-driven newspapers to newspaperData
-            // This loop needs to run even if db.json failed to load, to correctly set up available papers
-            // based on what was *successfully* loaded into dbNewspapersData.
             dbNewspapersData.forEach(dbPaper => {
                 const paperId = dbPaper.id;
                 // Ensure HTML elements for these dynamic newspapers exist before adding to newspaperData
