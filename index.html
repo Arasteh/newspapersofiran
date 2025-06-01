@@ -183,7 +183,7 @@
         .lightbox-content {
             position: relative;
             max-width: 90%;
-            max-height: 90%;
+    max-height: 90vh; /* محدودیت ارتفاع بر اساس viewport */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -192,15 +192,19 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             color: var(--lightbox-text-color);
+                overflow-y: auto; /* اضافه کردن اسکرول در صورت نیاز */
+
         }
         .lightbox-image {
             max-width: 100%;
-            max-height: 80vh; /* Limit height to prevent overflow on tall images */
+    max-height: calc(90vh - 200px); /* کاهش ارتفاع برای جا دادن عنوان و کنترل‌ها */
             height: auto;
             display: block;
             border-radius: 4px;
             border: 1px solid var(--border-color);
             margin: 0 auto; /* Center image within its container */
+                object-fit: contain; /* حفظ نسبت تصویر */
+
         }
         .lightbox-controls {
             display: flex;
@@ -487,6 +491,16 @@
                     <button id="lightboxPrevNewspaperButton" style="display: none;">روزنامه قبل</button>
                     <button id="lightboxNextNewspaperButton" style="display: none;">روزنامه بعد</button>
                 </div>
+                <div id="khorshidNavigation" style="margin-top: 10px; display: none; text-align: center;">
+    <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+        <button id="prevKhorshidIssue" style="padding: 8px 15px; background-color: var(--button-bg); color: white; border: none; border-radius: 4px; cursor: pointer;">&lt; شماره قبل</button>
+        <div style="display: flex; align-items: center; gap: 5px;">
+            <span>شماره:</span>
+            <input type="number" id="khorshidIssueNumber" style="width: 60px; padding: 8px; text-align: center; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--control-bg); color: var(--text-color);">
+        </div>
+        <button id="nextKhorshidIssue" style="padding: 8px 15px; background-color: var(--button-bg); color: white; border: none; border-radius: 4px; cursor: pointer;">شماره بعد &gt;</button>
+    </div>
+</div>
             </div>
         </div>
     </div>
@@ -1080,6 +1094,21 @@ updateKhorshidNavigationVisibility();
                     preloadedImages.prevNewspaper = null;
                     preloadedImages.nextNewspaper = null;
                 }
+                    // محاسبه ارتفاع دینامیک بر اساس فضای موجود
+    const lightboxContent = document.querySelector('.lightbox-content');
+    const viewportHeight = window.innerHeight;
+    const maxContentHeight = viewportHeight * 0.9; // 90% از ارتفاع viewport
+    
+    lightboxContent.style.maxHeight = `${maxContentHeight}px`;
+    
+    // محاسبه ارتفاع تصویر با در نظر گرفتن فضای سایر عناصر
+    const otherElementsHeight = lightboxNewspaperTitle.offsetHeight + 
+                              lightboxControls.offsetHeight + 
+                              lightboxStatusMessage.offsetHeight + 
+                              60; // padding و margین‌ها
+    
+    const maxImageHeight = maxContentHeight - otherElementsHeight;
+    lightboxImage.style.maxHeight = `${maxImageHeight}px`;
             };
 
             // تابع برای بارگذاری و مرتب کردن شماره‌های روزنامه خورشید
@@ -1171,7 +1200,11 @@ prevKhorshidIssueBtn.addEventListener('click', goToPrevKhorshidIssue);
 nextKhorshidIssueBtn.addEventListener('click', goToNextKhorshidIssue);
 khorshidIssueNumberInput.addEventListener('change', goToKhorshidIssueByNumber);
 
-
+window.addEventListener('resize', () => {
+    if (lightboxOverlay.classList.contains('visible')) {
+        updateLightboxContent();
+    }
+});
 
             const lightboxGoToPage = (direction) => {
                 const currentPaper = newspaperData[currentLightboxNewspaperType];
