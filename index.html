@@ -868,16 +868,15 @@
                     targetPage = 1;
                 }
 
-                if (source === 'date') {
-                    targetPage = 1; // Reset page to 1 when date changes
+                if (source === 'date' || source === 'issueNav') { // Reset page to 1 when date/issue changes
+                    targetPage = 1;
                     loadingPopupOverlay.classList.add('visible'); // Show loading pop-up
                     mainStatusMessage.style.display = 'none'; // Hide initial status
                     mainErrorMessage.style.display = 'none'; // Hide initial error
                 } else if (source === 'pageInput') {
                     // targetPage is already set from mainPageNumberInput value
                 }
-                // 'navButton' source is for lightbox only, so no need to handle here for main view
-
+                
                 // Update current page for all newspapers based on main control
                 Object.values(newspaperData).forEach(paper => {
                     paper.currentPage = targetPage;
@@ -898,7 +897,7 @@
                     return;
                 }
 
-                if (source !== 'date') { // Only show main status if not already showing pop-up
+                if (source !== 'date' && source !== 'issueNav') { // Only show main status if not already showing pop-up
                     mainErrorMessage.style.display = 'none'; // Clear previous main errors
                     mainStatusMessage.textContent = 'در حال بارگذاری روزنامه‌ها...';
                 }
@@ -917,7 +916,118 @@
                 } else {
                     mainErrorMessage.style.display = 'none';
                 }
+                updateNewspapersFilter(); // Update filter list after loading
+                updateIssueNavigationControls(); // Update issue navigation controls visibility
             };
+
+            // Function to update newspapers filter list
+            const updateNewspapersFilter = () => {
+                const filterContainer = document.getElementById('newspaperFilterList');
+                // Clear previous classes for all filter items
+                Object.values(newspaperData).forEach(paper => {
+                    if (paper.filterElement) {
+                        paper.filterElement.classList.remove('available', 'unavailable');
+                    }
+                });
+
+                // Set classes based on availability for the current date
+                Object.values(newspaperData).forEach(paper => {
+                    if (paper.filterElement) {
+                        if (paper.available) {
+                            paper.filterElement.classList.add('available');
+                        } else {
+                            paper.filterElement.classList.add('unavailable');
+                        }
+                    }
+                });
+            };
+
+            // Function to update issue navigation controls visibility and state
+            const updateIssueNavigationControls = () => {
+                const khorshidPaper = newspaperData['Q134006001'];
+                if (currentCalendarMode === 'hijri' && khorshidPaper && khorshidPaper.issues && khorshidPaper.issues.length > 0) {
+                    issueNavigationControls.style.display = 'flex';
+                    const maxIssueNumber = Math.max(...khorshidPaper.issues.map(i => i.issue_number));
+                    const minIssueNumber = Math.min(...khorshidPaper.issues.map(i => i.issue_number));
+
+                    // Find the issue number for the current date
+                    let year, month, day;
+                    if (currentCalendarMode === 'shamsi') { /* This block is technically unreachable if currentCalendarMode is 'hijri' */ }
+                    else { // hijri
+                        year = hijriYearInput.value;
+                        month = pad(hijriMonthSelect.value);
+                        day = pad(hijriDayInput.value);
+                    }
+                    const foundIssue = khorshidPaper.issues.find(issue => 
+                        issue.year == year && issue.month == month && issue.day == day
+                    );
+
+                    if (foundIssue) {
+                        currentIssueNumber = foundIssue.issue_number;
+                        issueNumberInput.value = currentIssueNumber;
+                        prevIssueButton.disabled = currentIssueNumber <= minIssueNumber;
+                        nextIssueButton.disabled = currentIssueNumber >= maxIssueNumber;
+                    } else {
+                        // If no issue found for current date, disable nav buttons and clear input
+                        issueNumberInput.value = '';
+                        prevIssueButton.disabled = true;
+                        nextIssueButton.disabled = true;
+                    }
+                } else {
+                    issueNavigationControls.style.display = 'none';
+                }
+            };
+
+            // Function to navigate by issue number
+            const navigateByIssueNumber = (direction = 0) => { // 0 for direct input, -1 for prev, 1 for next
+                const khorshidPaper = newspaperData['Q134006001'];
+                if (!khorshidPaper || !khorshidPaper.issues || khorshidPaper.issues.length === 0) {
+                    mainErrorMessage.textContent = 'روزنامه خورشید برای ناوبری شماره‌ای موجود نیست.';
+                    mainErrorMessage.style.display = 'block';
+                    return;
+                }
+
+                let targetIssueNum;
+                if (direction === 0) {
+                    targetIssueNum = parseInt(persianToEnglishDigits(issueNumberInput.value), 10);
+                } else {
+                    targetIssueNum = currentIssueNumber + direction;
+                }
+
+                const maxIssueNumber = Math.max(...khorshidPaper.issues.map(i => i.issue_number));
+                const minIssueNumber = Math.min(...khorshidPaper.issues.map(i => i.issue_number));
+
+                if (isNaN(targetIssueNum) || targetIssueNum < minIssueNumber || targetIssueNum > maxIssueNumber) {
+                    mainErrorMessage.textContent = `شماره روزنامه نامعتبر است. باید بین ${minIssueNumber} و ${maxIssueNumber} باشد.`;
+                    mainErrorMessage.style.display = 'block';
+                    issueNumberInput.value = currentIssueNumber; // Revert input
+                    return;
+                }
+
+                const foundIssue = khorshidPaper.issues.find(issue => issue.issue_number === targetIssueNum);
+
+                if (foundIssue) {
+                    currentIssueNumber = targetIssueNum;
+                    issueNumberInput.value = currentIssueNumber;
+                    
+                    // Update date inputs based on found issue
+                    // Assuming Khorshid is always hijri as per db.json
+                    hijriYearInput.value = foundIssue.year;
+                    hijriMonthSelect.value = foundIssue.month;
+                    hijriDayInput.value = foundIssue.day;
+                    currentCalendarMode = 'hijri'; // Ensure calendar mode is set
+                    hijriCalendarRadio.checked = true;
+                    shamsiDateControls.style.display = 'none';
+                    hijriDateControls.style.display = 'flex';
+                    
+                    loadImage('issueNav'); // Load images for the new date
+                } else {
+                    mainErrorMessage.textContent = `شماره ${targetIssueNum} روزنامه خورشید در دیتابیس یافت نشد.`;
+                    mainErrorMessage.style.display = 'block';
+                    issueNumberInput.value = currentIssueNumber; // Revert input
+                }
+            };
+
 
             // Event listeners for calendar mode selection
             shamsiCalendarRadio.addEventListener('change', () => {
@@ -945,6 +1055,12 @@
 
             // Event listener for main page number input
             mainPageNumberInput.addEventListener('change', () => loadImage('pageInput'));
+
+            // Event listeners for issue navigation controls
+            prevIssueButton.addEventListener('click', () => navigateByIssueNumber(-1));
+            nextIssueButton.addEventListener('click', () => navigateByIssueNumber(1));
+            issueNumberInput.addEventListener('change', () => navigateByIssueNumber(0));
+
 
             // --- Lightbox Functions ---
             const openLightbox = async (type) => {
@@ -1009,6 +1125,7 @@
                     if (foundIssue) {
                         fileNameBase = foundIssue.filename_base;
                         maxPages = foundIssue.pages || null;
+                        paper.currentIssue = foundIssue; // Ensure currentIssue is set for getWikimediaHash
                     } else {
                         lightboxStatusMessage.style.display = 'none';
                         lightboxImage.style.display = 'none';
@@ -1019,7 +1136,7 @@
                 }
 
                 const fullFileNameWithPdf = `${fileNameBase}.pdf`; // Full filename including .pdf
-                const hash = getWikimediaHash(paper, fullFileNameWithPdf); // Hash is based on the full filename (UTF-8)
+                const hash = getWikimediaHash(paper, fullFileNameWithPdf); // Pass paper object to getWikimediaHash
                 const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_'); // For URL path, replace spaces with underscores. Browser will handle URI encoding of non-ASCII chars.
                 
                 const width = 800; // Larger width for lightbox display
@@ -1252,6 +1369,7 @@
                 Object.values(newspaperData).forEach(paper => {
                     if (paper.type === 'database') {
                         paper.sectionElement.style.display = 'none';
+                        paper.filterElement.classList.add('unavailable'); // Hide filter item
                     }
                 });
             }
