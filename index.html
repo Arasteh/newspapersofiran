@@ -1090,7 +1090,7 @@ const loadKhorshidIssues = () => {
         return (a.issue_number || 0) - (b.issue_number || 0);
     });
     
-    // پیدا کردن شماره فعلی
+    // پیدا کردن شماره فعلی با توجه به تقویم فعلی
     const currentYear = currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value;
     const currentMonth = currentCalendarMode === 'shamsi' ? shamsiMonthSelect.value : hijriMonthSelect.value;
     const currentDay = currentCalendarMode === 'shamsi' ? shamsiDayInput.value : hijriDayInput.value;
@@ -1107,7 +1107,7 @@ const loadKhorshidIssues = () => {
     
     updateKhorshidNavButtons();
 };
-
+            
 // تابع برای به روزرسانی وضعیت دکمه‌های ناوبری
 const updateKhorshidNavButtons = () => {
     prevKhorshidIssueBtn.disabled = currentKhorshidIssueIndex <= 0;
@@ -1122,17 +1122,16 @@ const goToKhorshidIssue = (index) => {
     currentKhorshidIssueIndex = index;
     khorshidIssueNumberInput.value = issue.issue_number || '';
     
-    // تنظیم تاریخ
-    if (currentCalendarMode !== 'shamsi') {
-        shamsiCalendarRadio.checked = true;
-        shamsiDateControls.style.display = 'flex';
-        hijriDateControls.style.display = 'none';
-        currentCalendarMode = 'shamsi';
+    // تنظیم تاریخ بدون تغییر تقویم فعلی
+    if (currentCalendarMode === 'shamsi') {
+        shamsiYearInput.value = issue.year;
+        shamsiMonthSelect.value = issue.month;
+        shamsiDayInput.value = issue.day;
+    } else {
+        hijriYearInput.value = issue.year;
+        hijriMonthSelect.value = issue.month;
+        hijriDayInput.value = issue.day;
     }
-    
-    shamsiYearInput.value = issue.year;
-    shamsiMonthSelect.value = issue.month;
-    shamsiDayInput.value = issue.day;
     
     // بارگذاری روزنامه با تاریخ جدید
     loadImage('date');
