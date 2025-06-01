@@ -4,839 +4,125 @@
     "title": "روزنامه خورشید",
     "calendar_type": "hijri",
     "issues": [
-      {
-        "issue_number": 1,
-        "year": 1325,
-        "month": 1,
-        "day": 21,
-        "filename_base": "روزنامه خورشید 0001"
-      },
-      {
-        "issue_number": 2,
-        "year": 1325,
-        "month": 1,
-        "day": 28,
-        "filename_base": "روزنامه خورشید 0002"
-      },
-      {
-        "issue_number": 3,
-        "year": 1325,
-        "month": 2,
-        "day": 5,
-        "filename_base": "روزنامه خورشید 0003"
-      },
-      {
-        "issue_number": 4,
-        "year": 1325,
-        "month": 2,
-        "day": 12,
-        "filename_base": "روزنامه خورشید 0004"
-      },
-      {
-        "issue_number": 5,
-        "year": 1325,
-        "month": 2,
-        "day": 19,
-        "filename_base": "روزنامه خورشید 0005"
-      },
-      {
-        "issue_number": 6,
-        "year": 1325,
-        "month": 2,
-        "day": 25,
-        "filename_base": "روزنامه خورشید 0006"
-      },
-      {
-        "issue_number": 7,
-        "year": 1325,
-        "month": 3,
-        "day": 4,
-        "filename_base": "روزنامه خورشید 0007"
-      },
-      {
-        "issue_number": 8,
-        "year": 1325,
-        "month": 3,
-        "day": 13,
-        "filename_base": "روزنامه خورشید 0008"
-      },
-      {
-        "issue_number": 9,
-        "year": 1325,
-        "month": 3,
-        "day": 22,
-        "filename_base": "روزنامه خورشید 0009"
-      },
-      {
-        "issue_number": 10,
-        "year": 1325,
-        "month": 3,
-        "day": 29,
-        "filename_base": "روزنامه خورشید 0010"
-      },
-      {
-        "issue_number": 11,
-        "year": 1325,
-        "month": 4,
-        "day": 6,
-        "filename_base": "روزنامه خورشید 0011"
-      },
-      {
-        "issue_number": 12,
-        "year": 1325,
-        "month": 4,
-        "day": 14,
-        "filename_base": "روزنامه خورشید 0012"
-      },
-      {
-        "issue_number": 13,
-        "year": 1325,
-        "month": 4,
-        "day": 23,
-        "filename_base": "روزنامه خورشید 0013"
-      },
-      {
-        "issue_number": 14,
-        "year": 1325,
-        "month": 4,
-        "day": 30,
-        "filename_base": "روزنامه خورشید 0014"
-      },
-      {
-        "issue_number": 15,
-        "year": 1325,
-        "month": 5,
-        "day": 7,
-        "filename_base": "روزنامه خورشید 0015"
-      },
-      {
-        "issue_number": 16,
-        "year": 1325,
-        "month": 5,
-        "day": 14,
-        "filename_base": "روزنامه خورشید 0016"
-      },
-      {
-        "issue_number": 17,
-        "year": 1325,
-        "month": 5,
-        "day": 21,
-        "filename_base": "روزنامه خورشید 0017"
-      },
-      {
-        "issue_number": 18,
-        "year": 1325,
-        "month": 6,
-        "day": 2,
-        "filename_base": "روزنامه خورشید 0018"
-      },
-      {
-        "issue_number": 19,
-        "year": 1325,
-        "month": 6,
-        "day": 4,
-        "filename_base": "روزنامه خورشید 0019"
-      },
-      {
-        "issue_number": 20,
-        "year": 1325,
-        "month": 6,
-        "day": 6,
-        "filename_base": "روزنامه خورشید 0020"
-      },
-      {
-        "issue_number": 21,
-        "year": 1325,
-        "month": 6,
-        "day": 7,
-        "filename_base": "روزنامه خورشید 0021"
-      },
-      {
-        "issue_number": 22,
-        "year": 1325,
-        "month": 6,
-        "day": 9,
-        "filename_base": "روزنامه خورشید 0022"
-      },
-      {
-        "issue_number": 23,
-        "year": 1325,
-        "month": 6,
-        "day": 11,
-        "filename_base": "روزنامه خورشید 0023"
-      },
-      {
-        "issue_number": 24,
-        "year": 1325,
-        "month": 6,
-        "day": 12,
-        "filename_base": "روزنامه خورشید 0024"
-      },
-      {
-        "issue_number": 25,
-        "year": 1325,
-        "month": 6,
-        "day": 14,
-        "filename_base": "روزنامه خورشید 0025"
-      },
-      {
-        "issue_number": 26,
-        "year": 1325,
-        "month": 6,
-        "day": 17,
-        "filename_base": "روزنامه خورشید 0026"
-      },
-      {
-        "issue_number": 28,
-        "year": 1325,
-        "month": 6,
-        "day": 20,
-        "filename_base": "روزنامه خورشید 0028"
-      },
-      {
-        "issue_number": 29,
-        "year": 1325,
-        "month": 6,
-        "day": 21,
-        "filename_base": "روزنامه خورشید 0029"
-      },
-      {
-        "issue_number": 30,
-        "year": 1325,
-        "month": 6,
-        "day": 25,
-        "filename_base": "روزنامه خورشید 0030"
-      },
-      {
-        "issue_number": 31,
-        "year": 1325,
-        "month": 6,
-        "day": 26,
-        "filename_base": "روزنامه خورشید 0031"
-      },
-      {
-        "issue_number": 32,
-        "year": 1325,
-        "month": 6,
-        "day": 27,
-        "filename_base": "روزنامه خورشید 0032"
-      },
-      {
-        "issue_number": 33,
-        "year": 1325,
-        "month": 6,
-        "day": 29,
-        "filename_base": "روزنامه خورشید 0033"
-      },
-      {
-        "issue_number": 34,
-        "year": 1325,
-        "month": 7,
-        "day": 1,
-        "filename_base": "روزنامه خورشید 0034"
-      },
-      {
-        "issue_number": 35,
-        "year": 1325,
-        "month": 7,
-        "day": 5,
-        "filename_base": "روزنامه خورشید 0035"
-      },
-      {
-        "issue_number": 36,
-        "year": 1325,
-        "month": 7,
-        "day": 7,
-        "filename_base": "روزنامه خورشید 0036"
-      },
-      {
-        "issue_number": 37,
-        "year": 1325,
-        "month": 7,
-        "day": 9,
-        "filename_base": "روزنامه خورشید 0037"
-      },
-      {
-        "issue_number": 38,
-        "year": 1325,
-        "month": 7,
-        "day": 11,
-        "filename_base": "روزنامه خورشید 0038"
-      },
-      {
-        "issue_number": 39,
-        "year": 1325,
-        "month": 7,
-        "day": 15,
-        "filename_base": "روزنامه خورشید 0039"
-      },
-      {
-        "issue_number": 40,
-        "year": 1325,
-        "month": 7,
-        "day": 16,
-        "filename_base": "روزنامه خورشید 0040"
-      },
-      {
-        "issue_number": 41,
-        "year": 1325,
-        "month": 7,
-        "day": 21,
-        "filename_base": "روزنامه خورشید 0041"
-      },
-      {
-        "issue_number": 42,
-        "year": 1325,
-        "month": 7,
-        "day": 24,
-        "filename_base": "روزنامه خورشید 0042"
-      },
-      {
-        "issue_number": 43,
-        "year": 1325,
-        "month": 7,
-        "day": 28,
-        "filename_base": "روزنامه خورشید 0043"
-      },
-      {
-        "issue_number": 44,
-        "year": 1325,
-        "month": 8,
-        "day": 1,
-        "filename_base": "روزنامه خورشید 0044"
-      },
-      {
-        "issue_number": 45,
-        "year": 1325,
-        "month": 8,
-        "day": 6,
-        "filename_base": "روزنامه خورشید 0045"
-      },
-      {
-        "issue_number": 46,
-        "year": 1325,
-        "month": 8,
-        "day": 8,
-        "filename_base": "روزنامه خورشید 0046"
-      },
-      {
-        "issue_number": 47,
-        "year": 1325,
-        "month": 8,
-        "day": 12,
-        "filename_base": "روزنامه خورشید 0047"
-      },
-      {
-        "issue_number": 48,
-        "year": 1325,
-        "month": 8,
-        "day": 17,
-        "filename_base": "روزنامه خورشید 0048"
-      },
-      {
-        "issue_number": 49,
-        "year": 1325,
-        "month": 8,
-        "day": 21,
-        "filename_base": "روزنامه خورشید 0049"
-      },
-      {
-        "issue_number": 50,
-        "year": 1325,
-        "month": 8,
-        "day": 24,
-        "filename_base": "روزنامه خورشید 0050"
-      },
-      {
-        "issue_number": 51,
-        "year": 1325,
-        "month": 8,
-        "day": 27,
-        "filename_base": "روزنامه خورشید 0051"
-      },
-      {
-        "issue_number": 52,
-        "year": 1325,
-        "month": 9,
-        "day": 1,
-        "filename_base": "روزنامه خورشید 0052"
-      },
-      {
-        "issue_number": 53,
-        "year": 1325,
-        "month": 9,
-        "day": 4,
-        "filename_base": "روزنامه خورشید 0053"
-      },
-      {
-        "issue_number": 54,
-        "year": 1325,
-        "month": 9,
-        "day": 6,
-        "filename_base": "روزنامه خورشید 0054"
-      },
-      {
-        "issue_number": 55,
-        "year": 1325,
-        "month": 9,
-        "day": 8,
-        "filename_base": "روزنامه خورشید 0055"
-      },
-      {
-        "issue_number": 56,
-        "year": 1325,
-        "month": 9,
-        "day": 12,
-        "filename_base": "روزنامه خورشید 0056"
-      },
-      {
-        "issue_number": 57,
-        "year": 1325,
-        "month": 9,
-        "day": 14,
-        "filename_base": "روزنامه خورشید 0057"
-      },
-      {
-        "issue_number": 58,
-        "year": 1325,
-        "month": 9,
-        "day": 16,
-        "filename_base": "روزنامه خورشید 0058"
-      },
-      {
-        "issue_number": 59,
-        "year": 1325,
-        "month": 9,
-        "day": 20,
-        "filename_base": "روزنامه خورشید 0059"
-      },
-      {
-        "issue_number": 60,
-        "year": 1325,
-        "month": 9,
-        "day": 25,
-        "filename_base": "روزنامه خورشید 0060"
-      },
-      {
-        "issue_number": 61,
-        "year": 1325,
-        "month": 9,
-        "day": 27,
-        "filename_base": "روزنامه خورشید 0061"
-      },
-      {
-        "issue_number": 62,
-        "year": 1325,
-        "month": 9,
-        "day": 29,
-        "filename_base": "روزنامه خورشید 0062"
-      },
-      {
-        "issue_number": 63,
-        "year": 1325,
-        "month": 10,
-        "day": 3,
-        "filename_base": "روزنامه خورشید 0063"
-      },
-      {
-        "issue_number": 64,
-        "year": 1325,
-        "month": 10,
-        "day": 5,
-        "filename_base": "روزنامه خورشید 0064"
-      },
-      {
-        "issue_number": 65,
-        "year": 1325,
-        "month": 10,
-        "day": 11,
-        "filename_base": "روزنامه خورشید 0065"
-      },
-      {
-        "issue_number": 66,
-        "year": 1325,
-        "month": 10,
-        "day": 13,
-        "filename_base": "روزنامه خورشید 0066"
-      },
-      {
-        "issue_number": 67,
-        "year": 1325,
-        "month": 10,
-        "day": 14,
-        "filename_base": "روزنامه خورشید 0067"
-      },
-      {
-        "issue_number": 68,
-        "year": 1325,
-        "month": 10,
-        "day": 18,
-        "filename_base": "روزنامه خورشید 0068"
-      },
-      {
-        "issue_number": 69,
-        "year": 1325,
-        "month": 10,
-        "day": 20,
-        "filename_base": "روزنامه خورشید 0069"
-      },
-      {
-        "issue_number": 70,
-        "year": 1325,
-        "month": 10,
-        "day": 25,
-        "filename_base": "روزنامه خورشید 0070"
-      },
-      {
-        "issue_number": 71,
-        "year": 1325,
-        "month": 10,
-        "day": 26,
-        "filename_base": "روزنامه خورشید 0071"
-      },
-      {
-        "issue_number": 72,
-        "year": 1325,
-        "month": 10,
-        "day": 28,
-        "filename_base": "روزنامه خورشید 0072"
-      },
-      {
-        "issue_number": 73,
-        "year": 1325,
-        "month": 11,
-        "day": 2,
-        "filename_base": "روزنامه خورشید 0073"
-      },
-      {
-        "issue_number": 74,
-        "year": 1325,
-        "month": 11,
-        "day": 3,
-        "filename_base": "روزنامه خورشید 0074"
-      },
-      {
-        "issue_number": 75,
-        "year": 1325,
-        "month": 11,
-        "day": 5,
-        "filename_base": "روزنامه خورشید 0075"
-      },
-      {
-        "issue_number": 76,
-        "year": 1325,
-        "month": 11,
-        "day": 6,
-        "filename_base": "روزنامه خورشید 0076"
-      },
-      {
-        "issue_number": 77,
-        "year": 1325,
-        "month": 11,
-        "day": 9,
-        "filename_base": "روزنامه خورشید 0077"
-      },
-      {
-        "issue_number": 78,
-        "year": 1325,
-        "month": 11,
-        "day": 11,
-        "filename_base": "روزنامه خورشید 0078"
-      },
-      {
-        "issue_number": 79,
-        "year": 1325,
-        "month": 11,
-        "day": 12,
-        "filename_base": "روزنامه خورشید 0079"
-      },
-      {
-        "issue_number": 80,
-        "year": 1325,
-        "month": 11,
-        "day": 13,
-        "filename_base": "روزنامه خورشید 0080"
-      },
-      {
-        "issue_number": 81,
-        "year": 1325,
-        "month": 11,
-        "day": 16,
-        "filename_base": "روزنامه خورشید 0081"
-      },
-      {
-        "issue_number": 82,
-        "year": 1325,
-        "month": 11,
-        "day": 17,
-        "filename_base": "روزنامه خورشید 0082"
-      },
-      {
-        "issue_number": 83,
-        "year": 1325,
-        "month": 11,
-        "day": 18,
-        "filename_base": "روزنامه خورشید 0083"
-      },
-      {
-        "issue_number": 84,
-        "year": 1325,
-        "month": 11,
-        "day": 20,
-        "filename_base": "روزنامه خورشید 0084"
-      },
-      {
-        "issue_number": 85,
-        "year": 1325,
-        "month": 11,
-        "day": 23,
-        "filename_base": "روزنامه خورشید 0085"
-      },
-      {
-        "issue_number": 86,
-        "year": 1325,
-        "month": 11,
-        "day": 25,
-        "filename_base": "روزنامه خورشید 0086"
-      },
-      {
-        "issue_number": 87,
-        "year": 1325,
-        "month": 11,
-        "day": 26,
-        "filename_base": "روزنامه خورشید 0087"
-      },
-      {
-        "issue_number": 88,
-        "year": 1325,
-        "month": 11,
-        "day": 27,
-        "filename_base": "روزنامه خورشید 0088"
-      },
-      {
-        "issue_number": 89,
-        "year": 1325,
-        "month": 12,
-        "day": 1,
-        "filename_base": "روزنامه خورشید 0089"
-      },
-      {
-        "issue_number": 90,
-        "year": 1325,
-        "month": 12,
-        "day": 3,
-        "filename_base": "روزنامه خورشید 0090"
-      },
-      {
-        "issue_number": 91,
-        "year": 1325,
-        "month": 12,
-        "day": 4,
-        "filename_base": "روزنامه خورشید 0091"
-      },
-      {
-        "issue_number": 92,
-        "year": 1325,
-        "month": 12,
-        "day": 5,
-        "filename_base": "روزنامه خورشید 0092"
-      },
-      {
-        "issue_number": 93,
-        "year": 1325,
-        "month": 12,
-        "day": 6,
-        "filename_base": "روزنامه خورشید 0093"
-      },
-      {
-        "issue_number": 94,
-        "year": 1325,
-        "month": 12,
-        "day": 7,
-        "filename_base": "روزنامه خورشید 0094"
-      },
-      {
-        "issue_number": 95,
-        "year": 1325,
-        "month": 12,
-        "day": 9,
-        "filename_base": "روزنامه خورشید 0095"
-      },
-      {
-        "issue_number": 96,
-        "year": 1325,
-        "month": 12,
-        "day": 11,
-        "filename_base": "روزنامه خورشید 0096"
-      },
-      {
-        "issue_number": 97,
-        "year": 1325,
-        "month": 12,
-        "day": 13,
-        "filename_base": "روزنامه خورشید 0097"
-      },
-      {
-        "issue_number": 98,
-        "year": 1325,
-        "month": 12,
-        "day": 14,
-        "filename_base": "روزنامه خورشید 0098"
-      },
-      {
-        "issue_number": 99,
-        "year": 1325,
-        "month": 12,
-        "day": 16,
-        "filename_base": "روزنامه خورشید 0099"
-      },
-      {
-        "issue_number": 100,
-        "year": 1325,
-        "month": 12,
-        "day": 17,
-        "filename_base": "روزنامه خورشید 0100"
-      },
-      {
-        "issue_number": 101,
-        "year": 1325,
-        "month": 12,
-        "day": 21,
-        "filename_base": "روزنامه خورشید 0101"
-      },
-      {
-        "issue_number": 102,
-        "year": 1325,
-        "month": 12,
-        "day": 22,
-        "filename_base": "روزنامه خورشید 0102"
-      },
-      {
-        "issue_number": 103,
-        "year": 1325,
-        "month": 12,
-        "day": 24,
-        "filename_base": "روزنامه خورشید 0103"
-      },
-      {
-        "issue_number": 104,
-        "year": 1325,
-        "month": 12,
-        "day": 25,
-        "filename_base": "روزنامه خورشید 0104"
-      },
-      {
-        "issue_number": 105,
-        "year": 1325,
-        "month": 12,
-        "day": 27,
-        "filename_base": "روزنامه خورشید 0105"
-      },
-      {
-        "issue_number": 106,
-        "year": 1325,
-        "month": 12,
-        "day": 29,
-        "filename_base": "روزنامه خورشید 0106"
-      },
-      {
-        "issue_number": 107,
-        "year": 1326,
-        "month": 1,
-        "day": 2,
-        "filename_base": "روزنامه خورشید 0107"
-      },
-      {
-        "issue_number": 108,
-        "year": 1326,
-        "month": 1,
-        "day": 3,
-        "filename_base": "روزنامه خورشید 0108"
-      },
-      {
-        "issue_number": 109,
-        "year": 1326,
-        "month": 1,
-        "day": 6,
-        "filename_base": "روزنامه خورشید 0109"
-      },
-      {
-        "issue_number": 110,
-        "year": 1326,
-        "month": 1,
-        "day": 13,
-        "filename_base": "روزنامه خورشید 0110"
-      },
-      {
-        "issue_number": 111,
-        "year": 1326,
-        "month": 1,
-        "day": 14,
-        "filename_base": "روزنامه خورشید 0111"
-      },
-      {
-        "issue_number": 112,
-        "year": 1326,
-        "month": 1,
-        "day": 16,
-        "filename_base": "روزنامه خورشید 0112"
-      },
-      {
-        "issue_number": 113,
-        "year": 1326,
-        "month": 1,
-        "day": 17,
-        "filename_base": "روزنامه خورشید 0113"
-      },
-      {
-        "issue_number": 114,
-        "year": 1326,
-        "month": 1,
-        "day": 20,
-        "filename_base": "روزنامه خورشید 0114"
-      },
-      {
-        "issue_number": 115,
-        "year": 1326,
-        "month": 1,
-        "day": 21,
-        "filename_base": "روزنامه خورشید 0115"
-      },
-      {
-        "issue_number": 116,
-        "year": 1326,
-        "month": 1,
-        "day": 22,
-        "filename_base": "روزنامه خورشید 0116"
-      },
-      {
-        "issue_number": 117,
-        "year": 1326,
-        "month": 1,
-        "day": 24,
-        "filename_base": "روزنامه خورشید 0117"
-      },
-      {
-        "issue_number": 118,
-        "year": 1326,
-        "month": 1,
-        "day": 26,
-        "filename_base": "روزنامه خورشید 0118"
-      },
-      {
-        "issue_number": 119,
-        "year": 1326,
-        "month": 1,
-        "day": 27,
-        "filename_base": "روزنامه خورشید 0119"
-      },
-      {
-        "issue_number": 120,
-        "year": 1325,
-        "month": 2,
-        "day": 1,
-        "filename_base": "روزنامه خورشید 0120"
-      }
+      { "issue_number": 1, "year": 1325, "month": 1, "day": 21, "filename_base": "روزنامه خورشید 0001", "wikimedia_hash": "7b" },
+      { "issue_number": 2, "year": 1325, "month": 1, "day": 28, "filename_base": "روزنامه خورشید 0002", "wikimedia_hash": "1d" },
+      { "issue_number": 3, "year": 1325, "month": 2, "day": 5, "filename_base": "روزنامه خورشید 0003", "wikimedia_hash": "f9" },
+      { "issue_number": 4, "year": 1325, "month": 2, "day": 12, "filename_base": "روزنامه خورشید 0004", "wikimedia_hash": "c1" },
+      { "issue_number": 5, "year": 1325, "month": 2, "day": 19, "filename_base": "روزنامه خورشید 0005", "wikimedia_hash": "8d" },
+      { "issue_number": 6, "year": 1325, "month": 2, "day": 25, "filename_base": "روزنامه خورشید 0006", "wikimedia_hash": "17" },
+      { "issue_number": 7, "year": 1325, "month": 3, "day": 4, "filename_base": "روزنامه خورشید 0007", "wikimedia_hash": "f1" },
+      { "issue_number": 8, "year": 1325, "month": 3, "day": 13, "filename_base": "روزنامه خورشید 0008", "wikimedia_hash": "b0" },
+      { "issue_number": 9, "year": 1325, "month": 3, "day": 22, "filename_base": "روزنامه خورشید 0009", "wikimedia_hash": "ed" },
+      { "issue_number": 10, "year": 1325, "month": 3, "day": 29, "filename_base": "روزنامه خورشید 0010", "wikimedia_hash": "27" },
+      { "issue_number": 11, "year": 1325, "month": 4, "day": 6, "filename_base": "روزنامه خورشید 0011", "wikimedia_hash": "68" },
+      { "issue_number": 12, "year": 1325, "month": 4, "day": 14, "filename_base": "روزنامه خورشید 0012", "wikimedia_hash": "56" },
+      { "issue_number": 13, "year": 1325, "month": 4, "day": 23, "filename_base": "روزنامه خورشید 0013", "wikimedia_hash": "ab" },
+      { "issue_number": 14, "year": 1325, "month": 4, "day": 30, "filename_base": "روزنامه خورشید 0014", "wikimedia_hash": "17" },
+      { "issue_number": 15, "year": 1325, "month": 5, "day": 7, "filename_base": "روزنامه خورشید 0015", "wikimedia_hash": "ae" },
+      { "issue_number": 16, "year": 1325, "month": 5, "day": 14, "filename_base": "روزنامه خورشید 0016", "wikimedia_hash": "32" },
+      { "issue_number": 17, "year": 1325, "month": 5, "day": 14, "filename_base": "روزنامه خورشید 0017", "wikimedia_hash": "61" },
+      { "issue_number": 18, "year": 1325, "month": 6, "day": 2, "filename_base": "روزنامه خورشید 0018", "wikimedia_hash": "b1" },
+      { "issue_number": 19, "year": 1325, "month": 6, "day": 4, "filename_base": "روزنامه خورشید 0019", "wikimedia_hash": "ff" },
+      { "issue_number": 20, "year": 1325, "month": 6, "day": 6, "filename_base": "روزنامه خورشید 0020", "wikimedia_hash": "46" },
+      { "issue_number": 21, "year": 1325, "month": 6, "day": 7, "filename_base": "روزنامه خورشید 0021", "wikimedia_hash": "9e" },
+      { "issue_number": 22, "year": 1325, "month": 6, "day": 9, "filename_base": "روزنامه خورشید 0022", "wikimedia_hash": "71" },
+      { "issue_number": 23, "year": 1325, "month": 6, "day": 11, "filename_base": "روزنامه خورشید 0023", "wikimedia_hash": "07" },
+      { "issue_number": 24, "year": 1325, "month": 6, "day": 12, "filename_base": "روزنامه خورشید 0024", "wikimedia_hash": "2f" },
+      { "issue_number": 25, "year": 1325, "month": 6, "day": 14, "filename_base": "روزنامه خورشید 0025", "wikimedia_hash": "a4" },
+      { "issue_number": 26, "year": 1325, "month": 6, "day": 17, "filename_base": "روزنامه خورشید 0026", "wikimedia_hash": "9a" },
+      { "issue_number": 28, "year": 1325, "month": 6, "day": 20, "filename_base": "روزنامه خورشید 0028", "wikimedia_hash": "d2" },
+      { "issue_number": 29, "year": 1325, "month": 6, "day": 21, "filename_base": "روزنامه خورشید 0029", "wikimedia_hash": "15" },
+      { "issue_number": 30, "year": 1325, "month": 6, "day": 25, "filename_base": "روزنامه خورشید 0030", "wikimedia_hash": "20" },
+      { "issue_number": 31, "year": 1325, "month": 6, "day": 26, "filename_base": "روزنامه خورشید 0031", "wikimedia_hash": "4b" },
+      { "issue_number": 32, "year": 1325, "month": 6, "day": 27, "filename_base": "روزنامه خورشید 0032", "wikimedia_hash": "9c" },
+      { "issue_number": 33, "year": 1325, "month": 6, "day": 29, "filename_base": "روزنامه خورشید 0033", "wikimedia_hash": "eb" },
+      { "issue_number": 34, "year": 1325, "month": 7, "day": 1, "filename_base": "روزنامه خورشید 0034", "wikimedia_hash": "c0" },
+      { "issue_number": 35, "year": 1325, "month": 7, "day": 5, "filename_base": "روزنامه خورشید 0035", "wikimedia_hash": "2a" },
+      { "issue_number": 36, "year": 1325, "month": 7, "day": 7, "filename_base": "روزنامه خورشید 0036", "wikimedia_hash": "b5" },
+      { "issue_number": 37, "year": 1325, "month": 7, "day": 9, "filename_base": "روزنامه خورشید 0037", "wikimedia_hash": "42" },
+      { "issue_number": 38, "year": 1325, "month": 7, "day": 11, "filename_base": "روزنامه خورشید 0038", "wikimedia_hash": "07" },
+      { "issue_number": 39, "year": 1325, "month": 7, "day": 15, "filename_base": "روزنامه خورشید 0039", "wikimedia_hash": "85" },
+      { "issue_number": 40, "year": 1325, "month": 7, "day": 16, "filename_base": "روزنامه خورشید 0040", "wikimedia_hash": "aa" },
+      { "issue_number": 41, "year": 1325, "month": 7, "day": 21, "filename_base": "روزنامه خورشید 0041", "wikimedia_hash": "30" },
+      { "issue_number": 42, "year": 1325, "month": 7, "day": 24, "filename_base": "روزنامه خورشید 0042", "wikimedia_hash": "08" },
+      { "issue_number": 43, "year": 1325, "month": 7, "day": 28, "filename_base": "روزنامه خورشید 0043", "wikimedia_hash": "72" },
+      { "issue_number": 44, "year": 1325, "month": 8, "day": 1, "filename_base": "روزنامه خورشید 0044", "wikimedia_hash": "f6" },
+      { "issue_number": 45, "year": 1325, "month": 8, "day": 6, "filename_base": "روزنامه خورشید 0045", "wikimedia_hash": "e7" },
+      { "issue_number": 46, "year": 1325, "month": 8, "day": 8, "filename_base": "روزنامه خورشید 0046", "wikimedia_hash": "46" },
+      { "issue_number": 47, "year": 1325, "month": 8, "day": 12, "filename_base": "روزنامه خورشید 0047", "wikimedia_hash": "32" },
+      { "issue_number": 48, "year": 1325, "month": 8, "day": 17, "filename_base": "روزنامه خورشید 0048", "wikimedia_hash": "79" },
+      { "issue_number": 49, "year": 1325, "month": 8, "day": 21, "filename_base": "روزنامه خورشید 0049", "wikimedia_hash": "4c" },
+      { "issue_number": 50, "year": 1325, "month": 8, "day": 24, "filename_base": "روزنامه خورشید 0050", "wikimedia_hash": "5c" },
+      { "issue_number": 51, "year": 1325, "month": 8, "day": 27, "filename_base": "روزنامه خورشید 0051", "wikimedia_hash": "01" },
+      { "issue_number": 52, "year": 1325, "month": 9, "day": 1, "filename_base": "روزنامه خورشید 0052", "wikimedia_hash": "62" },
+      { "issue_number": 53, "year": 1325, "month": 9, "day": 4, "filename_base": "روزنامه خورشید 0053", "wikimedia_hash": "24" },
+      { "issue_number": 54, "year": 1325, "month": 9, "day": 6, "filename_base": "روزنامه خورشید 0054", "wikimedia_hash": "db" },
+      { "issue_number": 55, "year": 1325, "month": 9, "day": 8, "filename_base": "روزنامه خورشید 0055", "wikimedia_hash": "50" },
+      { "issue_number": 56, "year": 1325, "month": 9, "day": 12, "filename_base": "روزنامه خورشید 0056", "wikimedia_hash": "13" },
+      { "issue_number": 57, "year": 1325, "month": 9, "day": 14, "filename_base": "روزنامه خورشید 0057", "wikimedia_hash": "c2" },
+      { "issue_number": 58, "year": 1325, "month": 9, "day": 16, "filename_base": "روزنامه خورشید 0058", "wikimedia_hash": "9a" },
+      { "issue_number": 59, "year": 1325, "month": 9, "day": 20, "filename_base": "روزنامه خورشید 0059", "wikimedia_hash": "94" },
+      { "issue_number": 60, "year": 1325, "month": 9, "day": 25, "filename_base": "روزنامه خورشید 0060", "wikimedia_hash": "84" },
+      { "issue_number": 61, "year": 1325, "month": 9, "day": 27, "filename_base": "روزنامه خورشید 0061", "wikimedia_hash": "ba" },
+      { "issue_number": 62, "year": 1325, "month": 9, "day": 29, "filename_base": "روزنامه خورشید 0062", "wikimedia_hash": "7b" },
+      { "issue_number": 63, "year": 1325, "month": 10, "day": 3, "filename_base": "روزنامه خورشید 0063", "wikimedia_hash": "08" },
+      { "issue_number": 64, "year": 1325, "month": 10, "day": 5, "filename_base": "روزنامه خورشید 0064", "wikimedia_hash": "1d" },
+      { "issue_number": 65, "year": 1325, "month": 10, "day": 11, "filename_base": "روزنامه خورشید 0065", "wikimedia_hash": "d2" },
+      { "issue_number": 66, "year": 1325, "month": 10, "day": 13, "filename_base": "روزنامه خورشید 0066", "wikimedia_hash": "68" },
+      { "issue_number": 67, "year": 1325, "month": 10, "day": 14, "filename_base": "روزنامه خورشید 0067", "wikimedia_hash": "b9" },
+      { "issue_number": 68, "year": 1325, "month": 10, "day": 18, "filename_base": "روزنامه خورشید 0068", "wikimedia_hash": "05" },
+      { "issue_number": 69, "year": 1325, "month": 10, "day": 20, "filename_base": "روزنامه خورشید 0069", "wikimedia_hash": "8b" },
+      { "issue_number": 70, "year": 1325, "month": 10, "day": 25, "filename_base": "روزنامه خورشید 0070", "wikimedia_hash": "6c" },
+      { "issue_number": 71, "year": 1325, "month": 10, "day": 26, "filename_base": "روزنامه خورشید 0071", "wikimedia_hash": "d3" },
+      { "issue_number": 72, "year": 1325, "month": 10, "day": 28, "filename_base": "روزنامه خورشید 0072", "wikimedia_hash": "56" },
+      { "issue_number": 73, "year": 1325, "month": 11, "day": 2, "filename_base": "روزنامه خورشید 0073", "wikimedia_hash": "5f" },
+      { "issue_number": 74, "year": 1325, "month": 11, "day": 3, "filename_base": "روزنامه خورشید 0074", "wikimedia_hash": "e7" },
+      { "issue_number": 75, "year": 1325, "month": 11, "day": 5, "filename_base": "روزنامه خورشید 0075", "wikimedia_hash": "e8" },
+      { "issue_number": 76, "year": 1325, "month": 11, "day": 6, "filename_base": "روزنامه خورشید 0076", "wikimedia_hash": "68" },
+      { "issue_number": 77, "year": 1325, "month": 11, "day": 9, "filename_base": "روزنامه خورشید 0077", "wikimedia_hash": "31" },
+      { "issue_number": 78, "year": 1325, "month": 11, "day": 11, "filename_base": "روزنامه خورشید 0078", "wikimedia_hash": "ac" },
+      { "issue_number": 79, "year": 1325, "month": 11, "day": 12, "filename_base": "روزنامه خورشید 0079", "wikimedia_hash": "c8" },
+      { "issue_number": 80, "year": 1325, "month": 11, "day": 13, "filename_base": "روزنامه خورشید 0080", "wikimedia_hash": "32" },
+      { "issue_number": 81, "year": 1325, "month": 11, "day": 16, "filename_base": "روزنامه خورشید 0081", "wikimedia_hash": "11" },
+      { "issue_number": 82, "year": 1325, "month": 11, "day": 17, "filename_base": "روزنامه خورشید 0082", "wikimedia_hash": "bc" },
+      { "issue_number": 83, "year": 1325, "month": 11, "day": 18, "filename_base": "روزنامه خورشید 0083", "wikimedia_hash": "0a" },
+      { "issue_number": 84, "year": 1325, "month": 11, "day": 20, "filename_base": "روزنامه خورشید 0084", "wikimedia_hash": "c4" },
+      { "issue_number": 85, "year": 1325, "month": 11, "day": 23, "filename_base": "روزنامه خورشید 0085", "wikimedia_hash": "58" },
+      { "issue_number": 86, "year": 1325, "month": 11, "day": 25, "filename_base": "روزنامه خورشید 0086", "wikimedia_hash": "2b" },
+      { "issue_number": 87, "year": 1325, "month": 11, "day": 26, "filename_base": "روزنامه خورشید 0087", "wikimedia_hash": "ad" },
+      { "issue_number": 88, "year": 1325, "month": 11, "day": 27, "filename_base": "روزنامه خورشید 0088", "wikimedia_hash": "b5" },
+      { "issue_number": 89, "year": 1325, "month": 12, "day": 1, "filename_base": "روزنامه خورشید 0089", "wikimedia_hash": "65" },
+      { "issue_number": 90, "year": 1325, "month": 12, "day": 3, "filename_base": "روزنامه خورشید 0090", "wikimedia_hash": "fc" },
+      { "issue_number": 91, "year": 1325, "month": 12, "day": 4, "filename_base": "روزنامه خورشید 0091", "wikimedia_hash": "9b" },
+      { "issue_number": 92, "year": 1325, "month": 12, "day": 5, "filename_base": "روزنامه خورشید 0092", "wikimedia_hash": "7a" },
+      { "issue_number": 93, "year": 1325, "month": 12, "day": 6, "filename_base": "روزنامه خورشید 0093", "wikimedia_hash": "91" },
+      { "issue_number": 94, "year": 1325, "month": 12, "day": 7, "filename_base": "روزنامه خورشید 0094", "wikimedia_hash": "00" },
+      { "issue_number": 95, "year": 1325, "month": 12, "day": 9, "filename_base": "روزنامه خورشید 0095", "wikimedia_hash": "c8" },
+      { "issue_number": 96, "year": 1325, "month": 12, "day": 11, "filename_base": "روزنامه خورشید 0096", "wikimedia_hash": "f3" },
+      { "issue_number": 97, "year": 1325, "month": 12, "day": 13, "filename_base": "روزنامه خورشید 0097", "wikimedia_hash": "c1" },
+      { "issue_number": 98, "year": 1325, "month": 12, "day": 14, "filename_base": "روزنامه خورشید 0098", "wikimedia_hash": "72" },
+      { "issue_number": 99, "year": 1325, "month": 12, "day": 16, "filename_base": "روزنامه خورشید 0099", "wikimedia_hash": "aa" },
+      { "issue_number": 100, "year": 1325, "month": 12, "day": 17, "filename_base": "روزنامه خورشید 0100", "wikimedia_hash": "7c" },
+      { "issue_number": 101, "year": 1325, "month": 12, "day": 21, "filename_base": "روزنامه خورشید 0101", "wikimedia_hash": "1f" },
+      { "issue_number": 102, "year": 1325, "month": 12, "day": 22, "filename_base": "روزنامه خورشید 0102", "wikimedia_hash": "e2" },
+      { "issue_number": 103, "year": 1325, "month": 12, "day": 24, "filename_base": "روزنامه خورشید 0103", "wikimedia_hash": "86" },
+      { "issue_number": 104, "year": 1325, "month": 12, "day": 25, "filename_base": "روزنامه خورشید 0104", "wikimedia_hash": "ca" },
+      { "issue_number": 105, "year": 1325, "month": 12, "day": 27, "filename_base": "روزنامه خورشید 0105", "wikimedia_hash": "cc" },
+      { "issue_number": 106, "year": 1325, "month": 12, "day": 29, "filename_base": "روزنامه خورشید 0106", "wikimedia_hash": "74" },
+      { "issue_number": 107, "year": 1326, "month": 1, "day": 2, "filename_base": "روزنامه خورشید 0107", "wikimedia_hash": "6a" },
+      { "issue_number": 108, "year": 1326, "month": 1, "day": 3, "filename_base": "روزنامه خورشید 0108", "wikimedia_hash": "e9" },
+      { "issue_number": 109, "year": 1326, "month": 1, "day": 6, "filename_base": "روزنامه خورشید 0109", "wikimedia_hash": "21" },
+      { "issue_number": 110, "year": 1326, "month": 1, "day": 13, "filename_base": "روزنامه خورشید 0110", "wikimedia_hash": "e4" },
+      { "issue_number": 111, "year": 1326, "month": 1, "day": 14, "filename_base": "روزنامه خورشید 0111", "wikimedia_hash": "da" },
+      { "issue_number": 112, "year": 1326, "month": 1, "day": 16, "filename_base": "روزنامه خورشید 0112", "wikimedia_hash": "21" },
+      { "issue_number": 113, "year": 1326, "month": 1, "day": 17, "filename_base": "روزنامه خورشید 0113", "wikimedia_hash": "cd" },
+      { "issue_number": 114, "year": 1326, "month": 1, "day": 20, "filename_base": "روزنامه خورشید 0114", "wikimedia_hash": "14" },
+      { "issue_number": 115, "year": 1326, "month": 1, "day": 21, "filename_base": "روزنامه خورشید 0115", "wikimedia_hash": "fb" },
+      { "issue_number": 116, "year": 1326, "month": 1, "day": 22, "filename_base": "روزنامه خورشید 0116", "wikimedia_hash": "63" },
+      { "issue_number": 117, "year": 1326, "month": 1, "day": 24, "filename_base": "روزنامه خورشید 0117", "wikimedia_hash": "86" },
+      { "issue_number": 118, "year": 1326, "month": 1, "day": 26, "filename_base": "روزنامه خورشید 0118", "wikimedia_hash": "a2" },
+      { "issue_number": 119, "year": 1326, "month": 1, "day": 27, "filename_base": "روزنامه خورشید 0119", "wikimedia_hash": "ce" },
+      { "issue_number": 120, "year": 1325, "month": 2, "day": 1, "filename_base": "روزنامه خورشید 0120", "wikimedia_hash": "79" }
     ]
   }
 ]
