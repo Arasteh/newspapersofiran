@@ -460,6 +460,11 @@
             <p id="Q134006001StatusMessage" class="status-message" style="display: none;"></p>
             <p id="Q134006001ErrorMessage" class="error-message" style="display: none;"></p>
         </div>
+<div id="khorshidNavigation" style="margin-top: 10px; display: none;">
+    <button id="showKhorshidIssuesBtn" style="padding: 8px 15px; background-color: var(--button-bg); color: white; border: none; border-radius: 4px; cursor: pointer;">نمایش شماره‌های روزنامه خورشید</button>
+    <div id="khorshidIssuesList" style="display: none; margin-top: 10px; max-height: 200px; overflow-y: auto; background-color: var(--control-bg); padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    </div>
+</div>
     </div>
     
     <div class="pagination-controls" style="margin-top: 20px;">
@@ -551,6 +556,10 @@
             const khorshidNewspaperImage = document.getElementById('Q134006001NewspaperImage');
             const khorshidStatusMessage = document.getElementById('Q134006001StatusMessage');
             const khorshidErrorMessage = document.getElementById('Q134006001ErrorMessage');
+            const khorshidNavigation = document.getElementById('khorshidNavigation');
+            const showKhorshidIssuesBtn = document.getElementById('showKhorshidIssuesBtn');
+            const khorshidIssuesList = document.getElementById('khorshidIssuesList');
+
 
 
             const mainPageNumberInput = document.getElementById('mainPageNumberInput'); 
@@ -763,6 +772,7 @@
                         newspaperImgElement.style.display = 'block';
                         newspaperErrorElement.style.display = 'none';
                         paper.available = true;
+                        if (type === 'Q134006001') updateKhorshidNavigationVisibility();
                         paper.fileNameBase = fileNameBase; // Store for lightbox links (original base name)
                         paper.maxPages = maxPages; // Store max pages for lightbox
                         // Removed filterElement.classList.add/remove as the filter list is now hidden
@@ -842,6 +852,7 @@
                 const results = await Promise.all(loadPromises);
 
                 mainStatusMessage.style.display = 'none'; // Hide main loading message
+updateKhorshidNavigationVisibility();
 
                 if (!results.some(loaded => loaded)) { // If none of the newspapers loaded
                     mainErrorMessage.textContent = `روزنامه‌ای برای این تاریخ یافت نشد.`; // Simplified error message
@@ -1099,6 +1110,90 @@
                 }
                 updateLightboxContent();
             };
+
+            const showKhorshidIssues = () => {
+    const khorshidPaper = newspaperData['Q134006001'];
+    if (!khorshidPaper || !khorshidPaper.issues) return;
+    
+    khorshidIssuesList.innerHTML = ''; // پاک کردن محتوای قبلی
+    
+    // مرتب کردن شماره‌ها بر اساس تاریخ (جدیدترین اول)
+    const sortedIssues = [...khorshidPaper.issues].sort((a, b) => {
+        return new Date(b.year, b.month - 1, b.day) - new Date(a.year, a.month - 1, b.day);
+    });
+    
+    sortedIssues.forEach(issue => {
+        const issueDiv = document.createElement('div');
+        issueDiv.style.padding = '8px';
+        issueDiv.style.cursor = 'pointer';
+        issueDiv.style.borderBottom = '1px solid var(--border-color)';
+        issueDiv.style.transition = 'background-color 0.3s';
+        
+        issueDiv.innerHTML = `
+            <strong>شماره ${issue.issue_number || 'نامشخص'}</strong> - 
+            ${issue.year}/${issue.month}/${issue.day}
+            ${issue.title ? `- ${issue.title}` : ''}
+        `;
+        
+        issueDiv.addEventListener('click', () => {
+            // تنظیم تاریخ بر اساس شماره انتخاب شده
+            if (currentCalendarMode !== khorshidPaper.calendar_type) {
+                // اگر تقویم فعلی با تقویم روزنامه مطابقت ندارد، تقویم را تغییر دهید
+                if (khorshidPaper.calendar_type === 'shamsi') {
+                    shamsiCalendarRadio.checked = true;
+                    shamsiDateControls.style.display = 'flex';
+                    hijriDateControls.style.display = 'none';
+                    currentCalendarMode = 'shamsi';
+                } else {
+                    hijriCalendarRadio.checked = true;
+                    shamsiDateControls.style.display = 'none';
+                    hijriDateControls.style.display = 'flex';
+                    currentCalendarMode = 'hijri';
+                }
+            }
+            
+            // تنظیم تاریخ
+            if (khorshidPaper.calendar_type === 'shamsi') {
+                shamsiYearInput.value = issue.year;
+                shamsiMonthSelect.value = issue.month;
+                shamsiDayInput.value = issue.day;
+            } else {
+                hijriYearInput.value = issue.year;
+                hijriMonthSelect.value = issue.month;
+                hijriDayInput.value = issue.day;
+            }
+            
+            // بارگذاری روزنامه با تاریخ جدید
+            loadImage('date');
+            
+            // بستن لیست شماره‌ها
+            khorshidIssuesList.style.display = 'none';
+        });
+        
+        issueDiv.addEventListener('mouseover', () => {
+            issueDiv.style.backgroundColor = 'var(--button-bg)';
+            issueDiv.style.color = 'white';
+        });
+        
+        issueDiv.addEventListener('mouseout', () => {
+            issueDiv.style.backgroundColor = '';
+            issueDiv.style.color = '';
+        });
+        
+        khorshidIssuesList.appendChild(issueDiv);
+    });
+    
+    khorshidIssuesList.style.display = khorshidIssuesList.style.display === 'none' ? 'block' : 'none';
+};
+
+// نمایش ناوبری خورشید فقط وقتی که روزنامه خورشید موجود است
+const updateKhorshidNavigationVisibility = () => {
+    const khorshidPaper = newspaperData['Q134006001'];
+    khorshidNavigation.style.display = khorshidPaper && khorshidPaper.available ? 'block' : 'none';
+};
+
+            // اضافه کردن event listener برای دکمه نمایش شماره‌ها
+showKhorshidIssuesBtn.addEventListener('click', showKhorshidIssues);
 
             const lightboxChangeNewspaper = (direction) => {
                 const availableNewspapers = Object.keys(newspaperData).filter(key => newspaperData[key].available);
