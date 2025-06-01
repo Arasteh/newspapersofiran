@@ -406,8 +406,6 @@
         <div id="filter-mardom" class="newspaper-filter-item">روزنامه مردم</div>
         <div id="filter-kayhan" class="newspaper-filter-item">روزنامه کیهان</div>
         <div id="filter-bakhtarEmrooz" class="newspaper-filter-item">روزنامه باختر امروز</div>
-        <div id="filter-raad" class="newspaper-filter-item">روزنامه رعد</div>
-        <div id="filter-iran" class="newspaper-filter-item">روزنامه ایران</div>
         <div id="filter-Q134006001" class="newspaper-filter-item">روزنامه خورشید</div>
     </div>
 
@@ -572,8 +570,6 @@
             const filterMardom = document.getElementById('filter-mardom');
             const filterKayhan = document.getElementById('filter-kayhan');
             const filterBakhtarEmrooz = document.getElementById('filter-bakhtarEmrooz');
-            const filterRaad = document.getElementById('filter-raad');
-            const filterIran = document.getElementById('filter-iran');
             const filterKhorshid = document.getElementById('filter-Q134006001');
 
 
@@ -636,7 +632,7 @@
                 }
                 // Database-driven newspapers will be added dynamically after loading JSON
             };
-            let currentLightboxNewspaperType = null; // 'ettelaat', 'mardom', 'kayhan', 'bakhtarEmrooz', 'raad', 'iran', 'Q134006001'
+            let currentLightboxNewspaperType = null; // 'ettelaat', 'mardom', 'kayhan', 'bakhtarEmrooz', 'Q134006001'
             let lightboxCurrentPage = 1; // Page number specific to lightbox view
 
             // Store preloaded image objects to prevent garbage collection
@@ -1298,11 +1294,7 @@ const updateKhorshidNavigationVisibility = () => {
             mardomNewspaperImage.addEventListener('click', () => openLightbox('mardom'));
             kayhanNewspaperImage.addEventListener('click', () => openLightbox('kayhan'));
             bakhtarEmroozNewspaperImage.addEventListener('click', () => openLightbox('bakhtarEmrooz'));
-            // Add listeners for new database-driven newspapers
-            iranNewspaperImage.addEventListener('click', () => openLightbox('iran'));
-            raadNewspaperImage.addEventListener('click', () => openLightbox('raad'));
             khorshidNewspaperImage.addEventListener('click', () => openLightbox('Q134006001')); // Listener for Khorshid
-
 
             lightboxCloseButton.addEventListener('click', closeLightbox);
             lightboxOverlay.addEventListener('click', (e) => {
