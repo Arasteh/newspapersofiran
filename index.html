@@ -23,10 +23,7 @@
             --lightbox-button-bg: #007bff; /* Blue for lightbox buttons */
             --lightbox-button-hover-bg: #0056b3;
             --lightbox-close-button-color: #333;
-            --loading-popup-bg: rgba(255, 255, 255, 0.9);
-            --loading-popup-text: #333;
-            --spinner-border: #f3f3f3;
-            --spinner-border-top: #007bff;
+            /* Removed loading-popup specific variables */
         }
 
         @media (prefers-color-scheme: dark) {
@@ -47,10 +44,7 @@
                 --lightbox-button-bg: #0056b3; /* Darker blue for dark mode */
                 --lightbox-button-hover-bg: #003d80;
                 --lightbox-close-button-color: #e0e0e0;
-                --loading-popup-bg: rgba(42, 42, 42, 0.9);
-                --loading-popup-text: #e0e0e0;
-                --spinner-border: #555;
-                --spinner-border-top: #66b3ff;
+                /* Removed loading-popup specific variables */
             }
         }
 
@@ -280,55 +274,6 @@
             background-color: #45a049;
         }
 
-        /* Loading Pop-up Styles */
-        .loading-popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1001; /* Higher than lightbox overlay */
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .loading-popup-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .loading-popup-content {
-            background-color: var(--loading-popup-bg);
-            padding: 30px 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            text-align: center;
-            color: var(--loading-popup-text);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .spinner {
-            border: 4px solid var(--spinner-border);
-            border-top: 4px solid var(--spinner-border-top);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         /* Calendar Selection Styles */
         .calendar-selection {
             margin-bottom: 15px;
@@ -521,13 +466,6 @@
         <input type="number" id="mainPageNumberInput" value="1" min="1">
     </div>
 
-    <div id="loadingPopupOverlay" class="loading-popup-overlay">
-        <div class="loading-popup-content">
-            <p>در حال جستجو...</p>
-            <div class="spinner"></div>
-        </div>
-    </div>
-
     <div id="lightboxOverlay" class="lightbox-overlay">
         <div class="lightbox-content">
             <button id="lightboxCloseButton" class="lightbox-close-button">&times;</button>
@@ -616,8 +554,7 @@
 
             const mainPageNumberInput = document.getElementById('mainPageNumberInput'); 
 
-            // Loading Pop-up Elements
-            const loadingPopupOverlay = document.getElementById('loadingPopupOverlay');
+            // Removed Loading Pop-up Elements: const loadingPopupOverlay = document.getElementById('loadingPopupOverlay');
 
             // Lightbox Elements
             const lightboxOverlay = document.getElementById('lightboxOverlay');
@@ -870,9 +807,10 @@
 
                 if (source === 'date') {
                     targetPage = 1; // Reset page to 1 when date changes
-                    loadingPopupOverlay.classList.add('visible'); // Show loading pop-up
-                    mainStatusMessage.style.display = 'none'; // Hide initial status
-                    mainErrorMessage.style.display = 'none'; // Hide initial error
+                    // Removed: loadingPopupOverlay.classList.add('visible'); // Show loading pop-up
+                    mainStatusMessage.textContent = 'در حال بارگذاری روزنامه‌ها...'; // Keep main status message visible
+                    mainStatusMessage.style.display = 'block'; 
+                    mainErrorMessage.style.display = 'none'; 
                 } else if (source === 'pageInput') {
                     // targetPage is already set from mainPageNumberInput value
                 }
@@ -889,7 +827,7 @@
                     mainErrorMessage.textContent = 'لطفا تاریخ کامل را وارد کنید.';
                     mainErrorMessage.style.display = 'block';
                     mainStatusMessage.style.display = 'none';
-                    loadingPopupOverlay.classList.remove('visible'); // Hide loading pop-up
+                    // Removed: loadingPopupOverlay.classList.remove('visible'); // Hide loading pop-up
                     Object.values(newspaperData).forEach(paper => {
                         paper.sectionElement.style.display = 'none';
                         paper.filterElement.classList.remove('available');
@@ -901,6 +839,7 @@
                 if (source !== 'date') { // Only show main status if not already showing pop-up
                     mainErrorMessage.style.display = 'none'; // Clear previous main errors
                     mainStatusMessage.textContent = 'در حال بارگذاری روزنامه‌ها...';
+                    mainStatusMessage.style.display = 'block'; 
                 }
 
                 // Load all newspapers concurrently
@@ -910,10 +849,11 @@
                 const results = await Promise.all(loadPromises);
 
                 mainStatusMessage.style.display = 'none'; // Hide main loading message
-                loadingPopupOverlay.classList.remove('visible'); // Hide loading pop-up after all attempts
+                // Removed: loadingPopupOverlay.classList.remove('visible'); // Hide loading pop-up after all attempts
 
                 if (!results.some(loaded => loaded)) { // If none of the newspapers loaded
                     mainErrorMessage.textContent = `روزنامه‌ای برای این تاریخ یافت نشد.`; // Simplified error message
+                    mainErrorMessage.style.display = 'block';
                 } else {
                     mainErrorMessage.style.display = 'none';
                 }
@@ -1246,7 +1186,7 @@
                 console.error("Error loading db.json:", error);
                 mainErrorMessage.textContent = "خطا در بارگذاری دیتابیس روزنامه‌ها. روزنامه‌های مبتنی بر دیتابیس نمایش داده نخواهند شد.";
                 mainErrorMessage.style.display = 'block';
-                loadingPopupOverlay.classList.remove('visible');
+                // Removed: loadingPopupOverlay.classList.remove('visible');
                 mainStatusMessage.style.display = 'none';
                 // Hide all newspaper sections for database-driven papers if database loading fails
                 Object.values(newspaperData).forEach(paper => {
