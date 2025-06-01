@@ -1168,15 +1168,6 @@ const goToKhorshidIssueByNumber = () => {
     }
 };
 
-// نمایش/پنهان کردن ناوبری خورشید
-const updateKhorshidNavigationVisibility = () => {
-    const khorshidPaper = newspaperData['Q134006001'];
-    khorshidNavigation.style.display = khorshidPaper && khorshidPaper.available ? 'block' : 'none';
-    
-    if (khorshidNavigation.style.display === 'block') {
-        loadKhorshidIssues();
-    }
-};
 
 // اضافه کردن event listenerها
 prevKhorshidIssueBtn.addEventListener('click', goToPrevKhorshidIssue);
@@ -1274,12 +1265,16 @@ khorshidIssueNumberInput.addEventListener('change', goToKhorshidIssueByNumber);
     khorshidIssuesList.style.display = khorshidIssuesList.style.display === 'none' ? 'block' : 'none';
 };
 
-// نمایش ناوبری خورشید فقط وقتی که روزنامه خورشید موجود است
+// نمایش/پنهان کردن ناوبری خورشید
 const updateKhorshidNavigationVisibility = () => {
     const khorshidPaper = newspaperData['Q134006001'];
     khorshidNavigation.style.display = khorshidPaper && khorshidPaper.available ? 'block' : 'none';
+    
+    if (khorshidNavigation.style.display === 'block') {
+        loadKhorshidIssues();
+    }
 };
-
+            
             // اضافه کردن event listener برای دکمه نمایش شماره‌ها
 showKhorshidIssuesBtn.addEventListener('click', showKhorshidIssues);
 
