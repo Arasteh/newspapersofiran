@@ -110,6 +110,10 @@
         .newspaper-section h2 {
             margin-top: 0;
             color: var(--section-title-color);
+            font-weight: normal; /* Default to normal */
+        }
+        .newspaper-section.available-newspaper h2 {
+            font-weight: bold; /* Make bold when available */
         }
         .newspaper-image {
             max-width: 100%;
@@ -349,32 +353,43 @@
             color: white;
             border-color: var(--button-bg);
         }
-        .newspapers-filter {
-    margin: 15px 0;
-    padding: 10px;
-    background-color: var(--control-bg);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    max-width: 760px;
-}
 
-.newspaper-filter-item {
-    padding: 8px 12px;
-    border-radius: 4px;
-    background-color: var(--section-bg);
-    transition: all 0.3s ease;
-}
-
-.newspaper-filter-item.available {
-    font-weight: bold;
-    background-color: var(--button-bg);
-    color: white;
-}
+        /* Newspaper Filter List Styles */
+        .newspaper-filter-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--control-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 760px;
+        }
+        .newspaper-filter-item {
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s, font-weight 0.3s, opacity 0.3s;
+            white-space: nowrap;
+            display: none; /* Hidden by default, shown by JS */
+        }
+        .newspaper-filter-item.available {
+            font-weight: bold;
+            display: block; /* Show available ones */
+        }
+        .newspaper-filter-item.unavailable {
+            opacity: 0.5; /* Dim unavailable ones */
+            display: none; /* Hide unavailable ones as requested */
+        }
+        .newspaper-filter-item:hover {
+            background-color: light-dark(#e0e0e0, #3a3a3a);
+        }
     </style>
 </head>
 <body>
@@ -436,11 +451,19 @@
             <input type="number" id="hijriDay" value="21" min="1" max="30">
         </div>
     </div>
-    <div id="newspapersFilter" class="newspapers-filter">
-    </div>
 
     <p id="mainErrorMessage" class="error-message" style="display: none;"></p>
     <p id="mainStatusMessage" class="status-message">در حال بارگذاری روزنامه‌ها...</p>
+
+    <div id="newspaperFilterList" class="newspaper-filter-list">
+        <div id="filter-ettelaat" class="newspaper-filter-item">روزنامه اطلاعات</div>
+        <div id="filter-mardom" class="newspaper-filter-item">روزنامه مردم</div>
+        <div id="filter-kayhan" class="newspaper-filter-item">روزنامه کیهان</div>
+        <div id="filter-bakhtarEmrooz" class="newspaper-filter-item">روزنامه باختر امروز</div>
+        <div id="filter-raad" class="newspaper-filter-item">روزنامه رعد</div>
+        <div id="filter-iran" class="newspaper-filter-item">روزنامه ایران</div>
+        <div id="filter-Q134006001" class="newspaper-filter-item">روزنامه خورشید</div>
+    </div>
 
     <div class="newspaper-container">
         <div id="ettelaatSection" class="newspaper-section" style="display: none;">
@@ -611,6 +634,16 @@
             const downloadLink = document.getElementById('downloadLink');
             const viewLargeLink = document.getElementById('viewLargeLink');
 
+            // Newspaper Filter List Elements
+            const newspaperFilterList = document.getElementById('newspaperFilterList');
+            const filterEttelaat = document.getElementById('filter-ettelaat');
+            const filterMardom = document.getElementById('filter-mardom');
+            const filterKayhan = document.getElementById('filter-kayhan');
+            const filterBakhtarEmrooz = document.getElementById('filter-bakhtarEmrooz');
+            const filterRaad = document.getElementById('filter-raad');
+            const filterIran = document.getElementById('filter-iran');
+            const filterKhorshid = document.getElementById('filter-Q134006001');
+
 
             // Global State
             let currentCalendarMode = 'shamsi'; // 'shamsi' or 'hijri'
@@ -627,6 +660,7 @@
                     statusElement: ettelaatStatusMessage,
                     errorElement: ettelaatErrorMessage,
                     sectionElement: ettelaatSection,
+                    filterElement: filterEttelaat, // Link to filter element
                     calendar_type: 'shamsi' // Assume formula-based are shamsi
                 },
                 mardom: {
@@ -639,6 +673,7 @@
                     statusElement: mardomStatusMessage,
                     errorElement: mardomErrorMessage,
                     sectionElement: mardomSection,
+                    filterElement: filterMardom, // Link to filter element
                     calendar_type: 'shamsi'
                 },
                 kayhan: {
@@ -651,6 +686,7 @@
                     statusElement: kayhanStatusMessage,
                     errorElement: kayhanErrorMessage,
                     sectionElement: kayhanSection,
+                    filterElement: filterKayhan, // Link to filter element
                     calendar_type: 'shamsi'
                 },
                 bakhtarEmrooz: {
@@ -663,6 +699,7 @@
                     statusElement: bakhtarEmroozStatusMessage,
                     errorElement: bakhtarEmroozErrorMessage,
                     sectionElement: bakhtarEmroozSection,
+                    filterElement: filterBakhtarEmrooz, // Link to filter element
                     calendar_type: 'shamsi'
                 }
                 // Database-driven newspapers will be added dynamically after loading JSON
@@ -707,9 +744,15 @@
             };
 
             // Function to get the Wikimedia Commons hash (first two characters of MD5)
-            const getWikimediaHash = (filename) => {
+            // This function now takes the paper object to check for pre-defined wikimedia_hash
+            const getWikimediaHash = (paper, fullFileNameWithPdf) => {
+                // If the paper is database-driven and has a pre-defined wikimedia_hash for the current issue, use it
+                if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.wikimedia_hash) {
+                    return paper.currentIssue.wikimedia_hash;
+                }
+                // Otherwise, calculate the hash as before
                 // Replace spaces with underscores for hash calculation, as per Wikimedia's behavior
-                const filenameForHash = filename.replace(/ /g, '_'); 
+                const filenameForHash = fullFileNameWithPdf.replace(/ /g, '_'); 
                 const fullMd5 = MD5(filenameForHash); // Use the provided MD5 function
                 return fullMd5.substring(0, 2); // Get the first two characters of the MD5 hash
             };
@@ -725,6 +768,8 @@
                     if (currentCalendarMode !== 'shamsi') {
                         paper.sectionElement.style.display = 'none';
                         paper.available = false;
+                        paper.filterElement.classList.remove('available');
+                        paper.filterElement.classList.add('unavailable');
                         return false;
                     }
                     fileNameBase = `${paper.prefix}${year}${month}${day}`;
@@ -733,6 +778,8 @@
                     if (paper.calendar_type !== currentCalendarMode) {
                         paper.sectionElement.style.display = 'none';
                         paper.available = false;
+                        paper.filterElement.classList.remove('available');
+                        paper.filterElement.classList.add('unavailable');
                         return false;
                     }
 
@@ -742,6 +789,7 @@
                     if (foundIssue) {
                         fileNameBase = foundIssue.filename_base;
                         maxPages = foundIssue.pages || null; // Use pages from DB if available
+                        paper.currentIssue = foundIssue; // Store the found issue for later access in getWikimediaHash
                     } else {
                         // No matching issue found in DB for this date
                         paper.imageElement.style.display = 'none';
@@ -750,14 +798,15 @@
                         paper.errorElement.style.display = 'block';
                         paper.sectionElement.style.display = 'none';
                         paper.available = false;
+                        paper.filterElement.classList.remove('available');
+                        paper.filterElement.classList.add('unavailable');
                         return false;
                     }
                 }
 
                 const fullFileNameWithPdf = `${fileNameBase}.pdf`; // Full filename including .pdf
-                const hash = getWikimediaHash(fullFileNameWithPdf); // Hash is based on the full filename (UTF-8)
-                // For URL path, replace spaces with underscores. Browser will handle URI encoding of non-ASCII chars.
-                const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_'); 
+                const hash = getWikimediaHash(paper, fullFileNameWithPdf); // Hash is based on the full filename (UTF-8)
+                const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_'); // For URL path, replace spaces with underscores. Browser will handle URI encoding of non-ASCII chars.
                 
                 const width = 330; // Desired image width for thumbnails
                 const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${page}-${width}px-${fileNameForUrlPath}.jpg`;
@@ -781,39 +830,25 @@
                         paper.available = true;
                         paper.fileNameBase = fileNameBase; // Store for lightbox links (original base name)
                         paper.maxPages = maxPages; // Store max pages for lightbox
+                        paper.filterElement.classList.add('available');
+                        paper.filterElement.classList.remove('unavailable');
                         resolve(true);
-                        updateNewspapersFilter(); // Update filter list after loading
                     };
                     newspaperImgElement.onerror = () => {
                         newspaperStatusElement.style.display = 'none';
                         newspaperImgElement.style.display = 'none';
                         newspaperErrorElement.textContent = `تصویر برای ${paper.title} و صفحه ${page} یافت نشد.`;
-                        newspaperErrorElement.style.display = 'block';
-                        paper.sectionElement.style.display = 'none'; // Hide section if not available
+                        paper.errorElement.style.display = 'block';
+                        paper.sectionElement.style.display = 'none';
                         paper.available = false;
+                        paper.filterElement.classList.remove('available');
+                        paper.filterElement.classList.add('unavailable');
                         resolve(false);
-                        updateNewspapersFilter(); // Update filter list after loading
                     };
                     newspaperImgElement.src = imageUrl; // Start loading the image
                 });
             };
 
-            // Function to update newspapers filter list
-const updateNewspapersFilter = () => {
-    const filterContainer = document.getElementById('newspapersFilter');
-    filterContainer.innerHTML = ''; // Clear previous items
-    
-    Object.entries(newspaperData).forEach(([type, paper]) => {
-        const filterItem = document.createElement('div');
-        filterItem.className = `newspaper-filter-item ${paper.available ? 'available' : ''}`;
-        filterItem.textContent = paper.title;
-        
-        // Only show available newspapers (remove this line if you want to show all)
-        if (paper.available) {
-            filterContainer.appendChild(filterItem);
-        }
-    });
-};
             // Main function to load newspaper images
             const loadImage = async (source = 'initial') => {
                 let year, month, day;
@@ -838,7 +873,6 @@ const updateNewspapersFilter = () => {
                     loadingPopupOverlay.classList.add('visible'); // Show loading pop-up
                     mainStatusMessage.style.display = 'none'; // Hide initial status
                     mainErrorMessage.style.display = 'none'; // Hide initial error
-                    updateNewspapersFilter(); // Update filter list after loading
                 } else if (source === 'pageInput') {
                     // targetPage is already set from mainPageNumberInput value
                 }
@@ -858,6 +892,8 @@ const updateNewspapersFilter = () => {
                     loadingPopupOverlay.classList.remove('visible'); // Hide loading pop-up
                     Object.values(newspaperData).forEach(paper => {
                         paper.sectionElement.style.display = 'none';
+                        paper.filterElement.classList.remove('available');
+                        paper.filterElement.classList.add('unavailable');
                     });
                     return;
                 }
@@ -983,7 +1019,7 @@ const updateNewspapersFilter = () => {
                 }
 
                 const fullFileNameWithPdf = `${fileNameBase}.pdf`; // Full filename including .pdf
-                const hash = getWikimediaHash(fullFileNameWithPdf); // Hash is based on the full filename (UTF-8)
+                const hash = getWikimediaHash(paper, fullFileNameWithPdf); // Hash is based on the full filename (UTF-8)
                 const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_'); // For URL path, replace spaces with underscores. Browser will handle URI encoding of non-ASCII chars.
                 
                 const width = 800; // Larger width for lightbox display
@@ -1038,7 +1074,7 @@ const updateNewspapersFilter = () => {
 
                 // Preload next page of current newspaper
                 const nextPageFullFileName = `${fileNameBase}.pdf`;
-                const nextPageHash = getWikimediaHash(nextPageFullFileName);
+                const nextPageHash = getWikimediaHash(paper, nextPageFullFileName); // Pass paper object
                 const nextPageFileNameForUrlPath = nextPageFullFileName.replace(/ /g, '_');
                 const nextPageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nextPageHash[0]}/${nextPageHash}/${nextPageFileNameForUrlPath}/page${lightboxCurrentPage + 1}-${preloadWidth}px-${nextPageFileNameForUrlPath}.jpg`;
                 preloadedImages.nextPage = new Image();
@@ -1047,7 +1083,7 @@ const updateNewspapersFilter = () => {
                 // Preload previous page of current newspaper
                 if (lightboxCurrentPage > 1) {
                     const prevPageFullFileName = `${fileNameBase}.pdf`;
-                    const prevPageHash = getWikimediaHash(prevPageFullFileName);
+                    const prevPageHash = getWikimediaHash(paper, prevPageFullFileName); // Pass paper object
                     const prevPageFileNameForUrlPath = prevPageFullFileName.replace(/ /g, '_');
                     const prevPageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${prevPageHash[0]}/${prevPageHash}/${prevPageFileNameForUrlPath}/page${lightboxCurrentPage - 1}-${preloadWidth}px-${prevPageFileNameForUrlPath}.jpg`;
                     preloadedImages.prevPage = new Image();
@@ -1077,7 +1113,7 @@ const updateNewspapersFilter = () => {
 
                     if (nextFileNameBase) {
                         const nextFullFileName = `${nextFileNameBase}.pdf`;
-                        const nextHash = getWikimediaHash(nextFullFileName);
+                        const nextHash = getWikimediaHash(nextPaper, nextFullFileName); // Pass paper object
                         const nextFileNameForUrlPath = nextFullFileName.replace(/ /g, '_');
                         const nextNewspaperUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nextHash[0]}/${nextHash}/${nextFileNameForUrlPath}/page${lightboxCurrentPage}-${preloadWidth}px-${nextFileNameForUrlPath}.jpg`;
                         preloadedImages.nextNewspaper = new Image();
@@ -1103,7 +1139,7 @@ const updateNewspapersFilter = () => {
 
                     if (prevFileNameBase) {
                         const prevFullFileName = `${prevFileNameBase}.pdf`;
-                        const prevHash = getWikimediaHash(prevFullFileName);
+                        const prevHash = getWikimediaHash(prevPaper, prevFullFileName); // Pass paper object
                         const prevFileNameForUrlPath = prevFullFileName.replace(/ /g, '_');
                         const prevNewspaperUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${prevHash[0]}/${prevHash}/${prevFileNameForUrlPath}/page${lightboxCurrentPage}-${preloadWidth}px-${prevFileNameForUrlPath}.jpg`;
                         preloadedImages.prevNewspaper = new Image();
@@ -1228,8 +1264,9 @@ const updateNewspapersFilter = () => {
                 const statusElement = document.getElementById(`${paperId}StatusMessage`);
                 const errorElement = document.getElementById(`${paperId}ErrorMessage`);
                 const sectionElement = document.getElementById(`${paperId}Section`);
+                const filterElement = document.getElementById(`filter-${paperId}`); // Get filter element
 
-                if (imageElement && statusElement && errorElement && sectionElement) {
+                if (imageElement && statusElement && errorElement && sectionElement && filterElement) {
                     newspaperData[paperId] = {
                         type: 'database',
                         title: dbPaper.title,
@@ -1239,6 +1276,7 @@ const updateNewspapersFilter = () => {
                         statusElement: statusElement,
                         errorElement: errorElement,
                         sectionElement: sectionElement,
+                        filterElement: filterElement, // Link filter element
                         issues: dbPaper.issues, // Link to the issues from JSON
                         calendar_type: dbPaper.calendar_type // Get calendar type from DB
                     };
