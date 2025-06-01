@@ -440,29 +440,21 @@
             <p id="bakhtarEmroozErrorMessage" class="error-message" style="display: none;"></p>
         </div>
 
-        <div id="raadSection" class="newspaper-section" style="display: none;">
-            <h2>روزنامه رعد</h2>
-            <img id="raadNewspaperImage" src="" alt="تصویر روزنامه رعد" class="newspaper-image">
-            <p id="raadStatusMessage" class="status-message" style="display: none;"></p>
-            <p id="raadErrorMessage" class="error-message" style="display: none;"></p>
-        </div>
-
-        <div id="iranSection" class="newspaper-section" style="display: none;">
-            <h2>روزنامه ایران</h2>
-            <img id="iranNewspaperImage" src="" alt="تصویر روزنامه ایران" class="newspaper-image">
-            <p id="iranStatusMessage" class="status-message" style="display: none;"></p>
-            <p id="iranErrorMessage" class="error-message" style="display: none;"></p>
-        </div>
-
         <div id="Q134006001Section" class="newspaper-section" style="display: none;">
             <h2>روزنامه خورشید</h2>
             <img id="Q134006001NewspaperImage" src="" alt="تصویر روزنامه خورشید" class="newspaper-image">
             <p id="Q134006001StatusMessage" class="status-message" style="display: none;"></p>
             <p id="Q134006001ErrorMessage" class="error-message" style="display: none;"></p>
         </div>
-<div id="khorshidNavigation" style="margin-top: 10px; display: none;">
-    <button id="showKhorshidIssuesBtn" style="padding: 8px 15px; background-color: var(--button-bg); color: white; border: none; border-radius: 4px; cursor: pointer;">نمایش شماره‌های روزنامه خورشید</button>
-    <div id="khorshidIssuesList" style="display: none; margin-top: 10px; max-height: 200px; overflow-y: auto; background-color: var(--control-bg); padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+
+<div id="khorshidNavigation" style="margin-top: 10px; display: none; text-align: center;">
+    <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+        <button id="prevKhorshidIssue" style="padding: 8px 15px; background-color: var(--button-bg); color: white; border: none; border-radius: 4px; cursor: pointer;">&lt; شماره قبل</button>
+        <div style="display: flex; align-items: center; gap: 5px;">
+            <span>شماره:</span>
+            <input type="number" id="khorshidIssueNumber" style="width: 60px; padding: 8px; text-align: center; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--control-bg); color: var(--text-color);">
+        </div>
+        <button id="nextKhorshidIssue" style="padding: 8px 15px; background-color: var(--button-bg); color: white; border: none; border-radius: 4px; cursor: pointer;">شماره بعد &gt;</button>
     </div>
 </div>
     </div>
@@ -541,24 +533,17 @@
             const bakhtarEmroozStatusMessage = document.getElementById('bakhtarEmroozStatusMessage');
             const bakhtarEmroozErrorMessage = document.getElementById('bakhtarEmroozErrorMessage');
 
-            // Newspaper Section Elements - Database-driven (placeholders)
-            const raadSection = document.getElementById('raadSection');
-            const raadNewspaperImage = document.getElementById('raadNewspaperImage');
-            const raadStatusMessage = document.getElementById('raadStatusMessage');
-            const raadErrorMessage = document.getElementById('raadErrorMessage');
-
-            const iranSection = document.getElementById('iranSection');
-            const iranNewspaperImage = document.getElementById('iranNewspaperImage');
-            const iranStatusMessage = document.getElementById('iranStatusMessage');
-            const iranErrorMessage = document.getElementById('iranErrorMessage');
-
             const khorshidSection = document.getElementById('Q134006001Section'); // Using Wikidata ID as element ID
             const khorshidNewspaperImage = document.getElementById('Q134006001NewspaperImage');
             const khorshidStatusMessage = document.getElementById('Q134006001StatusMessage');
             const khorshidErrorMessage = document.getElementById('Q134006001ErrorMessage');
             const khorshidNavigation = document.getElementById('khorshidNavigation');
-            const showKhorshidIssuesBtn = document.getElementById('showKhorshidIssuesBtn');
-            const khorshidIssuesList = document.getElementById('khorshidIssuesList');
+            const prevKhorshidIssueBtn = document.getElementById('prevKhorshidIssue');
+            const nextKhorshidIssueBtn = document.getElementById('nextKhorshidIssue');
+            const khorshidIssueNumberInput = document.getElementById('khorshidIssueNumber');
+            
+            let khorshidIssues = [];
+            let currentKhorshidIssueIndex = -1;
 
 
 
@@ -792,6 +777,8 @@
                 });
             };
 
+
+            
             // Main function to load newspaper images
             const loadImage = async (source = 'initial') => {
                 let year, month, day;
@@ -1096,6 +1083,107 @@ updateKhorshidNavigationVisibility();
                     preloadedImages.nextNewspaper = null;
                 }
             };
+
+            // تابع برای بارگذاری و مرتب کردن شماره‌های روزنامه خورشید
+const loadKhorshidIssues = () => {
+    const khorshidPaper = newspaperData['Q134006001'];
+    if (!khorshidPaper || !khorshidPaper.issues) return;
+    
+    // مرتب کردن شماره‌ها بر اساس شماره (صعودی)
+    khorshidIssues = [...khorshidPaper.issues].sort((a, b) => {
+        return (a.issue_number || 0) - (b.issue_number || 0);
+    });
+    
+    // پیدا کردن شماره فعلی
+    const currentYear = currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value;
+    const currentMonth = currentCalendarMode === 'shamsi' ? shamsiMonthSelect.value : hijriMonthSelect.value;
+    const currentDay = currentCalendarMode === 'shamsi' ? shamsiDayInput.value : hijriDayInput.value;
+    
+    currentKhorshidIssueIndex = khorshidIssues.findIndex(issue => 
+        issue.year == currentYear && 
+        issue.month == currentMonth && 
+        issue.day == currentDay
+    );
+    
+    if (currentKhorshidIssueIndex >= 0) {
+        khorshidIssueNumberInput.value = khorshidIssues[currentKhorshidIssueIndex].issue_number || '';
+    }
+    
+    updateKhorshidNavButtons();
+};
+
+// تابع برای به روزرسانی وضعیت دکمه‌های ناوبری
+const updateKhorshidNavButtons = () => {
+    prevKhorshidIssueBtn.disabled = currentKhorshidIssueIndex <= 0;
+    nextKhorshidIssueBtn.disabled = currentKhorshidIssueIndex >= khorshidIssues.length - 1;
+};
+
+// تابع برای رفتن به شماره خاص
+const goToKhorshidIssue = (index) => {
+    if (index < 0 || index >= khorshidIssues.length) return;
+    
+    const issue = khorshidIssues[index];
+    currentKhorshidIssueIndex = index;
+    khorshidIssueNumberInput.value = issue.issue_number || '';
+    
+    // تنظیم تاریخ
+    if (currentCalendarMode !== 'shamsi') {
+        shamsiCalendarRadio.checked = true;
+        shamsiDateControls.style.display = 'flex';
+        hijriDateControls.style.display = 'none';
+        currentCalendarMode = 'shamsi';
+    }
+    
+    shamsiYearInput.value = issue.year;
+    shamsiMonthSelect.value = issue.month;
+    shamsiDayInput.value = issue.day;
+    
+    // بارگذاری روزنامه با تاریخ جدید
+    loadImage('date');
+    updateKhorshidNavButtons();
+};
+
+// تابع برای رفتن به شماره قبل
+const goToPrevKhorshidIssue = () => {
+    if (currentKhorshidIssueIndex > 0) {
+        goToKhorshidIssue(currentKhorshidIssueIndex - 1);
+    }
+};
+
+// تابع برای رفتن به شماره بعد
+const goToNextKhorshidIssue = () => {
+    if (currentKhorshidIssueIndex < khorshidIssues.length - 1) {
+        goToKhorshidIssue(currentKhorshidIssueIndex + 1);
+    }
+};
+
+// تابع برای رفتن به شماره خاص با وارد کردن عدد
+const goToKhorshidIssueByNumber = () => {
+    const issueNumber = parseInt(khorshidIssueNumberInput.value);
+    if (isNaN(issueNumber)) return;
+    
+    const issueIndex = khorshidIssues.findIndex(issue => issue.issue_number == issueNumber);
+    if (issueIndex >= 0) {
+        goToKhorshidIssue(issueIndex);
+    }
+};
+
+// نمایش/پنهان کردن ناوبری خورشید
+const updateKhorshidNavigationVisibility = () => {
+    const khorshidPaper = newspaperData['Q134006001'];
+    khorshidNavigation.style.display = khorshidPaper && khorshidPaper.available ? 'block' : 'none';
+    
+    if (khorshidNavigation.style.display === 'block') {
+        loadKhorshidIssues();
+    }
+};
+
+// اضافه کردن event listenerها
+prevKhorshidIssueBtn.addEventListener('click', goToPrevKhorshidIssue);
+nextKhorshidIssueBtn.addEventListener('click', goToNextKhorshidIssue);
+khorshidIssueNumberInput.addEventListener('change', goToKhorshidIssueByNumber);
+
+
 
             const lightboxGoToPage = (direction) => {
                 const currentPaper = newspaperData[currentLightboxNewspaperType];
