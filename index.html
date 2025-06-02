@@ -386,8 +386,9 @@
             background-color: var(--control-bg);
             color: var(--text-color);
         }
-        .go-to-first-issue-btn { 
+        .go-to-first-issue-btn { /* This class is for in-section buttons, not used in this version as per request */
             margin-top: 10px;
+            /* display: none; /* Ensure it's hidden if not used */
         }
     </style>
 </head>
@@ -627,7 +628,15 @@
 
             // --- Utility Functions ---
             const pad = (num) => num.toString().padStart(2, '0');
-            const persianToEnglishDigits = (str) => { /* ... implementation ... */ return str; }; // Placeholder, keep existing
+            const persianToEnglishDigits = (str) => {
+                if (typeof str !== 'string') return str; // Return as is if not a string
+                const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                return str.split('').map(char => {
+                    const index = persianNumbers.indexOf(char);
+                    return index !== -1 ? englishNumbers[index] : char;
+                }).join('');
+            };
             var MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}function bit_rol(d,_){return d<<_|d>>>32-_}
 
             const getWikimediaHash = (paper, fullFileNameWithPdf) => {
@@ -642,48 +651,74 @@
             // --- Newspaper Loading Logic ---
             const checkAndLoadNewspaper = async (type, year, month, day, page) => {
                 const paper = newspaperData[type];
-                if (!paper) return false; 
+                if (!paper || !paper.sectionElement) { // Ensure sectionElement exists
+                     console.warn(`Newspaper data or sectionElement missing for type: ${type}`);
+                     return Promise.resolve(false);
+                }
 
                 let fileNameBase;
-                let maxPages = null; 
+                let maxPages = null;
+                let shouldProcess = false;
+                let isHijriDBPaper = paper.type === 'database' && paper.calendar_type === 'hijri';
 
-                if (paper.type === 'formula') {
-                    if (currentCalendarMode !== 'shamsi') {
-                        if(paper.sectionElement) paper.sectionElement.style.display = 'none';
+                // Determine section visibility and if we should process this paper
+                if (currentCalendarMode === 'hijri') {
+                    if (isHijriDBPaper) {
+                        paper.sectionElement.style.display = 'block';
+                        shouldProcess = true;
+                    } else { // Formula (Shamsi) or non-Hijri DB papers
+                        paper.sectionElement.style.display = 'none';
                         paper.available = false;
-                        return false;
+                        return Promise.resolve(false);
                     }
+                } else { // Shamsi mode
+                    if (paper.type === 'formula' || (paper.type === 'database' && paper.calendar_type === 'shamsi')) {
+                        paper.sectionElement.style.display = 'block';
+                        shouldProcess = true;
+                    } else { // Hijri DB paper in Shamsi mode
+                        paper.sectionElement.style.display = 'none';
+                        paper.available = false;
+                        return Promise.resolve(false);
+                    }
+                }
+
+                if (!shouldProcess) {
+                    paper.available = false; // Should already be set, but for safety
+                    return Promise.resolve(false);
+                }
+                
+                // At this point, the section is visible. Now determine content (image or "not available" message).
+                paper.errorElement.style.display = 'none'; // Clear previous errors for this section
+                paper.imageElement.style.display = 'none'; // Hide image initially
+                paper.statusElement.style.display = 'none'; // Hide status initially
+
+
+                if (paper.type === 'formula') { // Will only be true if in Shamsi mode
                     fileNameBase = `${paper.prefix}${year}${month}${day}`;
-                } else if (paper.type === 'database') {
-                    if (paper.calendar_type !== currentCalendarMode) {
-                        if(paper.sectionElement) paper.sectionElement.style.display = 'none';
-                        paper.available = false;
-                        return false;
-                    }
-
+                    paper.currentIssue = null; // Formula papers don't have 'currentIssue' in the same way
+                } else if (paper.type === 'database') { // calendar_type already matches currentCalendarMode
                     const foundIssue = paper.issues && paper.issues.find(issue => 
                         issue.year == year && issue.month == month && issue.day == day
                     );
                     if (foundIssue) {
                         fileNameBase = foundIssue.filename_base;
-                        maxPages = foundIssue.pages || null; 
-                        paper.currentIssue = foundIssue; 
+                        maxPages = foundIssue.pages || null;
+                        paper.currentIssue = foundIssue;
                     } else {
-                        if(paper.imageElement) paper.imageElement.style.display = 'none';
-                        if(paper.statusElement) paper.statusElement.style.display = 'none';
-                        if(paper.errorElement) {
-                            paper.errorElement.textContent = `شماره‌ای برای ${paper.title} در تاریخ ${year}/${month}/${day} یافت نشد.`;
-                            paper.errorElement.style.display = 'block';
-                        }
-                        if(paper.sectionElement) paper.sectionElement.style.display = 'none';
+                        // Section is visible (for Hijri DB papers), but no issue for this date
+                        paper.errorElement.textContent = 'روزنامه در این تاریخ موجود نیست';
+                        paper.errorElement.style.display = 'block';
                         paper.available = false;
-                        return false;
+                        return Promise.resolve(false); // No image to load
                     }
                 } else {
                      console.warn("Unknown paper type for:", type);
-                     return false;
+                     return Promise.resolve(false);
                 }
-
+                
+                // If we have a fileNameBase, attempt to load the image
+                paper.statusElement.textContent = 'در حال بارگذاری...';
+                paper.statusElement.style.display = 'block';
 
                 const fullFileNameWithPdf = `${fileNameBase}.pdf`; 
                 const hash = getWikimediaHash(paper, fullFileNameWithPdf); 
@@ -692,44 +727,29 @@
                 const width = 330; 
                 const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${page}-${width}px-${fileNameForUrlPath}.jpg`;
 
-                const newspaperImgElement = paper.imageElement;
-                const newspaperStatusElement = paper.statusElement;
-                const newspaperErrorElement = paper.errorElement;
-                const newspaperSection = paper.sectionElement;
-
-                if (!newspaperImgElement || !newspaperStatusElement || !newspaperErrorElement || !newspaperSection) {
-                    console.warn("Missing HTML elements for newspaper:", type);
-                    return false;
-                }
-
-                newspaperImgElement.style.display = 'none';
-                newspaperStatusElement.textContent = 'در حال بارگذاری...';
-                newspaperStatusElement.style.display = 'block';
-                newspaperErrorElement.style.display = 'none';
-                newspaperSection.style.display = 'block'; 
-
                 return new Promise((resolve) => {
-                    newspaperImgElement.onload = () => {
-                        newspaperStatusElement.style.display = 'none';
-                        newspaperImgElement.style.display = 'block';
-                        newspaperErrorElement.style.display = 'none';
+                    paper.imageElement.onload = () => {
+                        paper.statusElement.style.display = 'none';
+                        paper.imageElement.style.display = 'block';
+                        paper.errorElement.style.display = 'none'; // Ensure error is hidden on success
                         paper.available = true;
-                        if (type === 'Q134006001') updateIssueNavigationVisibility('Q134006001');
-                        if (type === 'Q134311191') updateIssueNavigationVisibility('Q134311191');
+                        if (type === 'Q134006001' || type === 'Q134311191') { // Update specific issue navs
+                           updateIssueNavigationVisibility(type);
+                        }
                         paper.fileNameBase = fileNameBase; 
                         paper.maxPages = maxPages; 
                         resolve(true);
                     };
-                    newspaperImgElement.onerror = () => {
-                        newspaperStatusElement.style.display = 'none';
-                        newspaperImgElement.style.display = 'none';
-                        newspaperErrorElement.textContent = `تصویر برای ${paper.title} و صفحه ${page} یافت نشد.`;
+                    paper.imageElement.onerror = () => {
+                        paper.statusElement.style.display = 'none';
+                        // paper.imageElement.style.display = 'none'; // Already hidden
+                        paper.errorElement.textContent = `تصویر صفحه ${page} یافت نشد.`;
                         paper.errorElement.style.display = 'block';
-                        paper.sectionElement.style.display = 'none';
+                        // paper.sectionElement.style.display = 'none'; // NO, section remains visible with error
                         paper.available = false;
                         resolve(false);
                     };
-                    newspaperImgElement.src = imageUrl; 
+                    paper.imageElement.src = imageUrl; 
                 }).catch(() => resolve(false)); 
             };
             
@@ -787,13 +807,14 @@
                 mainStatusMessage.style.display = 'none'; 
                 updateIssueNavigationVisibility('Q134006001');
                 updateIssueNavigationVisibility('Q134311191'); 
-                updateInSectionGoToFirstIssueButtonsVisibility(); 
-                updateGlobalGoToFirstIssueButtonsVisibility(); // New call for global buttons
+                // updateInSectionGoToFirstIssueButtonsVisibility(); // This is removed
+                updateGlobalGoToFirstIssueButtonsVisibility(); 
 
 
                 if (!results.some(loaded => loaded)) { 
-                    mainErrorMessage.textContent = `روزنامه‌ای برای این تاریخ یافت نشد.`; 
-                    mainErrorMessage.style.display = 'block';
+                    // This message might be redundant if individual sections show "not available"
+                    // mainErrorMessage.textContent = `روزنامه‌ای برای این تاریخ یافت نشد.`; 
+                    // mainErrorMessage.style.display = 'block';
                 } else {
                     mainErrorMessage.style.display = 'none';
                 }
@@ -804,8 +825,8 @@
                 shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'flex' : 'none';
                 hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'flex' : 'none';
                 loadImage('date');
-                updateInSectionGoToFirstIssueButtonsVisibility(); 
-                updateGlobalGoToFirstIssueButtonsVisibility(); // Update global buttons on calendar change
+                // updateInSectionGoToFirstIssueButtonsVisibility(); // This is removed
+                updateGlobalGoToFirstIssueButtonsVisibility(); 
             };
             shamsiCalendarRadio.addEventListener('change', () => { currentCalendarMode = 'shamsi'; handleCalendarChange(); });
             hijriCalendarRadio.addEventListener('change', () => { currentCalendarMode = 'hijri'; handleCalendarChange(); });
@@ -819,8 +840,12 @@
             // --- Lightbox Functions ---
             const openLightbox = async (type) => { 
                 currentLightboxNewspaperType = type;
-                if (!newspaperData[type]) return;
-                lightboxCurrentPage = newspaperData[type].currentPage;
+                const paper = newspaperData[type];
+                if (!paper || !paper.available) { // Only open lightbox if paper is available for the current date
+                    console.warn(`Lightbox cannot be opened for ${type} as it's not available for the selected date.`);
+                    return;
+                }
+                lightboxCurrentPage = paper.currentPage;
                 lightboxOverlay.classList.add('visible');
                 await updateLightboxContent();
             };
@@ -870,27 +895,18 @@
                 let fileNameBase;
                 let maxPages = null;
 
-                if (paper.type === 'formula') {
-                    fileNameBase = `${paper.prefix}${year}${month}${day}`;
-                } else if (paper.type === 'database') {
-                    const foundIssue = paper.issues && paper.issues.find(issue => 
-                        issue.year == year && issue.month == month && issue.day == day
-                    );
-                    if (foundIssue) {
-                        fileNameBase = foundIssue.filename_base;
-                        maxPages = foundIssue.pages || null;
-                    } else {
-                        lightboxStatusMessage.style.display = 'none';
-                        lightboxImage.style.display = 'none';
-                        lightboxErrorMessage.textContent = `شماره‌ای برای ${paper.title} در تاریخ ${formattedDate} یافت نشد.`;
-                        lightboxErrorMessage.style.display = 'block';
-                        return;
-                    }
-                } else { 
-                     lightboxStatusMessage.style.display = 'none';
-                     lightboxErrorMessage.textContent = `نوع روزنامه نامشخص: ${paper.title}`;
-                     lightboxErrorMessage.style.display = 'block';
-                     return;
+                // For lightbox, we use the fileNameBase stored on the paper object from the main view load
+                // This assumes the lightbox always shows the paper for the main selected date.
+                if (paper.fileNameBase) {
+                     fileNameBase = paper.fileNameBase;
+                     maxPages = paper.maxPages; // Use maxPages stored from main view
+                } else {
+                     // This case should ideally not happen if lightbox is opened for an 'available' paper
+                    console.error("fileNameBase not found for lightbox for paper:", type);
+                    lightboxStatusMessage.style.display = 'none';
+                    lightboxErrorMessage.textContent = `اطلاعات روزنامه برای نمایش در لایت‌باکس یافت نشد.`;
+                    lightboxErrorMessage.style.display = 'block';
+                    return;
                 }
 
 
@@ -941,30 +957,95 @@
                     lightboxNextNewspaperButton.style.display = 'none';
                 }
             };
-            const lightboxGoToPage = (direction) => { /* ... existing implementation ... */ };
-            const lightboxChangeNewspaper = (direction) => { /* ... existing implementation ... */ };
+            const lightboxGoToPage = (direction) => {
+                const paper = newspaperData[currentLightboxNewspaperType];
+                if (!paper) return;
+
+                if (direction === 'prev' && lightboxCurrentPage > 1) {
+                    lightboxCurrentPage--;
+                } else if (direction === 'next') {
+                    // Use paper.maxPages which should be set when the main image was loaded
+                    if (paper.maxPages !== null && lightboxCurrentPage >= paper.maxPages) {
+                        return; 
+                    }
+                    lightboxCurrentPage++;
+                }
+                updateLightboxContent();
+            };
+            const lightboxChangeNewspaper = (direction) => {
+                const availableNewspapers = Object.keys(newspaperData).filter(key => newspaperData[key] && newspaperData[key].available);
+                if (availableNewspapers.length <= 1) return; 
+
+                const currentIndex = availableNewspapers.indexOf(currentLightboxNewspaperType);
+                let newIndex;
+                if (direction === 'prev') {
+                    newIndex = (currentIndex - 1 + availableNewspapers.length) % availableNewspapers.length;
+                } else { 
+                    newIndex = (currentIndex + 1) % availableNewspapers.length;
+                }
+                currentLightboxNewspaperType = availableNewspapers[newIndex];
+                const newPaper = newspaperData[currentLightboxNewspaperType];
+                if (newPaper) {
+                     lightboxCurrentPage = newPaper.currentPage; 
+                } else {
+                    lightboxCurrentPage = 1; // Fallback
+                }
+                updateLightboxContent();
+            };
 
             // Lightbox Event Listeners
-            Object.values(newspaperData).forEach(paper => {
+            Object.keys(newspaperData).forEach(type => {
+                const paper = newspaperData[type];
                 if (paper && paper.imageElement) {
-                    paper.imageElement.addEventListener('click', () => openLightbox(Object.keys(newspaperData).find(key => newspaperData[key] === paper)));
+                    paper.imageElement.addEventListener('click', () => openLightbox(type));
                 }
             });
+
             lightboxCloseButton.addEventListener('click', closeLightbox);
             lightboxOverlay.addEventListener('click', (e) => { if (e.target === lightboxOverlay) closeLightbox(); });
             lightboxPrevPageButton.addEventListener('click', () => lightboxGoToPage('prev'));
             lightboxNextPageButton.addEventListener('click', () => lightboxGoToPage('next'));
-            lightboxPageNumberInput.addEventListener('change', () => { /* ... existing ... */ });
+            lightboxPageNumberInput.addEventListener('change', () => {
+                const inputPageValue = persianToEnglishDigits(lightboxPageNumberInput.value); // Convert Persian numbers
+                const parsedInputPage = parseInt(inputPageValue, 10);
+                if (!isNaN(parsedInputPage) && parsedInputPage >= 1) {
+                    const paper = newspaperData[currentLightboxNewspaperType];
+                    if (paper && paper.maxPages !== null && parsedInputPage > paper.maxPages) {
+                        lightboxCurrentPage = paper.maxPages; // Go to max page if input exceeds
+                    } else {
+                        lightboxCurrentPage = parsedInputPage;
+                    }
+                    updateLightboxContent();
+                } else {
+                    lightboxPageNumberInput.value = lightboxCurrentPage; // Revert to current valid page
+                }
+            });
             lightboxPrevNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('prev'));
             lightboxNextNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('next'));
-            document.addEventListener('keydown', (e) => { /* ... existing ... */ });
+            document.addEventListener('keydown', (e) => { 
+                 if (lightboxOverlay.classList.contains('visible')) {
+                    if (e.key === 'ArrowLeft') {
+                        lightboxGoToPage('prev');
+                    } else if (e.key === 'ArrowRight') {
+                        lightboxGoToPage('next');
+                    } else if (e.key === 'Escape') {
+                        closeLightbox();
+                    }
+                }
+            });
 
 
             // --- Issue Navigation Functions (Generic for DB papers) ---
             const loadNewspaperIssues = (newspaperId) => {
                 const paper = newspaperData[newspaperId];
                 if (!paper || !paper.issues) return [];
-                let sortedIssues = [...paper.issues].sort((a, b) => (a.issue_number || 0) - (b.issue_number || 0));
+                // Sort by year, then month, then day, then issue_number for robustness
+                let sortedIssues = [...paper.issues].sort((a, b) => {
+                    if (a.year !== b.year) return a.year - b.year;
+                    if (a.month !== b.month) return a.month - b.month;
+                    if (a.day !== b.day) return a.day - b.day;
+                    return (a.issue_number || 0) - (b.issue_number || 0);
+                });
                 if (newspaperId === 'Q134006001') khorshidIssues = sortedIssues;
                 if (newspaperId === 'Q134311191') bamdadRoshanIssues = sortedIssues;
                 return sortedIssues;
@@ -990,19 +1071,18 @@
                 if (!issueNumberInputRef || !issue) return;
                 issueNumberInputRef.value = issue.issue_number || '';
                 
+                // This function assumes the newspaper's calendar_type matches currentCalendarMode for date setting
+                // For Hijri DB papers, this will set Hijri date controls
                 if (newspaperData[newspaperId] && newspaperData[newspaperId].calendar_type === 'hijri') {
                     hijriYearInput.value = issue.year;
                     hijriMonthSelect.value = issue.month;
                     hijriDayInput.value = issue.day;
-                } else if (newspaperData[newspaperId] && newspaperData[newspaperId].calendar_type === 'shamsi') {
-                    shamsiYearInput.value = issue.year;
-                    shamsiMonthSelect.value = issue.month;
-                    shamsiDayInput.value = issue.day;
-                }
+                } 
+                // No need to handle Shamsi here as issue navigation is for Hijri papers
                 mainPageNumberInput.value = 1; 
                 Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
-                loadImage('date');
-                updateIssueNavButtons(newspaperId);
+                loadImage('date'); // This will reload all papers for the new date
+                updateIssueNavButtons(newspaperId); // Update buttons for the navigated paper
             };
 
             const goToPrevNewspaperIssue = (newspaperId) => {
@@ -1018,7 +1098,8 @@
                 let issueNumberInputRef = newspaperId === 'Q134006001' ? khorshidIssueNumberInput : bamdadRoshanIssueNumberInput;
                 let issuesArray = newspaperId === 'Q134006001' ? khorshidIssues : bamdadRoshanIssues;
                 if (!issueNumberInputRef) return;
-                const issueNumber = parseInt(issueNumberInputRef.value);
+                const issueNumberText = persianToEnglishDigits(issueNumberInputRef.value);
+                const issueNumber = parseInt(issueNumberText);
                 if (isNaN(issueNumber)) return;
                 const issueIndex = issuesArray.findIndex(issue => issue.issue_number == issueNumber);
                 if (issueIndex >= 0) goToNewspaperIssue(newspaperId, issueIndex);
@@ -1027,78 +1108,48 @@
             const updateIssueNavigationVisibility = (newspaperId) => {
                 const paper = newspaperData[newspaperId];
                 let navigationDiv = document.getElementById(`${newspaperId}Navigation`);
-                if (!navigationDiv || !paper || !paper.issues) { if(navigationDiv) navigationDiv.style.display = 'none'; return; }
-
-                navigationDiv.style.display = paper.available && paper.issues.length > 0 ? 'block' : 'none';
                 
-                if (navigationDiv.style.display === 'block') {
-                    const loadedIssues = loadNewspaperIssues(newspaperId); // This now returns sorted issues
-                    const currentYear = paper.calendar_type === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value;
-                    const currentMonth = paper.calendar_type === 'shamsi' ? pad(shamsiMonthSelect.value) : pad(hijriMonthSelect.value);
-                    const currentDay = paper.calendar_type === 'shamsi' ? pad(shamsiDayInput.value) : pad(hijriDayInput.value);
-            
-                    const foundIndex = loadedIssues.findIndex(issue => 
-                        issue.year == currentYear && 
-                        issue.month == parseInt(currentMonth) && // Ensure comparison with number
-                        issue.day == parseInt(currentDay) // Ensure comparison with number
-                    );
-                    
-                    let issueNumberInputRef;
-                    if (newspaperId === 'Q134006001') { currentKhorshidIssueIndex = foundIndex; issueNumberInputRef = khorshidIssueNumberInput; }
-                    else if (newspaperId === 'Q134311191') { currentBamdadRoshanIssueIndex = foundIndex; issueNumberInputRef = bamdadRoshanIssueNumberInput; }
-                    
-                    if (foundIndex >= 0 && issueNumberInputRef && loadedIssues[foundIndex]) {
-                         issueNumberInputRef.value = loadedIssues[foundIndex].issue_number || '';
-                    } else if (issueNumberInputRef) {
-                        issueNumberInputRef.value = ''; // Clear if no issue found for current date
-                    }
-                    updateIssueNavButtons(newspaperId);
-                }
-            };
-
-            // --- "Go to First Issue" Button Logic (In-Section) ---
-            const goToFirstAvailableIssueInSection = (paperId) => {
-                // This is the old function, renamed for clarity
-                const paper = newspaperData[paperId];
-                if (!paper || paper.type !== 'database' || paper.calendar_type !== 'hijri' || !paper.issues || paper.issues.length === 0) {
+                if (!navigationDiv || !paper || paper.type !== 'database' || paper.calendar_type !== 'hijri' || !paper.issues || paper.issues.length === 0) {
+                    if(navigationDiv) navigationDiv.style.display = 'none';
                     return;
                 }
-                if (currentCalendarMode !== 'hijri') return;
 
-                const sortedIssues = [...paper.issues].sort((a, b) => {
-                    if (a.year !== b.year) return a.year - b.year;
-                    if (a.month !== b.month) return a.month - b.month;
-                    return a.day - b.day;
-                });
-
-                if (sortedIssues.length > 0) {
-                    const firstIssue = sortedIssues[0];
-                    hijriYearInput.value = firstIssue.year;
-                    hijriMonthSelect.value = firstIssue.month;
-                    hijriDayInput.value = firstIssue.day;
-                    mainPageNumberInput.value = 1; 
-                    Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
-                    loadImage('date'); 
+                // Always show nav controls if it's a Hijri DB paper in Hijri mode, and it has issues defined
+                if (currentCalendarMode === 'hijri') {
+                    navigationDiv.style.display = 'block';
+                } else {
+                    navigationDiv.style.display = 'none';
+                    return; 
                 }
+                
+                // If visible, populate and update buttons
+                const loadedIssues = loadNewspaperIssues(newspaperId); 
+                const currentYear = hijriYearInput.value; 
+                const currentMonth = pad(hijriMonthSelect.value);
+                const currentDay = pad(hijriDayInput.value);
+        
+                const foundIndex = loadedIssues.findIndex(issue => 
+                    issue.year == currentYear && 
+                    issue.month == parseInt(currentMonth) && 
+                    issue.day == parseInt(currentDay)
+                );
+                
+                let issueNumberInputRef;
+                if (newspaperId === 'Q134006001') { currentKhorshidIssueIndex = foundIndex; issueNumberInputRef = khorshidIssueNumberInput; }
+                else if (newspaperId === 'Q134311191') { currentBamdadRoshanIssueIndex = foundIndex; issueNumberInputRef = bamdadRoshanIssueNumberInput; }
+                
+                if (issueNumberInputRef) { 
+                    if (foundIndex >= 0 && loadedIssues[foundIndex]) {
+                         issueNumberInputRef.value = loadedIssues[foundIndex].issue_number || '';
+                    } else {
+                        issueNumberInputRef.value = ''; 
+                    }
+                }
+                updateIssueNavButtons(newspaperId); 
             };
 
-            const updateInSectionGoToFirstIssueButtonsVisibility = () => {
-                // This is the old function, renamed for clarity
-                Object.keys(newspaperData).forEach(paperId => {
-                    const paper = newspaperData[paperId];
-                    if (paper && paper.goToFirstIssueButtonElement) { // Check if the button element exists for this paper
-                        if (currentCalendarMode === 'hijri' &&
-                            paper.type === 'database' &&
-                            paper.calendar_type === 'hijri' &&
-                            paper.available && // Only show if the newspaper is currently available/loaded
-                            paper.issues && paper.issues.length > 0) {
-                            paper.goToFirstIssueButtonElement.style.display = 'block';
-                        } else {
-                            paper.goToFirstIssueButtonElement.style.display = 'none';
-                        }
-                    }
-                });
-            };
+            // --- "Go to First Issue" Button Logic (In-Section - REMOVED as per request) ---
+            // const updateInSectionGoToFirstIssueButtonsVisibility = () => { ... }; // Kept for reference if needed later, but not used.
 
             // --- Global "Go to First Issue" Button Logic ---
             const handleGlobalGoToFirstIssue = (paperId) => {
@@ -1107,41 +1158,43 @@
                     console.warn(`Cannot go to first issue for ${paperId}: Not a valid database newspaper with issues.`);
                     return;
                 }
-                 // Ensure we are in Hijri mode, otherwise, these buttons shouldn't be visible/active.
                 if (currentCalendarMode !== 'hijri') {
-                     console.warn("Global 'Go to First Issue' button clicked, but not in Hijri mode. This shouldn't happen if visibility is correct.");
+                     console.warn("Global 'Go to First Issue' button clicked, but not in Hijri mode.");
                      return;
                 }
 
-
-                const sortedIssues = [...paper.issues].sort((a, b) => {
-                    if (a.year !== b.year) return a.year - b.year;
-                    if (a.month !== b.month) return a.month - b.month;
-                    return a.day - b.day;
-                });
+                const sortedIssues = loadNewspaperIssues(paperId); // Use the already sorted (by issue_number, then date) list
 
                 if (sortedIssues.length > 0) {
-                    const firstIssue = sortedIssues[0];
-                    hijriYearInput.value = firstIssue.year;
-                    hijriMonthSelect.value = firstIssue.month;
-                    hijriDayInput.value = firstIssue.day;
-                    mainPageNumberInput.value = 1;
-                    Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
-                    loadImage('date');
+                    // Find the issue with the absolute earliest date
+                    const firstChronologicalIssue = [...paper.issues].sort((a,b) => {
+                        if(a.year !== b.year) return a.year - b.year;
+                        if(a.month !== b.month) return a.month - b.month;
+                        return a.day - b.day;
+                    })[0];
+
+                    if (firstChronologicalIssue) {
+                        hijriYearInput.value = firstChronologicalIssue.year;
+                        hijriMonthSelect.value = firstChronologicalIssue.month;
+                        hijriDayInput.value = firstChronologicalIssue.day;
+                        mainPageNumberInput.value = 1;
+                        Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
+                        loadImage('date');
+                    }
                 }
             };
 
             const updateGlobalGoToFirstIssueButtonsVisibility = () => {
                 if (currentCalendarMode === 'hijri') {
-                    if (newspaperData['Q134006001'] && newspaperData['Q134006001'].issues && newspaperData['Q134006001'].issues.length > 0) {
-                        if(goToFirstKhorshidGlobalBtn) goToFirstKhorshidGlobalBtn.style.display = 'inline-block';
-                    } else {
-                        if(goToFirstKhorshidGlobalBtn) goToFirstKhorshidGlobalBtn.style.display = 'none';
+                    if (goToFirstKhorshidGlobalBtn && newspaperData['Q134006001'] && newspaperData['Q134006001'].issues && newspaperData['Q134006001'].issues.length > 0) {
+                        goToFirstKhorshidGlobalBtn.style.display = 'inline-block';
+                    } else if(goToFirstKhorshidGlobalBtn) {
+                        goToFirstKhorshidGlobalBtn.style.display = 'none';
                     }
-                    if (newspaperData['Q134311191'] && newspaperData['Q134311191'].issues && newspaperData['Q134311191'].issues.length > 0) {
-                        if(goToFirstBamdadRoshanGlobalBtn) goToFirstBamdadRoshanGlobalBtn.style.display = 'inline-block';
-                    } else {
-                        if(goToFirstBamdadRoshanGlobalBtn) goToFirstBamdadRoshanGlobalBtn.style.display = 'none';
+                    if (goToFirstBamdadRoshanGlobalBtn && newspaperData['Q134311191'] && newspaperData['Q134311191'].issues && newspaperData['Q134311191'].issues.length > 0) {
+                       goToFirstBamdadRoshanGlobalBtn.style.display = 'inline-block';
+                    } else if(goToFirstBamdadRoshanGlobalBtn) {
+                        goToFirstBamdadRoshanGlobalBtn.style.display = 'none';
                     }
                 } else {
                     if(goToFirstKhorshidGlobalBtn) goToFirstKhorshidGlobalBtn.style.display = 'none';
@@ -1182,7 +1235,7 @@
                 const errorElement = document.getElementById(`${paperId}ErrorMessage`);
                 const sectionElement = document.getElementById(`${paperId}Section`);
                 const filterElement = document.getElementById(`filter-${paperId}`);
-                const goToFirstIssueButtonInSectionElement = document.getElementById(`goToFirst_${paperId}`); 
+                // const goToFirstIssueButtonInSectionElement = document.getElementById(`goToFirst_${paperId}`); // Removed
 
                 if (imageElement && statusElement && errorElement && sectionElement && filterElement) {
                     newspaperData[paperId] = {
@@ -1197,22 +1250,22 @@
                         filterElement: filterElement,
                         issues: dbPaper.issues,
                         calendar_type: dbPaper.calendar_type,
-                        goToFirstIssueButtonElement: goToFirstIssueButtonInSectionElement // Renamed for clarity
+                        // goToFirstIssueButtonElement: goToFirstIssueButtonInSectionElement // Removed
                     };
                     if (paperId === 'Q134006001' || paperId === 'Q134311191') {
-                        loadNewspaperIssues(paperId);
+                        loadNewspaperIssues(paperId); // Load and sort issues
                     }
-                    if (goToFirstIssueButtonInSectionElement) { 
-                        goToFirstIssueButtonInSectionElement.addEventListener('click', () => goToFirstAvailableIssueInSection(paperId));
-                    }
+                    // if (goToFirstIssueButtonInSectionElement) { // Removed
+                    //     goToFirstIssueButtonInSectionElement.addEventListener('click', () => goToFirstAvailableIssueInSection(paperId));
+                    // }
                     imageElement.addEventListener('click', () => openLightbox(paperId));
                 } else {
                     console.warn(`HTML elements for newspaper '${dbPaper.title}' (ID: ${paperId}) incomplete. Skipping dynamic addition or full setup.`);
                 }
             });
             
-            updateInSectionGoToFirstIssueButtonsVisibility(); 
-            updateGlobalGoToFirstIssueButtonsVisibility(); // Call for global buttons
+            // updateInSectionGoToFirstIssueButtonsVisibility(); // Removed
+            updateGlobalGoToFirstIssueButtonsVisibility(); 
 
             setTimeout(() => {
                 loadImage('initial');
