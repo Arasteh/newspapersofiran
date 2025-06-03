@@ -1,1424 +1,1422 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بایگانی روزنامه‌های ایران</title>
-    <style>
-        /* CSS Variables for Light/Dark Mode */
-        body {
-            --body-bg: #f4f4f4;
-            --text-color: #333;
-            --control-bg: #fff;
-            --border-color: #ddd;
-            --button-bg: #28a745; /* Green for main buttons */
-            --button-hover-bg: #218838;
-            --button-disabled-bg: #cccccc;
-            --error-color: red;
-            --status-color: #007bff;
-            --section-bg: #fff;
-            --section-title-color: #555;
-            --lightbox-bg: #fff;
-            --lightbox-text-color: #333;
-            --lightbox-button-bg: #007bff; /* Blue for lightbox buttons */
-            --lightbox-button-hover-bg: #0056b3;
-            --lightbox-close-button-color: #333;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بایگانی روزنامه‌های ایران</title>
+<style>
+/* CSS Variables for Light/Dark Mode */
+body {
+    --body-bg: #f4f4f4;
+    --text-color: #333;
+    --control-bg: #fff;
+    --border-color: #ddd;
+    --button-bg: #28a745; /* Green for main buttons */
+    --button-hover-bg: #218838;
+    --button-disabled-bg: #cccccc;
+    --error-color: red;
+    --status-color: #007bff;
+    --section-bg: #fff;
+    --section-title-color: #555;
+    --lightbox-bg: #fff;
+    --lightbox-text-color: #333;
+    --lightbox-button-bg: #007bff; /* Blue for lightbox buttons */
+    --lightbox-button-hover-bg: #0056b3;
+    --lightbox-close-button-color: #333;
+}
 
-        @media (prefers-color-scheme: dark) {
-            body {
-                --body-bg: #1a1a1a;
-                --text-color: #e0e0e0;
-                --control-bg: #2a2a2a;
-                --border-color: #555;
-                --button-bg: #1e7e34; /* Darker green for dark mode */
-                --button-hover-bg: #1c6b2f;
-                --button-disabled-bg: #555555;
-                --error-color: #ff6666;
-                --status-color: #66b3ff;
-                --section-bg: #2a2a2a;
-                --section-title-color: #cccccc;
-                --lightbox-bg: #3a3a3a;
-                --lightbox-text-color: #e0e0e0;
-                --lightbox-button-bg: #0056b3; /* Darker blue for dark mode */
-                --lightbox-button-hover-bg: #003d80;
-                --lightbox-close-button-color: #e0e0e0;
-            }
-        }
+@media (prefers-color-scheme: dark) {
+    body {
+        --body-bg: #1a1a1a;
+        --text-color: #e0e0e0;
+        --control-bg: #2a2a2a;
+        --border-color: #555;
+        --button-bg: #1e7e34; /* Darker green for dark mode */
+        --button-hover-bg: #1c6b2f;
+        --button-disabled-bg: #555555;
+        --error-color: #ff6666;
+        --status-color: #66b3ff;
+        --section-bg: #2a2a2a;
+        --section-title-color: #cccccc;
+        --lightbox-bg: #3a3a3a;
+        --lightbox-text-color: #e0e0e0;
+        --lightbox-button-bg: #0056b3; /* Darker blue for dark mode */
+        --lightbox-button-hover-bg: #003d80;
+        --lightbox-close-button-color: #e0e0e0;
+    }
+}
 
-        body {
-            font-family: system-ui;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px;
-            background-color: var(--body-bg);
-            color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .controls {
-            margin-bottom: 10px; 
-            background-color: var(--control-bg);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .global-issue-nav-controls { 
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px; 
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .global-issue-nav-controls button { 
-            padding: 8px 15px;
-            background-color: var(--button-bg);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
-        }
-        .global-issue-nav-controls button:hover {
-            background-color: var(--button-hover-bg);
-        }
-        .global-issue-nav-controls button:disabled {
-            background-color: var(--button-disabled-bg);
-            cursor: not-allowed;
-        }
-        .controls label {
-            margin-left: 5px;
-        }
-        .controls select, .controls input[type="number"] {
-            padding: 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 16px;
-            background-color: var(--control-bg);
-            color: var(--text-color);
-        }
-        .newspaper-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            width: 100%;
-            max-width: 1150px; 
-        }
-        .newspaper-section {
-            flex: 1;
-            min-width: 330px;
-            max-width: 370px;
-            text-align: center;
-            background-color: var(--section-bg);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .newspaper-section h2 {
-            margin-top: 0;
-            color: var(--section-title-color);
-            font-weight: normal;
-        }
-        .newspaper-section.available-newspaper h2 {
-            font-weight: bold;
-        }
-        .newspaper-image {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 0 auto;
-            display: block;
-        }
-        .error-message {
-            color: var(--error-color);
-            margin-top: 10px;
-            text-align: center;
-            width: 100%;
-        }
-        .status-message {
-            color: var(--status-color);
-            margin-top: 10px;
-            text-align: center;
-            width: 100%;
-        }
-        .pagination-controls {
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .pagination-controls button {
-            padding: 8px 15px;
-            background-color: var(--button-bg);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
-        }
-        .pagination-controls button:hover {
-            background-color: var(--button-hover-bg);
-        }
-        .pagination-controls button:disabled {
-            background-color: var(--button-disabled-bg);
-            cursor: not-allowed;
-        }
-        .pagination-controls input[type="number"] {
-            width: 60px;
-            text-align: center;
-            background-color: var(--control-bg);
-            color: var(--text-color);
-        }
+body {
+    font-family: system-ui;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    background-color: var(--body-bg);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+.controls {
+    margin-bottom: 10px;
+    background-color: var(--control-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.global-issue-nav-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.global-issue-nav-controls button {
+    padding: 8px 15px;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+.global-issue-nav-controls button:hover {
+    background-color: var(--button-hover-bg);
+}
+.global-issue-nav-controls button:disabled {
+    background-color: var(--button-disabled-bg);
+    cursor: not-allowed;
+}
+.controls label {
+    margin-left: 5px;
+}
+.controls select, .controls input[type="number"] {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: var(--control-bg);
+    color: var(--text-color);
+}
+.newspaper-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1150px;
+}
+.newspaper-section {
+    flex: 1;
+    min-width: 330px;
+    max-width: 370px;
+    text-align: center;
+    background-color: var(--section-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.newspaper-section h2 {
+    margin-top: 0;
+    color: var(--section-title-color);
+    font-weight: normal;
+}
+.newspaper-section.available-newspaper h2 {
+    font-weight: bold;
+}
+.newspaper-image {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 auto;
+    display: block;
+}
+.error-message {
+    color: var(--error-color);
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+}
+.status-message {
+    color: var(--status-color);
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+}
+.pagination-controls {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.pagination-controls button {
+    padding: 8px 15px;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+.pagination-controls button:hover {
+    background-color: var(--button-hover-bg);
+}
+.pagination-controls button:disabled {
+    background-color: var(--button-disabled-bg);
+    cursor: not-allowed;
+}
+.pagination-controls input[type="number"] {
+    width: 60px;
+    text-align: center;
+    background-color: var(--control-bg);
+    color: var(--text-color);
+}
 
-        .lightbox-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .lightbox-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        .lightbox-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90vh; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: var(--lightbox-bg);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            color: var(--lightbox-text-color);
-            overflow-y: auto; 
-        }
-        .lightbox-image {
-            max-width: 100%;
-            max-height: calc(90vh - 200px); 
-            height: auto;
-            display: block;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-            margin: 0 auto; 
-            object-fit: contain; 
-        }
-        .lightbox-controls {
-            display: flex;
-            justify-content: center; 
-            flex-wrap: wrap; 
-            width: 100%;
-            margin-top: 15px;
-            gap: 10px; 
-        }
-        .lightbox-controls .page-nav, .lightbox-controls .newspaper-nav {
-            display: flex;
-            align-items: center;
-            gap: 5px; 
-        }
-        .lightbox-controls button {
-            padding: 10px 20px;
-            background-color: var(--lightbox-button-bg);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-        .lightbox-controls button:hover {
-            background-color: var(--lightbox-button-hover-bg);
-        }
-        .lightbox-controls button:disabled {
-            background-color: var(--button-disabled-bg);
-            cursor: not-allowed;
-        }
-        .lightbox-controls input[type="number"] {
-            width: 70px;
-            text-align: center;
-            padding: 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 44px;
-            font-size: 16px;
-            background-color: var(--control-bg);
-            color: var(--text-color);
-        }
-        .lightbox-close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--lightbox-close-button-color);
-        }
-        .lightbox-links {
-            margin-top: 15px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .lightbox-links a {
-            padding: 8px 15px;
-            background-color: #4CAF50; 
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
-        .lightbox-links a:hover {
-            background-color: #45a049;
-        }
-        .calendar-selection {
-            margin-bottom: 15px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            align-items: center;
-        }
-        .calendar-selection label {
-            cursor: pointer;
-            padding: 8px 15px;
-            border-radius: 5px;
-            border: 1px solid var(--border-color);
-            background-color: var(--control-bg);
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-        .calendar-selection input[type="radio"] {
-            display: none; 
-        }
-        .calendar-selection input[type="radio"]:checked + label {
-            background-color: var(--button-bg);
-            color: white;
-            border-color: var(--button-bg);
-        }
-        .newspaper-filter-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: var(--control-bg);
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 760px;
-            display: none; 
-        }
-        .newspaper-filter-item {
-            padding: 8px 12px;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            background-color: var(--section-bg);
-            color: var(--text-color);
-            cursor: pointer;
-            transition: background-color 0.3s, border-color 0.3s, font-weight 0.3s, opacity 0.3s;
-            white-space: nowrap;
-        }
-        .newspaper-filter-item.available {
-            font-weight: bold;
-            display: block; 
-        }
-        .newspaper-filter-item.unavailable {
-            opacity: 0.5; 
-            display: none; 
-        }
-        .newspaper-filter-item:hover {
-            background-color: light-dark(#e0e0e0, #3a3a3a);
-        }
-        .issue-navigation-controls {
-            margin-top: 10px;
-            display: none; 
-            text-align: center;
-        }
-        .issue-navigation-controls > div { 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-        .issue-navigation-controls button { 
-            padding: 8px 15px;
-            background-color: var(--button-bg);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-         .issue-navigation-controls button:hover { 
-            background-color: var(--button-hover-bg);
-        }
-        .issue-navigation-controls button:disabled { 
-            background-color: var(--button-disabled-bg);
-            cursor: not-allowed;
-        }
-        .issue-navigation-controls input[type="number"] {
-            width: 60px;
-            padding: 8px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            background-color: var(--control-bg);
-            color: var(--text-color);
-        }
-    </style>
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.lightbox-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--lightbox-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    color: var(--lightbox-text-color);
+    overflow-y: auto;
+}
+.lightbox-image {
+    max-width: 100%;
+    max-height: calc(90vh - 200px);
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    margin: 0 auto;
+    object-fit: contain;
+}
+.lightbox-controls {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 15px;
+    gap: 10px;
+}
+.lightbox-controls .page-nav, .lightbox-controls .newspaper-nav {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.lightbox-controls button {
+    padding: 10px 20px;
+    background-color: var(--lightbox-button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+.lightbox-controls button:hover {
+    background-color: var(--lightbox-button-hover-bg);
+}
+.lightbox-controls button:disabled {
+    background-color: var(--button-disabled-bg);
+    cursor: not-allowed;
+}
+.lightbox-controls input[type="number"] {
+    width: 70px;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 44px;
+    font-size: 16px;
+    background-color: var(--control-bg);
+    color: var(--text-color);
+}
+.lightbox-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--lightbox-close-button-color);
+}
+.lightbox-links {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.lightbox-links a {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+.lightbox-links a:hover {
+    background-color: #45a049;
+}
+.calendar-selection {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+.calendar-selection label {
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    background-color: var(--control-bg);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.calendar-selection input[type="radio"] {
+    display: none;
+}
+.calendar-selection input[type="radio"]:checked + label {
+    background-color: var(--button-bg);
+    color: white;
+    border-color: var(--button-bg);
+}
+.newspaper-filter-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--control-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 760px;
+    display: none;
+}
+.newspaper-filter-item {
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background-color: var(--section-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, font-weight 0.3s, opacity 0.3s;
+    white-space: nowrap;
+}
+.newspaper-filter-item.available {
+    font-weight: bold;
+    display: block;
+}
+.newspaper-filter-item.unavailable {
+    opacity: 0.5;
+    display: none;
+}
+.newspaper-filter-item:hover {
+    background-color: light-dark(#e0e0e0, #3a3a3a);
+}
+.issue-navigation-controls {
+    margin-top: 10px;
+    display: none;
+    text-align: center;
+}
+.issue-navigation-controls > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.issue-navigation-controls button {
+    padding: 8px 15px;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+    .issue-navigation-controls button:hover {
+    background-color: var(--button-hover-bg);
+}
+.issue-navigation-controls button:disabled {
+    background-color: var(--button-disabled-bg);
+    cursor: not-allowed;
+}
+.issue-navigation-controls input[type="number"] {
+    width: 60px;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--control-bg);
+    color: var(--text-color);
+}
+</style>
 </head>
 <body>
-    <h1>بایگانی روزنامه‌های ایران</h1>
-
-    <div class="controls">
-        <div class="calendar-selection">
-            <input type="radio" id="shamsiCalendar" name="calendar" value="shamsi" checked>
-            <label for="shamsiCalendar">شمسی</label>
-            <input type="radio" id="hijriCalendar" name="calendar" value="hijri">
-            <label for="hijriCalendar">قمری</label>
-        </div>
-
-        <div id="shamsiDateControls">
-            <label for="shamsiYear">سال:</label>
-            <input type="number" id="shamsiYear" value="1350" min="1300" max="1450"> <label for="shamsiMonth">ماه:</label>
-            <select id="shamsiMonth">
-                <option value="1">فروردین</option>
-                <option value="2">اردیبهشت</option>
-                <option value="3">خرداد</option>
-                <option value="4">تیر</option>
-                <option value="5" selected>مرداد</option> <option value="6">شهریور</option>
-                <option value="7">مهر</option>
-                <option value="8">آبان</option>
-                <option value="9">آذر</option>
-                <option value="10">دی</option>
-                <option value="11">بهمن</option>
-                <option value="12">اسفند</option>
-            </select>
-
-            <label for="shamsiDay">روز:</label>
-            <input type="number" id="shamsiDay" value="4" min="1" max="31"> </div>
-
-        <div id="hijriDateControls" style="display: none;">
-            <label for="hijriYear">سال قمری:</label>
-            <input type="number" id="hijriYear" value="1325" min="1300" max="1500">
-
-            <label for="hijriMonth">ماه قمری:</label>
-            <select id="hijriMonth">
-                <option value="1">محرم</option>
-                <option value="2">صفر</option>
-                <option value="3">ربیع‌الاول</option>
-                <option value="4">ربیع‌الثانی</option>
-                <option value="5">جمادی‌الاول</option>
-                <option value="6">جمادی‌الثانی</option>
-                <option value="7">رجب</option>
-                <option value="8">شعبان</option>
-                <option value="9">رمضان</option>
-                <option value="10">شوال</option>
-                <option value="11">ذی‌القعده</option>
-                <option value="12">ذی‌الحجه</option>
-            </select>
-
-            <label for="hijriDay">روز قمری:</label>
-            <input type="number" id="hijriDay" value="21" min="1" max="30">
-        </div>
-    </div>
-    <div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
-        <button id="goToFirstEttelaatGlobal" style="display: none;">اطلاعات</button>
-        <button id="goToFirstMardomGlobal" style="display: none;">مردم</button>
-        <button id="goToFirstKayhanGlobal" style="display: none;">کیهان</button>
-        <button id="goToFirstBakhtarEmroozGlobal" style="display: none;">باختر امروز</button>
-        <button id="goToFirstJashnShahanshahiIranGlobal" style="display: none;">جشن شاهنشاهی ایران</button>
-        <button id="goToFirstKhorshidGlobal" style="display: none;">خورشید</button>
-        <button id="goToFirstBamdadRoshanGlobal" style="display: none;">بامداد روشن</button>
-        <button id="goToFirstDawlatIranGlobal" style="display: none;">دولت علیه ایران</button>
-    </div>
-
-    <p id="mainErrorMessage" class="error-message" style="display: none;"></p>
-    <p id="mainStatusMessage" class="status-message">در حال بارگذاری روزنامه‌ها...</p>
-
-    <div id="newspaperFilterList" class="newspaper-filter-list" style="display: none;">
-        <div id="filter-ettelaat" class="newspaper-filter-item">روزنامه اطلاعات</div>
-        <div id="filter-mardom" class="newspaper-filter-item">روزنامه مردم</div>
-        <div id="filter-kayhan" class="newspaper-filter-item">روزنامه کیهان</div>
-        <div id="filter-bakhtarEmrooz" class="newspaper-filter-item">روزنامه باختر امروز</div>
-        <div id="filter-jashnShahanshahiIran" class="newspaper-filter-item">روزنامه جشن شاهنشاهی ایران</div>
-        <div id="filter-Q134006001" class="newspaper-filter-item">روزنامه خورشید</div>
-        <div id="filter-Q134311191" class="newspaper-filter-item">روزنامه بامداد روشن</div> 
-        <div id="filter-Q_Dawlat_e_Alliya_ye_Iran" class="newspaper-filter-item">روزنامه دولت علیه ایران</div>
-    </div>
-
-    <div class="newspaper-container">
-        <div id="ettelaatSection" class="newspaper-section" style="display: none;">
-            <h2>روزنامه اطلاعات</h2>
-            <img id="ettelaatNewspaperImage" src="" alt="تصویر روزنامه اطلاعات" class="newspaper-image">
-            <p id="ettelaatStatusMessage" class="status-message" style="display: none;"></p>
-            <p id="ettelaatErrorMessage" class="error-error-message" style="display: none;"></p>
-        </div>
-
-        <div id="mardomSection" class="newspaper-section" style="display: none;">
-            <h2>روزنامه مردم</h2>
-            <img id="mardomNewspaperImage" src="" alt="تصویر روزنامه مردم" class="newspaper-image">
-            <p id="mardomStatusMessage" class="status-message" style="display: none;"></p>
-            <p id="mardomErrorMessage" class="error-message" style="display: none;"></p>
-        </div>
-
-        <div id="kayhanSection" class="newspaper-section" style="display: none;">
-            <h2>روزنامه کیهان</h2>
-            <img id="kayhanNewspaperImage" src="" alt="تصویر روزنامه کیهان" class="newspaper-image">
-            <p id="kayhanStatusMessage" class="status-message" style="display: none;"></p>
-            <p id="kayhanErrorMessage" class="error-message" style="display: none;"></p>
-        </div>
-
-        <div id="bakhtarEmroozSection" class="newspaper-section" style="display: none;">
-            <h2>روزنامه باختر امروز</h2>
-            <img id="bakhtarEmroozNewspaperImage" src="" alt="تصویر روزنامه باختر امروز" class="newspaper-image">
-            <p id="bakhtarEmroozStatusMessage" class="status-message" style="display: none;"></p>
-            <p id="bakhtarEmroozErrorMessage" class="error-message" style="display: none;"></p>
-        </div>
-
-        <div id="jashnShahanshahiIranSection" class="newspaper-section" style="display: none;">
-            <h2>روزنامه جشن شاهنشاهی ایران</h2>
-            <img id="jashnShahanshahiIranNewspaperImage" src="" alt="تصویر روزنامه جشن شاهنشاهی ایران" class="newspaper-image">
-            <p id="jashnShahanshahiIranStatusMessage" class="status-message" style="display: none;"></p>
-            <p id="jashnShahanshahiIranErrorMessage" class="error-message" style="display: none;"></p>
-        </div>
-
-        <div id="Q134006001Section" class="newspaper-section" style="display: none;">
-            <h2>روزنامه خورشید</h2>
-            <img id="Q134006001NewspaperImage" src="" alt="تصویر روزنامه خورشید" class="newspaper-image">
-            <p id="Q134006001StatusMessage" class="status-message" style="display: none;"></p>
-            <p id="Q134006001ErrorMessage" class="error-message" style="display: none;"></p>
-            <div id="Q134006001Navigation" class="issue-navigation-controls">
-                <div>
-                    <button id="prevQ134006001Issue">&lt; شماره قبل</button>
-                    <div>
-                        <span>شماره:</span>
-                        <input type="number" id="Q134006001IssueNumber">
-                    </div>
-                    <button id="nextQ134006001Issue">شماره بعد &gt;</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="Q134311191Section" class="newspaper-section" style="display: none;">
-            <h2>روزنامه بامداد روشن</h2>
-            <img id="Q134311191NewspaperImage" src="" alt="تصویر روزنامه بامداد روشن" class="newspaper-image">
-            <p id="Q134311191StatusMessage" class="status-message" style="display: none;"></p>
-            <p id="Q134311191ErrorMessage" class="error-message" style="display: none;"></p>
-            <div id="Q134311191Navigation" class="issue-navigation-controls">
-                 <div>
-                    <button id="prevQ134311191Issue">&lt; شماره قبل</button>
-                    <div>
-                        <span>شماره:</span>
-                        <input type="number" id="Q134311191IssueNumber">
-                    </div>
-                    <button id="nextQ134311191Issue">شماره بعد &gt;</button>
-                </div>
-            </div>
-        </div>
-        
-        <div id="Q_Dawlat_e_Alliya_ye_IranSection" class="newspaper-section" style="display: none;">
-            <h2>روزنامه دولت علیه ایران</h2>
-            <img id="Q_Dawlat_e_Alliya_ye_IranNewspaperImage" src="" alt="تصویر روزنامه دولت علیه ایران" class="newspaper-image">
-            <p id="Q_Dawlat_e_Alliya_ye_IranStatusMessage" class="status-message" style="display: none;"></p>
-            <p id="Q_Dawlat_e_Alliya_ye_IranErrorMessage" class="error-message" style="display: none;"></p>
-            <div id="Q_Dawlat_e_Alliya_ye_IranNavigation" class="issue-navigation-controls">
-                 <div>
-                    <button id="prevQ_Dawlat_e_Alliya_ye_IranIssue">&lt; شماره قبل</button>
-                    <div>
-                        <span>شماره:</span>
-                        <input type="number" id="Q_Dawlat_e_Alliya_ye_IranIssueNumber">
-                    </div>
-                    <button id="nextQ_Dawlat_e_Alliya_ye_IranIssue">شماره بعد &gt;</button>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    
-    <div class="pagination-controls" style="margin-top: 20px;">
-        <label for="mainPageNumberInput">صفحه اصلی:</label>
-        <input type="number" id="mainPageNumberInput" value="1" min="1">
-    </div>
-
-    <div id="lightboxOverlay" class="lightbox-overlay">
-        <div class="lightbox-content">
-            <button id="lightboxCloseButton" class="lightbox-close-button">&times;</button>
-            <h2 id="lightboxNewspaperTitle"></h2>
-            <img id="lightboxImage" src="" alt="تصویر روزنامه در لایت‌باکس" class="lightbox-image">
-            <p id="lightboxStatusMessage" class="status-message" style="display: none;"></p>
-            <p id="lightboxErrorMessage" class="error-message" style="display: none;"></p>
-
-            <div class="lightbox-links">
-                <a id="downloadLink" href="#" target="_blank" style="display: none;">دانلود روزنامه</a>
-                <a id="viewLargeLink" href="#" target="_blank" style="display: none;">تصویر بزرگتر</a>
-            </div>
-
-            <div class="lightbox-controls">
-                <div class="page-nav">
-                    <button id="lightboxPrevPageButton">&lt;</button>
-                    <input type="number" id="lightboxPageNumberInput" value="1" min="1">
-                    <button id="lightboxNextPageButton">&gt;</button>
-                </div>
-                <div class="newspaper-nav">
-                    <button id="lightboxPrevNewspaperButton" style="display: none;">روزنامه قبل</button>
-                    <button id="lightboxNextNewspaperButton" style="display: none;">روزنامه بعد</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            // DOM Element References
-            const shamsiCalendarRadio = document.getElementById('shamsiCalendar');
-            const hijriCalendarRadio = document.getElementById('hijriCalendar');
-            const shamsiDateControls = document.getElementById('shamsiDateControls');
-            const hijriDateControls = document.getElementById('hijriDateControls');
-            const shamsiYearInput = document.getElementById('shamsiYear');
-            const shamsiMonthSelect = document.getElementById('shamsiMonth');
-            const shamsiDayInput = document.getElementById('shamsiDay');
-            const hijriYearInput = document.getElementById('hijriYear');
-            const hijriMonthSelect = document.getElementById('hijriMonth');
-            const hijriDayInput = document.getElementById('hijriDay');
-            const mainErrorMessage = document.getElementById('mainErrorMessage');
-            const mainStatusMessage = document.getElementById('mainStatusMessage');
-            const mainPageNumberInput = document.getElementById('mainPageNumberInput');
-            const lightboxOverlay = document.getElementById('lightboxOverlay');
-            const lightboxCloseButton = document.getElementById('lightboxCloseButton');
-            const lightboxNewspaperTitle = document.getElementById('lightboxNewspaperTitle');
-            const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxStatusMessage = document.getElementById('lightboxStatusMessage');
-            const lightboxErrorMessage = document.getElementById('lightboxErrorMessage');
-            const lightboxPrevPageButton = document.getElementById('lightboxPrevPageButton');
-            const lightboxNextPageButton = document.getElementById('lightboxNextPageButton');
-            const lightboxPageNumberInput = document.getElementById('lightboxPageNumberInput');
-            const lightboxPrevNewspaperButton = document.getElementById('lightboxPrevNewspaperButton');
-            const lightboxNextNewspaperButton = document.getElementById('lightboxNextNewspaperButton');
-            const downloadLink = document.getElementById('downloadLink');
-            const viewLargeLink = document.getElementById('viewLargeLink');
-            const newspaperContainer = document.querySelector('.newspaper-container'); 
-
-            // Global "Go to First Issue" Buttons
-            const goToFirstKhorshidGlobalBtn = document.getElementById('goToFirstKhorshidGlobal');
-            const goToFirstBamdadRoshanGlobalBtn = document.getElementById('goToFirstBamdadRoshanGlobal');
-            const goToFirstDawlatIranGlobalBtn = document.getElementById('goToFirstDawlatIranGlobal');
-            const goToFirstEttelaatGlobalBtn = document.getElementById('goToFirstEttelaatGlobal');
-            const goToFirstMardomGlobalBtn = document.getElementById('goToFirstMardomGlobal');
-            const goToFirstKayhanGlobalBtn = document.getElementById('goToFirstKayhanGlobal');
-            const goToFirstBakhtarEmroozGlobalBtn = document.getElementById('goToFirstBakhtarEmroozGlobal');
-            const goToFirstJashnShahanshahiIranGlobalBtn = document.getElementById('goToFirstJashnShahanshahiIranGlobal');
-
-
-            // Jashn Shahanshahi Iran Elements
-            const jashnShahanshahiIranSection = document.getElementById('jashnShahanshahiIranSection');
-            const jashnShahanshahiIranNewspaperImage = document.getElementById('jashnShahanshahiIranNewspaperImage');
-            const jashnShahanshahiIranStatusMessage = document.getElementById('jashnShahanshahiIranStatusMessage');
-            const jashnShahanshahiIranErrorMessage = document.getElementById('jashnShahanshahiIranErrorMessage');
-            const filterJashnShahanshahiIran = document.getElementById('filter-jashnShahanshahiIran');
-
-
-            // Global State
-            let currentCalendarMode = 'shamsi';
-            let dbNewspapersData = [];
-            let newspaperData = {
-                ettelaat: { type: 'formula', prefix: 'Ettelaat', title: 'روزنامه اطلاعات', currentPage: 1, available: false, imageElement: document.getElementById('ettelaatNewspaperImage'), statusElement: document.getElementById('ettelaatStatusMessage'), errorElement: document.getElementById('ettelaatErrorMessage'), sectionElement: document.getElementById('ettelaatSection'), filterElement: document.getElementById('filter-ettelaat'), calendar_type: 'shamsi' },
-                mardom: { type: 'formula', prefix: 'Mardom', title: 'روزنامه مردم', currentPage: 1, available: false, imageElement: document.getElementById('mardomNewspaperImage'), statusElement: document.getElementById('mardomStatusMessage'), errorElement: document.getElementById('mardomErrorMessage'), sectionElement: document.getElementById('mardomSection'), filterElement: document.getElementById('filter-mardom'), calendar_type: 'shamsi' },
-                kayhan: { type: 'formula', prefix: 'Kayhan', title: 'روزنامه کیهان', currentPage: 1, available: false, imageElement: document.getElementById('kayhanNewspaperImage'), statusElement: document.getElementById('kayhanStatusMessage'), errorElement: document.getElementById('kayhanErrorMessage'), sectionElement: document.getElementById('kayhanSection'), filterElement: document.getElementById('filter-kayhan'), calendar_type: 'shamsi' },
-                bakhtarEmrooz: { type: 'formula', prefix: 'BakhtarEmrooz', title: 'روزنامه باختر امروز', currentPage: 1, available: false, imageElement: document.getElementById('bakhtarEmroozNewspaperImage'), statusElement: document.getElementById('bakhtarEmroozStatusMessage'), errorElement: document.getElementById('bakhtarEmroozErrorMessage'), sectionElement: document.getElementById('bakhtarEmroozSection'), filterElement: document.getElementById('filter-bakhtarEmrooz'), calendar_type: 'shamsi' },
-                jashnShahanshahiIran: { 
-                    type: 'formula',
-                    prefix: 'JashneShahanshahieIran', 
-                    title: 'روزنامه جشن شاهنشاهی ایران',
-                    currentPage: 1,
-                    available: false,
-                    imageElement: jashnShahanshahiIranNewspaperImage,
-                    statusElement: jashnShahanshahiIranStatusMessage,
-                    errorElement: jashnShahanshahiIranErrorMessage,
-                    sectionElement: jashnShahanshahiIranSection,
-                    filterElement: filterJashnShahanshahiIran,
-                    calendar_type: 'shamsi' 
-                }
-            };
-            let currentLightboxNewspaperType = null;
-            let lightboxCurrentPage = 1;
-            let preloadedImages = { prevPage: null, nextPage: null, prevNewspaper: null, nextNewspaper: null };
-
-            // Khorshid (Q134006001) specific state
-            let khorshidIssues = [];
-            let currentKhorshidIssueIndex = -1;
-            const prevKhorshidIssueBtn = document.getElementById('prevQ134006001Issue');
-            const nextKhorshidIssueBtn = document.getElementById('nextQ134006001Issue');
-            const khorshidIssueNumberInput = document.getElementById('Q134006001IssueNumber');
-
-            // Bamdad Roshan (Q134311191) specific state
-            let bamdadRoshanIssues = [];
-            let currentBamdadRoshanIssueIndex = -1;
-            const prevBamdadRoshanIssueBtn = document.getElementById('prevQ134311191Issue');
-            const nextBamdadRoshanIssueBtn = document.getElementById('nextQ134311191Issue');
-            const bamdadRoshanIssueNumberInput = document.getElementById('Q134311191IssueNumber');
-            
-            // Dawlat-e ʿAlliya-ye Iran (Q_Dawlat_e_Alliya_ye_Iran) specific state
-            let dawlatIranIssues = [];
-            let currentDawlatIranIssueIndex = -1;
-            const prevDawlatIranIssueBtn = document.getElementById('prevQ_Dawlat_e_Alliya_ye_IranIssue');
-            const nextDawlatIranIssueBtn = document.getElementById('nextQ_Dawlat_e_Alliya_ye_IranIssue');
-            const dawlatIranIssueNumberInput = document.getElementById('Q_Dawlat_e_Alliya_ye_IranIssueNumber');
-
-            const firstShamsiIssueDates = {
-                ettelaat: "13050419",
-                bakhtarEmrooz: "13300329",
-                jashnShahanshahiIran: "13500503",
-                kayhan: "13320525",
-                mardom: "13571223"
-            };
-
-
-            // --- Utility Functions ---
-            const pad = (num) => num.toString().padStart(2, '0');
-            const persianToEnglishDigits = (str) => {
-                if (typeof str !== 'string') return str; 
-                const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-                const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-                return str.split('').map(char => {
-                    const index = persianNumbers.indexOf(char);
-                    return index !== -1 ? englishNumbers[index] : char;
-                }).join('');
-            };
-            var MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}function bit_rol(d,_){return d<<_|d>>>32-_}
-
-            const getWikimediaHash = (paper, fullFileNameWithPdf) => {
-                if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.wikimedia_hash) {
-                    return paper.currentIssue.wikimedia_hash;
-                }
-                const filenameForHash = fullFileNameWithPdf.replace(/ /g, '_'); 
-                const fullMd5 = MD5(filenameForHash); 
-                return fullMd5.substring(0, 2); 
-            };
-
-            // --- Newspaper Loading Logic ---
-            const checkAndLoadNewspaper = async (type, year, month, day, page) => {
-                const paper = newspaperData[type];
-                if (!paper || !paper.sectionElement) { 
-                     console.warn(`Newspaper data or sectionElement missing for type: ${type}`);
-                     return Promise.resolve(false);
-                }
-
-                let fileNameBase;
-                let maxPages = null;
-                let shouldDisplaySection = false;
-                let issueExistsForDate = false;
-
-                if (currentCalendarMode === 'hijri') {
-                    if (paper.type === 'database' && paper.calendar_type === 'hijri') {
-                        shouldDisplaySection = true;
-                    }
-                } else { // Shamsi mode
-                    if (paper.type === 'formula' || (paper.type === 'database' && paper.calendar_type === 'shamsi')) {
-                        shouldDisplaySection = true;
-                    }
-                }
-
-                paper.sectionElement.style.display = shouldDisplaySection ? 'block' : 'none';
-                if (!shouldDisplaySection) {
-                    paper.available = false;
-                    return Promise.resolve(false);
-                }
-                
-                paper.errorElement.style.display = 'none';
-                paper.imageElement.style.display = 'none';
-                paper.statusElement.style.display = 'none';
-
-                if (paper.type === 'formula') {
-                    fileNameBase = `${paper.prefix}${year}${month}${day}`;
-                    paper.currentIssue = null; 
-                    issueExistsForDate = true; 
-                } else if (paper.type === 'database') { 
-                    const foundIssue = paper.issues && paper.issues.find(issue => 
-                        issue.year == year && issue.month == month && issue.day == day
-                    );
-                    if (foundIssue) {
-                        fileNameBase = foundIssue.filename_base;
-                        maxPages = foundIssue.pages || null;
-                        paper.currentIssue = foundIssue;
-                        issueExistsForDate = true;
-                    } else {
-                        paper.errorElement.textContent = 'روزنامه در این تاریخ موجود نیست';
-                        paper.errorElement.style.display = 'block';
-                        paper.available = false;
-                        return Promise.resolve(false); 
-                    }
-                } else {
-                     console.warn("Unknown paper type for:", type);
-                     return Promise.resolve(false);
-                }
-                
-                if (!issueExistsForDate) { 
-                    paper.available = false;
-                    return Promise.resolve(false);
-                }
-                
-                paper.statusElement.textContent = 'در حال بارگذاری...';
-                paper.statusElement.style.display = 'block';
-
-                const fullFileNameWithPdf = `${fileNameBase}.pdf`; 
-                const hash = getWikimediaHash(paper, fullFileNameWithPdf); 
-                const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_'); 
-                
-                const width = 330; 
-                const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${page}-${width}px-${fileNameForUrlPath}.jpg`;
-
-                return new Promise((resolve) => {
-                    paper.imageElement.onload = () => {
-                        paper.statusElement.style.display = 'none';
-                        paper.imageElement.style.display = 'block';
-                        paper.errorElement.style.display = 'none'; 
-                        paper.available = true;
-                        if (type === 'Q134006001' || type === 'Q134311191' || type === 'Q_Dawlat_e_Alliya_ye_Iran') { 
-                           updateIssueNavigationVisibility(type);
-                        }
-                        paper.fileNameBase = fileNameBase; 
-                        paper.maxPages = maxPages; 
-                        resolve(true);
-                    };
-                    paper.imageElement.onerror = () => {
-                        paper.statusElement.style.display = 'none';
-                        paper.errorElement.textContent = `تصویر صفحه ${page} یافت نشد.`;
-                        paper.errorElement.style.display = 'block';
-                        paper.available = false;
-                        resolve(false);
-                    };
-                    paper.imageElement.src = imageUrl; 
-                }).catch(() => resolve(false)); 
-            };
-            
-            const loadImage = async (source = 'initial') => {
-                let year, month, day;
-
-                if (currentCalendarMode === 'shamsi') {
-                    year = shamsiYearInput.value;
-                    month = pad(shamsiMonthSelect.value);
-                    day = pad(shamsiDayInput.value);
-                } else { 
-                    year = hijriYearInput.value;
-                    month = pad(hijriMonthSelect.value);
-                    day = pad(hijriDayInput.value);
-                }
-
-                let targetPage = parseInt(persianToEnglishDigits(mainPageNumberInput.value), 10);
-                if (isNaN(targetPage) || targetPage < 1) {
-                    targetPage = 1;
-                }
-
-                if (source === 'date') {
-                    targetPage = 1; 
-                    mainStatusMessage.textContent = 'در حال بارگذاری روزنامه‌ها...'; 
-                    mainStatusMessage.style.display = 'block'; 
-                    mainErrorMessage.style.display = 'none'; 
-                }
-                
-                Object.values(newspaperData).forEach(paper => {
-                    if(paper) paper.currentPage = targetPage;
-                });
-                mainPageNumberInput.value = targetPage; 
-
-                if (!year || !month || !day) {
-                    mainErrorMessage.textContent = 'لطفا تاریخ کامل را وارد کنید.';
-                    mainErrorMessage.style.display = 'block';
-                    mainStatusMessage.style.display = 'none';
-                    Object.values(newspaperData).forEach(paper => {
-                        if(paper && paper.sectionElement) paper.sectionElement.style.display = 'none';
-                    });
-                    return;
-                }
-
-                if (source !== 'date') { 
-                    mainErrorMessage.style.display = 'none'; 
-                    mainStatusMessage.textContent = 'در حال بارگذاری روزنامه‌ها...';
-                    mainStatusMessage.style.display = 'block'; 
-                }
-
-                const loadPromises = Object.keys(newspaperData).map(type => 
-                    checkAndLoadNewspaper(type, year, month, day, newspaperData[type] ? newspaperData[type].currentPage : 1)
-                );
-                const results = await Promise.all(loadPromises);
-
-                mainStatusMessage.style.display = 'none'; 
-                
-                // Sort and re-append newspaper sections
-                const newspaperKeys = Object.keys(newspaperData);
-                newspaperKeys.sort((aKey, bKey) => {
-                    const paperA = newspaperData[aKey];
-                    const paperB = newspaperData[bKey];
-
-                    if (!paperA || !paperB) return 0; 
-
-                    // Primary sort: availability
-                    if (paperA.available && !paperB.available) return -1;
-                    if (!paperA.available && paperB.available) return 1;
-
-                    // Secondary sort: alphabetical by title (Persian)
-                    return paperA.title.localeCompare(paperB.title, 'fa');
-                });
-
-                newspaperKeys.forEach(key => {
-                    const paper = newspaperData[key];
-                    if (paper && paper.sectionElement) {
-                        newspaperContainer.appendChild(paper.sectionElement);
-                    }
-                });
-                
-                // Update visibility of navigation controls after sorting and loading
-                updateIssueNavigationVisibility('Q134006001');
-                updateIssueNavigationVisibility('Q134311191'); 
-                updateIssueNavigationVisibility('Q_Dawlat_e_Alliya_ye_Iran');
-                updateGlobalGoToFirstIssueButtonsVisibility(); 
-
-
-                if (!results.some(loaded => loaded) && currentCalendarMode === 'shamsi') { 
-                    mainErrorMessage.textContent = `روزنامه‌ای برای این تاریخ یافت نشد.`; 
-                    mainErrorMessage.style.display = 'block';
-                } else {
-                    mainErrorMessage.style.display = 'none';
-                }
-            };
-
-            // --- Calendar Mode Change ---
-            const handleCalendarChange = () => {
-                shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'block' : 'none';
-                hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'block' : 'none';
-                loadImage('date');
-                updateGlobalGoToFirstIssueButtonsVisibility(); 
-            };
-            shamsiCalendarRadio.addEventListener('change', () => { currentCalendarMode = 'shamsi'; handleCalendarChange(); });
-            hijriCalendarRadio.addEventListener('change', () => { currentCalendarMode = 'hijri'; handleCalendarChange(); });
-
-            // --- Date/Page Input Event Listeners ---
-            [shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput].forEach(el => {
-                if(el) el.addEventListener('change', () => loadImage('date'));
-            });
-            if(mainPageNumberInput) mainPageNumberInput.addEventListener('change', () => loadImage('pageInput'));
-
-            // --- Lightbox Functions ---
-            const openLightbox = async (type) => { 
-                currentLightboxNewspaperType = type;
-                const paper = newspaperData[type];
-                if (!paper || !paper.available) { 
-                    console.warn(`Lightbox cannot be opened for ${type} as it's not available for the selected date.`);
-                    return;
-                }
-                lightboxCurrentPage = paper.currentPage;
-                lightboxOverlay.classList.add('visible');
-                await updateLightboxContent();
-            };
-            const closeLightbox = () => { 
-                lightboxOverlay.classList.remove('visible');
-                currentLightboxNewspaperType = null;
-            };
-            const updateLightboxContent = async () => { 
-                const type = currentLightboxNewspaperType;
-                if (!type || !newspaperData[type]) {
-                    closeLightbox(); 
-                    return;
-                }
-                const paper = newspaperData[type];
-                 let year, month, day;
-                if (currentCalendarMode === 'shamsi') {
-                    year = shamsiYearInput.value;
-                    month = pad(shamsiMonthSelect.value);
-                    day = pad(shamsiDayInput.value);
-                } else { 
-                    year = hijriYearInput.value;
-                    month = pad(hijriMonthSelect.value);
-                    day = pad(hijriDayInput.value);
-                }
-
-                let formattedDate;
-                if (currentCalendarMode === 'shamsi') {
-                    const monthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
-                    const persianMonthName = monthNames[parseInt(month) - 1];
-                    formattedDate = `${day} ${persianMonthName} ${year}`;
-                } else { 
-                    const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
-                    const hijriMonthName = hijriMonthNames[parseInt(month) - 1];
-                    formattedDate = `${day} ${hijriMonthName} ${year} (قمری)`;
-                }
-                
-                lightboxNewspaperTitle.textContent = `${paper.title} - ${formattedDate} - صفحه: ${lightboxCurrentPage}`;
-                lightboxPageNumberInput.value = lightboxCurrentPage;
-
-                lightboxStatusMessage.textContent = 'در حال بارگذاری...';
-                lightboxStatusMessage.style.display = 'block';
-                lightboxErrorMessage.style.display = 'none';
-                lightboxImage.style.display = 'none';
-                downloadLink.style.display = 'none'; 
-                viewLargeLink.style.display = 'none';
-
-                let fileNameBase;
-                let maxPages = null;
-
-                if (paper.fileNameBase) { 
-                     fileNameBase = paper.fileNameBase;
-                     maxPages = paper.maxPages; 
-                } else { 
-                    if (paper.type === 'formula') {
-                        fileNameBase = `${paper.prefix}${year}${month}${day}`;
-                    } else if (paper.type === 'database') {
-                         const foundIssue = paper.issues && paper.issues.find(issue => 
-                            issue.year == year && issue.month == month && issue.day == day
-                        );
-                        if (foundIssue) {
-                            fileNameBase = foundIssue.filename_base;
-                            maxPages = foundIssue.pages || null;
-                            paper.currentIssue = foundIssue; 
-                        } else {
-                            console.error("Issue not found for lightbox for paper:", type, "on date", year, month, day);
-                            lightboxStatusMessage.style.display = 'none';
-                            lightboxErrorMessage.textContent = `اطلاعات روزنامه برای نمایش در لایت‌باکس یافت نشد.`;
-                            lightboxErrorMessage.style.display = 'block';
-                            return;
-                        }
-                    } else {
-                        console.error("Unknown paper type for lightbox:", type);
-                        lightboxStatusMessage.style.display = 'none';
-                        lightboxErrorMessage.textContent = `نوع روزنامه نامشخص.`;
-                        lightboxErrorMessage.style.display = 'block';
-                        return;
-                    }
-                }
-
-
-                const fullFileNameWithPdf = `${fileNameBase}.pdf`; 
-                const hash = getWikimediaHash(paper, fullFileNameWithPdf); 
-                const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_'); 
-                
-                const width = 800; 
-                const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${lightboxCurrentPage}-${width}px-${fileNameForUrlPath}.jpg`;
-
-                lightboxImage.src = imageUrl;
-
-                try {
-                    await new Promise((resolve, reject) => {
-                        lightboxImage.onload = resolve;
-                        lightboxImage.onerror = reject;
-                    });
-                    lightboxStatusMessage.style.display = 'none';
-                    lightboxImage.style.display = 'block';
-                    lightboxErrorMessage.style.display = 'none';
-
-                    downloadLink.href = `https://upload.wikimedia.org/wikipedia/commons/${hash[0]}/${hash}/${fileNameForUrlPath}?download`;
-                    downloadLink.style.display = 'inline-block';
-
-                    viewLargeLink.href = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${lightboxCurrentPage}-2048px-${fileNameForUrlPath}.jpg`;
-                    viewLargeLink.style.display = 'inline-block';
-
-                } catch (error) {
-                    lightboxStatusMessage.style.display = 'none';
-                    lightboxImage.style.display = 'none';
-                    lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${lightboxCurrentPage} یافت نشد.`;
-                    lightboxErrorMessage.style.display = 'block';
-                    downloadLink.style.display = 'none';
-                    viewLargeLink.style.display = 'none';
-                }
-
-                lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
-                lightboxNextPageButton.disabled = (maxPages !== null && lightboxCurrentPage >= maxPages);
-                lightboxPrevPageButton.style.display = 'inline-block'; 
-                lightboxNextPageButton.style.display = 'inline-block';
-
-                const availableNewspapers = Object.keys(newspaperData).filter(key => newspaperData[key] && newspaperData[key].available);
-                if (availableNewspapers.length > 1) {
-                    lightboxPrevNewspaperButton.style.display = 'inline-block';
-                    lightboxNextNewspaperButton.style.display = 'inline-block';
-                } else {
-                    lightboxPrevNewspaperButton.style.display = 'none';
-                    lightboxNextNewspaperButton.style.display = 'none';
-                }
-            };
-             const lightboxGoToPage = (direction) => {
-                const paper = newspaperData[currentLightboxNewspaperType];
-                if (!paper) return;
-
-                if (direction === 'prev' && lightboxCurrentPage > 1) {
-                    lightboxCurrentPage--;
-                } else if (direction === 'next') {
-                    if (paper.maxPages !== null && lightboxCurrentPage >= paper.maxPages) {
-                        return; 
-                    }
-                    lightboxCurrentPage++;
-                }
-                updateLightboxContent();
-            };
-            const lightboxChangeNewspaper = (direction) => {
-                const availableNewspapers = Object.keys(newspaperData).filter(key => newspaperData[key] && newspaperData[key].available);
-                if (availableNewspapers.length <= 1) return; 
-
-                const currentIndex = availableNewspapers.indexOf(currentLightboxNewspaperType);
-                let newIndex;
-                if (direction === 'prev') {
-                    newIndex = (currentIndex - 1 + availableNewspapers.length) % availableNewspapers.length;
-                } else { 
-                    newIndex = (currentIndex + 1) % availableNewspapers.length;
-                }
-                currentLightboxNewspaperType = availableNewspapers[newIndex];
-                const newPaper = newspaperData[currentLightboxNewspaperType];
-                if (newPaper) {
-                     lightboxCurrentPage = newPaper.currentPage; 
-                } else {
-                    lightboxCurrentPage = 1; // Fallback
-                }
-                updateLightboxContent();
-            };
-
-            // Lightbox Event Listeners
-            Object.keys(newspaperData).forEach(type => { 
-                const paper = newspaperData[type];
-                if (paper && paper.imageElement) {
-                    paper.imageElement.addEventListener('click', () => openLightbox(type));
-                }
-            });
-
-            lightboxCloseButton.addEventListener('click', closeLightbox);
-            lightboxOverlay.addEventListener('click', (e) => { if (e.target === lightboxOverlay) closeLightbox(); });
-            lightboxPrevPageButton.addEventListener('click', () => lightboxGoToPage('prev'));
-            lightboxNextPageButton.addEventListener('click', () => lightboxGoToPage('next'));
-            lightboxPageNumberInput.addEventListener('change', () => {
-                const inputPageValue = persianToEnglishDigits(lightboxPageNumberInput.value); 
-                const parsedInputPage = parseInt(inputPageValue, 10);
-                if (!isNaN(parsedInputPage) && parsedInputPage >= 1) {
-                    const paper = newspaperData[currentLightboxNewspaperType];
-                    if (paper && paper.maxPages !== null && parsedInputPage > paper.maxPages) {
-                        lightboxCurrentPage = paper.maxPages; 
-                    } else {
-                        lightboxCurrentPage = parsedInputPage;
-                    }
-                    updateLightboxContent();
-                } else {
-                    lightboxPageNumberInput.value = lightboxCurrentPage; 
-                }
-            });
-            lightboxPrevNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('prev'));
-            lightboxNextNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('next'));
-            document.addEventListener('keydown', (e) => { 
-                 if (lightboxOverlay.classList.contains('visible')) {
-                    if (e.key === 'ArrowLeft') {
-                        lightboxGoToPage('prev');
-                    } else if (e.key === 'ArrowRight') {
-                        lightboxGoToPage('next');
-                    } else if (e.key === 'Escape') {
-                        closeLightbox();
-                    }
-                }
-            });
-
-
-            // --- Issue Navigation Functions (Generic for DB papers) ---
-            const loadNewspaperIssues = (newspaperId) => {
-                const paper = newspaperData[newspaperId];
-                if (!paper || !paper.issues) return [];
-                let sortedIssues = [...paper.issues].sort((a, b) => {
-                    if (a.year !== b.year) return a.year - b.year;
-                    if (a.month !== b.month) return a.month - b.month;
-                    if (a.day !== b.day) return a.day - b.day;
-                    return (a.issue_number || 0) - (b.issue_number || 0);
-                });
-                if (newspaperId === 'Q134006001') khorshidIssues = sortedIssues;
-                else if (newspaperId === 'Q134311191') bamdadRoshanIssues = sortedIssues;
-                else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') dawlatIranIssues = sortedIssues;
-                return sortedIssues;
-            };
-
-            const updateIssueNavButtons = (newspaperId) => {
-                let currentIndex, issuesArray, prevBtn, nextBtn;
-                if (newspaperId === 'Q134006001') { currentIndex = currentKhorshidIssueIndex; issuesArray = khorshidIssues; prevBtn = prevKhorshidIssueBtn; nextBtn = nextKhorshidIssueBtn; }
-                else if (newspaperId === 'Q134311191') { currentIndex = currentBamdadRoshanIssueIndex; issuesArray = bamdadRoshanIssues; prevBtn = prevBamdadRoshanIssueBtn; nextBtn = nextBamdadRoshanIssueBtn; }
-                else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { currentIndex = currentDawlatIranIssueIndex; issuesArray = dawlatIranIssues; prevBtn = prevDawlatIranIssueBtn; nextBtn = nextDawlatIranIssueBtn; }
-                else return;
-
-                if (!prevBtn || !nextBtn || !issuesArray) return;
-                prevBtn.disabled = currentIndex <= 0;
-                nextBtn.disabled = currentIndex >= issuesArray.length - 1;
-            };
-
-            const goToNewspaperIssue = (newspaperId, index) => {
-                let issuesArray, issueNumberInputRef;
-                if (newspaperId === 'Q134006001') { issuesArray = khorshidIssues; issueNumberInputRef = khorshidIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentKhorshidIssueIndex = index; }
-                else if (newspaperId === 'Q134311191') { issuesArray = bamdadRoshanIssues; issueNumberInputRef = bamdadRoshanIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentBamdadRoshanIssueIndex = index; }
-                else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { issuesArray = dawlatIranIssues; issueNumberInputRef = dawlatIranIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentDawlatIranIssueIndex = index; }
-                else return;
-
-                const issue = issuesArray[index];
-                if (!issueNumberInputRef || !issue) return;
-                issueNumberInputRef.value = issue.issue_number || '';
-                
-                if (newspaperData[newspaperId] && newspaperData[newspaperId].calendar_type === 'hijri') {
-                    hijriYearInput.value = issue.year;
-                    hijriMonthSelect.value = issue.month;
-                    hijriDayInput.value = issue.day;
-                } 
-                mainPageNumberInput.value = 1; 
-                Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
-                loadImage('date'); 
-                updateIssueNavButtons(newspaperId); 
-            };
-
-            const goToPrevNewspaperIssue = (newspaperId) => {
-                let currentIndex;
-                if (newspaperId === 'Q134006001') currentIndex = currentKhorshidIssueIndex;
-                else if (newspaperId === 'Q134311191') currentIndex = currentBamdadRoshanIssueIndex;
-                else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') currentIndex = currentDawlatIranIssueIndex;
-                else return;
-                if (currentIndex > 0) goToNewspaperIssue(newspaperId, currentIndex - 1);
-            };
-            const goToNextNewspaperIssue = (newspaperId) => {
-                let currentIndex, issuesArray;
-                if (newspaperId === 'Q134006001') { currentIndex = currentKhorshidIssueIndex; issuesArray = khorshidIssues; }
-                else if (newspaperId === 'Q134311191') { currentIndex = currentBamdadRoshanIssueIndex; issuesArray = bamdadRoshanIssues; }
-                else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { currentIndex = currentDawlatIranIssueIndex; issuesArray = dawlatIranIssues; }
-                else return;
-                if (currentIndex < issuesArray.length - 1) goToNewspaperIssue(newspaperId, currentIndex + 1);
-            };
-            const goToNewspaperIssueByNumber = (newspaperId) => {
-                let issueNumberInputRef, issuesArray;
-                if (newspaperId === 'Q134006001') { issueNumberInputRef = khorshidIssueNumberInput; issuesArray = khorshidIssues; }
-                else if (newspaperId === 'Q134311191') { issueNumberInputRef = bamdadRoshanIssueNumberInput; issuesArray = bamdadRoshanIssues; }
-                else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { issueNumberInputRef = dawlatIranIssueNumberInput; issuesArray = dawlatIranIssues; }
-                else return;
-
-                if (!issueNumberInputRef) return;
-                const issueNumberText = persianToEnglishDigits(issueNumberInputRef.value);
-                const issueNumber = parseInt(issueNumberText);
-                if (isNaN(issueNumber)) return;
-                const issueIndex = issuesArray.findIndex(issue => issue.issue_number == issueNumber);
-                if (issueIndex >= 0) goToNewspaperIssue(newspaperId, issueIndex);
-            };
-            
-            const updateIssueNavigationVisibility = (newspaperId) => {
-                const paper = newspaperData[newspaperId];
-                let navigationDiv = document.getElementById(`${newspaperId}Navigation`);
-                
-                if (!navigationDiv || !paper || paper.type !== 'database' || paper.calendar_type !== 'hijri' || !paper.issues || paper.issues.length === 0) {
-                    if(navigationDiv) navigationDiv.style.display = 'none';
-                    return;
-                }
-
-                if (currentCalendarMode === 'hijri') {
-                    navigationDiv.style.display = 'block';
-                } else {
-                    navigationDiv.style.display = 'none';
-                    return; 
-                }
-                
-                const loadedIssues = loadNewspaperIssues(newspaperId); 
-                const currentYear = hijriYearInput.value; 
-                const currentMonth = pad(hijriMonthSelect.value);
-                const currentDay = pad(hijriDayInput.value);
-        
-                const foundIndex = loadedIssues.findIndex(issue => 
-                    issue.year == currentYear && 
-                    issue.month == parseInt(currentMonth) && 
-                    issue.day == parseInt(currentDay)
-                );
-                
-                let issueNumberInputRef;
-                if (newspaperId === 'Q134006001') { currentKhorshidIssueIndex = foundIndex; issueNumberInputRef = khorshidIssueNumberInput; }
-                else if (newspaperId === 'Q134311191') { currentBamdadRoshanIssueIndex = foundIndex; issueNumberInputRef = bamdadRoshanIssueNumberInput; }
-                else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { currentDawlatIranIssueIndex = foundIndex; issueNumberInputRef = dawlatIranIssueNumberInput; }
-                
-                if (issueNumberInputRef) { 
-                    if (foundIndex >= 0 && loadedIssues[foundIndex]) {
-                         issueNumberInputRef.value = loadedIssues[foundIndex].issue_number || '';
-                    } else {
-                        issueNumberInputRef.value = ''; 
-                    }
-                }
-                updateIssueNavButtons(newspaperId); 
-            };
-
-            // --- Global "Go to First Issue" Button Logic ---
-            const handleGlobalGoToFirstHijriDbIssue = (paperId) => { // Renamed
-                const paper = newspaperData[paperId];
-                if (!paper || paper.type !== 'database' || !paper.issues || paper.issues.length === 0) {
-                    console.warn(`Cannot go to first issue for ${paperId}: Not a valid database newspaper with issues.`);
-                    return;
-                }
-                if (currentCalendarMode !== 'hijri') {
-                     console.warn("Global 'Go to First Hijri DB Issue' button clicked, but not in Hijri mode.");
-                     return;
-                }
-
-                const firstChronologicalIssue = [...paper.issues].sort((a,b) => { 
-                    if(a.year !== b.year) return a.year - b.year;
-                    if(a.month !== b.month) return a.month - b.month;
-                    return a.day - b.day;
-                })[0];
-
-                if (firstChronologicalIssue) {
-                    hijriYearInput.value = firstChronologicalIssue.year;
-                    hijriMonthSelect.value = firstChronologicalIssue.month;
-                    hijriDayInput.value = firstChronologicalIssue.day;
-                    mainPageNumberInput.value = 1;
-                    Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
-                    loadImage('date');
-                }
-            };
-
-            const handleGlobalGoToFirstShamsiFormulaIssue = (paperId) => {
-                const dateStr = firstShamsiIssueDates[paperId];
-                if (!dateStr) {
-                    console.warn(`No first issue date defined for Shamsi paper: ${paperId}`);
-                    return;
-                }
-                if (currentCalendarMode !== 'shamsi') {
-                     console.warn("Global 'Go to First Shamsi Formula Issue' button clicked, but not in Shamsi mode.");
-                     return;
-                }
-
-                const year = parseInt(dateStr.substring(0, 4));
-                const month = parseInt(dateStr.substring(4, 6));
-                const day = parseInt(dateStr.substring(6, 8));
-
-                shamsiYearInput.value = year;
-                shamsiMonthSelect.value = month;
-                shamsiDayInput.value = day;
-                mainPageNumberInput.value = 1;
-                Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
-                loadImage('date');
-            };
-
-
-            const updateGlobalGoToFirstIssueButtonsVisibility = () => {
-                const hijriButtons = [
-                    { btn: goToFirstKhorshidGlobalBtn, id: 'Q134006001' },
-                    { btn: goToFirstBamdadRoshanGlobalBtn, id: 'Q134311191' },
-                    { btn: goToFirstDawlatIranGlobalBtn, id: 'Q_Dawlat_e_Alliya_ye_Iran' }
-                ];
-                const shamsiButtons = [
-                    { btn: goToFirstEttelaatGlobalBtn, id: 'ettelaat' },
-                    { btn: goToFirstMardomGlobalBtn, id: 'mardom' },
-                    { btn: goToFirstKayhanGlobalBtn, id: 'kayhan' },
-                    { btn: goToFirstBakhtarEmroozGlobalBtn, id: 'bakhtarEmrooz' },
-                    { btn: goToFirstJashnShahanshahiIranGlobalBtn, id: 'jashnShahanshahiIran' }
-                ];
-
-                if (currentCalendarMode === 'hijri') {
-                    hijriButtons.forEach(item => {
-                        if (item.btn && newspaperData[item.id] && newspaperData[item.id].issues && newspaperData[item.id].issues.length > 0) {
-                            item.btn.style.display = 'inline-block';
-                        } else if (item.btn) {
-                            item.btn.style.display = 'none';
-                        }
-                    });
-                    shamsiButtons.forEach(item => { if (item.btn) item.btn.style.display = 'none'; });
-                } else { // Shamsi mode
-                    shamsiButtons.forEach(item => {
-                        if (item.btn && newspaperData[item.id] /* Formula papers always "exist" */) {
-                            item.btn.style.display = 'inline-block';
-                        } else if (item.btn) {
-                            item.btn.style.display = 'none';
-                        }
-                    });
-                    hijriButtons.forEach(item => { if (item.btn) item.btn.style.display = 'none'; });
-                }
-            };
-            
-            // Event Listeners for Issue Navigation
-            if(prevKhorshidIssueBtn) prevKhorshidIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue('Q134006001'));
-            if(nextKhorshidIssueBtn) nextKhorshidIssueBtn.addEventListener('click', () => goToNextNewspaperIssue('Q134006001'));
-            if(khorshidIssueNumberInput) khorshidIssueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber('Q134006001'));
-            
-            if(prevBamdadRoshanIssueBtn) prevBamdadRoshanIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue('Q134311191'));
-            if(nextBamdadRoshanIssueBtn) nextBamdadRoshanIssueBtn.addEventListener('click', () => goToNextNewspaperIssue('Q134311191'));
-            if(bamdadRoshanIssueNumberInput) bamdadRoshanIssueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber('Q134311191'));
-
-            if(prevDawlatIranIssueBtn) prevDawlatIranIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue('Q_Dawlat_e_Alliya_ye_Iran'));
-            if(nextDawlatIranIssueBtn) nextDawlatIranIssueBtn.addEventListener('click', () => goToNextNewspaperIssue('Q_Dawlat_e_Alliya_ye_Iran'));
-            if(dawlatIranIssueNumberInput) dawlatIranIssueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber('Q_Dawlat_e_Alliya_ye_Iran'));
-
-
-            // Event Listeners for Global "Go to First Issue" Buttons
-            if(goToFirstKhorshidGlobalBtn) goToFirstKhorshidGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q134006001'));
-            if(goToFirstBamdadRoshanGlobalBtn) goToFirstBamdadRoshanGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q134311191'));
-            if(goToFirstDawlatIranGlobalBtn) goToFirstDawlatIranGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q_Dawlat_e_Alliya_ye_Iran'));
-            
-            if(goToFirstEttelaatGlobalBtn) goToFirstEttelaatGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('ettelaat'));
-            if(goToFirstMardomGlobalBtn) goToFirstMardomGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('mardom'));
-            if(goToFirstKayhanGlobalBtn) goToFirstKayhanGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('kayhan'));
-            if(goToFirstBakhtarEmroozGlobalBtn) goToFirstBakhtarEmroozGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('bakhtarEmrooz'));
-            if(goToFirstJashnShahanshahiIranGlobalBtn) goToFirstJashnShahanshahiIranGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('jashnShahanshahiIran'));
-
-
-            // --- Initial Load ---
-            try {
-                const response = await fetch('db.json'); 
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                dbNewspapersData = await response.json();
-                console.log("db.json loaded successfully.");
-            } catch (error) {
-                console.error("Error loading db.json:", error);
-                mainErrorMessage.textContent = "خطا در بارگذاری دیتابیس روزنامه‌ها.";
-                mainErrorMessage.style.display = 'block';
-                mainStatusMessage.style.display = 'none';
-            }
-
-            dbNewspapersData.forEach(dbPaper => {
-                const paperId = dbPaper.id;
-                const imageElement = document.getElementById(`${paperId}NewspaperImage`);
-                const statusElement = document.getElementById(`${paperId}StatusMessage`);
-                const errorElement = document.getElementById(`${paperId}ErrorMessage`);
-                const sectionElement = document.getElementById(`${paperId}Section`);
-                const filterElement = document.getElementById(`filter-${paperId}`);
-
-                if (imageElement && statusElement && errorElement && sectionElement && filterElement) {
-                    newspaperData[paperId] = {
-                        type: 'database',
-                        title: dbPaper.title,
-                        currentPage: 1,
-                        available: false,
-                        imageElement: imageElement,
-                        statusElement: statusElement,
-                        errorElement: errorElement,
-                        sectionElement: sectionElement,
-                        filterElement: filterElement,
-                        issues: dbPaper.issues,
-                        calendar_type: dbPaper.calendar_type
-                    };
-                    if (paperId === 'Q134006001' || paperId === 'Q134311191' || paperId === 'Q_Dawlat_e_Alliya_ye_Iran') {
-                        loadNewspaperIssues(paperId); 
-                    }
-                    imageElement.addEventListener('click', () => openLightbox(paperId));
-                } else {
-                    console.warn(`HTML elements for newspaper '${dbPaper.title}' (ID: ${paperId}) incomplete. Skipping dynamic addition or full setup.`);
-                }
-            });
-            
-            updateGlobalGoToFirstIssueButtonsVisibility(); 
-
-            setTimeout(() => {
-                loadImage('initial');
-            }, 100); 
-        });
-    </script>
+<h1>بایگانی روزنامه‌های ایران</h1>
+
+<div class="controls">
+	<div class="calendar-selection">
+		<input type="radio" id="shamsiCalendar" name="calendar" value="shamsi" checked>
+		<label for="shamsiCalendar">شمسی</label>
+		<input type="radio" id="hijriCalendar" name="calendar" value="hijri">
+		<label for="hijriCalendar">قمری</label>
+	</div>
+
+	<div id="shamsiDateControls">
+		<label for="shamsiYear">سال:</label>
+		<input type="number" id="shamsiYear" value="1350" min="1300" max="1450"> <label for="shamsiMonth">ماه:</label>
+		<select id="shamsiMonth">
+			<option value="1">فروردین</option>
+			<option value="2">اردیبهشت</option>
+			<option value="3">خرداد</option>
+			<option value="4">تیر</option>
+			<option value="5" selected>مرداد</option> <option value="6">شهریور</option>
+			<option value="7">مهر</option>
+			<option value="8">آبان</option>
+			<option value="9">آذر</option>
+			<option value="10">دی</option>
+			<option value="11">بهمن</option>
+			<option value="12">اسفند</option>
+		</select>
+
+		<label for="shamsiDay">روز:</label>
+		<input type="number" id="shamsiDay" value="4" min="1" max="31"> </div>
+
+	<div id="hijriDateControls" style="display: none;">
+		<label for="hijriYear">سال قمری:</label>
+		<input type="number" id="hijriYear" value="1325" min="1300" max="1500">
+
+		<label for="hijriMonth">ماه قمری:</label>
+		<select id="hijriMonth">
+			<option value="1">محرم</option>
+			<option value="2">صفر</option>
+			<option value="3">ربیع‌الاول</option>
+			<option value="4">ربیع‌الثانی</option>
+			<option value="5">جمادی‌الاول</option>
+			<option value="6">جمادی‌الثانی</option>
+			<option value="7">رجب</option>
+			<option value="8">شعبان</option>
+			<option value="9">رمضان</option>
+			<option value="10">شوال</option>
+			<option value="11">ذی‌القعده</option>
+			<option value="12">ذی‌الحجه</option>
+		</select>
+
+		<label for="hijriDay">روز قمری:</label>
+		<input type="number" id="hijriDay" value="21" min="1" max="30">
+	</div>
+</div>
+<div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
+	<button id="goToFirstEttelaatGlobal" style="display: none;">اطلاعات</button>
+	<button id="goToFirstMardomGlobal" style="display: none;">مردم</button>
+	<button id="goToFirstKayhanGlobal" style="display: none;">کیهان</button>
+	<button id="goToFirstBakhtarEmroozGlobal" style="display: none;">باختر امروز</button>
+	<button id="goToFirstJashnShahanshahiIranGlobal" style="display: none;">جشن شاهنشاهی ایران</button>
+	<button id="goToFirstKhorshidGlobal" style="display: none;">خورشید</button>
+	<button id="goToFirstBamdadRoshanGlobal" style="display: none;">بامداد روشن</button>
+	<button id="goToFirstDawlatIranGlobal" style="display: none;">دولت علیه ایران</button>
+</div>
+
+<p id="mainErrorMessage" class="error-message" style="display: none;"></p>
+<p id="mainStatusMessage" class="status-message">در حال بارگذاری روزنامه‌ها...</p>
+
+<div id="newspaperFilterList" class="newspaper-filter-list" style="display: none;">
+	<div id="filter-ettelaat" class="newspaper-filter-item">روزنامه اطلاعات</div>
+	<div id="filter-mardom" class="newspaper-filter-item">روزنامه مردم</div>
+	<div id="filter-kayhan" class="newspaper-filter-item">روزنامه کیهان</div>
+	<div id="filter-bakhtarEmrooz" class="newspaper-filter-item">روزنامه باختر امروز</div>
+	<div id="filter-jashnShahanshahiIran" class="newspaper-filter-item">روزنامه جشن شاهنشاهی ایران</div>
+	<div id="filter-Q134006001" class="newspaper-filter-item">روزنامه خورشید</div>
+	<div id="filter-Q134311191" class="newspaper-filter-item">روزنامه بامداد روشن</div>
+	<div id="filter-Q_Dawlat_e_Alliya_ye_Iran" class="newspaper-filter-item">روزنامه دولت علیه ایران</div>
+</div>
+
+<div class="newspaper-container">
+	<div id="ettelaatSection" class="newspaper-section" style="display: none;">
+		<h2>روزنامه اطلاعات</h2>
+		<img id="ettelaatNewspaperImage" src="" alt="تصویر روزنامه اطلاعات" class="newspaper-image">
+		<p id="ettelaatStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="ettelaatErrorMessage" class="error-error-message" style="display: none;"></p>
+	</div>
+
+	<div id="mardomSection" class="newspaper-section" style="display: none;">
+		<h2>روزنامه مردم</h2>
+		<img id="mardomNewspaperImage" src="" alt="تصویر روزنامه مردم" class="newspaper-image">
+		<p id="mardomStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="mardomErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+
+	<div id="kayhanSection" class="newspaper-section" style="display: none;">
+		<h2>روزنامه کیهان</h2>
+		<img id="kayhanNewspaperImage" src="" alt="تصویر روزنامه کیهان" class="newspaper-image">
+		<p id="kayhanStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="kayhanErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+
+	<div id="bakhtarEmroozSection" class="newspaper-section" style="display: none;">
+		<h2>روزنامه باختر امروز</h2>
+		<img id="bakhtarEmroozNewspaperImage" src="" alt="تصویر روزنامه باختر امروز" class="newspaper-image">
+		<p id="bakhtarEmroozStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="bakhtarEmroozErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+
+	<div id="jashnShahanshahiIranSection" class="newspaper-section" style="display: none;">
+		<h2>روزنامه جشن شاهنشاهی ایران</h2>
+		<img id="jashnShahanshahiIranNewspaperImage" src="" alt="تصویر روزنامه جشن شاهنشاهی ایران" class="newspaper-image">
+		<p id="jashnShahanshahiIranStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="jashnShahanshahiIranErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+
+	<div id="Q134006001Section" class="newspaper-section" style="display: none;">
+		<h2>روزنامه خورشید</h2>
+		<img id="Q134006001NewspaperImage" src="" alt="تصویر روزنامه خورشید" class="newspaper-image">
+		<p id="Q134006001StatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q134006001ErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q134006001Navigation" class="issue-navigation-controls">
+			<div>
+				<button id="prevQ134006001Issue">&lt; شماره قبل</button>
+				<div>
+					<span>شماره:</span>
+					<input type="number" id="Q134006001IssueNumber">
+				</div>
+				<button id="nextQ134006001Issue">شماره بعد &gt;</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="Q134311191Section" class="newspaper-section" style="display: none;">
+		<h2>روزنامه بامداد روشن</h2>
+		<img id="Q134311191NewspaperImage" src="" alt="تصویر روزنامه بامداد روشن" class="newspaper-image">
+		<p id="Q134311191StatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q134311191ErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q134311191Navigation" class="issue-navigation-controls">
+				<div>
+				<button id="prevQ134311191Issue">&lt; شماره قبل</button>
+				<div>
+					<span>شماره:</span>
+					<input type="number" id="Q134311191IssueNumber">
+				</div>
+				<button id="nextQ134311191Issue">شماره بعد &gt;</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="Q_Dawlat_e_Alliya_ye_IranSection" class="newspaper-section" style="display: none;">
+		<h2>روزنامه دولت علیه ایران</h2>
+		<img id="Q_Dawlat_e_Alliya_ye_IranNewspaperImage" src="" alt="تصویر روزنامه دولت علیه ایران" class="newspaper-image">
+		<p id="Q_Dawlat_e_Alliya_ye_IranStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q_Dawlat_e_Alliya_ye_IranErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q_Dawlat_e_Alliya_ye_IranNavigation" class="issue-navigation-controls">
+				<div>
+				<button id="prevQ_Dawlat_e_Alliya_ye_IranIssue">&lt; شماره قبل</button>
+				<div>
+					<span>شماره:</span>
+					<input type="number" id="Q_Dawlat_e_Alliya_ye_IranIssueNumber">
+				</div>
+				<button id="nextQ_Dawlat_e_Alliya_ye_IranIssue">شماره بعد &gt;</button>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="pagination-controls" style="margin-top: 20px;">
+	<label for="mainPageNumberInput">صفحه اصلی:</label>
+	<input type="number" id="mainPageNumberInput" value="1" min="1">
+</div>
+
+<div id="lightboxOverlay" class="lightbox-overlay">
+	<div class="lightbox-content">
+		<button id="lightboxCloseButton" class="lightbox-close-button">&times;</button>
+		<h2 id="lightboxNewspaperTitle"></h2>
+		<img id="lightboxImage" src="" alt="تصویر روزنامه در لایت‌باکس" class="lightbox-image">
+		<p id="lightboxStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="lightboxErrorMessage" class="error-message" style="display: none;"></p>
+
+		<div class="lightbox-links">
+			<a id="downloadLink" href="#" target="_blank" style="display: none;">دانلود روزنامه</a>
+			<a id="viewLargeLink" href="#" target="_blank" style="display: none;">تصویر بزرگتر</a>
+		</div>
+
+		<div class="lightbox-controls">
+			<div class="page-nav">
+				<button id="lightboxPrevPageButton">&lt;</button>
+				<input type="number" id="lightboxPageNumberInput" value="1" min="1">
+				<button id="lightboxNextPageButton">&gt;</button>
+			</div>
+			<div class="newspaper-nav">
+				<button id="lightboxPrevNewspaperButton" style="display: none;">روزنامه قبل</button>
+				<button id="lightboxNextNewspaperButton" style="display: none;">روزنامه بعد</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="module">
+// DOM Element References
+const shamsiCalendarRadio = document.getElementById('shamsiCalendar');
+const hijriCalendarRadio = document.getElementById('hijriCalendar');
+const shamsiDateControls = document.getElementById('shamsiDateControls');
+const hijriDateControls = document.getElementById('hijriDateControls');
+const shamsiYearInput = document.getElementById('shamsiYear');
+const shamsiMonthSelect = document.getElementById('shamsiMonth');
+const shamsiDayInput = document.getElementById('shamsiDay');
+const hijriYearInput = document.getElementById('hijriYear');
+const hijriMonthSelect = document.getElementById('hijriMonth');
+const hijriDayInput = document.getElementById('hijriDay');
+const mainErrorMessage = document.getElementById('mainErrorMessage');
+const mainStatusMessage = document.getElementById('mainStatusMessage');
+const mainPageNumberInput = document.getElementById('mainPageNumberInput');
+const lightboxOverlay = document.getElementById('lightboxOverlay');
+const lightboxCloseButton = document.getElementById('lightboxCloseButton');
+const lightboxNewspaperTitle = document.getElementById('lightboxNewspaperTitle');
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxStatusMessage = document.getElementById('lightboxStatusMessage');
+const lightboxErrorMessage = document.getElementById('lightboxErrorMessage');
+const lightboxPrevPageButton = document.getElementById('lightboxPrevPageButton');
+const lightboxNextPageButton = document.getElementById('lightboxNextPageButton');
+const lightboxPageNumberInput = document.getElementById('lightboxPageNumberInput');
+const lightboxPrevNewspaperButton = document.getElementById('lightboxPrevNewspaperButton');
+const lightboxNextNewspaperButton = document.getElementById('lightboxNextNewspaperButton');
+const downloadLink = document.getElementById('downloadLink');
+const viewLargeLink = document.getElementById('viewLargeLink');
+const newspaperContainer = document.querySelector('.newspaper-container');
+
+// Global "Go to First Issue" Buttons
+const goToFirstKhorshidGlobalBtn = document.getElementById('goToFirstKhorshidGlobal');
+const goToFirstBamdadRoshanGlobalBtn = document.getElementById('goToFirstBamdadRoshanGlobal');
+const goToFirstDawlatIranGlobalBtn = document.getElementById('goToFirstDawlatIranGlobal');
+const goToFirstEttelaatGlobalBtn = document.getElementById('goToFirstEttelaatGlobal');
+const goToFirstMardomGlobalBtn = document.getElementById('goToFirstMardomGlobal');
+const goToFirstKayhanGlobalBtn = document.getElementById('goToFirstKayhanGlobal');
+const goToFirstBakhtarEmroozGlobalBtn = document.getElementById('goToFirstBakhtarEmroozGlobal');
+const goToFirstJashnShahanshahiIranGlobalBtn = document.getElementById('goToFirstJashnShahanshahiIranGlobal');
+
+
+// Jashn Shahanshahi Iran Elements
+const jashnShahanshahiIranSection = document.getElementById('jashnShahanshahiIranSection');
+const jashnShahanshahiIranNewspaperImage = document.getElementById('jashnShahanshahiIranNewspaperImage');
+const jashnShahanshahiIranStatusMessage = document.getElementById('jashnShahanshahiIranStatusMessage');
+const jashnShahanshahiIranErrorMessage = document.getElementById('jashnShahanshahiIranErrorMessage');
+const filterJashnShahanshahiIran = document.getElementById('filter-jashnShahanshahiIran');
+
+
+// Global State
+let currentCalendarMode = 'shamsi';
+let dbNewspapersData = [];
+let newspaperData = {
+	ettelaat: { type: 'formula', prefix: 'Ettelaat', title: 'روزنامه اطلاعات', currentPage: 1, available: false, imageElement: document.getElementById('ettelaatNewspaperImage'), statusElement: document.getElementById('ettelaatStatusMessage'), errorElement: document.getElementById('ettelaatErrorMessage'), sectionElement: document.getElementById('ettelaatSection'), filterElement: document.getElementById('filter-ettelaat'), calendar_type: 'shamsi' },
+	mardom: { type: 'formula', prefix: 'Mardom', title: 'روزنامه مردم', currentPage: 1, available: false, imageElement: document.getElementById('mardomNewspaperImage'), statusElement: document.getElementById('mardomStatusMessage'), errorElement: document.getElementById('mardomErrorMessage'), sectionElement: document.getElementById('mardomSection'), filterElement: document.getElementById('filter-mardom'), calendar_type: 'shamsi' },
+	kayhan: { type: 'formula', prefix: 'Kayhan', title: 'روزنامه کیهان', currentPage: 1, available: false, imageElement: document.getElementById('kayhanNewspaperImage'), statusElement: document.getElementById('kayhanStatusMessage'), errorElement: document.getElementById('kayhanErrorMessage'), sectionElement: document.getElementById('kayhanSection'), filterElement: document.getElementById('filter-kayhan'), calendar_type: 'shamsi' },
+	bakhtarEmrooz: { type: 'formula', prefix: 'BakhtarEmrooz', title: 'روزنامه باختر امروز', currentPage: 1, available: false, imageElement: document.getElementById('bakhtarEmroozNewspaperImage'), statusElement: document.getElementById('bakhtarEmroozStatusMessage'), errorElement: document.getElementById('bakhtarEmroozErrorMessage'), sectionElement: document.getElementById('bakhtarEmroozSection'), filterElement: document.getElementById('filter-bakhtarEmrooz'), calendar_type: 'shamsi' },
+	jashnShahanshahiIran: {
+		type: 'formula',
+		prefix: 'JashneShahanshahieIran',
+		title: 'روزنامه جشن شاهنشاهی ایران',
+		currentPage: 1,
+		available: false,
+		imageElement: jashnShahanshahiIranNewspaperImage,
+		statusElement: jashnShahanshahiIranStatusMessage,
+		errorElement: jashnShahanshahiIranErrorMessage,
+		sectionElement: jashnShahanshahiIranSection,
+		filterElement: filterJashnShahanshahiIran,
+		calendar_type: 'shamsi'
+	}
+};
+let currentLightboxNewspaperType = null;
+let lightboxCurrentPage = 1;
+let preloadedImages = { prevPage: null, nextPage: null, prevNewspaper: null, nextNewspaper: null };
+
+// Khorshid (Q134006001) specific state
+let khorshidIssues = [];
+let currentKhorshidIssueIndex = -1;
+const prevKhorshidIssueBtn = document.getElementById('prevQ134006001Issue');
+const nextKhorshidIssueBtn = document.getElementById('nextQ134006001Issue');
+const khorshidIssueNumberInput = document.getElementById('Q134006001IssueNumber');
+
+// Bamdad Roshan (Q134311191) specific state
+let bamdadRoshanIssues = [];
+let currentBamdadRoshanIssueIndex = -1;
+const prevBamdadRoshanIssueBtn = document.getElementById('prevQ134311191Issue');
+const nextBamdadRoshanIssueBtn = document.getElementById('nextQ134311191Issue');
+const bamdadRoshanIssueNumberInput = document.getElementById('Q134311191IssueNumber');
+
+// Dawlat-e ʿAlliya-ye Iran (Q_Dawlat_e_Alliya_ye_Iran) specific state
+let dawlatIranIssues = [];
+let currentDawlatIranIssueIndex = -1;
+const prevDawlatIranIssueBtn = document.getElementById('prevQ_Dawlat_e_Alliya_ye_IranIssue');
+const nextDawlatIranIssueBtn = document.getElementById('nextQ_Dawlat_e_Alliya_ye_IranIssue');
+const dawlatIranIssueNumberInput = document.getElementById('Q_Dawlat_e_Alliya_ye_IranIssueNumber');
+
+const firstShamsiIssueDates = {
+	ettelaat: "13050419",
+	bakhtarEmrooz: "13300329",
+	jashnShahanshahiIran: "13500503",
+	kayhan: "13320525",
+	mardom: "13571223"
+};
+
+
+// --- Utility Functions ---
+const pad = (num) => num.toString().padStart(2, '0');
+const persianToEnglishDigits = (str) => {
+	if (typeof str !== 'string') return str;
+	const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+	const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+	return str.split('').map(char => {
+		const index = persianNumbers.indexOf(char);
+		return index !== -1 ? englishNumbers[index] : char;
+	}).join('');
+};
+var MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}function bit_rol(d,_){return d<<_|d>>>32-_}
+
+const getWikimediaHash = (paper, fullFileNameWithPdf) => {
+	if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.wikimedia_hash) {
+		return paper.currentIssue.wikimedia_hash;
+	}
+	const filenameForHash = fullFileNameWithPdf.replace(/ /g, '_');
+	const fullMd5 = MD5(filenameForHash);
+	return fullMd5.substring(0, 2);
+};
+
+// --- Newspaper Loading Logic ---
+const checkAndLoadNewspaper = async (type, year, month, day, page) => {
+	const paper = newspaperData[type];
+	if (!paper || !paper.sectionElement) {
+			console.warn(`Newspaper data or sectionElement missing for type: ${type}`);
+			return Promise.resolve(false);
+	}
+
+	let fileNameBase;
+	let maxPages = null;
+	let shouldDisplaySection = false;
+	let issueExistsForDate = false;
+
+	if (currentCalendarMode === 'hijri') {
+		if (paper.type === 'database' && paper.calendar_type === 'hijri') {
+			shouldDisplaySection = true;
+		}
+	} else { // Shamsi mode
+		if (paper.type === 'formula' || (paper.type === 'database' && paper.calendar_type === 'shamsi')) {
+			shouldDisplaySection = true;
+		}
+	}
+
+	paper.sectionElement.style.display = shouldDisplaySection ? 'block' : 'none';
+	if (!shouldDisplaySection) {
+		paper.available = false;
+		return Promise.resolve(false);
+	}
+
+	paper.errorElement.style.display = 'none';
+	paper.imageElement.style.display = 'none';
+	paper.statusElement.style.display = 'none';
+
+	if (paper.type === 'formula') {
+		fileNameBase = `${paper.prefix}${year}${month}${day}`;
+		paper.currentIssue = null;
+		issueExistsForDate = true;
+	} else if (paper.type === 'database') {
+		const foundIssue = paper.issues && paper.issues.find(issue =>
+			issue.year == year && issue.month == month && issue.day == day
+		);
+		if (foundIssue) {
+			fileNameBase = foundIssue.filename_base;
+			maxPages = foundIssue.pages || null;
+			paper.currentIssue = foundIssue;
+			issueExistsForDate = true;
+		} else {
+			paper.errorElement.textContent = 'روزنامه در این تاریخ موجود نیست';
+			paper.errorElement.style.display = 'block';
+			paper.available = false;
+			return Promise.resolve(false);
+		}
+	} else {
+			console.warn("Unknown paper type for:", type);
+			return Promise.resolve(false);
+	}
+
+	if (!issueExistsForDate) {
+		paper.available = false;
+		return Promise.resolve(false);
+	}
+
+	paper.statusElement.textContent = 'در حال بارگذاری...';
+	paper.statusElement.style.display = 'block';
+
+	const fullFileNameWithPdf = `${fileNameBase}.pdf`;
+	const hash = getWikimediaHash(paper, fullFileNameWithPdf);
+	const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_');
+
+	const width = 330;
+	const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${page}-${width}px-${fileNameForUrlPath}.jpg`;
+
+	return new Promise((resolve) => {
+		paper.imageElement.onload = () => {
+			paper.statusElement.style.display = 'none';
+			paper.imageElement.style.display = 'block';
+			paper.errorElement.style.display = 'none';
+			paper.available = true;
+			if (type === 'Q134006001' || type === 'Q134311191' || type === 'Q_Dawlat_e_Alliya_ye_Iran') {
+				updateIssueNavigationVisibility(type);
+			}
+			paper.fileNameBase = fileNameBase;
+			paper.maxPages = maxPages;
+			resolve(true);
+		};
+		paper.imageElement.onerror = () => {
+			paper.statusElement.style.display = 'none';
+			paper.errorElement.textContent = `تصویر صفحه ${page} یافت نشد.`;
+			paper.errorElement.style.display = 'block';
+			paper.available = false;
+			resolve(false);
+		};
+		paper.imageElement.src = imageUrl;
+	}).catch(() => resolve(false));
+};
+
+const loadImage = async (source = 'initial') => {
+	let year, month, day;
+
+	if (currentCalendarMode === 'shamsi') {
+		year = shamsiYearInput.value;
+		month = pad(shamsiMonthSelect.value);
+		day = pad(shamsiDayInput.value);
+	} else {
+		year = hijriYearInput.value;
+		month = pad(hijriMonthSelect.value);
+		day = pad(hijriDayInput.value);
+	}
+
+	let targetPage = parseInt(persianToEnglishDigits(mainPageNumberInput.value), 10);
+	if (isNaN(targetPage) || targetPage < 1) {
+		targetPage = 1;
+	}
+
+	if (source === 'date') {
+		targetPage = 1;
+		mainStatusMessage.textContent = 'در حال بارگذاری روزنامه‌ها...';
+		mainStatusMessage.style.display = 'block';
+		mainErrorMessage.style.display = 'none';
+	}
+
+	Object.values(newspaperData).forEach(paper => {
+		if(paper) paper.currentPage = targetPage;
+	});
+	mainPageNumberInput.value = targetPage;
+
+	if (!year || !month || !day) {
+		mainErrorMessage.textContent = 'لطفا تاریخ کامل را وارد کنید.';
+		mainErrorMessage.style.display = 'block';
+		mainStatusMessage.style.display = 'none';
+		Object.values(newspaperData).forEach(paper => {
+			if(paper && paper.sectionElement) paper.sectionElement.style.display = 'none';
+		});
+		return;
+	}
+
+	if (source !== 'date') {
+		mainErrorMessage.style.display = 'none';
+		mainStatusMessage.textContent = 'در حال بارگذاری روزنامه‌ها...';
+		mainStatusMessage.style.display = 'block';
+	}
+
+	const loadPromises = Object.keys(newspaperData).map(type =>
+		checkAndLoadNewspaper(type, year, month, day, newspaperData[type] ? newspaperData[type].currentPage : 1)
+	);
+	const results = await Promise.all(loadPromises);
+
+	mainStatusMessage.style.display = 'none';
+
+	// Sort and re-append newspaper sections
+	const newspaperKeys = Object.keys(newspaperData);
+	newspaperKeys.sort((aKey, bKey) => {
+		const paperA = newspaperData[aKey];
+		const paperB = newspaperData[bKey];
+
+		if (!paperA || !paperB) return 0;
+
+		// Primary sort: availability
+		if (paperA.available && !paperB.available) return -1;
+		if (!paperA.available && paperB.available) return 1;
+
+		// Secondary sort: alphabetical by title (Persian)
+		return paperA.title.localeCompare(paperB.title, 'fa');
+	});
+
+	newspaperKeys.forEach(key => {
+		const paper = newspaperData[key];
+		if (paper && paper.sectionElement) {
+			newspaperContainer.appendChild(paper.sectionElement);
+		}
+	});
+
+	// Update visibility of navigation controls after sorting and loading
+	updateIssueNavigationVisibility('Q134006001');
+	updateIssueNavigationVisibility('Q134311191');
+	updateIssueNavigationVisibility('Q_Dawlat_e_Alliya_ye_Iran');
+	updateGlobalGoToFirstIssueButtonsVisibility();
+
+
+	if (!results.some(loaded => loaded) && currentCalendarMode === 'shamsi') {
+		mainErrorMessage.textContent = `روزنامه‌ای برای این تاریخ یافت نشد.`;
+		mainErrorMessage.style.display = 'block';
+	} else {
+		mainErrorMessage.style.display = 'none';
+	}
+};
+
+// --- Calendar Mode Change ---
+const handleCalendarChange = () => {
+	shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'block' : 'none';
+	hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'block' : 'none';
+	loadImage('date');
+	updateGlobalGoToFirstIssueButtonsVisibility();
+};
+shamsiCalendarRadio.addEventListener('change', () => { currentCalendarMode = 'shamsi'; handleCalendarChange(); });
+hijriCalendarRadio.addEventListener('change', () => { currentCalendarMode = 'hijri'; handleCalendarChange(); });
+
+// --- Date/Page Input Event Listeners ---
+[shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput].forEach(el => {
+	if(el) el.addEventListener('change', () => loadImage('date'));
+});
+if(mainPageNumberInput) mainPageNumberInput.addEventListener('change', () => loadImage('pageInput'));
+
+// --- Lightbox Functions ---
+const openLightbox = async (type) => {
+	currentLightboxNewspaperType = type;
+	const paper = newspaperData[type];
+	if (!paper || !paper.available) {
+		console.warn(`Lightbox cannot be opened for ${type} as it's not available for the selected date.`);
+		return;
+	}
+	lightboxCurrentPage = paper.currentPage;
+	lightboxOverlay.classList.add('visible');
+	await updateLightboxContent();
+};
+const closeLightbox = () => {
+	lightboxOverlay.classList.remove('visible');
+	currentLightboxNewspaperType = null;
+};
+const updateLightboxContent = async () => {
+	const type = currentLightboxNewspaperType;
+	if (!type || !newspaperData[type]) {
+		closeLightbox();
+		return;
+	}
+	const paper = newspaperData[type];
+		let year, month, day;
+	if (currentCalendarMode === 'shamsi') {
+		year = shamsiYearInput.value;
+		month = pad(shamsiMonthSelect.value);
+		day = pad(shamsiDayInput.value);
+	} else {
+		year = hijriYearInput.value;
+		month = pad(hijriMonthSelect.value);
+		day = pad(hijriDayInput.value);
+	}
+
+	let formattedDate;
+	if (currentCalendarMode === 'shamsi') {
+		const monthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
+		const persianMonthName = monthNames[parseInt(month) - 1];
+		formattedDate = `${day} ${persianMonthName} ${year}`;
+	} else {
+		const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
+		const hijriMonthName = hijriMonthNames[parseInt(month) - 1];
+		formattedDate = `${day} ${hijriMonthName} ${year} (قمری)`;
+	}
+
+	lightboxNewspaperTitle.textContent = `${paper.title} - ${formattedDate} - صفحه: ${lightboxCurrentPage}`;
+	lightboxPageNumberInput.value = lightboxCurrentPage;
+
+	lightboxStatusMessage.textContent = 'در حال بارگذاری...';
+	lightboxStatusMessage.style.display = 'block';
+	lightboxErrorMessage.style.display = 'none';
+	lightboxImage.style.display = 'none';
+	downloadLink.style.display = 'none';
+	viewLargeLink.style.display = 'none';
+
+	let fileNameBase;
+	let maxPages = null;
+
+	if (paper.fileNameBase) {
+			fileNameBase = paper.fileNameBase;
+			maxPages = paper.maxPages;
+	} else {
+		if (paper.type === 'formula') {
+			fileNameBase = `${paper.prefix}${year}${month}${day}`;
+		} else if (paper.type === 'database') {
+				const foundIssue = paper.issues && paper.issues.find(issue =>
+				issue.year == year && issue.month == month && issue.day == day
+			);
+			if (foundIssue) {
+				fileNameBase = foundIssue.filename_base;
+				maxPages = foundIssue.pages || null;
+				paper.currentIssue = foundIssue;
+			} else {
+				console.error("Issue not found for lightbox for paper:", type, "on date", year, month, day);
+				lightboxStatusMessage.style.display = 'none';
+				lightboxErrorMessage.textContent = `اطلاعات روزنامه برای نمایش در لایت‌باکس یافت نشد.`;
+				lightboxErrorMessage.style.display = 'block';
+				return;
+			}
+		} else {
+			console.error("Unknown paper type for lightbox:", type);
+			lightboxStatusMessage.style.display = 'none';
+			lightboxErrorMessage.textContent = `نوع روزنامه نامشخص.`;
+			lightboxErrorMessage.style.display = 'block';
+			return;
+		}
+	}
+
+
+	const fullFileNameWithPdf = `${fileNameBase}.pdf`;
+	const hash = getWikimediaHash(paper, fullFileNameWithPdf);
+	const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_');
+
+	const width = 800;
+	const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${lightboxCurrentPage}-${width}px-${fileNameForUrlPath}.jpg`;
+
+	lightboxImage.src = imageUrl;
+
+	try {
+		await new Promise((resolve, reject) => {
+			lightboxImage.onload = resolve;
+			lightboxImage.onerror = reject;
+		});
+		lightboxStatusMessage.style.display = 'none';
+		lightboxImage.style.display = 'block';
+		lightboxErrorMessage.style.display = 'none';
+
+		downloadLink.href = `https://upload.wikimedia.org/wikipedia/commons/${hash[0]}/${hash}/${fileNameForUrlPath}?download`;
+		downloadLink.style.display = 'inline-block';
+
+		viewLargeLink.href = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${lightboxCurrentPage}-2048px-${fileNameForUrlPath}.jpg`;
+		viewLargeLink.style.display = 'inline-block';
+
+	} catch (error) {
+		lightboxStatusMessage.style.display = 'none';
+		lightboxImage.style.display = 'none';
+		lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${lightboxCurrentPage} یافت نشد.`;
+		lightboxErrorMessage.style.display = 'block';
+		downloadLink.style.display = 'none';
+		viewLargeLink.style.display = 'none';
+	}
+
+	lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
+	lightboxNextPageButton.disabled = (maxPages !== null && lightboxCurrentPage >= maxPages);
+	lightboxPrevPageButton.style.display = 'inline-block';
+	lightboxNextPageButton.style.display = 'inline-block';
+
+	const availableNewspapers = Object.keys(newspaperData).filter(key => newspaperData[key] && newspaperData[key].available);
+	if (availableNewspapers.length > 1) {
+		lightboxPrevNewspaperButton.style.display = 'inline-block';
+		lightboxNextNewspaperButton.style.display = 'inline-block';
+	} else {
+		lightboxPrevNewspaperButton.style.display = 'none';
+		lightboxNextNewspaperButton.style.display = 'none';
+	}
+};
+	const lightboxGoToPage = (direction) => {
+	const paper = newspaperData[currentLightboxNewspaperType];
+	if (!paper) return;
+
+	if (direction === 'prev' && lightboxCurrentPage > 1) {
+		lightboxCurrentPage--;
+	} else if (direction === 'next') {
+		if (paper.maxPages !== null && lightboxCurrentPage >= paper.maxPages) {
+			return;
+		}
+		lightboxCurrentPage++;
+	}
+	updateLightboxContent();
+};
+const lightboxChangeNewspaper = (direction) => {
+	const availableNewspapers = Object.keys(newspaperData).filter(key => newspaperData[key] && newspaperData[key].available);
+	if (availableNewspapers.length <= 1) return;
+
+	const currentIndex = availableNewspapers.indexOf(currentLightboxNewspaperType);
+	let newIndex;
+	if (direction === 'prev') {
+		newIndex = (currentIndex - 1 + availableNewspapers.length) % availableNewspapers.length;
+	} else {
+		newIndex = (currentIndex + 1) % availableNewspapers.length;
+	}
+	currentLightboxNewspaperType = availableNewspapers[newIndex];
+	const newPaper = newspaperData[currentLightboxNewspaperType];
+	if (newPaper) {
+			lightboxCurrentPage = newPaper.currentPage;
+	} else {
+		lightboxCurrentPage = 1; // Fallback
+	}
+	updateLightboxContent();
+};
+
+// Lightbox Event Listeners
+Object.keys(newspaperData).forEach(type => {
+	const paper = newspaperData[type];
+	if (paper && paper.imageElement) {
+		paper.imageElement.addEventListener('click', () => openLightbox(type));
+	}
+});
+
+lightboxCloseButton.addEventListener('click', closeLightbox);
+lightboxOverlay.addEventListener('click', (e) => { if (e.target === lightboxOverlay) closeLightbox(); });
+lightboxPrevPageButton.addEventListener('click', () => lightboxGoToPage('prev'));
+lightboxNextPageButton.addEventListener('click', () => lightboxGoToPage('next'));
+lightboxPageNumberInput.addEventListener('change', () => {
+	const inputPageValue = persianToEnglishDigits(lightboxPageNumberInput.value);
+	const parsedInputPage = parseInt(inputPageValue, 10);
+	if (!isNaN(parsedInputPage) && parsedInputPage >= 1) {
+		const paper = newspaperData[currentLightboxNewspaperType];
+		if (paper && paper.maxPages !== null && parsedInputPage > paper.maxPages) {
+			lightboxCurrentPage = paper.maxPages;
+		} else {
+			lightboxCurrentPage = parsedInputPage;
+		}
+		updateLightboxContent();
+	} else {
+		lightboxPageNumberInput.value = lightboxCurrentPage;
+	}
+});
+lightboxPrevNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('prev'));
+lightboxNextNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('next'));
+document.addEventListener('keydown', (e) => {
+		if (lightboxOverlay.classList.contains('visible')) {
+		if (e.key === 'ArrowLeft') {
+			lightboxGoToPage('prev');
+		} else if (e.key === 'ArrowRight') {
+			lightboxGoToPage('next');
+		} else if (e.key === 'Escape') {
+			closeLightbox();
+		}
+	}
+});
+
+
+// --- Issue Navigation Functions (Generic for DB papers) ---
+const loadNewspaperIssues = (newspaperId) => {
+	const paper = newspaperData[newspaperId];
+	if (!paper || !paper.issues) return [];
+	let sortedIssues = [...paper.issues].sort((a, b) => {
+		if (a.year !== b.year) return a.year - b.year;
+		if (a.month !== b.month) return a.month - b.month;
+		if (a.day !== b.day) return a.day - b.day;
+		return (a.issue_number || 0) - (b.issue_number || 0);
+	});
+	if (newspaperId === 'Q134006001') khorshidIssues = sortedIssues;
+	else if (newspaperId === 'Q134311191') bamdadRoshanIssues = sortedIssues;
+	else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') dawlatIranIssues = sortedIssues;
+	return sortedIssues;
+};
+
+const updateIssueNavButtons = (newspaperId) => {
+	let currentIndex, issuesArray, prevBtn, nextBtn;
+	if (newspaperId === 'Q134006001') { currentIndex = currentKhorshidIssueIndex; issuesArray = khorshidIssues; prevBtn = prevKhorshidIssueBtn; nextBtn = nextKhorshidIssueBtn; }
+	else if (newspaperId === 'Q134311191') { currentIndex = currentBamdadRoshanIssueIndex; issuesArray = bamdadRoshanIssues; prevBtn = prevBamdadRoshanIssueBtn; nextBtn = nextBamdadRoshanIssueBtn; }
+	else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { currentIndex = currentDawlatIranIssueIndex; issuesArray = dawlatIranIssues; prevBtn = prevDawlatIranIssueBtn; nextBtn = nextDawlatIranIssueBtn; }
+	else return;
+
+	if (!prevBtn || !nextBtn || !issuesArray) return;
+	prevBtn.disabled = currentIndex <= 0;
+	nextBtn.disabled = currentIndex >= issuesArray.length - 1;
+};
+
+const goToNewspaperIssue = (newspaperId, index) => {
+	let issuesArray, issueNumberInputRef;
+	if (newspaperId === 'Q134006001') { issuesArray = khorshidIssues; issueNumberInputRef = khorshidIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentKhorshidIssueIndex = index; }
+	else if (newspaperId === 'Q134311191') { issuesArray = bamdadRoshanIssues; issueNumberInputRef = bamdadRoshanIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentBamdadRoshanIssueIndex = index; }
+	else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { issuesArray = dawlatIranIssues; issueNumberInputRef = dawlatIranIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentDawlatIranIssueIndex = index; }
+	else return;
+
+	const issue = issuesArray[index];
+	if (!issueNumberInputRef || !issue) return;
+	issueNumberInputRef.value = issue.issue_number || '';
+
+	if (newspaperData[newspaperId] && newspaperData[newspaperId].calendar_type === 'hijri') {
+		hijriYearInput.value = issue.year;
+		hijriMonthSelect.value = issue.month;
+		hijriDayInput.value = issue.day;
+	}
+	mainPageNumberInput.value = 1;
+	Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
+	loadImage('date');
+	updateIssueNavButtons(newspaperId);
+};
+
+const goToPrevNewspaperIssue = (newspaperId) => {
+	let currentIndex;
+	if (newspaperId === 'Q134006001') currentIndex = currentKhorshidIssueIndex;
+	else if (newspaperId === 'Q134311191') currentIndex = currentBamdadRoshanIssueIndex;
+	else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') currentIndex = currentDawlatIranIssueIndex;
+	else return;
+	if (currentIndex > 0) goToNewspaperIssue(newspaperId, currentIndex - 1);
+};
+const goToNextNewspaperIssue = (newspaperId) => {
+	let currentIndex, issuesArray;
+	if (newspaperId === 'Q134006001') { currentIndex = currentKhorshidIssueIndex; issuesArray = khorshidIssues; }
+	else if (newspaperId === 'Q134311191') { currentIndex = currentBamdadRoshanIssueIndex; issuesArray = bamdadRoshanIssues; }
+	else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { currentIndex = currentDawlatIranIssueIndex; issuesArray = dawlatIranIssues; }
+	else return;
+	if (currentIndex < issuesArray.length - 1) goToNewspaperIssue(newspaperId, currentIndex + 1);
+};
+const goToNewspaperIssueByNumber = (newspaperId) => {
+	let issueNumberInputRef, issuesArray;
+	if (newspaperId === 'Q134006001') { issueNumberInputRef = khorshidIssueNumberInput; issuesArray = khorshidIssues; }
+	else if (newspaperId === 'Q134311191') { issueNumberInputRef = bamdadRoshanIssueNumberInput; issuesArray = bamdadRoshanIssues; }
+	else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { issueNumberInputRef = dawlatIranIssueNumberInput; issuesArray = dawlatIranIssues; }
+	else return;
+
+	if (!issueNumberInputRef) return;
+	const issueNumberText = persianToEnglishDigits(issueNumberInputRef.value);
+	const issueNumber = parseInt(issueNumberText);
+	if (isNaN(issueNumber)) return;
+	const issueIndex = issuesArray.findIndex(issue => issue.issue_number == issueNumber);
+	if (issueIndex >= 0) goToNewspaperIssue(newspaperId, issueIndex);
+};
+
+const updateIssueNavigationVisibility = (newspaperId) => {
+	const paper = newspaperData[newspaperId];
+	let navigationDiv = document.getElementById(`${newspaperId}Navigation`);
+
+	if (!navigationDiv || !paper || paper.type !== 'database' || paper.calendar_type !== 'hijri' || !paper.issues || paper.issues.length === 0) {
+		if(navigationDiv) navigationDiv.style.display = 'none';
+		return;
+	}
+
+	if (currentCalendarMode === 'hijri') {
+		navigationDiv.style.display = 'block';
+	} else {
+		navigationDiv.style.display = 'none';
+		return;
+	}
+
+	const loadedIssues = loadNewspaperIssues(newspaperId);
+	const currentYear = hijriYearInput.value;
+	const currentMonth = pad(hijriMonthSelect.value);
+	const currentDay = pad(hijriDayInput.value);
+
+	const foundIndex = loadedIssues.findIndex(issue =>
+		issue.year == currentYear &&
+		issue.month == parseInt(currentMonth) &&
+		issue.day == parseInt(currentDay)
+	);
+
+	let issueNumberInputRef;
+	if (newspaperId === 'Q134006001') { currentKhorshidIssueIndex = foundIndex; issueNumberInputRef = khorshidIssueNumberInput; }
+	else if (newspaperId === 'Q134311191') { currentBamdadRoshanIssueIndex = foundIndex; issueNumberInputRef = bamdadRoshanIssueNumberInput; }
+	else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { currentDawlatIranIssueIndex = foundIndex; issueNumberInputRef = dawlatIranIssueNumberInput; }
+
+	if (issueNumberInputRef) {
+		if (foundIndex >= 0 && loadedIssues[foundIndex]) {
+				issueNumberInputRef.value = loadedIssues[foundIndex].issue_number || '';
+		} else {
+			issueNumberInputRef.value = '';
+		}
+	}
+	updateIssueNavButtons(newspaperId);
+};
+
+// --- Global "Go to First Issue" Button Logic ---
+const handleGlobalGoToFirstHijriDbIssue = (paperId) => { // Renamed
+	const paper = newspaperData[paperId];
+	if (!paper || paper.type !== 'database' || !paper.issues || paper.issues.length === 0) {
+		console.warn(`Cannot go to first issue for ${paperId}: Not a valid database newspaper with issues.`);
+		return;
+	}
+	if (currentCalendarMode !== 'hijri') {
+			console.warn("Global 'Go to First Hijri DB Issue' button clicked, but not in Hijri mode.");
+			return;
+	}
+
+	const firstChronologicalIssue = [...paper.issues].sort((a,b) => {
+		if(a.year !== b.year) return a.year - b.year;
+		if(a.month !== b.month) return a.month - b.month;
+		return a.day - b.day;
+	})[0];
+
+	if (firstChronologicalIssue) {
+		hijriYearInput.value = firstChronologicalIssue.year;
+		hijriMonthSelect.value = firstChronologicalIssue.month;
+		hijriDayInput.value = firstChronologicalIssue.day;
+		mainPageNumberInput.value = 1;
+		Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
+		loadImage('date');
+	}
+};
+
+const handleGlobalGoToFirstShamsiFormulaIssue = (paperId) => {
+	const dateStr = firstShamsiIssueDates[paperId];
+	if (!dateStr) {
+		console.warn(`No first issue date defined for Shamsi paper: ${paperId}`);
+		return;
+	}
+	if (currentCalendarMode !== 'shamsi') {
+			console.warn("Global 'Go to First Shamsi Formula Issue' button clicked, but not in Shamsi mode.");
+			return;
+	}
+
+	const year = parseInt(dateStr.substring(0, 4));
+	const month = parseInt(dateStr.substring(4, 6));
+	const day = parseInt(dateStr.substring(6, 8));
+
+	shamsiYearInput.value = year;
+	shamsiMonthSelect.value = month;
+	shamsiDayInput.value = day;
+	mainPageNumberInput.value = 1;
+	Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
+	loadImage('date');
+};
+
+
+const updateGlobalGoToFirstIssueButtonsVisibility = () => {
+	const hijriButtons = [
+		{ btn: goToFirstKhorshidGlobalBtn, id: 'Q134006001' },
+		{ btn: goToFirstBamdadRoshanGlobalBtn, id: 'Q134311191' },
+		{ btn: goToFirstDawlatIranGlobalBtn, id: 'Q_Dawlat_e_Alliya_ye_Iran' }
+	];
+	const shamsiButtons = [
+		{ btn: goToFirstEttelaatGlobalBtn, id: 'ettelaat' },
+		{ btn: goToFirstMardomGlobalBtn, id: 'mardom' },
+		{ btn: goToFirstKayhanGlobalBtn, id: 'kayhan' },
+		{ btn: goToFirstBakhtarEmroozGlobalBtn, id: 'bakhtarEmrooz' },
+		{ btn: goToFirstJashnShahanshahiIranGlobalBtn, id: 'jashnShahanshahiIran' }
+	];
+
+	if (currentCalendarMode === 'hijri') {
+		hijriButtons.forEach(item => {
+			if (item.btn && newspaperData[item.id] && newspaperData[item.id].issues && newspaperData[item.id].issues.length > 0) {
+				item.btn.style.display = 'inline-block';
+			} else if (item.btn) {
+				item.btn.style.display = 'none';
+			}
+		});
+		shamsiButtons.forEach(item => { if (item.btn) item.btn.style.display = 'none'; });
+	} else { // Shamsi mode
+		shamsiButtons.forEach(item => {
+			if (item.btn && newspaperData[item.id] /* Formula papers always "exist" */) {
+				item.btn.style.display = 'inline-block';
+			} else if (item.btn) {
+				item.btn.style.display = 'none';
+			}
+		});
+		hijriButtons.forEach(item => { if (item.btn) item.btn.style.display = 'none'; });
+	}
+};
+
+// Event Listeners for Issue Navigation
+if(prevKhorshidIssueBtn) prevKhorshidIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue('Q134006001'));
+if(nextKhorshidIssueBtn) nextKhorshidIssueBtn.addEventListener('click', () => goToNextNewspaperIssue('Q134006001'));
+if(khorshidIssueNumberInput) khorshidIssueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber('Q134006001'));
+
+if(prevBamdadRoshanIssueBtn) prevBamdadRoshanIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue('Q134311191'));
+if(nextBamdadRoshanIssueBtn) nextBamdadRoshanIssueBtn.addEventListener('click', () => goToNextNewspaperIssue('Q134311191'));
+if(bamdadRoshanIssueNumberInput) bamdadRoshanIssueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber('Q134311191'));
+
+if(prevDawlatIranIssueBtn) prevDawlatIranIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue('Q_Dawlat_e_Alliya_ye_Iran'));
+if(nextDawlatIranIssueBtn) nextDawlatIranIssueBtn.addEventListener('click', () => goToNextNewspaperIssue('Q_Dawlat_e_Alliya_ye_Iran'));
+if(dawlatIranIssueNumberInput) dawlatIranIssueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber('Q_Dawlat_e_Alliya_ye_Iran'));
+
+
+// Event Listeners for Global "Go to First Issue" Buttons
+if(goToFirstKhorshidGlobalBtn) goToFirstKhorshidGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q134006001'));
+if(goToFirstBamdadRoshanGlobalBtn) goToFirstBamdadRoshanGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q134311191'));
+if(goToFirstDawlatIranGlobalBtn) goToFirstDawlatIranGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q_Dawlat_e_Alliya_ye_Iran'));
+
+if(goToFirstEttelaatGlobalBtn) goToFirstEttelaatGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('ettelaat'));
+if(goToFirstMardomGlobalBtn) goToFirstMardomGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('mardom'));
+if(goToFirstKayhanGlobalBtn) goToFirstKayhanGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('kayhan'));
+if(goToFirstBakhtarEmroozGlobalBtn) goToFirstBakhtarEmroozGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('bakhtarEmrooz'));
+if(goToFirstJashnShahanshahiIranGlobalBtn) goToFirstJashnShahanshahiIranGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('jashnShahanshahiIran'));
+
+
+// --- Initial Load ---
+try {
+	const response = await fetch('db.json');
+	if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+	dbNewspapersData = await response.json();
+	console.log("db.json loaded successfully.");
+} catch (error) {
+	console.error("Error loading db.json:", error);
+	mainErrorMessage.textContent = "خطا در بارگذاری دیتابیس روزنامه‌ها.";
+	mainErrorMessage.style.display = 'block';
+	mainStatusMessage.style.display = 'none';
+}
+
+dbNewspapersData.forEach(dbPaper => {
+	const paperId = dbPaper.id;
+	const imageElement = document.getElementById(`${paperId}NewspaperImage`);
+	const statusElement = document.getElementById(`${paperId}StatusMessage`);
+	const errorElement = document.getElementById(`${paperId}ErrorMessage`);
+	const sectionElement = document.getElementById(`${paperId}Section`);
+	const filterElement = document.getElementById(`filter-${paperId}`);
+
+	if (imageElement && statusElement && errorElement && sectionElement && filterElement) {
+		newspaperData[paperId] = {
+			type: 'database',
+			title: dbPaper.title,
+			currentPage: 1,
+			available: false,
+			imageElement: imageElement,
+			statusElement: statusElement,
+			errorElement: errorElement,
+			sectionElement: sectionElement,
+			filterElement: filterElement,
+			issues: dbPaper.issues,
+			calendar_type: dbPaper.calendar_type
+		};
+		if (paperId === 'Q134006001' || paperId === 'Q134311191' || paperId === 'Q_Dawlat_e_Alliya_ye_Iran') {
+			loadNewspaperIssues(paperId);
+		}
+		imageElement.addEventListener('click', () => openLightbox(paperId));
+	} else {
+		console.warn(`HTML elements for newspaper '${dbPaper.title}' (ID: ${paperId}) incomplete. Skipping dynamic addition or full setup.`);
+	}
+});
+
+updateGlobalGoToFirstIssueButtonsVisibility();
+
+setTimeout(() => {
+	loadImage('initial');
+}, 100);
+</script>
 </body>
 </html>
