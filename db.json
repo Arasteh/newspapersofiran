@@ -887,5 +887,244 @@
       "wikimedia_hash": "41"
     }
   ]
+},
+  {
+  "id": "Q54943808",
+  "title": "روح‌القدس",
+  "calendar_type": "hijri",
+  "issues": [
+    {
+      "issue_number": 101,
+      "year": 1325,
+      "month": 6,
+      "day": 25,
+      "filename_base": "RooholQodos_Volume_1_Issue_1",
+      "wikimedia_hash": "a2"
+    },
+    {
+      "issue_number": 102,
+      "year": 1325,
+      "month": 7,
+      "day": 4,
+      "filename_base": "RooholQodos_Volume_1_Issue_2",
+      "wikimedia_hash": "4b"
+    },
+    {
+      "issue_number": 103,
+      "year": 1325,
+      "month": 7,
+      "day": 11,
+      "filename_base": "RooholQodos_Volume_1_Issue_3",
+      "wikimedia_hash": "d4"
+    },
+    {
+      "issue_number": 104,
+      "year": 1325,
+      "month": 7,
+      "day": 23,
+      "filename_base": "RooholQodos_Volume_1_Issue_4",
+      "wikimedia_hash": "50"
+    },
+    {
+      "issue_number": 105,
+      "year": 1325,
+      "month": 8,
+      "day": 1,
+      "filename_base": "RooholQodos_Volume_1_Issue_5",
+      "wikimedia_hash": "e0"
+    },
+    {
+      "issue_number": 106,
+      "year": 1325,
+      "month": 8,
+      "day": 8,
+      "filename_base": "RooholQodos_Volume_1_Issue_6",
+      "wikimedia_hash": "b6"
+    },
+    {
+      "issue_number": 107,
+      "year": 1325,
+      "month": 8,
+      "day": 13,
+      "filename_base": "RooholQodos_Volume_1_Issue_7",
+      "wikimedia_hash": "7c"
+    },
+    {
+      "issue_number": 108,
+      "year": 1325,
+      "month": 8,
+      "day": 22,
+      "filename_base": "RooholQodos_Volume_1_Issue_8",
+      "wikimedia_hash": "a0"
+    },
+    {
+      "issue_number": 109,
+      "year": 1325,
+      "month": 8,
+      "day": 28,
+      "filename_base": "RooholQodos_Volume_1_Issue_9",
+      "wikimedia_hash": "da"
+    },
+    {
+      "issue_number": 110,
+      "year": 1325,
+      "month": 9,
+      "day": 6,
+      "filename_base": "RooholQodos_Volume_1_Issue_10",
+      "wikimedia_hash": "cc"
+    },
+    {
+      "issue_number": 111,
+      "year": 1325,
+      "month": 9,
+      "day": 13,
+      "filename_base": "RooholQodos_Volume_1_Issue_11",
+      "wikimedia_hash": "bd"
+    },
+    {
+      "issue_number": 112,
+      "year": 1325,
+      "month": 9,
+      "day": 25,
+      "filename_base": "RooholQodos_Volume_1_Issue_12",
+      "wikimedia_hash": "77"
+    },
+    {
+      "issue_number": 113,
+      "year": 1325,
+      "month": 9,
+      "day": 29,
+      "filename_base": "RooholQodos_Volume_1_Issue_13",
+      "wikimedia_hash": "2f"
+    },
+    {
+      "issue_number": 114,
+      "year": 1325,
+      "month": 11,
+      "day": 27,
+      "filename_base": "RooholQodos_Volume_1_Issue_14",
+      "wikimedia_hash": "4b"
+    },
+    {
+      "issue_number": 115,
+      "year": 1325,
+      "month": 12,
+      "day": 18,
+      "filename_base": "RooholQodos_Volume_1_Issue_15",
+      "wikimedia_hash": "cd"
+    },
+    {
+      "issue_number": 116,
+      "year": 1325,
+      "month": 12,
+      "day": 25,
+      "filename_base": "RooholQodos_Volume_1_Issue_16",
+      "wikimedia_hash": "d7"
+    },
+    {
+      "issue_number": 117,
+      "year": 1326,
+      "month": 1,
+      "day": 21,
+      "filename_base": "RooholQodos_Volume_1_Issue_17",
+      "wikimedia_hash": "56"
+    },
+    {
+      "issue_number": 118,
+      "year": 1326,
+      "month": 1,
+      "day": 28,
+      "filename_base": "RooholQodos_Volume_1_Issue_18",
+      "wikimedia_hash": "19"
+    },
+    {
+      "issue_number": 119,
+      "year": 1326,
+      "month": 2,
+      "day": 6,
+      "filename_base": "RooholQodos_Volume_1_Issue_19",
+      "wikimedia_hash": "c2"
+    },
+    {
+      "issue_number": 120,
+      "year": 1326,
+      "month": 2,
+      "day": 13,
+      "filename_base": "RooholQodos_Volume_1_Issue_20",
+      "wikimedia_hash": "8b"
+    },
+    {
+      "issue_number": 121,
+      "year": 1326,
+      "month": 2,
+      "day": 26,
+      "filename_base": "RooholQodos_Volume_1_Issue_21",
+      "wikimedia_hash": "c8"
+    },
+    {
+      "issue_number": 122,
+      "year": 1326,
+      "month": 3,
+      "day": 3,
+      "filename_base": "RooholQodos_Volume_1_Issue_22",
+      "wikimedia_hash": "1d"
+    },
+    {
+      "issue_number": 123,
+      "year": 1326,
+      "month": 3,
+      "day": 13,
+      "filename_base": "RooholQodos_Volume_1_Issue_23",
+      "wikimedia_hash": "5d"
+    },
+    {
+      "issue_number": 124,
+      "year": 1326,
+      "month": 3,
+      "day": 24,
+      "filename_base": "RooholQodos_Volume_1_Issue_24",
+      "wikimedia_hash": "ff"
+    },
+    {
+      "issue_number": 125,
+      "year": 1326,
+      "month": 4,
+      "day": 3,
+      "filename_base": "RooholQodos_Volume_1_Issue_25",
+      "wikimedia_hash": "99"
+    },
+    {
+      "issue_number": 126,
+      "year": 1326,
+      "month": 4,
+      "day": 18,
+      "filename_base": "RooholQodos_Volume_1_Issue_26",
+      "wikimedia_hash": "7d"
+    },
+    {
+      "issue_number": 127,
+      "year": 1326,
+      "month": 5,
+      "day": 4,
+      "filename_base": "RooholQodos_Volume_1_Issue_27",
+      "wikimedia_hash": "9c"
+    },
+    {
+      "issue_number": 128,
+      "year": 1326,
+      "month": 5,
+      "day": 17,
+      "filename_base": "RooholQodos_Volume_1_Issue_28",
+      "wikimedia_hash": "e4"
+    },
+    {
+      "issue_number": 201,
+      "year": 1327,
+      "month": 2,
+      "day": 24,
+      "filename_base": "RooholQodos_Volume_2_Issue_1",
+      "wikimedia_hash": "82"
+    }
+  ]
 }
 ]
