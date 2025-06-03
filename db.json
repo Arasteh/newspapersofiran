@@ -616,5 +616,276 @@
       "wikimedia_hash": "0e"
     }
   ]
+},
+  {
+  "id": "Q5686829",
+  "title": "شرف",
+  "calendar_type": "hijri",
+  "issues": [
+    {
+      "issue_number": 1,
+      "year": 1300,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Sharaf_01_Muharram_1300",
+      "wikimedia_hash": "5a"
+    },
+    {
+      "issue_number": 2,
+      "year": 1300,
+      "month": 2,
+      "day": 1,
+      "filename_base": "Sharaf_02_Safar_1300",
+      "wikimedia_hash": "07"
+    },
+    {
+      "issue_number": 4,
+      "year": 1300,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Sharaf_04_Rabi_al_thani_1300",
+      "wikimedia_hash": "a0"
+    },
+    {
+      "issue_number": 5,
+      "year": 1300,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Sharaf_05_Jamadi_al_Oula_1300",
+      "wikimedia_hash": "8d"
+    },
+    {
+      "issue_number": 6,
+      "year": 1300,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Sharaf_06_Jamadi_al_thani_1300",
+      "wikimedia_hash": "c6"
+    },
+    {
+      "issue_number": 7,
+      "year": 1300,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Sharaf_07_Rajab_1300",
+      "wikimedia_hash": "21"
+    },
+    {
+      "issue_number": 8,
+      "year": 1300,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Sharaf_08_Shaban_1300",
+      "wikimedia_hash": "cb"
+    },
+    {
+      "issue_number": 9,
+      "year": 1300,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Sharaf_09_Ramazan_1300",
+      "wikimedia_hash": "05"
+    },
+    {
+      "issue_number": 10,
+      "year": 1300,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Sharaf_10_Shawal_1300",
+      "wikimedia_hash": "25"
+    },
+    {
+      "issue_number": 11,
+      "year": 1300,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Sharaf_11_Ziqadeh_1300",
+      "wikimedia_hash": "49"
+    },
+    {
+      "issue_number": 12,
+      "year": 1300,
+      "month": 12,
+      "day": 1,
+      "filename_base": "Sharaf_12_Zihajeh_1300",
+      "wikimedia_hash": "24"
+    },
+    {
+      "issue_number": 13,
+      "year": 1301,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Sharaf_13_Muharram_1301",
+      "wikimedia_hash": "d1"
+    },
+    {
+      "issue_number": 14,
+      "year": 1301,
+      "month": 2,
+      "day": 1,
+      "filename_base": "Sharaf_14_Safar_1301",
+      "wikimedia_hash": "89"
+    },
+    {
+      "issue_number": 15,
+      "year": 1301,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Sharaf_15_Rabi_al_Oula_1301",
+      "wikimedia_hash": "33"
+    },
+    {
+      "issue_number": 16,
+      "year": 1301,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Sharaf_16_Rabi_al_thani_1301",
+      "wikimedia_hash": "01"
+    },
+    {
+      "issue_number": 17,
+      "year": 1301,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Sharaf_17_Jamadi_al_Oula_1301",
+      "wikimedia_hash": "d6"
+    },
+    {
+      "issue_number": 18,
+      "year": 1301,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Sharaf_18_Jamadi_al_thani_1301",
+      "wikimedia_hash": "a3"
+    },
+    {
+      "issue_number": 19,
+      "year": 1301,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Sharaf_19_Shabaan_1301",
+      "wikimedia_hash": "f3"
+    },
+    {
+      "issue_number": 20,
+      "year": 1301,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Sharaf_20_Ramadaan_1301",
+      "wikimedia_hash": "c9"
+    },
+    {
+      "issue_number": 21,
+      "year": 1301,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Sharaf_21_Shawal_1301",
+      "wikimedia_hash": "0f"
+    },
+    {
+      "issue_number": 22,
+      "year": 1301,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Sharaf_22_Ziqadeh_1301",
+      "wikimedia_hash": "4c"
+    },
+    {
+      "issue_number": 23,
+      "year": 1301,
+      "month": 12,
+      "day": 1,
+      "filename_base": "Sharaf_23_Zihajeh_1301",
+      "wikimedia_hash": "be"
+    },
+    {
+      "issue_number": 24,
+      "year": 1302,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Sharaf_24_Muharram_1302",
+      "wikimedia_hash": "53"
+    },
+    {
+      "issue_number": 25,
+      "year": 1302,
+      "month": 3,
+      "day": 1,
+      "filename_base": "25._Ausgabe_(Rabīʿ_al-awwal_1302)",
+      "wikimedia_hash": "22"
+    },
+    {
+      "issue_number": 26,
+      "year": 1302,
+      "month": 4,
+      "day": 1,
+      "filename_base": "26._Ausgabe_(Rabīʿ_aṭ-ṭānī_1302)",
+      "wikimedia_hash": "e8"
+    },
+    {
+      "issue_number": 27,
+      "year": 1302,
+      "month": 5,
+      "day": 1,
+      "filename_base": "27._Ausgabe_(Ǧumādā_l-ūlā_1302)",
+      "wikimedia_hash": "93"
+    },
+    {
+      "issue_number": 28,
+      "year": 1302,
+      "month": 6,
+      "day": 1,
+      "filename_base": "28._Ausgabe_(Ǧumādā_l-uḫrā_1302)",
+      "wikimedia_hash": "25"
+    },
+    {
+      "issue_number": 29,
+      "year": 1302,
+      "month": 7,
+      "day": 1,
+      "filename_base": "29._Ausgabe_(Raǧab_1302)",
+      "wikimedia_hash": "72"
+    },
+    {
+      "issue_number": 30,
+      "year": 1302,
+      "month": 8,
+      "day": 1,
+      "filename_base": "30._Ausgabe_(Šaʿbān_1302)",
+      "wikimedia_hash": "45"
+    },
+    {
+      "issue_number": 31,
+      "year": 1302,
+      "month": 9,
+      "day": 1,
+      "filename_base": "31._Ausgabe_(Ramaḍān_1302)",
+      "wikimedia_hash": "5a"
+    },
+    {
+      "issue_number": 32,
+      "year": 1302,
+      "month": 10,
+      "day": 1,
+      "filename_base": "32._Ausgabe_(Šawwāl_1302)",
+      "wikimedia_hash": "32"
+    },
+    {
+      "issue_number": 33,
+      "year": 1302,
+      "month": 11,
+      "day": 1,
+      "filename_base": "33._Ausgabe_(Ḏī_l-qaʿda_1302)",
+      "wikimedia_hash": "7a"
+    },
+    {
+      "issue_number": 34,
+      "year": 1302,
+      "month": 12,
+      "day": 1,
+      "filename_base": "34._Ausgabe_(Ḏī_l-ḥiǧǧa_1302)",
+      "wikimedia_hash": "41"
+    }
+  ]
 }
 ]
