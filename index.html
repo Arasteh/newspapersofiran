@@ -613,6 +613,7 @@
             const lightboxNextNewspaperButton = document.getElementById('lightboxNextNewspaperButton');
             const downloadLink = document.getElementById('downloadLink');
             const viewLargeLink = document.getElementById('viewLargeLink');
+            const newspaperContainer = document.querySelector('.newspaper-container'); // Reference to the container
 
             // Global "Go to First Issue" Buttons
             const goToFirstKhorshidGlobalBtn = document.getElementById('goToFirstKhorshidGlobal');
@@ -635,7 +636,7 @@
                 mardom: { type: 'formula', prefix: 'Mardom', title: 'روزنامه مردم', currentPage: 1, available: false, imageElement: document.getElementById('mardomNewspaperImage'), statusElement: document.getElementById('mardomStatusMessage'), errorElement: document.getElementById('mardomErrorMessage'), sectionElement: document.getElementById('mardomSection'), filterElement: document.getElementById('filter-mardom'), calendar_type: 'shamsi' },
                 kayhan: { type: 'formula', prefix: 'Kayhan', title: 'روزنامه کیهان', currentPage: 1, available: false, imageElement: document.getElementById('kayhanNewspaperImage'), statusElement: document.getElementById('kayhanStatusMessage'), errorElement: document.getElementById('kayhanErrorMessage'), sectionElement: document.getElementById('kayhanSection'), filterElement: document.getElementById('filter-kayhan'), calendar_type: 'shamsi' },
                 bakhtarEmrooz: { type: 'formula', prefix: 'BakhtarEmrooz', title: 'روزنامه باختر امروز', currentPage: 1, available: false, imageElement: document.getElementById('bakhtarEmroozNewspaperImage'), statusElement: document.getElementById('bakhtarEmroozStatusMessage'), errorElement: document.getElementById('bakhtarEmroozErrorMessage'), sectionElement: document.getElementById('bakhtarEmroozSection'), filterElement: document.getElementById('filter-bakhtarEmrooz'), calendar_type: 'shamsi' },
-                jashnShahanshahiIran: { // New newspaper entry
+                jashnShahanshahiIran: { 
                     type: 'formula',
                     prefix: 'JashneShahanshahieIran', 
                     title: 'روزنامه جشن شاهنشاهی ایران',
@@ -845,6 +846,31 @@
                 const results = await Promise.all(loadPromises);
 
                 mainStatusMessage.style.display = 'none'; 
+                
+                // Sort and re-append newspaper sections
+                const newspaperKeys = Object.keys(newspaperData);
+                newspaperKeys.sort((aKey, bKey) => {
+                    const paperA = newspaperData[aKey];
+                    const paperB = newspaperData[bKey];
+
+                    if (!paperA || !paperB) return 0; // Should not happen if newspaperData is well-formed
+
+                    // Primary sort: availability
+                    if (paperA.available && !paperB.available) return -1;
+                    if (!paperA.available && paperB.available) return 1;
+
+                    // Secondary sort: alphabetical by title (Persian)
+                    return paperA.title.localeCompare(paperB.title, 'fa');
+                });
+
+                newspaperKeys.forEach(key => {
+                    const paper = newspaperData[key];
+                    if (paper && paper.sectionElement) {
+                        newspaperContainer.appendChild(paper.sectionElement);
+                    }
+                });
+                
+                // Update visibility of navigation controls after sorting and loading
                 updateIssueNavigationVisibility('Q134006001');
                 updateIssueNavigationVisibility('Q134311191'); 
                 updateIssueNavigationVisibility('Q_Dawlat_e_Alliya_ye_Iran');
@@ -936,12 +962,31 @@
                 if (paper.fileNameBase) { 
                      fileNameBase = paper.fileNameBase;
                      maxPages = paper.maxPages; 
-                } else {
-                    console.error("fileNameBase not found for lightbox for paper:", type);
-                    lightboxStatusMessage.style.display = 'none';
-                    lightboxErrorMessage.textContent = `اطلاعات روزنامه برای نمایش در لایت‌باکس یافت نشد.`;
-                    lightboxErrorMessage.style.display = 'block';
-                    return;
+                } else { // Fallback if fileNameBase wasn't set (e.g. lightbox opened for a paper that had an error in main view)
+                    if (paper.type === 'formula') {
+                        fileNameBase = `${paper.prefix}${year}${month}${day}`;
+                    } else if (paper.type === 'database') {
+                         const foundIssue = paper.issues && paper.issues.find(issue => 
+                            issue.year == year && issue.month == month && issue.day == day
+                        );
+                        if (foundIssue) {
+                            fileNameBase = foundIssue.filename_base;
+                            maxPages = foundIssue.pages || null;
+                            paper.currentIssue = foundIssue; // Ensure currentIssue is set for hash
+                        } else {
+                            console.error("Issue not found for lightbox for paper:", type, "on date", year, month, day);
+                            lightboxStatusMessage.style.display = 'none';
+                            lightboxErrorMessage.textContent = `اطلاعات روزنامه برای نمایش در لایت‌باکس یافت نشد.`;
+                            lightboxErrorMessage.style.display = 'block';
+                            return;
+                        }
+                    } else {
+                        console.error("Unknown paper type for lightbox:", type);
+                        lightboxStatusMessage.style.display = 'none';
+                        lightboxErrorMessage.textContent = `نوع روزنامه نامشخص.`;
+                        lightboxErrorMessage.style.display = 'block';
+                        return;
+                    }
                 }
 
 
