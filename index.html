@@ -455,7 +455,7 @@
         <button id="goToFirstSureEsrafilGlobal" style="display: none;">صور اسرافیل</button>
         <button id="goToFirstSharafGlobal" style="display: none;">شرف</button>
         <button id="goToFirstRoohAlQodsGlobal" style="display: none;">روح‌القدس</button>
-    </div>
+        <button id="goToFirstNowruzGlobal" style="display: none;">نوروز</button> </div>
 
     <p id="mainErrorMessage" class="error-message" style="display: none;"></p>
     <p id="mainStatusMessage" class="status-message">در حال بارگذاری روزنامه‌ها...</p>
@@ -472,7 +472,7 @@
         <div id="filter-Q6467762" class="newspaper-filter-item">روزنامه صور اسرافیل</div>
         <div id="filter-Q5686829" class="newspaper-filter-item">روزنامه شرف</div>
         <div id="filter-Q54943808" class="newspaper-filter-item">روزنامه روح‌القدس</div>
-    </div>
+        <div id="filter-Q64941184" class="newspaper-filter-item">روزنامه نوروز</div> </div>
 
     <div class="newspaper-container">
         <div id="ettelaatSection" class="newspaper-section" style="display: none;">
@@ -618,7 +618,23 @@
             </div>
         </div>
 
-    </div>
+        <div id="Q64941184Section" class="newspaper-section" style="display: none;">
+            <h2>روزنامه نوروز</h2>
+            <img id="Q64941184NewspaperImage" src="" alt="تصویر روزنامه نوروز" class="newspaper-image">
+            <p id="Q64941184StatusMessage" class="status-message" style="display: none;"></p>
+            <p id="Q64941184ErrorMessage" class="error-message" style="display: none;"></p>
+            <div id="Q64941184Navigation" class="issue-navigation-controls">
+                 <div>
+                    <button id="prevQ64941184Issue">&lt; شماره قبل</button>
+                    <div>
+                        <span>شماره:</span>
+                        <input type="number" id="Q64941184IssueNumber">
+                    </div>
+                    <button id="nextQ64941184Issue">شماره بعد &gt;</button>
+                </div>
+            </div>
+        </div>
+        </div>
 
     <div class="pagination-controls" style="margin-top: 20px;">
         <label for="mainPageNumberInput">صفحه اصلی:</label>
@@ -690,12 +706,13 @@
             const goToFirstSureEsrafilGlobalBtn = document.getElementById('goToFirstSureEsrafilGlobal');
             const goToFirstSharafGlobalBtn = document.getElementById('goToFirstSharafGlobal');
             const goToFirstRoohAlQodsGlobalBtn = document.getElementById('goToFirstRoohAlQodsGlobal');
+            const goToFirstNowruzGlobalBtn = document.getElementById('goToFirstNowruzGlobal'); // New Ref
             const goToFirstEttelaatGlobalBtn = document.getElementById('goToFirstEttelaatGlobal');
             const goToFirstMardomGlobalBtn = document.getElementById('goToFirstMardomGlobal');
             const goToFirstKayhanGlobalBtn = document.getElementById('goToFirstKayhanGlobal');
             const goToFirstBakhtarEmroozGlobalBtn = document.getElementById('goToFirstBakhtarEmroozGlobal');
             const goToFirstJashnShahanshahiIranGlobalBtn = document.getElementById('goToFirstJashnShahanshahiIranGlobal');
-            const goToFirstZaneRoozGlobalBtn = document.getElementById('goToFirstZaneRoozGlobal'); // New Ref
+            const goToFirstZaneRoozGlobalBtn = document.getElementById('goToFirstZaneRoozGlobal');
 
 
             // Jashn Shahanshahi Iran Elements
@@ -705,7 +722,7 @@
             const jashnShahanshahiIranErrorMessage = document.getElementById('jashnShahanshahiIranErrorMessage');
             const filterJashnShahanshahiIran = document.getElementById('filter-jashnShahanshahiIran');
 
-            // Zane Rooz Elements - New
+            // Zane Rooz Elements
             const zaneRoozSection = document.getElementById('zaneRoozSection');
             const zaneRoozNewspaperImage = document.getElementById('zaneRoozNewspaperImage');
             const zaneRoozStatusMessage = document.getElementById('zaneRoozStatusMessage');
@@ -734,6 +751,13 @@
             const roohAlQodsErrorMessage = document.getElementById('Q54943808ErrorMessage');
             const filterRoohAlQods = document.getElementById('filter-Q54943808');
 
+            // Nowruz Elements (Q64941184) - New
+            const nowruzSection = document.getElementById('Q64941184Section');
+            const nowruzNewspaperImage = document.getElementById('Q64941184NewspaperImage');
+            const nowruzStatusMessage = document.getElementById('Q64941184StatusMessage');
+            const nowruzErrorMessage = document.getElementById('Q64941184ErrorMessage');
+            const filterNowruz = document.getElementById('filter-Q64941184');
+
 
             // Global State
             let currentCalendarMode = 'shamsi';
@@ -756,7 +780,7 @@
                     filterElement: filterJashnShahanshahiIran,
                     calendar_type: 'shamsi'
                 },
-                zaneRooz: { // New newspaper entry
+                zaneRooz: {
                     type: 'formula',
                     prefix: 'ZaneRooz',
                     title: 'روزنامه زن روز',
@@ -816,6 +840,13 @@
             const nextRoohAlQodsIssueBtn = document.getElementById('nextQ54943808Issue');
             const roohAlQodsIssueNumberInput = document.getElementById('Q54943808IssueNumber');
 
+            // Nowruz (Q64941184) specific state - New
+            let nowruzIssues = [];
+            let currentNowruzIssueIndex = -1;
+            const prevNowruzIssueBtn = document.getElementById('prevQ64941184Issue');
+            const nextNowruzIssueBtn = document.getElementById('nextQ64941184Issue');
+            const nowruzIssueNumberInput = document.getElementById('Q64941184IssueNumber');
+
 
             const firstShamsiIssueDates = {
                 ettelaat: "13050419",
@@ -823,7 +854,7 @@
                 jashnShahanshahiIran: "13500503",
                 kayhan: "13320525",
                 mardom: "13571223",
-                zaneRooz: "13461017" // New entry for Zane Rooz
+                zaneRooz: "13461017"
             };
 
 
@@ -927,7 +958,7 @@
                         paper.imageElement.style.display = 'block';
                         paper.errorElement.style.display = 'none';
                         paper.available = true;
-                        if (type === 'Q134006001' || type === 'Q134311191' || type === 'Q_Dawlat_e_Alliya_ye_Iran' || type === 'Q6467762' || type === 'Q5686829' || type === 'Q54943808') {
+                        if (type === 'Q134006001' || type === 'Q134311191' || type === 'Q_Dawlat_e_Alliya_ye_Iran' || type === 'Q6467762' || type === 'Q5686829' || type === 'Q54943808' || type === 'Q64941184') { // Added Q64941184
                            updateIssueNavigationVisibility(type);
                         }
                         paper.fileNameBase = fileNameBase;
@@ -1008,11 +1039,9 @@
                     if (paperA.available && !paperB.available) return -1;
                     if (!paperA.available && paperB.available) return 1;
 
-                    // Sort by title for papers of the same availability and calendar type
                     if (paperA.calendar_type === paperB.calendar_type) {
                          return paperA.title.localeCompare(paperB.title, 'fa');
                     }
-                    // If calendar types differ, prioritize Shamsi (could be adjusted)
                     return paperA.calendar_type === 'shamsi' ? -1 : 1;
                 });
 
@@ -1030,10 +1059,11 @@
                 updateIssueNavigationVisibility('Q6467762');
                 updateIssueNavigationVisibility('Q5686829');
                 updateIssueNavigationVisibility('Q54943808');
+                updateIssueNavigationVisibility('Q64941184'); // Added Q64941184
                 updateGlobalGoToFirstIssueButtonsVisibility();
 
 
-                if (!results.some(loaded => loaded) && (currentCalendarMode === 'shamsi' || currentCalendarMode === 'hijri')) { // Check for both modes
+                if (!results.some(loaded => loaded) && (currentCalendarMode === 'shamsi' || currentCalendarMode === 'hijri')) {
                     mainErrorMessage.textContent = `روزنامه‌ای برای این تاریخ یافت نشد.`;
                     mainErrorMessage.style.display = 'block';
                 } else {
@@ -1228,14 +1258,6 @@
                 updateLightboxContent();
             };
 
-            // Lightbox Event Listeners
-            Object.keys(newspaperData).forEach(type => {
-                const paper = newspaperData[type];
-                if (paper && paper.imageElement) {
-                    paper.imageElement.addEventListener('click', () => openLightbox(type));
-                }
-            });
-
             lightboxCloseButton.addEventListener('click', closeLightbox);
             lightboxOverlay.addEventListener('click', (e) => { if (e.target === lightboxOverlay) closeLightbox(); });
             lightboxPrevPageButton.addEventListener('click', () => lightboxGoToPage('prev'));
@@ -1286,6 +1308,7 @@
                 else if (newspaperId === 'Q6467762') sureEsrafilIssues = sortedIssues;
                 else if (newspaperId === 'Q5686829') sharafIssues = sortedIssues;
                 else if (newspaperId === 'Q54943808') roohAlQodsIssues = sortedIssues;
+                else if (newspaperId === 'Q64941184') nowruzIssues = sortedIssues; // Added Q64941184
                 return sortedIssues;
             };
 
@@ -1297,6 +1320,7 @@
                 else if (newspaperId === 'Q6467762') { currentIndex = currentSureEsrafilIssueIndex; issuesArray = sureEsrafilIssues; prevBtn = prevSureEsrafilIssueBtn; nextBtn = nextSureEsrafilIssueBtn; }
                 else if (newspaperId === 'Q5686829') { currentIndex = currentSharafIssueIndex; issuesArray = sharafIssues; prevBtn = prevSharafIssueBtn; nextBtn = nextSharafIssueBtn; }
                 else if (newspaperId === 'Q54943808') { currentIndex = currentRoohAlQodsIssueIndex; issuesArray = roohAlQodsIssues; prevBtn = prevRoohAlQodsIssueBtn; nextBtn = nextRoohAlQodsIssueBtn; }
+                else if (newspaperId === 'Q64941184') { currentIndex = currentNowruzIssueIndex; issuesArray = nowruzIssues; prevBtn = prevNowruzIssueBtn; nextBtn = nextNowruzIssueBtn; } // Added Q64941184
                 else return;
 
                 if (!prevBtn || !nextBtn || !issuesArray) return;
@@ -1312,6 +1336,7 @@
                 else if (newspaperId === 'Q6467762') { issuesArray = sureEsrafilIssues; issueNumberInputRef = sureEsrafilIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentSureEsrafilIssueIndex = index; }
                 else if (newspaperId === 'Q5686829') { issuesArray = sharafIssues; issueNumberInputRef = sharafIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentSharafIssueIndex = index; }
                 else if (newspaperId === 'Q54943808') { issuesArray = roohAlQodsIssues; issueNumberInputRef = roohAlQodsIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentRoohAlQodsIssueIndex = index; }
+                else if (newspaperId === 'Q64941184') { issuesArray = nowruzIssues; issueNumberInputRef = nowruzIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentNowruzIssueIndex = index; } // Added Q64941184
                 else return;
 
                 const issue = issuesArray[index];
@@ -1337,6 +1362,7 @@
                 else if (newspaperId === 'Q6467762') currentIndex = currentSureEsrafilIssueIndex;
                 else if (newspaperId === 'Q5686829') currentIndex = currentSharafIssueIndex;
                 else if (newspaperId === 'Q54943808') currentIndex = currentRoohAlQodsIssueIndex;
+                else if (newspaperId === 'Q64941184') currentIndex = currentNowruzIssueIndex; // Added Q64941184
                 else return;
                 if (currentIndex > 0) goToNewspaperIssue(newspaperId, currentIndex - 1);
             };
@@ -1348,6 +1374,7 @@
                 else if (newspaperId === 'Q6467762') { currentIndex = currentSureEsrafilIssueIndex; issuesArray = sureEsrafilIssues; }
                 else if (newspaperId === 'Q5686829') { currentIndex = currentSharafIssueIndex; issuesArray = sharafIssues; }
                 else if (newspaperId === 'Q54943808') { currentIndex = currentRoohAlQodsIssueIndex; issuesArray = roohAlQodsIssues; }
+                else if (newspaperId === 'Q64941184') { currentIndex = currentNowruzIssueIndex; issuesArray = nowruzIssues; } // Added Q64941184
                 else return;
                 if (currentIndex < issuesArray.length - 1) goToNewspaperIssue(newspaperId, currentIndex + 1);
             };
@@ -1359,6 +1386,7 @@
                 else if (newspaperId === 'Q6467762') { issueNumberInputRef = sureEsrafilIssueNumberInput; issuesArray = sureEsrafilIssues; }
                 else if (newspaperId === 'Q5686829') { issueNumberInputRef = sharafIssueNumberInput; issuesArray = sharafIssues; }
                 else if (newspaperId === 'Q54943808') { issueNumberInputRef = roohAlQodsIssueNumberInput; issuesArray = roohAlQodsIssues; }
+                else if (newspaperId === 'Q64941184') { issueNumberInputRef = nowruzIssueNumberInput; issuesArray = nowruzIssues; } // Added Q64941184
                 else return;
 
                 if (!issueNumberInputRef) return;
@@ -1403,6 +1431,7 @@
                 else if (newspaperId === 'Q6467762') { currentSureEsrafilIssueIndex = foundIndex; issueNumberInputRef = sureEsrafilIssueNumberInput; }
                 else if (newspaperId === 'Q5686829') { currentSharafIssueIndex = foundIndex; issueNumberInputRef = sharafIssueNumberInput; }
                 else if (newspaperId === 'Q54943808') { currentRoohAlQodsIssueIndex = foundIndex; issueNumberInputRef = roohAlQodsIssueNumberInput; }
+                else if (newspaperId === 'Q64941184') { currentNowruzIssueIndex = foundIndex; issueNumberInputRef = nowruzIssueNumberInput; } // Added Q64941184
 
                 if (issueNumberInputRef) {
                     if (foundIndex >= 0 && loadedIssues[foundIndex]) {
@@ -1473,7 +1502,8 @@
                     { btn: goToFirstDawlatIranGlobalBtn, id: 'Q_Dawlat_e_Alliya_ye_Iran' },
                     { btn: goToFirstSureEsrafilGlobalBtn, id: 'Q6467762'},
                     { btn: goToFirstSharafGlobalBtn, id: 'Q5686829'},
-                    { btn: goToFirstRoohAlQodsGlobalBtn, id: 'Q54943808'}
+                    { btn: goToFirstRoohAlQodsGlobalBtn, id: 'Q54943808'},
+                    { btn: goToFirstNowruzGlobalBtn, id: 'Q64941184'} // Added Q64941184
                 ];
                 const shamsiButtons = [
                     { btn: goToFirstEttelaatGlobalBtn, id: 'ettelaat' },
@@ -1481,7 +1511,7 @@
                     { btn: goToFirstKayhanGlobalBtn, id: 'kayhan' },
                     { btn: goToFirstBakhtarEmroozGlobalBtn, id: 'bakhtarEmrooz' },
                     { btn: goToFirstJashnShahanshahiIranGlobalBtn, id: 'jashnShahanshahiIran' },
-                    { btn: goToFirstZaneRoozGlobalBtn, id: 'zaneRooz' } // New Shamsi button
+                    { btn: goToFirstZaneRoozGlobalBtn, id: 'zaneRooz' }
                 ];
 
                 if (currentCalendarMode === 'hijri') {
@@ -1495,7 +1525,7 @@
                     shamsiButtons.forEach(item => { if (item.btn) item.btn.style.display = 'none'; });
                 } else { // Shamsi mode
                     shamsiButtons.forEach(item => {
-                        if (item.btn && newspaperData[item.id] ) { // For formula based, no need to check for .issues
+                        if (item.btn && newspaperData[item.id] ) {
                             item.btn.style.display = 'inline-block';
                         } else if (item.btn) {
                             item.btn.style.display = 'none';
@@ -1530,6 +1560,11 @@
             if(nextRoohAlQodsIssueBtn) nextRoohAlQodsIssueBtn.addEventListener('click', () => goToNextNewspaperIssue('Q54943808'));
             if(roohAlQodsIssueNumberInput) roohAlQodsIssueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber('Q54943808'));
 
+            // Event listeners for Nowruz (Q64941184) - New
+            if(prevNowruzIssueBtn) prevNowruzIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue('Q64941184'));
+            if(nextNowruzIssueBtn) nextNowruzIssueBtn.addEventListener('click', () => goToNextNewspaperIssue('Q64941184'));
+            if(nowruzIssueNumberInput) nowruzIssueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber('Q64941184'));
+
 
             // Event Listeners for Global "Go to First Issue" Buttons
             if(goToFirstKhorshidGlobalBtn) goToFirstKhorshidGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q134006001'));
@@ -1538,13 +1573,14 @@
             if(goToFirstSureEsrafilGlobalBtn) goToFirstSureEsrafilGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q6467762'));
             if(goToFirstSharafGlobalBtn) goToFirstSharafGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q5686829'));
             if(goToFirstRoohAlQodsGlobalBtn) goToFirstRoohAlQodsGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q54943808'));
+            if(goToFirstNowruzGlobalBtn) goToFirstNowruzGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q64941184')); // Added Q64941184
 
             if(goToFirstEttelaatGlobalBtn) goToFirstEttelaatGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('ettelaat'));
             if(goToFirstMardomGlobalBtn) goToFirstMardomGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('mardom'));
             if(goToFirstKayhanGlobalBtn) goToFirstKayhanGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('kayhan'));
             if(goToFirstBakhtarEmroozGlobalBtn) goToFirstBakhtarEmroozGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('bakhtarEmrooz'));
             if(goToFirstJashnShahanshahiIranGlobalBtn) goToFirstJashnShahanshahiIranGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('jashnShahanshahiIran'));
-            if(goToFirstZaneRoozGlobalBtn) goToFirstZaneRoozGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('zaneRooz')); // New listener
+            if(goToFirstZaneRoozGlobalBtn) goToFirstZaneRoozGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('zaneRooz'));
 
 
             // --- Initial Load ---
@@ -1582,16 +1618,14 @@
                         issues: dbPaper.issues,
                         calendar_type: dbPaper.calendar_type
                     };
-                    if (paperId === 'Q134006001' || paperId === 'Q134311191' || paperId === 'Q_Dawlat_e_Alliya_ye_Iran' || paperId === 'Q6467762' || paperId === 'Q5686829' || paperId === 'Q54943808') {
+                    if (paperId === 'Q134006001' || paperId === 'Q134311191' || paperId === 'Q_Dawlat_e_Alliya_ye_Iran' || paperId === 'Q6467762' || paperId === 'Q5686829' || paperId === 'Q54943808' || paperId === 'Q64941184') { // Added Q64941184
                         loadNewspaperIssues(paperId);
                     }
-                    // imageElement.addEventListener('click', () => openLightbox(paperId)); // Moved after all newspaperData is populated
                 } else {
                     console.warn(`HTML elements for newspaper '${dbPaper.title}' (ID: ${paperId}) incomplete. Skipping dynamic addition or full setup.`);
                 }
             });
             
-            // Add click listeners for lightbox AFTER all newspaperData is populated (including formula-based ones)
             Object.keys(newspaperData).forEach(type => {
                 const paper = newspaperData[type];
                 if (paper && paper.imageElement) {
