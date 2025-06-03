@@ -108,7 +108,7 @@
             justify-content: center;
             gap: 20px;
             width: 100%;
-            max-width: 1150px; /* Adjusted to potentially fit three items */
+            max-width: 1150px; 
         }
         .newspaper-section {
             flex: 1;
@@ -401,16 +401,13 @@
 
         <div id="shamsiDateControls">
             <label for="shamsiYear">سال:</label>
-            <input type="number" id="shamsiYear" value="1358" min="1300" max="1450">
-
-            <label for="shamsiMonth">ماه:</label>
+            <input type="number" id="shamsiYear" value="1350" min="1300" max="1450"> <label for="shamsiMonth">ماه:</label>
             <select id="shamsiMonth">
                 <option value="1">فروردین</option>
                 <option value="2">اردیبهشت</option>
                 <option value="3">خرداد</option>
                 <option value="4">تیر</option>
-                <option value="5">مرداد</option>
-                <option value="6">شهریور</option>
+                <option value="5" selected>مرداد</option> <option value="6">شهریور</option>
                 <option value="7">مهر</option>
                 <option value="8">آبان</option>
                 <option value="9">آذر</option>
@@ -420,8 +417,7 @@
             </select>
 
             <label for="shamsiDay">روز:</label>
-            <input type="number" id="shamsiDay" value="15" min="1" max="31">
-        </div>
+            <input type="number" id="shamsiDay" value="4" min="1" max="31"> </div>
 
         <div id="hijriDateControls" style="display: none;">
             <label for="hijriYear">سال قمری:</label>
@@ -461,6 +457,7 @@
         <div id="filter-mardom" class="newspaper-filter-item">روزنامه مردم</div>
         <div id="filter-kayhan" class="newspaper-filter-item">روزنامه کیهان</div>
         <div id="filter-bakhtarEmrooz" class="newspaper-filter-item">روزنامه باختر امروز</div>
+        <div id="filter-jashnShahanshahiIran" class="newspaper-filter-item">روزنامه جشن شاهنشاهی ایران</div>
         <div id="filter-Q134006001" class="newspaper-filter-item">روزنامه خورشید</div>
         <div id="filter-Q134311191" class="newspaper-filter-item">روزنامه بامداد روشن</div> 
         <div id="filter-Q_Dawlat_e_Alliya_ye_Iran" class="newspaper-filter-item">روزنامه دولت علیه ایران</div>
@@ -493,6 +490,13 @@
             <img id="bakhtarEmroozNewspaperImage" src="" alt="تصویر روزنامه باختر امروز" class="newspaper-image">
             <p id="bakhtarEmroozStatusMessage" class="status-message" style="display: none;"></p>
             <p id="bakhtarEmroozErrorMessage" class="error-message" style="display: none;"></p>
+        </div>
+
+        <div id="jashnShahanshahiIranSection" class="newspaper-section" style="display: none;">
+            <h2>روزنامه جشن شاهنشاهی ایران</h2>
+            <img id="jashnShahanshahiIranNewspaperImage" src="" alt="تصویر روزنامه جشن شاهنشاهی ایران" class="newspaper-image">
+            <p id="jashnShahanshahiIranStatusMessage" class="status-message" style="display: none;"></p>
+            <p id="jashnShahanshahiIranErrorMessage" class="error-message" style="display: none;"></p>
         </div>
 
         <div id="Q134006001Section" class="newspaper-section" style="display: none;">
@@ -615,6 +619,13 @@
             const goToFirstBamdadRoshanGlobalBtn = document.getElementById('goToFirstBamdadRoshanGlobal');
             const goToFirstDawlatIranGlobalBtn = document.getElementById('goToFirstDawlatIranGlobal');
 
+            // Jashn Shahanshahi Iran Elements
+            const jashnShahanshahiIranSection = document.getElementById('jashnShahanshahiIranSection');
+            const jashnShahanshahiIranNewspaperImage = document.getElementById('jashnShahanshahiIranNewspaperImage');
+            const jashnShahanshahiIranStatusMessage = document.getElementById('jashnShahanshahiIranStatusMessage');
+            const jashnShahanshahiIranErrorMessage = document.getElementById('jashnShahanshahiIranErrorMessage');
+            const filterJashnShahanshahiIran = document.getElementById('filter-jashnShahanshahiIran');
+
 
             // Global State
             let currentCalendarMode = 'shamsi';
@@ -623,7 +634,20 @@
                 ettelaat: { type: 'formula', prefix: 'Ettelaat', title: 'روزنامه اطلاعات', currentPage: 1, available: false, imageElement: document.getElementById('ettelaatNewspaperImage'), statusElement: document.getElementById('ettelaatStatusMessage'), errorElement: document.getElementById('ettelaatErrorMessage'), sectionElement: document.getElementById('ettelaatSection'), filterElement: document.getElementById('filter-ettelaat'), calendar_type: 'shamsi' },
                 mardom: { type: 'formula', prefix: 'Mardom', title: 'روزنامه مردم', currentPage: 1, available: false, imageElement: document.getElementById('mardomNewspaperImage'), statusElement: document.getElementById('mardomStatusMessage'), errorElement: document.getElementById('mardomErrorMessage'), sectionElement: document.getElementById('mardomSection'), filterElement: document.getElementById('filter-mardom'), calendar_type: 'shamsi' },
                 kayhan: { type: 'formula', prefix: 'Kayhan', title: 'روزنامه کیهان', currentPage: 1, available: false, imageElement: document.getElementById('kayhanNewspaperImage'), statusElement: document.getElementById('kayhanStatusMessage'), errorElement: document.getElementById('kayhanErrorMessage'), sectionElement: document.getElementById('kayhanSection'), filterElement: document.getElementById('filter-kayhan'), calendar_type: 'shamsi' },
-                bakhtarEmrooz: { type: 'formula', prefix: 'BakhtarEmrooz', title: 'روزنامه باختر امروز', currentPage: 1, available: false, imageElement: document.getElementById('bakhtarEmroozNewspaperImage'), statusElement: document.getElementById('bakhtarEmroozStatusMessage'), errorElement: document.getElementById('bakhtarEmroozErrorMessage'), sectionElement: document.getElementById('bakhtarEmroozSection'), filterElement: document.getElementById('filter-bakhtarEmrooz'), calendar_type: 'shamsi' }
+                bakhtarEmrooz: { type: 'formula', prefix: 'BakhtarEmrooz', title: 'روزنامه باختر امروز', currentPage: 1, available: false, imageElement: document.getElementById('bakhtarEmroozNewspaperImage'), statusElement: document.getElementById('bakhtarEmroozStatusMessage'), errorElement: document.getElementById('bakhtarEmroozErrorMessage'), sectionElement: document.getElementById('bakhtarEmroozSection'), filterElement: document.getElementById('filter-bakhtarEmrooz'), calendar_type: 'shamsi' },
+                jashnShahanshahiIran: { // New newspaper entry
+                    type: 'formula',
+                    prefix: 'JashneShahanshahieIran', 
+                    title: 'روزنامه جشن شاهنشاهی ایران',
+                    currentPage: 1,
+                    available: false,
+                    imageElement: jashnShahanshahiIranNewspaperImage,
+                    statusElement: jashnShahanshahiIranStatusMessage,
+                    errorElement: jashnShahanshahiIranErrorMessage,
+                    sectionElement: jashnShahanshahiIranSection,
+                    filterElement: filterJashnShahanshahiIran,
+                    calendar_type: 'shamsi' 
+                }
             };
             let currentLightboxNewspaperType = null;
             let lightboxCurrentPage = 1;
@@ -686,7 +710,6 @@
                 let shouldDisplaySection = false;
                 let issueExistsForDate = false;
 
-                // Determine section visibility based on current calendar mode and paper's calendar_type
                 if (currentCalendarMode === 'hijri') {
                     if (paper.type === 'database' && paper.calendar_type === 'hijri') {
                         shouldDisplaySection = true;
@@ -703,7 +726,6 @@
                     return Promise.resolve(false);
                 }
                 
-                // Clear previous state for the section
                 paper.errorElement.style.display = 'none';
                 paper.imageElement.style.display = 'none';
                 paper.statusElement.style.display = 'none';
@@ -711,7 +733,7 @@
                 if (paper.type === 'formula') {
                     fileNameBase = `${paper.prefix}${year}${month}${day}`;
                     paper.currentIssue = null; 
-                    issueExistsForDate = true; // Assume formula based always "exists" for the date, error handled by image load
+                    issueExistsForDate = true; 
                 } else if (paper.type === 'database') { 
                     const foundIssue = paper.issues && paper.issues.find(issue => 
                         issue.year == year && issue.month == month && issue.day == day
@@ -732,7 +754,7 @@
                      return Promise.resolve(false);
                 }
                 
-                if (!issueExistsForDate) { // Should have been caught above for DB papers
+                if (!issueExistsForDate) { 
                     paper.available = false;
                     return Promise.resolve(false);
                 }
@@ -829,7 +851,7 @@
                 updateGlobalGoToFirstIssueButtonsVisibility(); 
 
 
-                if (!results.some(loaded => loaded) && currentCalendarMode === 'shamsi') { // Only show general error for shamsi if nothing loaded
+                if (!results.some(loaded => loaded) && currentCalendarMode === 'shamsi') { 
                     mainErrorMessage.textContent = `روزنامه‌ای برای این تاریخ یافت نشد.`; 
                     mainErrorMessage.style.display = 'block';
                 } else {
@@ -911,7 +933,7 @@
                 let fileNameBase;
                 let maxPages = null;
 
-                if (paper.fileNameBase) { // Use stored fileNameBase from main view load
+                if (paper.fileNameBase) { 
                      fileNameBase = paper.fileNameBase;
                      maxPages = paper.maxPages; 
                 } else {
@@ -1006,7 +1028,7 @@
             };
 
             // Lightbox Event Listeners
-            Object.keys(newspaperData).forEach(type => { // Initial setup for formula-based
+            Object.keys(newspaperData).forEach(type => { 
                 const paper = newspaperData[type];
                 if (paper && paper.imageElement) {
                     paper.imageElement.addEventListener('click', () => openLightbox(type));
@@ -1182,7 +1204,7 @@
                      return;
                 }
 
-                const firstChronologicalIssue = [...paper.issues].sort((a,b) => { // Sort by date to find the actual first
+                const firstChronologicalIssue = [...paper.issues].sort((a,b) => { 
                     if(a.year !== b.year) return a.year - b.year;
                     if(a.month !== b.month) return a.month - b.month;
                     return a.day - b.day;
