@@ -455,6 +455,7 @@
         <button id="goToFirstBamdadRoshanGlobal" style="display: none;">بامداد روشن</button>
         <button id="goToFirstDawlatIranGlobal" style="display: none;">دولت علیه ایران</button>
         <button id="goToFirstSureEsrafilGlobal" style="display: none;">صور اسرافیل</button>
+        <button id="goToFirstSharafGlobal" style="display: none;">شرف</button>
     </div>
 
     <p id="mainErrorMessage" class="error-message" style="display: none;"></p>
@@ -469,7 +470,8 @@
         <div id="filter-Q134006001" class="newspaper-filter-item">روزنامه خورشید</div>
         <div id="filter-Q134311191" class="newspaper-filter-item">روزنامه بامداد روشن</div> 
         <div id="filter-Q_Dawlat_e_Alliya_ye_Iran" class="newspaper-filter-item">روزنامه دولت علیه ایران</div>
-        <div id="filter-Q_SureEsrafil" class="newspaper-filter-item">روزنامه صور اسرافیل</div>
+        <div id="filter-Q6467762" class="newspaper-filter-item">روزنامه صور اسرافیل</div>
+        <div id="filter-Q5686829" class="newspaper-filter-item">روزنامه شرف</div>
     </div>
 
     <div class="newspaper-container">
@@ -559,20 +561,36 @@
             </div>
         </div>
         
-        <!-- New Section for Sur-e Esrafil -->
-        <div id="Q_SureEsrafilSection" class="newspaper-section" style="display: none;">
+        <div id="Q6467762Section" class="newspaper-section" style="display: none;">
             <h2>روزنامه صور اسرافیل</h2>
-            <img id="Q_SureEsrafilNewspaperImage" src="" alt="تصویر روزنامه صور اسرافیل" class="newspaper-image">
-            <p id="Q_SureEsrafilStatusMessage" class="status-message" style="display: none;"></p>
-            <p id="Q_SureEsrafilErrorMessage" class="error-message" style="display: none;"></p>
-            <div id="Q_SureEsrafilNavigation" class="issue-navigation-controls">
+            <img id="Q6467762NewspaperImage" src="" alt="تصویر روزنامه صور اسرافیل" class="newspaper-image">
+            <p id="Q6467762StatusMessage" class="status-message" style="display: none;"></p>
+            <p id="Q6467762ErrorMessage" class="error-message" style="display: none;"></p>
+            <div id="Q6467762Navigation" class="issue-navigation-controls">
                  <div>
-                    <button id="prevQ_SureEsrafilIssue">&lt; شماره قبل</button>
+                    <button id="prevQ6467762Issue">&lt; شماره قبل</button>
                     <div>
                         <span>شماره:</span>
-                        <input type="number" id="Q_SureEsrafilIssueNumber">
+                        <input type="number" id="Q6467762IssueNumber">
                     </div>
-                    <button id="nextQ_SureEsrafilIssue">شماره بعد &gt;</button>
+                    <button id="nextQ6467762Issue">شماره بعد &gt;</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="Q5686829Section" class="newspaper-section" style="display: none;">
+            <h2>روزنامه شرف</h2>
+            <img id="Q5686829NewspaperImage" src="" alt="تصویر روزنامه شرف" class="newspaper-image">
+            <p id="Q5686829StatusMessage" class="status-message" style="display: none;"></p>
+            <p id="Q5686829ErrorMessage" class="error-message" style="display: none;"></p>
+            <div id="Q5686829Navigation" class="issue-navigation-controls">
+                 <div>
+                    <button id="prevQ5686829Issue">&lt; شماره قبل</button>
+                    <div>
+                        <span>شماره:</span>
+                        <input type="number" id="Q5686829IssueNumber">
+                    </div>
+                    <button id="nextQ5686829Issue">شماره بعد &gt;</button>
                 </div>
             </div>
         </div>
@@ -646,7 +664,8 @@
             const goToFirstKhorshidGlobalBtn = document.getElementById('goToFirstKhorshidGlobal');
             const goToFirstBamdadRoshanGlobalBtn = document.getElementById('goToFirstBamdadRoshanGlobal');
             const goToFirstDawlatIranGlobalBtn = document.getElementById('goToFirstDawlatIranGlobal');
-            const goToFirstSureEsrafilGlobalBtn = document.getElementById('goToFirstSureEsrafilGlobal'); // New Button
+            const goToFirstSureEsrafilGlobalBtn = document.getElementById('goToFirstSureEsrafilGlobal'); 
+            const goToFirstSharafGlobalBtn = document.getElementById('goToFirstSharafGlobal'); // New
             const goToFirstEttelaatGlobalBtn = document.getElementById('goToFirstEttelaatGlobal');
             const goToFirstMardomGlobalBtn = document.getElementById('goToFirstMardomGlobal');
             const goToFirstKayhanGlobalBtn = document.getElementById('goToFirstKayhanGlobal');
@@ -661,12 +680,19 @@
             const jashnShahanshahiIranErrorMessage = document.getElementById('jashnShahanshahiIranErrorMessage');
             const filterJashnShahanshahiIran = document.getElementById('filter-jashnShahanshahiIran');
 
-            // Sur-e Esrafil Elements
-            const sureEsrafilSection = document.getElementById('Q_SureEsrafilSection');
-            const sureEsrafilNewspaperImage = document.getElementById('Q_SureEsrafilNewspaperImage');
-            const sureEsrafilStatusMessage = document.getElementById('Q_SureEsrafilStatusMessage');
-            const sureEsrafilErrorMessage = document.getElementById('Q_SureEsrafilErrorMessage');
-            const filterSureEsrafil = document.getElementById('filter-Q_SureEsrafil');
+            // Sur-e Esrafil Elements (Q6467762)
+            const sureEsrafilSection = document.getElementById('Q6467762Section');
+            const sureEsrafilNewspaperImage = document.getElementById('Q6467762NewspaperImage');
+            const sureEsrafilStatusMessage = document.getElementById('Q6467762StatusMessage');
+            const sureEsrafilErrorMessage = document.getElementById('Q6467762ErrorMessage');
+            const filterSureEsrafil = document.getElementById('filter-Q6467762');
+
+            // Sharaf Elements (Q5686829)
+            const sharafSection = document.getElementById('Q5686829Section');
+            const sharafNewspaperImage = document.getElementById('Q5686829NewspaperImage');
+            const sharafStatusMessage = document.getElementById('Q5686829StatusMessage');
+            const sharafErrorMessage = document.getElementById('Q5686829ErrorMessage');
+            const filterSharaf = document.getElementById('filter-Q5686829');
 
 
             // Global State
@@ -716,12 +742,19 @@
             const nextDawlatIranIssueBtn = document.getElementById('nextQ_Dawlat_e_Alliya_ye_IranIssue');
             const dawlatIranIssueNumberInput = document.getElementById('Q_Dawlat_e_Alliya_ye_IranIssueNumber');
 
-            // Sur-e Esrafil (Q_SureEsrafil) specific state
-            let sureEsrafilIssues = [];
+            // Sur-e Esrafil (Q6467762) specific state
+            let sureEsrafilIssues = []; // Renamed from Q_SureEsrafil
             let currentSureEsrafilIssueIndex = -1;
-            const prevSureEsrafilIssueBtn = document.getElementById('prevQ_SureEsrafilIssue');
-            const nextSureEsrafilIssueBtn = document.getElementById('nextQ_SureEsrafilIssue');
-            const sureEsrafilIssueNumberInput = document.getElementById('Q_SureEsrafilIssueNumber');
+            const prevSureEsrafilIssueBtn = document.getElementById('prevQ6467762Issue');
+            const nextSureEsrafilIssueBtn = document.getElementById('nextQ6467762Issue');
+            const sureEsrafilIssueNumberInput = document.getElementById('Q6467762IssueNumber');
+
+            // Sharaf (Q5686829) specific state
+            let sharafIssues = [];
+            let currentSharafIssueIndex = -1;
+            const prevSharafIssueBtn = document.getElementById('prevQ5686829Issue');
+            const nextSharafIssueBtn = document.getElementById('nextQ5686829Issue');
+            const sharafIssueNumberInput = document.getElementById('Q5686829IssueNumber');
 
 
             const firstShamsiIssueDates = {
@@ -833,7 +866,7 @@
                         paper.imageElement.style.display = 'block';
                         paper.errorElement.style.display = 'none'; 
                         paper.available = true;
-                        if (type === 'Q134006001' || type === 'Q134311191' || type === 'Q_Dawlat_e_Alliya_ye_Iran' || type === 'Q_SureEsrafil') { 
+                        if (type === 'Q134006001' || type === 'Q134311191' || type === 'Q_Dawlat_e_Alliya_ye_Iran' || type === 'Q6467762' || type === 'Q5686829') { 
                            updateIssueNavigationVisibility(type);
                         }
                         paper.fileNameBase = fileNameBase; 
@@ -927,7 +960,8 @@
                 updateIssueNavigationVisibility('Q134006001');
                 updateIssueNavigationVisibility('Q134311191'); 
                 updateIssueNavigationVisibility('Q_Dawlat_e_Alliya_ye_Iran');
-                updateIssueNavigationVisibility('Q_SureEsrafil'); // New
+                updateIssueNavigationVisibility('Q6467762'); 
+                updateIssueNavigationVisibility('Q5686829'); 
                 updateGlobalGoToFirstIssueButtonsVisibility(); 
 
 
@@ -1181,7 +1215,8 @@
                 if (newspaperId === 'Q134006001') khorshidIssues = sortedIssues;
                 else if (newspaperId === 'Q134311191') bamdadRoshanIssues = sortedIssues;
                 else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') dawlatIranIssues = sortedIssues;
-                else if (newspaperId === 'Q_SureEsrafil') sureEsrafilIssues = sortedIssues; // New
+                else if (newspaperId === 'Q6467762') sureEsrafilIssues = sortedIssues; 
+                else if (newspaperId === 'Q5686829') sharafIssues = sortedIssues; 
                 return sortedIssues;
             };
 
@@ -1190,7 +1225,8 @@
                 if (newspaperId === 'Q134006001') { currentIndex = currentKhorshidIssueIndex; issuesArray = khorshidIssues; prevBtn = prevKhorshidIssueBtn; nextBtn = nextKhorshidIssueBtn; }
                 else if (newspaperId === 'Q134311191') { currentIndex = currentBamdadRoshanIssueIndex; issuesArray = bamdadRoshanIssues; prevBtn = prevBamdadRoshanIssueBtn; nextBtn = nextBamdadRoshanIssueBtn; }
                 else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { currentIndex = currentDawlatIranIssueIndex; issuesArray = dawlatIranIssues; prevBtn = prevDawlatIranIssueBtn; nextBtn = nextDawlatIranIssueBtn; }
-                else if (newspaperId === 'Q_SureEsrafil') { currentIndex = currentSureEsrafilIssueIndex; issuesArray = sureEsrafilIssues; prevBtn = prevSureEsrafilIssueBtn; nextBtn = nextSureEsrafilIssueBtn; } // New
+                else if (newspaperId === 'Q6467762') { currentIndex = currentSureEsrafilIssueIndex; issuesArray = sureEsrafilIssues; prevBtn = prevSureEsrafilIssueBtn; nextBtn = nextSureEsrafilIssueBtn; } 
+                else if (newspaperId === 'Q5686829') { currentIndex = currentSharafIssueIndex; issuesArray = sharafIssues; prevBtn = prevSharafIssueBtn; nextBtn = nextSharafIssueBtn; } 
                 else return;
 
                 if (!prevBtn || !nextBtn || !issuesArray) return;
@@ -1203,7 +1239,8 @@
                 if (newspaperId === 'Q134006001') { issuesArray = khorshidIssues; issueNumberInputRef = khorshidIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentKhorshidIssueIndex = index; }
                 else if (newspaperId === 'Q134311191') { issuesArray = bamdadRoshanIssues; issueNumberInputRef = bamdadRoshanIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentBamdadRoshanIssueIndex = index; }
                 else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { issuesArray = dawlatIranIssues; issueNumberInputRef = dawlatIranIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentDawlatIranIssueIndex = index; }
-                else if (newspaperId === 'Q_SureEsrafil') { issuesArray = sureEsrafilIssues; issueNumberInputRef = sureEsrafilIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentSureEsrafilIssueIndex = index; } // New
+                else if (newspaperId === 'Q6467762') { issuesArray = sureEsrafilIssues; issueNumberInputRef = sureEsrafilIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentSureEsrafilIssueIndex = index; } 
+                else if (newspaperId === 'Q5686829') { issuesArray = sharafIssues; issueNumberInputRef = sharafIssueNumberInput; if (index < 0 || index >= issuesArray.length) return; currentSharafIssueIndex = index; } 
                 else return;
 
                 const issue = issuesArray[index];
@@ -1226,7 +1263,8 @@
                 if (newspaperId === 'Q134006001') currentIndex = currentKhorshidIssueIndex;
                 else if (newspaperId === 'Q134311191') currentIndex = currentBamdadRoshanIssueIndex;
                 else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') currentIndex = currentDawlatIranIssueIndex;
-                else if (newspaperId === 'Q_SureEsrafil') currentIndex = currentSureEsrafilIssueIndex; // New
+                else if (newspaperId === 'Q6467762') currentIndex = currentSureEsrafilIssueIndex; 
+                else if (newspaperId === 'Q5686829') currentIndex = currentSharafIssueIndex; 
                 else return;
                 if (currentIndex > 0) goToNewspaperIssue(newspaperId, currentIndex - 1);
             };
@@ -1235,7 +1273,8 @@
                 if (newspaperId === 'Q134006001') { currentIndex = currentKhorshidIssueIndex; issuesArray = khorshidIssues; }
                 else if (newspaperId === 'Q134311191') { currentIndex = currentBamdadRoshanIssueIndex; issuesArray = bamdadRoshanIssues; }
                 else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { currentIndex = currentDawlatIranIssueIndex; issuesArray = dawlatIranIssues; }
-                else if (newspaperId === 'Q_SureEsrafil') { currentIndex = currentSureEsrafilIssueIndex; issuesArray = sureEsrafilIssues; } // New
+                else if (newspaperId === 'Q6467762') { currentIndex = currentSureEsrafilIssueIndex; issuesArray = sureEsrafilIssues; } 
+                else if (newspaperId === 'Q5686829') { currentIndex = currentSharafIssueIndex; issuesArray = sharafIssues; } 
                 else return;
                 if (currentIndex < issuesArray.length - 1) goToNewspaperIssue(newspaperId, currentIndex + 1);
             };
@@ -1244,7 +1283,8 @@
                 if (newspaperId === 'Q134006001') { issueNumberInputRef = khorshidIssueNumberInput; issuesArray = khorshidIssues; }
                 else if (newspaperId === 'Q134311191') { issueNumberInputRef = bamdadRoshanIssueNumberInput; issuesArray = bamdadRoshanIssues; }
                 else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { issueNumberInputRef = dawlatIranIssueNumberInput; issuesArray = dawlatIranIssues; }
-                else if (newspaperId === 'Q_SureEsrafil') { issueNumberInputRef = sureEsrafilIssueNumberInput; issuesArray = sureEsrafilIssues; } // New
+                else if (newspaperId === 'Q6467762') { issueNumberInputRef = sureEsrafilIssueNumberInput; issuesArray = sureEsrafilIssues; } 
+                else if (newspaperId === 'Q5686829') { issueNumberInputRef = sharafIssueNumberInput; issuesArray = sharafIssues; } 
                 else return;
 
                 if (!issueNumberInputRef) return;
@@ -1286,7 +1326,8 @@
                 if (newspaperId === 'Q134006001') { currentKhorshidIssueIndex = foundIndex; issueNumberInputRef = khorshidIssueNumberInput; }
                 else if (newspaperId === 'Q134311191') { currentBamdadRoshanIssueIndex = foundIndex; issueNumberInputRef = bamdadRoshanIssueNumberInput; }
                 else if (newspaperId === 'Q_Dawlat_e_Alliya_ye_Iran') { currentDawlatIranIssueIndex = foundIndex; issueNumberInputRef = dawlatIranIssueNumberInput; }
-                else if (newspaperId === 'Q_SureEsrafil') { currentSureEsrafilIssueIndex = foundIndex; issueNumberInputRef = sureEsrafilIssueNumberInput; } // New
+                else if (newspaperId === 'Q6467762') { currentSureEsrafilIssueIndex = foundIndex; issueNumberInputRef = sureEsrafilIssueNumberInput; } 
+                else if (newspaperId === 'Q5686829') { currentSharafIssueIndex = foundIndex; issueNumberInputRef = sharafIssueNumberInput; } 
                 
                 if (issueNumberInputRef) { 
                     if (foundIndex >= 0 && loadedIssues[foundIndex]) {
@@ -1355,7 +1396,8 @@
                     { btn: goToFirstKhorshidGlobalBtn, id: 'Q134006001' },
                     { btn: goToFirstBamdadRoshanGlobalBtn, id: 'Q134311191' },
                     { btn: goToFirstDawlatIranGlobalBtn, id: 'Q_Dawlat_e_Alliya_ye_Iran' },
-                    { btn: goToFirstSureEsrafilGlobalBtn, id: 'Q_SureEsrafil'} // New
+                    { btn: goToFirstSureEsrafilGlobalBtn, id: 'Q6467762'}, 
+                    { btn: goToFirstSharafGlobalBtn, id: 'Q5686829'} 
                 ];
                 const shamsiButtons = [
                     { btn: goToFirstEttelaatGlobalBtn, id: 'ettelaat' },
@@ -1399,16 +1441,21 @@
             if(nextDawlatIranIssueBtn) nextDawlatIranIssueBtn.addEventListener('click', () => goToNextNewspaperIssue('Q_Dawlat_e_Alliya_ye_Iran'));
             if(dawlatIranIssueNumberInput) dawlatIranIssueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber('Q_Dawlat_e_Alliya_ye_Iran'));
 
-            if(prevSureEsrafilIssueBtn) prevSureEsrafilIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue('Q_SureEsrafil')); // New
-            if(nextSureEsrafilIssueBtn) nextSureEsrafilIssueBtn.addEventListener('click', () => goToNextNewspaperIssue('Q_SureEsrafil')); // New
-            if(sureEsrafilIssueNumberInput) sureEsrafilIssueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber('Q_SureEsrafil')); //New
+            if(prevSureEsrafilIssueBtn) prevSureEsrafilIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue('Q6467762')); 
+            if(nextSureEsrafilIssueBtn) nextSureEsrafilIssueBtn.addEventListener('click', () => goToNextNewspaperIssue('Q6467762')); 
+            if(sureEsrafilIssueNumberInput) sureEsrafilIssueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber('Q6467762')); 
+
+            if(prevSharafIssueBtn) prevSharafIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue('Q5686829')); 
+            if(nextSharafIssueBtn) nextSharafIssueBtn.addEventListener('click', () => goToNextNewspaperIssue('Q5686829')); 
+            if(sharafIssueNumberInput) sharafIssueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber('Q5686829')); 
 
 
             // Event Listeners for Global "Go to First Issue" Buttons
             if(goToFirstKhorshidGlobalBtn) goToFirstKhorshidGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q134006001'));
             if(goToFirstBamdadRoshanGlobalBtn) goToFirstBamdadRoshanGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q134311191'));
             if(goToFirstDawlatIranGlobalBtn) goToFirstDawlatIranGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q_Dawlat_e_Alliya_ye_Iran'));
-            if(goToFirstSureEsrafilGlobalBtn) goToFirstSureEsrafilGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q_SureEsrafil')); // New
+            if(goToFirstSureEsrafilGlobalBtn) goToFirstSureEsrafilGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q6467762')); 
+            if(goToFirstSharafGlobalBtn) goToFirstSharafGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q5686829')); 
             
             if(goToFirstEttelaatGlobalBtn) goToFirstEttelaatGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('ettelaat'));
             if(goToFirstMardomGlobalBtn) goToFirstMardomGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('mardom'));
@@ -1452,7 +1499,7 @@
                         issues: dbPaper.issues,
                         calendar_type: dbPaper.calendar_type
                     };
-                    if (paperId === 'Q134006001' || paperId === 'Q134311191' || paperId === 'Q_Dawlat_e_Alliya_ye_Iran' || paperId === 'Q_SureEsrafil') { // Added Q_SureEsrafil
+                    if (paperId === 'Q134006001' || paperId === 'Q134311191' || paperId === 'Q_Dawlat_e_Alliya_ye_Iran' || paperId === 'Q6467762' || paperId === 'Q5686829') { 
                         loadNewspaperIssues(paperId); 
                     }
                     imageElement.addEventListener('click', () => openLightbox(paperId));
