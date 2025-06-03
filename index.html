@@ -47,7 +47,7 @@
         }
 
         body {
-            font-family: sans-serif;
+            font-family: system-ui;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -975,8 +975,8 @@
 
             // --- Calendar Mode Change ---
             const handleCalendarChange = () => {
-                shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'flex' : 'none';
-                hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'flex' : 'none';
+                shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'block' : 'none';
+                hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'block' : 'none';
                 loadImage('date');
                 updateGlobalGoToFirstIssueButtonsVisibility(); 
             };
