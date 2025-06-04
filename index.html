@@ -76,7 +76,6 @@
         }
         .global-issue-nav-controls button {
             padding: 8px 15px;
-            background-color: var(--button-bg);
             color: white;
             border: none;
             border-radius: 4px;
@@ -84,9 +83,27 @@
             font-size: 14px;
             transition: background-color 0.3s ease;
         }
+        /* Default to Hijri (green) button styling if no specific class */
+        .global-issue-nav-controls button {
+            background-color: var(--button-bg);
+        }
         .global-issue-nav-controls button:hover {
             background-color: var(--button-hover-bg);
         }
+
+        .global-issue-nav-controls button.shamsi-nav-btn {
+            background-color: var(--lightbox-button-bg); /* Blue */
+        }
+        .global-issue-nav-controls button.shamsi-nav-btn:hover {
+            background-color: var(--lightbox-button-hover-bg); /* Darker Blue */
+        }
+        .global-issue-nav-controls button.hijri-nav-btn {
+            background-color: var(--button-bg); /* Green */
+        }
+        .global-issue-nav-controls button.hijri-nav-btn:hover {
+            background-color: var(--button-hover-bg); /* Darker Green */
+        }
+
         .global-issue-nav-controls button:disabled {
             background-color: var(--button-disabled-bg);
             cursor: not-allowed;
@@ -327,7 +344,7 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 760px;
+            max-width: 760px; /* Adjusted for potentially more buttons */
             display: none;
         }
         .newspaper-filter-item {
@@ -444,20 +461,22 @@
         </div>
     </div>
     <div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
-        <button id="goToFirstEttelaatGlobal" style="display: none;">اطلاعات</button>
-        <button id="goToFirstMardomGlobal" style="display: none;">مردم</button>
-        <button id="goToFirstKayhanGlobal" style="display: none;">کیهان</button>
-        <button id="goToFirstBakhtarEmroozGlobal" style="display: none;">باختر امروز</button>
-        <button id="goToFirstJashnShahanshahiIranGlobal" style="display: none;">جشن شاهنشاهی ایران</button>
-        <button id="goToFirstZaneRoozGlobal" style="display: none;">زن روز</button>
-        <button id="goToFirstBabashamalGlobal" style="display: none;">باباشمل</button>
-        <button id="goToFirstKhorshidGlobal" style="display: none;">خورشید</button>
-        <button id="goToFirstBamdadRoshanGlobal" style="display: none;">بامداد روشن</button>
-        <button id="goToFirstDawlatIranGlobal" style="display: none;">دولت علیه ایران</button>
-        <button id="goToFirstSureEsrafilGlobal" style="display: none;">صور اسرافیل</button>
-        <button id="goToFirstSharafGlobal" style="display: none;">شرف</button>
-        <button id="goToFirstRoohAlQodsGlobal" style="display: none;">روح‌القدس</button>
-        <button id="goToFirstNowruzGlobal" style="display: none;">نوروز</button>
+        <button id="goToFirstDawlatIranGlobal" style="display: none;" class="hijri-nav-btn">دولت علیه ایران</button>
+        <button id="goToFirstSharafGlobal" style="display: none;" class="hijri-nav-btn">شرف</button>
+        <button id="goToFirstNowruzGlobal" style="display: none;" class="hijri-nav-btn">نوروز</button>
+        <button id="goToFirstSureEsrafilGlobal" style="display: none;" class="hijri-nav-btn">صور اسرافیل</button>
+        <button id="goToFirstRoohAlQodsGlobal" style="display: none;" class="hijri-nav-btn">روح‌القدس</button>
+        <button id="goToFirstKhorshidGlobal" style="display: none;" class="hijri-nav-btn">خورشید</button>
+        <button id="goToFirstBamdadRoshanGlobal" style="display: none;" class="hijri-nav-btn">بامداد روشن</button>
+        
+        <button id="goToFirstEttelaatGlobal" style="display: none;" class="shamsi-nav-btn">اطلاعات</button>
+        <button id="goToFirstBabashamalGlobal" style="display: none;" class="shamsi-nav-btn">باباشمل</button>
+        <button id="goToFirstBakhtarEmroozGlobal" style="display: none;" class="shamsi-nav-btn">باختر امروز</button>
+        <button id="goToFirstKayhanGlobal" style="display: none;" class="shamsi-nav-btn">کیهان</button>
+        <button id="goToFirstZaneRoozGlobal" style="display: none;" class="shamsi-nav-btn">زن روز</button>
+        <button id="goToFirstTamashaGlobal" style="display: none;" class="shamsi-nav-btn">تماشا</button>
+        <button id="goToFirstJashnShahanshahiIranGlobal" style="display: none;" class="shamsi-nav-btn">جشن شاهنشاهی ایران</button>
+        <button id="goToFirstMardomGlobal" style="display: none;" class="shamsi-nav-btn">مردم</button>
     </div>
 
     <p id="mainErrorMessage" class="error-message" style="display: none;"></p>
@@ -471,6 +490,7 @@
         <div id="filter-jashnShahanshahiIran" class="newspaper-filter-item">جشن شاهنشاهی ایران</div>
         <div id="filter-zaneRooz" class="newspaper-filter-item">زن روز</div>
         <div id="filter-babashamal" class="newspaper-filter-item">باباشمل</div>
+        <div id="filter-tamasha" class="newspaper-filter-item">تماشا</div> 
         <div id="filter-Q134006001" class="newspaper-filter-item">خورشید</div>
         <div id="filter-Q134311191" class="newspaper-filter-item">بامداد روشن</div>
         <div id="filter-Q_Dawlat_e_Alliya_ye_Iran" class="newspaper-filter-item">دولت علیه ایران</div>
@@ -527,6 +547,12 @@
             <img id="babashamalNewspaperImage" src="" alt="تصویر باباشمل" class="newspaper-image">
             <p id="babashamalStatusMessage" class="status-message" style="display: none;"></p>
             <p id="babashamalErrorMessage" class="error-message" style="display: none;"></p>
+        </div>
+        <div id="tamashaSection" class="newspaper-section" style="display: none;">
+            <h2>تماشا</h2>
+            <img id="tamashaNewspaperImage" src="" alt="تصویر تماشا" class="newspaper-image">
+            <p id="tamashaStatusMessage" class="status-message" style="display: none;"></p>
+            <p id="tamashaErrorMessage" class="error-message" style="display: none;"></p>
         </div>
 
         <div id="Q134006001Section" class="newspaper-section" style="display: none;">
@@ -713,7 +739,7 @@
             const viewLargeLink = document.getElementById('viewLargeLink');
             const newspaperContainer = document.querySelector('.newspaper-container');
 
-            // Global "Go to First Issue" Buttons (references obtained as needed)
+            // Global "Go to First Issue" Buttons
             const goToFirstKhorshidGlobalBtn = document.getElementById('goToFirstKhorshidGlobal');
             const goToFirstBamdadRoshanGlobalBtn = document.getElementById('goToFirstBamdadRoshanGlobal');
             const goToFirstDawlatIranGlobalBtn = document.getElementById('goToFirstDawlatIranGlobal');
@@ -728,6 +754,7 @@
             const goToFirstJashnShahanshahiIranGlobalBtn = document.getElementById('goToFirstJashnShahanshahiIranGlobal');
             const goToFirstZaneRoozGlobalBtn = document.getElementById('goToFirstZaneRoozGlobal');
             const goToFirstBabashamalGlobalBtn = document.getElementById('goToFirstBabashamalGlobal');
+            const goToFirstTamashaGlobalBtn = document.getElementById('goToFirstTamashaGlobal');
 
 
             // Global State
@@ -776,6 +803,19 @@
                     sectionElement: document.getElementById('babashamalSection'),
                     filterElement: document.getElementById('filter-babashamal'),
                     calendar_type: 'shamsi'
+                },
+                tamasha: {
+                    type: 'formula',
+                    prefix: 'Tamasha',
+                    title: 'تماشا',
+                    currentPage: 1,
+                    available: false,
+                    imageElement: document.getElementById('tamashaNewspaperImage'),
+                    statusElement: document.getElementById('tamashaStatusMessage'),
+                    errorElement: document.getElementById('tamashaErrorMessage'),
+                    sectionElement: document.getElementById('tamashaSection'),
+                    filterElement: document.getElementById('filter-tamasha'),
+                    calendar_type: 'shamsi'
                 }
             };
             let currentLightboxNewspaperType = null;
@@ -788,7 +828,8 @@
                 kayhan: "13320525",
                 mardom: "13571223",
                 zaneRooz: "13461017",
-                babashamal: "13220125"
+                babashamal: "13220125",
+                tamasha: "13491227"
             };
 
             // --- Utility Functions ---
@@ -835,8 +876,14 @@
                         shouldDisplaySection = true;
                     }
                 }
+                
+                // Update alt text for main image
+                if (paper.imageElement) {
+                    paper.imageElement.alt = `تصویر ${paper.title}`;
+                }
 
-                paper.sectionElement.style.display = shouldDisplaySection ? 'flex' : 'none'; // Use flex for newspaper-section
+
+                paper.sectionElement.style.display = shouldDisplaySection ? 'flex' : 'none'; 
                 if (!shouldDisplaySection) {
                     paper.available = false;
                     return Promise.resolve(false);
@@ -900,9 +947,9 @@
                     };
                     paper.imageElement.onerror = () => {
                         paper.statusElement.style.display = 'none';
-                        if (paper.calendar_type === 'shamsi') { // Covers formula (always shamsi) and DB shamsi
+                        if (paper.calendar_type === 'shamsi') { 
                             paper.errorElement.textContent = 'نشریه در این تاریخ موجود نیست.';
-                        } else { // For Hijri papers
+                        } else { 
                             paper.errorElement.textContent = `تصویر صفحه ${page} یافت نشد.`;
                         }
                         paper.errorElement.style.display = 'block';
@@ -1450,7 +1497,8 @@
                     { btn: goToFirstBakhtarEmroozGlobalBtn, id: 'bakhtarEmrooz' },
                     { btn: goToFirstJashnShahanshahiIranGlobalBtn, id: 'jashnShahanshahiIran' },
                     { btn: goToFirstZaneRoozGlobalBtn, id: 'zaneRooz' },
-                    { btn: goToFirstBabashamalGlobalBtn, id: 'babashamal'}
+                    { btn: goToFirstBabashamalGlobalBtn, id: 'babashamal'},
+                    { btn: goToFirstTamashaGlobalBtn, id: 'tamasha'}
                 ];
 
                 hijriButtons.forEach(item => {
@@ -1486,6 +1534,7 @@
             if(goToFirstJashnShahanshahiIranGlobalBtn) goToFirstJashnShahanshahiIranGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('jashnShahanshahiIran'));
             if(goToFirstZaneRoozGlobalBtn) goToFirstZaneRoozGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('zaneRooz'));
             if(goToFirstBabashamalGlobalBtn) goToFirstBabashamalGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('babashamal'));
+            if(goToFirstTamashaGlobalBtn) goToFirstTamashaGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('tamasha'));
 
 
             // --- Initial Load ---
@@ -1512,7 +1561,7 @@
                 if (imageElement && statusElement && errorElement && sectionElement && filterElement) {
                     newspaperData[paperId] = {
                         type: 'database',
-                        title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''), // Clean title
+                        title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''), 
                         currentPage: 1,
                         available: false,
                         imageElement: imageElement,
