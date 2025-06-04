@@ -739,7 +739,7 @@
             const viewLargeLink = document.getElementById('viewLargeLink');
             const newspaperContainer = document.querySelector('.newspaper-container');
 
-            // Global "Go to First Issue" Buttons
+            // Global "Go to First Issue" Buttons (references obtained as needed)
             const goToFirstKhorshidGlobalBtn = document.getElementById('goToFirstKhorshidGlobal');
             const goToFirstBamdadRoshanGlobalBtn = document.getElementById('goToFirstBamdadRoshanGlobal');
             const goToFirstDawlatIranGlobalBtn = document.getElementById('goToFirstDawlatIranGlobal');
@@ -759,8 +759,8 @@
 
             // Global State
             let currentCalendarMode = 'shamsi';
-            let dbNewspapersData = []; // Raw data from db.json
-            let newspaperData = { // Holds processed data including DOM elements and navState
+            let dbNewspapersData = []; 
+            let newspaperData = { 
                 ettelaat: { type: 'formula', prefix: 'Ettelaat', title: 'اطلاعات', currentPage: 1, available: false, imageElement: document.getElementById('ettelaatNewspaperImage'), statusElement: document.getElementById('ettelaatStatusMessage'), errorElement: document.getElementById('ettelaatErrorMessage'), sectionElement: document.getElementById('ettelaatSection'), filterElement: document.getElementById('filter-ettelaat'), calendar_type: 'shamsi' },
                 mardom: { type: 'formula', prefix: 'Mardom', title: 'مردم', currentPage: 1, available: false, imageElement: document.getElementById('mardomNewspaperImage'), statusElement: document.getElementById('mardomStatusMessage'), errorElement: document.getElementById('mardomErrorMessage'), sectionElement: document.getElementById('mardomSection'), filterElement: document.getElementById('filter-mardom'), calendar_type: 'shamsi' },
                 kayhan: { type: 'formula', prefix: 'Kayhan', title: 'کیهان', currentPage: 1, available: false, imageElement: document.getElementById('kayhanNewspaperImage'), statusElement: document.getElementById('kayhanStatusMessage'), errorElement: document.getElementById('kayhanErrorMessage'), sectionElement: document.getElementById('kayhanSection'), filterElement: document.getElementById('filter-kayhan'), calendar_type: 'shamsi' },
@@ -829,8 +829,27 @@
                 mardom: "13571223",
                 zaneRooz: "13461017",
                 babashamal: "13220125",
-                tamasha: "13491227"
+                tamasha: "13491227" 
             };
+            
+            const allGlobalNavButtonConfigs = [
+                { id: 'Q_Dawlat_e_Alliya_ye_Iran', btnId: 'goToFirstDawlatIranGlobalBtn' },
+                { id: 'Q5686829', btnId: 'goToFirstSharafGlobalBtn' },
+                { id: 'Q64941184', btnId: 'goToFirstNowruzGlobalBtn' },
+                { id: 'Q6467762', btnId: 'goToFirstSureEsrafilGlobalBtn'},
+                { id: 'Q54943808', btnId: 'goToFirstRoohAlQodsGlobalBtn'},
+                { id: 'Q134006001', btnId: 'goToFirstKhorshidGlobalBtn' },
+                { id: 'Q134311191', btnId: 'goToFirstBamdadRoshanGlobalBtn' },
+                { id: 'ettelaat', btnId: 'goToFirstEttelaatGlobalBtn' },
+                { id: 'babashamal', btnId: 'goToFirstBabashamalGlobalBtn'},
+                { id: 'bakhtarEmrooz', btnId: 'goToFirstBakhtarEmroozGlobalBtn' },
+                { id: 'kayhan', btnId: 'goToFirstKayhanGlobalBtn' },
+                { id: 'zaneRooz', btnId: 'goToFirstZaneRoozGlobalBtn' },
+                { id: 'tamasha', btnId: 'goToFirstTamashaGlobalBtn'},
+                { id: 'jashnShahanshahiIran', btnId: 'goToFirstJashnShahanshahiIranGlobalBtn' },
+                { id: 'mardom', btnId: 'goToFirstMardomGlobalBtn' }
+            ];
+
 
             // --- Utility Functions ---
             const pad = (num) => num.toString().padStart(2, '0');
@@ -871,13 +890,12 @@
                     if (paper.type === 'database' && paper.calendar_type === 'hijri') {
                         shouldDisplaySection = true;
                     }
-                } else { // Shamsi mode
+                } else { 
                     if (paper.type === 'formula' || (paper.type === 'database' && paper.calendar_type === 'shamsi')) {
                         shouldDisplaySection = true;
                     }
                 }
                 
-                // Update alt text for main image
                 if (paper.imageElement) {
                     paper.imageElement.alt = `تصویر ${paper.title}`;
                 }
@@ -1434,16 +1452,25 @@
                      currentCalendarMode = 'hijri';
                      handleCalendarChange(); 
                 }
+                
+                let firstChronologicalIssue;
+                if (paper.firstIssueDateComparable && paper.navState && paper.navState.issuesArray && paper.navState.issuesArray.length > 0) {
+                     const [fYear, fMonth, fDay] = [
+                        parseInt(paper.firstIssueDateComparable.substring(0,4)),
+                        parseInt(paper.firstIssueDateComparable.substring(4,6)),
+                        parseInt(paper.firstIssueDateComparable.substring(6,8))
+                     ];
+                     firstChronologicalIssue = paper.navState.issuesArray.find(iss => iss.year === fYear && iss.month === fMonth && iss.day === fDay);
+                     if (!firstChronologicalIssue) { // Fallback if specific date not found (should not happen if data is consistent)
+                        firstChronologicalIssue = paper.navState.issuesArray[0];
+                     }
+                } else if (paper.navState && paper.navState.issuesArray && paper.navState.issuesArray.length > 0) {
+                     firstChronologicalIssue = paper.navState.issuesArray[0]; // Already sorted
+                } else {
+                    console.warn(`Could not determine first issue for Hijri DB paper ${paperId}`);
+                    return;
+                }
 
-                const issuesToConsider = (paper.navState && paper.navState.issuesArray && paper.navState.issuesArray.length > 0)
-                                       ? paper.navState.issuesArray
-                                       : [...paper.issues].sort((a,b) => {
-                                            if(a.year !== b.year) return a.year - b.year;
-                                            if(a.month !== b.month) return a.month - b.month;
-                                            return a.day - b.day;
-                                         });
-
-                const firstChronologicalIssue = issuesToConsider[0];
 
                 if (firstChronologicalIssue) {
                     hijriYearInput.value = firstChronologicalIssue.year;
@@ -1481,42 +1508,77 @@
 
 
             const updateGlobalGoToFirstIssueButtonsVisibility = () => {
-                const hijriButtons = [
-                    { btn: goToFirstKhorshidGlobalBtn, id: 'Q134006001' },
-                    { btn: goToFirstBamdadRoshanGlobalBtn, id: 'Q134311191' },
-                    { btn: goToFirstDawlatIranGlobalBtn, id: 'Q_Dawlat_e_Alliya_ye_Iran' },
-                    { btn: goToFirstSureEsrafilGlobalBtn, id: 'Q6467762'},
-                    { btn: goToFirstSharafGlobalBtn, id: 'Q5686829'},
-                    { btn: goToFirstRoohAlQodsGlobalBtn, id: 'Q54943808'},
-                    { btn: goToFirstNowruzGlobalBtn, id: 'Q64941184'}
-                ];
-                const shamsiButtons = [
-                    { btn: goToFirstEttelaatGlobalBtn, id: 'ettelaat' },
-                    { btn: goToFirstMardomGlobalBtn, id: 'mardom' },
-                    { btn: goToFirstKayhanGlobalBtn, id: 'kayhan' },
-                    { btn: goToFirstBakhtarEmroozGlobalBtn, id: 'bakhtarEmrooz' },
-                    { btn: goToFirstJashnShahanshahiIranGlobalBtn, id: 'jashnShahanshahiIran' },
-                    { btn: goToFirstZaneRoozGlobalBtn, id: 'zaneRooz' },
-                    { btn: goToFirstBabashamalGlobalBtn, id: 'babashamal'},
-                    { btn: goToFirstTamashaGlobalBtn, id: 'tamasha'}
-                ];
+                allGlobalNavButtonConfigs.forEach(config => {
+                    const paper = newspaperData[config.id];
+                    const button = document.getElementById(config.btnId);
+                    if (!button || !paper) return;
 
-                hijriButtons.forEach(item => {
-                    if (item.btn && newspaperData[item.id] && newspaperData[item.id].issues && newspaperData[item.id].issues.length > 0) {
-                        item.btn.style.display = 'inline-block';
-                    } else if (item.btn) {
-                        item.btn.style.display = 'none';
+                    let shouldBeVisible = false;
+                    if (paper.calendar_type === 'shamsi') {
+                        if (firstShamsiIssueDates[config.id]) {
+                            shouldBeVisible = true;
+                        }
+                    } else if (paper.calendar_type === 'hijri') {
+                        if (paper.issues && paper.issues.length > 0) {
+                            shouldBeVisible = true;
+                        }
                     }
+                    button.style.display = shouldBeVisible ? 'inline-block' : 'none';
                 });
-                shamsiButtons.forEach(item => {
-                    if (item.btn && newspaperData[item.id] && firstShamsiIssueDates[item.id]) { 
-                        item.btn.style.display = 'inline-block';
-                    } else if (item.btn) {
-                        item.btn.style.display = 'none';
-                    }
-                });
-
             };
+            
+            const sortAndRenderGlobalNavButtons = () => {
+                let processedNavButtons = allGlobalNavButtonConfigs.map(config => {
+                    const paper = newspaperData[config.id];
+                    const buttonElement = document.getElementById(config.btnId);
+
+                    if (!paper || !buttonElement) {
+                        // console.warn(`Sort: Paper or button element not found for config ID: ${config.id}`);
+                        return null;
+                    }
+
+                    let firstDateOriginal = '';
+                    if (paper.calendar_type === 'shamsi') {
+                        firstDateOriginal = firstShamsiIssueDates[config.id];
+                    } else if (paper.calendar_type === 'hijri') {
+                        firstDateOriginal = paper.firstIssueDateComparable; 
+                    }
+
+                    if (!firstDateOriginal) {
+                        // console.warn(`Sort: First issue date not found for ${paper.title} (ID: ${config.id}). Button will be placed last in its group.`);
+                        firstDateOriginal = paper.calendar_type === 'hijri' ? '99999998' : '99999999'; // Fallback for sorting
+                    }
+                    
+                    return {
+                        id: config.id,
+                        name: paper.title,
+                        firstDateOriginal: firstDateOriginal,
+                        calendarType: paper.calendar_type, 
+                        buttonElement: buttonElement
+                    };
+                }).filter(item => item !== null);
+
+                const hijriNavButtons = processedNavButtons
+                    .filter(item => item.calendarType === 'hijri')
+                    .sort((a, b) => a.firstDateOriginal.localeCompare(b.firstDateOriginal));
+
+                const shamsiNavButtons = processedNavButtons
+                    .filter(item => item.calendarType === 'shamsi')
+                    .sort((a, b) => a.firstDateOriginal.localeCompare(b.firstDateOriginal));
+
+                const sortedGlobalNavButtons = [...hijriNavButtons, ...shamsiNavButtons];
+
+                const globalNavControlsContainer = document.getElementById('globalGoToFirstIssueControls');
+                
+                Array.from(globalNavControlsContainer.children).forEach(child => {
+                    globalNavControlsContainer.removeChild(child);
+                });
+
+                sortedGlobalNavButtons.forEach(item => {
+                    globalNavControlsContainer.appendChild(item.buttonElement);
+                });
+            };
+
 
             // Event Listeners for Global "Go to First Issue" Buttons
             if(goToFirstKhorshidGlobalBtn) goToFirstKhorshidGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q134006001'));
@@ -1571,6 +1633,7 @@
                         filterElement: filterElement,
                         issues: dbPaper.issues, 
                         calendar_type: dbPaper.calendar_type,
+                        firstIssueDateComparable: null, // Will be set for Hijri DB papers
                         ...( (dbPaper.calendar_type === 'hijri' && document.getElementById(`${paperId}Navigation`)) ? {
                             navState: {
                                 issuesArray: [], 
@@ -1582,6 +1645,19 @@
                             }
                         } : {})
                     };
+
+                    if (newspaperData[paperId].type === 'database' && newspaperData[paperId].calendar_type === 'hijri') {
+                        if (newspaperData[paperId].issues && newspaperData[paperId].issues.length > 0) {
+                            let sortedHijriIssues = [...newspaperData[paperId].issues].sort((a,b) => {
+                                if(a.year !== b.year) return a.year - b.year;
+                                if(a.month !== b.month) return a.month - b.month;
+                                return a.day - b.day;
+                            });
+                            const firstIssue = sortedHijriIssues[0];
+                            newspaperData[paperId].firstIssueDateComparable = `${firstIssue.year}${pad(firstIssue.month)}${pad(firstIssue.day)}`;
+                        }
+                    }
+
 
                     if (newspaperData[paperId].navState) {
                         loadNewspaperIssues(paperId); 
@@ -1602,6 +1678,8 @@
                     paper.imageElement.addEventListener('click', () => openLightbox(type));
                 }
             });
+
+            sortAndRenderGlobalNavButtons(); // Sort and re-render the global nav buttons
             
             if (shamsiCalendarRadio.checked) {
                  currentCalendarMode = 'shamsi';
