@@ -1516,5 +1516,124 @@
       "wikimedia_hash": "a9"
     }
   ]
+},
+{
+  "id": "Q60745684",
+  "title": "دانش",
+  "calendar_type": "hijri",
+  "issues": [
+    {
+      "issue_number": 1,
+      "year": 1299,
+      "month": 7,
+      "day": 24,
+      "filename_base": "Danesh_Tabriz_1882-06-10",
+      "wikimedia_hash": "d4"
+    },
+    {
+      "issue_number": 2,
+      "year": 1299,
+      "month": 8,
+      "day": 7,
+      "filename_base": "Danesh_Tabriz_1882-06-24",
+      "wikimedia_hash": "ce"
+    },
+    {
+      "issue_number": 3,
+      "year": 1299,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Danesh_Tabriz_1882-07-17",
+      "wikimedia_hash": "8b"
+    },
+    {
+      "issue_number": 4,
+      "year": 1299,
+      "month": 9,
+      "day": 15,
+      "filename_base": "Danesh_Tabriz_1882-07-31",
+      "wikimedia_hash": "aa"
+    },
+    {
+      "issue_number": 5,
+      "year": 1299,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Danesh_Tabriz_1882-08-16",
+      "wikimedia_hash": "7e"
+    },
+    {
+      "issue_number": 6,
+      "year": 1299,
+      "month": 10,
+      "day": 16,
+      "filename_base": "Danesh_Tabriz_1882-08-31",
+      "wikimedia_hash": "aa"
+    },
+    {
+      "issue_number": 7,
+      "year": 1299,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Danesh_Tabriz_1882-09-14",
+      "wikimedia_hash": "7f"
+    },
+    {
+      "issue_number": 8,
+      "year": 1299,
+      "month": 11,
+      "day": 16,
+      "filename_base": "Danesh_Tabriz_1882-09-30",
+      "wikimedia_hash": "df"
+    },
+    {
+      "issue_number": 9,
+      "year": 1299,
+      "month": 12,
+      "day": 1,
+      "filename_base": "Danesh_Tabriz_1882-10-15",
+      "wikimedia_hash": "ec"
+    },
+    {
+      "issue_number": 10,
+      "year": 1299,
+      "month": 12,
+      "day": 16,
+      "filename_base": "Danesh_Tabriz_1882-10-30",
+      "wikimedia_hash": "b6"
+    },
+    {
+      "issue_number": 11,
+      "year": 1300,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Danesh_Tabriz_1882-11-13",
+      "wikimedia_hash": "6d"
+    },
+    {
+      "issue_number": 12,
+      "year": 1300,
+      "month": 1,
+      "day": 16,
+      "filename_base": "Danesh_Tabriz_1882-11-28",
+      "wikimedia_hash": "ed"
+    },
+    {
+      "issue_number": 13,
+      "year": 1300,
+      "month": 2,
+      "day": 1,
+      "filename_base": "Danesh_Tabriz_1882-12-12",
+      "wikimedia_hash": "a5"
+    },
+    {
+      "issue_number": 14,
+      "year": 1300,
+      "month": 2,
+      "day": 16,
+      "filename_base": "Danesh_Tabriz_1882-12-27",
+      "wikimedia_hash": "24"
+    }
+  ]
 }
 ]
