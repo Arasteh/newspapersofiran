@@ -144,7 +144,7 @@
             color: var(--section-title-color);
             font-weight: normal;
         }
-        .newspaper-section.available-newspaper h2 { /* This class might not be needed anymore if filter list is gone */
+        .newspaper-section.available-newspaper h2 {
             font-weight: bold;
         }
         .newspaper-image {
@@ -435,23 +435,22 @@
         <button id="goToFirstRoohAlQodsGlobal" style="display: none;" class="hijri-nav-btn">روح‌القدس</button>
         <button id="goToFirstBamdadRoshanGlobal" style="display: none;" class="hijri-nav-btn">بامداد روشن</button>
         <button id="goToFirstJangalGlobal" style="display: none;" class="hijri-nav-btn">جنگل</button>
+        <button id="goToFirstDaneshGlobal" style="display: none;" class="hijri-nav-btn">دانش</button>
 
         <!-- Shamsi Buttons -->
         <button id="goToFirstEttelaatGlobal" style="display: none;" class="shamsi-nav-btn">اطلاعات</button>
         <button id="goToFirstBabashamalGlobal" style="display: none;" class="shamsi-nav-btn">باباشمل</button>
-        <button id="goToFirstYaghmaGlobal" style="display: none;" class="shamsi-nav-btn">یغما</button>
         <button id="goToFirstBakhtarEmroozGlobal" style="display: none;" class="shamsi-nav-btn">باختر امروز</button>
         <button id="goToFirstKayhanGlobal" style="display: none;" class="shamsi-nav-btn">کیهان</button>
         <button id="goToFirstZaneRoozGlobal" style="display: none;" class="shamsi-nav-btn">زن روز</button>
         <button id="goToFirstTamashaGlobal" style="display: none;" class="shamsi-nav-btn">تماشا</button>
         <button id="goToFirstJashnShahanshahiIranGlobal" style="display: none;" class="shamsi-nav-btn">جشن شاهنشاهی ایران</button>
         <button id="goToFirstMardomGlobal" style="display: none;" class="shamsi-nav-btn">مردم</button>
+        <button id="goToFirstYaghmaGlobal" style="display: none;" class="shamsi-nav-btn">یغما</button>
     </div>
 
     <p id="mainErrorMessage" class="error-message" style="display: none;"></p>
     <p id="mainStatusMessage" class="status-message">در حال بارگذاری نشریات...</p>
-
-    <!-- newspaperFilterList and its contents have been removed -->
 
     <div class="newspaper-container">
         <!-- Shamsi Sections -->
@@ -562,6 +561,22 @@
                         <input type="number" id="Q_Dawlat_e_Alliya_ye_IranIssueNumber">
                     </div>
                     <button id="nextQ_Dawlat_e_Alliya_ye_IranIssue">شماره بعد &gt;</button>
+                </div>
+            </div>
+        </div>
+        <div id="Q60745684Section" class="newspaper-section" style="display: none;">
+            <h2>دانش</h2>
+            <img id="Q60745684NewspaperImage" src="" alt="تصویر دانش" class="newspaper-image">
+            <p id="Q60745684StatusMessage" class="status-message" style="display: none;"></p>
+            <p id="Q60745684ErrorMessage" class="error-message" style="display: none;"></p>
+            <div id="Q60745684Navigation" class="issue-navigation-controls">
+                <div>
+                    <button id="prevQ60745684Issue">&lt; شماره قبل</button>
+                    <div>
+                        <span>شماره:</span>
+                        <input type="number" id="Q60745684IssueNumber">
+                    </div>
+                    <button id="nextQ60745684Issue">شماره بعد &gt;</button>
                 </div>
             </div>
         </div>
@@ -693,7 +708,6 @@
             const downloadLink = document.getElementById('downloadLink');
             const viewLargeLink = document.getElementById('viewLargeLink');
             const newspaperContainer = document.querySelector('.newspaper-container');
-            // const newspaperFilterListDiv = document.getElementById('newspaperFilterList'); // Removed
 
 
             // Global "Go to First Issue" Buttons
@@ -705,6 +719,7 @@
             const goToFirstRoohAlQodsGlobalBtn = document.getElementById('goToFirstRoohAlQodsGlobal');
             const goToFirstNowruzGlobalBtn = document.getElementById('goToFirstNowruzGlobal');
             const goToFirstJangalGlobalBtn = document.getElementById('goToFirstJangalGlobal');
+            const goToFirstDaneshGlobalBtn = document.getElementById('goToFirstDaneshGlobal');
             const goToFirstEttelaatGlobalBtn = document.getElementById('goToFirstEttelaatGlobal');
             const goToFirstMardomGlobalBtn = document.getElementById('goToFirstMardomGlobal');
             const goToFirstKayhanGlobalBtn = document.getElementById('goToFirstKayhanGlobal');
@@ -811,7 +826,6 @@
                 paper.sectionElement.style.display = shouldDisplaySectionBasedOnModeAndType ? 'flex' : 'none';
                 if (!shouldDisplaySectionBasedOnModeAndType) {
                     paper.available = false;
-                    // if (paper.filterElement) paper.filterElement.classList.remove('available'); // filterElement removed
                     return Promise.resolve(false);
                 }
 
@@ -833,7 +847,6 @@
                             paper.errorElement.textContent = 'نشریه یغما در این تاریخ (سال/ماه) موجود نیست.';
                             paper.errorElement.style.display = 'block';
                             paper.available = false;
-                            // if (paper.filterElement) paper.filterElement.classList.remove('available'); // filterElement removed
                             return Promise.resolve(false);
                         }
                     } else if (paper.calendar_type === 'hijri') {
@@ -857,7 +870,6 @@
                         paper.errorElement.textContent = 'نشریه در این تاریخ موجود نیست';
                         paper.errorElement.style.display = 'block';
                         paper.available = false;
-                        // if (paper.filterElement) paper.filterElement.classList.remove('available'); // filterElement removed
                         return Promise.resolve(false);
                     }
                 } else {
@@ -867,7 +879,6 @@
 
                 if (!issueExistsForDate) {
                     paper.available = false;
-                    // if (paper.filterElement) paper.filterElement.classList.remove('available'); // filterElement removed
                     return Promise.resolve(false);
                 }
 
@@ -887,7 +898,6 @@
                         paper.imageElement.style.display = 'block';
                         paper.errorElement.style.display = 'none';
                         paper.available = true;
-                        // if (paper.filterElement) paper.filterElement.classList.add('available'); // filterElement removed
                         if (paper.navState) {
                            updateIssueNavigationVisibility(type);
                         }
@@ -906,13 +916,11 @@
                         }
                         paper.errorElement.style.display = 'block';
                         paper.available = false;
-                        // if (paper.filterElement) paper.filterElement.classList.remove('available'); // filterElement removed
                         resolve(false);
                     };
                     paper.imageElement.src = imageUrl;
                 }).catch(() => {
                     paper.available = false;
-                    // if (paper.filterElement) paper.filterElement.classList.remove('available'); // filterElement removed
                     resolve(false);
                 });
             };
@@ -1530,6 +1538,7 @@
                     { btn: goToFirstKhorshidGlobalBtn, id: 'Q134006001' },
                     { btn: goToFirstBamdadRoshanGlobalBtn, id: 'Q134311191' },
                     { btn: goToFirstDawlatIranGlobalBtn, id: 'Q_Dawlat_e_Alliya_ye_Iran' },
+                    { btn: goToFirstDaneshGlobalBtn, id: 'Q60745684' },
                     { btn: goToFirstSureEsrafilGlobalBtn, id: 'Q6467762'},
                     { btn: goToFirstSharafGlobalBtn, id: 'Q5686829'},
                     { btn: goToFirstRoohAlQodsGlobalBtn, id: 'Q54943808'},
@@ -1581,6 +1590,7 @@
             if(goToFirstRoohAlQodsGlobalBtn) goToFirstRoohAlQodsGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q54943808'));
             if(goToFirstNowruzGlobalBtn) goToFirstNowruzGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q64941184'));
             if(goToFirstJangalGlobalBtn) goToFirstJangalGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriFormulaIssue('jangal_qamari'));
+            if(goToFirstDaneshGlobalBtn) goToFirstDaneshGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q60745684'));
 
             if(goToFirstEttelaatGlobalBtn) goToFirstEttelaatGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('ettelaat'));
             if(goToFirstMardomGlobalBtn) goToFirstMardomGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('mardom'));
@@ -1611,10 +1621,9 @@
                 const statusElement = document.getElementById(`${paperId}StatusMessage`);
                 const errorElement = document.getElementById(`${paperId}ErrorMessage`);
                 const sectionElement = document.getElementById(`${paperId}Section`);
-                // const filterElement = document.getElementById(`filter-${paperId}`); // filterElement removed
                 const navigationDiv = document.getElementById(`${paperId}Navigation`);
 
-                if (imageElement && statusElement && errorElement && sectionElement /*&& filterElement removed */) {
+                if (imageElement && statusElement && errorElement && sectionElement) {
                     newspaperData[paperId] = {
                         type: 'database',
                         title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
@@ -1624,7 +1633,6 @@
                         statusElement: statusElement,
                         errorElement: errorElement,
                         sectionElement: sectionElement,
-                        // filterElement: filterElement, // filterElement removed
                         issues: dbPaper.issues,
                         calendar_type: dbPaper.calendar_type,
                         ...( (dbPaper.calendar_type === 'hijri' && navigationDiv) ? {
@@ -1655,7 +1663,6 @@
                 if (paper && paper.imageElement) {
                     paper.imageElement.addEventListener('click', () => openLightbox(type));
                 }
-                 // Removed filterElement click listener
             });
 
             if (shamsiCalendarRadio.checked) {
