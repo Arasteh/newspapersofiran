@@ -441,6 +441,7 @@
         <button id="goToFirstEttelaatGlobal" style="display: none;" class="shamsi-nav-btn">اطلاعات</button>
         <button id="goToFirstBabashamalGlobal" style="display: none;" class="shamsi-nav-btn">باباشمل</button>
         <button id="goToFirstYaghmaGlobal" style="display: none;" class="shamsi-nav-btn">یغما</button>
+        <button id="goToFirstNeginGlobal" style="display: none;" class="shamsi-nav-btn">نگین</button>
         <button id="goToFirstBakhtarEmroozGlobal" style="display: none;" class="shamsi-nav-btn">باختر امروز</button>
         <button id="goToFirstKayhanGlobal" style="display: none;" class="shamsi-nav-btn">کیهان</button>
         <button id="goToFirstZaneRoozGlobal" style="display: none;" class="shamsi-nav-btn">زن روز</button>
@@ -507,6 +508,12 @@
             <img id="yaghmaNewspaperImage" src="" alt="تصویر یغما" class="newspaper-image">
             <p id="yaghmaStatusMessage" class="status-message" style="display: none;"></p>
             <p id="yaghmaErrorMessage" class="error-message" style="display: none;"></p>
+        </div>
+        <div id="neginSection" class="newspaper-section" style="display: none;">
+            <h2>نگین</h2>
+            <img id="neginNewspaperImage" src="" alt="تصویر نگین" class="newspaper-image">
+            <p id="neginStatusMessage" class="status-message" style="display: none;"></p>
+            <p id="neginErrorMessage" class="error-message" style="display: none;"></p>
         </div>
 
         <!-- Hijri Sections (Database driven) -->
@@ -729,6 +736,7 @@
             const goToFirstBabashamalGlobalBtn = document.getElementById('goToFirstBabashamalGlobal');
             const goToFirstTamashaGlobalBtn = document.getElementById('goToFirstTamashaGlobal');
             const goToFirstYaghmaGlobalBtn = document.getElementById('goToFirstYaghmaGlobal');
+            const goToFirstNeginGlobalBtn = document.getElementById('goToFirstNeginGlobal');
 
 
             // Global State
@@ -755,6 +763,18 @@
                     sectionElement: document.getElementById('yaghmaSection'),
                     calendar_type: 'shamsi'
                 },
+                negin: {
+                    type: 'formula',
+                    prefix: 'Negin',
+                    title: 'نگین',
+                    currentPage: 1,
+                    available: false,
+                    imageElement: document.getElementById('neginNewspaperImage'),
+                    statusElement: document.getElementById('neginStatusMessage'),
+                    errorElement: document.getElementById('neginErrorMessage'),
+                    sectionElement: document.getElementById('neginSection'),
+                    calendar_type: 'shamsi'
+                },
                 jangal_qamari: { type: 'formula', prefix: 'Jangal', title: 'جنگل', currentPage: 1, available: false, imageElement: document.getElementById('jangal_qamariNewspaperImage'), statusElement: document.getElementById('jangal_qamariStatusMessage'), errorElement: document.getElementById('jangal_qamariErrorMessage'), sectionElement: document.getElementById('jangal_qamariSection'), calendar_type: 'hijri'}
             };
             let currentLightboxNewspaperType = null;
@@ -769,7 +789,8 @@
                 zaneRooz: "13461017",
                 babashamal: "13220125",
                 tamasha: "13491227",
-                yaghma: "13270101"
+                yaghma: "13270101",
+                negin: "13440301"
             };
             const firstHijriFormulaIssueDates = {
                 jangal_qamari: "13350819"
@@ -849,6 +870,34 @@
                             paper.available = false;
                             return Promise.resolve(false);
                         }
+                    } else if (paper.prefix === 'Negin' && paper.calendar_type === 'shamsi') {
+                        const shamsiInputYear = parseInt(year, 10);
+                        const shamsiInputMonth = parseInt(month, 10);
+                        // Publication range: Khordad 1344 to Farvardin 1359
+                        const startDateCheck = shamsiInputYear > 1344 || (shamsiInputYear === 1344 && shamsiInputMonth >= 3);
+                        const endDateCheck = shamsiInputYear < 1359 || (shamsiInputYear === 1359 && shamsiInputMonth <= 1);
+
+                        if (startDateCheck && endDateCheck) {
+                            const volume = shamsiInputYear - 1344 + 1;
+                            let issueNumber;
+                            if (shamsiInputYear === 1344) {
+                                // First year (1344) starts from month 3 (Khordad)
+                                issueNumber = shamsiInputMonth - 2; 
+                            } else {
+                                // Issues in 1344: 10 (from month 3 to 12)
+                                // Full years between start and current year
+                                const yearsAfter1344 = shamsiInputYear - 1345;
+                                const issuesInFullYears = yearsAfter1344 * 12;
+                                issueNumber = 10 + issuesInFullYears + shamsiInputMonth;
+                            }
+                            fileNameBase = `Negin, Vol. ${volume}, No. ${issueNumber}, ${shamsiInputYear} SH`;
+                            issueExistsForDate = true;
+                        } else {
+                            paper.errorElement.textContent = 'نشریه نگین در این تاریخ (سال/ماه) موجود نیست.';
+                            paper.errorElement.style.display = 'block';
+                            paper.available = false;
+                            return Promise.resolve(false);
+                        }
                     } else if (paper.calendar_type === 'hijri') {
                         fileNameBase = `${paper.prefix} ${year}${month}${day} AH`;
                         issueExistsForDate = true;
@@ -909,6 +958,8 @@
                         paper.statusElement.style.display = 'none';
                         if (paper.prefix === 'Yaghma' && paper.calendar_type === 'shamsi') {
                              paper.errorElement.textContent = `صفحه ${page} برای شماره ${shamsiMonthSelect.options[parseInt(month,10)-1].text} سال ${year} از نشریه یغما یافت نشد.`;
+                        } else if (paper.prefix === 'Negin' && paper.calendar_type === 'shamsi') {
+                            paper.errorElement.textContent = `صفحه ${page} برای شماره ${shamsiMonthSelect.options[parseInt(month,10)-1].text} سال ${year} از نشریه نگین یافت نشد.`;
                         } else if (paper.type === 'formula' || (paper.type === 'database' && paper.calendar_type === 'shamsi')) {
                             paper.errorElement.textContent = 'نشریه در این تاریخ موجود نیست.';
                         } else {
@@ -1118,7 +1169,7 @@
                 }
 
                 let formattedDate;
-                let displayDayForDate = (paper.prefix === 'Yaghma' && paper.calendar_type === 'shamsi') ? '01' : day;
+                let displayDayForDate = (paper.prefix === 'Yaghma' || paper.prefix === 'Negin') && paper.calendar_type === 'shamsi' ? '01' : day;
 
 
                 if (paper.calendar_type === 'hijri') {
@@ -1169,6 +1220,30 @@
                             console.error("Yaghma lightbox: Date out of range for filename", shamsiInputYear, shamsiInputMonth);
                             lightboxStatusMessage.style.display = 'none';
                             lightboxErrorMessage.textContent = `اطلاعات نشریه یغما برای این تاریخ در لایت‌باکس یافت نشد.`;
+                            lightboxErrorMessage.style.display = 'block';
+                            return;
+                        }
+                    } else if (paper.prefix === 'Negin' && paper.calendar_type === 'shamsi') {
+                        const shamsiInputYear = parseInt(dateForFilename.y, 10);
+                        const shamsiInputMonth = parseInt(dateForFilename.m, 10);
+                        const startDateCheck = shamsiInputYear > 1344 || (shamsiInputYear === 1344 && shamsiInputMonth >= 3);
+                        const endDateCheck = shamsiInputYear < 1359 || (shamsiInputYear === 1359 && shamsiInputMonth <= 1);
+
+                        if (startDateCheck && endDateCheck) {
+                            const volume = shamsiInputYear - 1344 + 1;
+                            let issueNumber;
+                            if (shamsiInputYear === 1344) {
+                                issueNumber = shamsiInputMonth - 2;
+                            } else {
+                                const yearsAfter1344 = shamsiInputYear - 1345;
+                                const issuesInFullYears = yearsAfter1344 * 12;
+                                issueNumber = 10 + issuesInFullYears + shamsiInputMonth;
+                            }
+                            fileNameBase = `Negin, Vol. ${volume}, No. ${issueNumber}, ${shamsiInputYear} SH`;
+                        } else {
+                            console.error("Negin lightbox: Date out of range for filename", shamsiInputYear, shamsiInputMonth);
+                            lightboxStatusMessage.style.display = 'none';
+                            lightboxErrorMessage.textContent = `اطلاعات نشریه نگین برای این تاریخ در لایت‌باکس یافت نشد.`;
                             lightboxErrorMessage.style.display = 'block';
                             return;
                         }
@@ -1553,7 +1628,8 @@
                     { btn: goToFirstZaneRoozGlobalBtn, id: 'zaneRooz' },
                     { btn: goToFirstBabashamalGlobalBtn, id: 'babashamal'},
                     { btn: goToFirstTamashaGlobalBtn, id: 'tamasha'},
-                    { btn: goToFirstYaghmaGlobalBtn, id: 'yaghma'}
+                    { btn: goToFirstYaghmaGlobalBtn, id: 'yaghma'},
+                    { btn: goToFirstNeginGlobalBtn, id: 'negin' }
                 ];
                 const hijriFormulaButtons = [
                     { btn: goToFirstJangalGlobalBtn, id: 'jangal_qamari'}
@@ -1601,6 +1677,7 @@
             if(goToFirstBabashamalGlobalBtn) goToFirstBabashamalGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('babashamal'));
             if(goToFirstTamashaGlobalBtn) goToFirstTamashaGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('tamasha'));
             if(goToFirstYaghmaGlobalBtn) goToFirstYaghmaGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('yaghma'));
+            if(goToFirstNeginGlobalBtn) goToFirstNeginGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstShamsiFormulaIssue('negin'));
 
 
             try {
