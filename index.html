@@ -47,7 +47,7 @@
         }
 
         body {
-            font-family: system-ui;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -328,8 +328,14 @@
             display: none;
         }
         .calendar-selection input[type="radio"]:checked + label {
-            background-color: var(--button-bg);
             color: white;
+        }
+        .calendar-selection input[type="radio"]#shamsiCalendar:checked + label {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .calendar-selection input[type="radio"]#hijriCalendar:checked + label {
+            background-color: var(--button-bg);
             border-color: var(--button-bg);
         }
         .issue-navigation-controls {
@@ -375,10 +381,10 @@
 
     <div class="controls">
         <div class="calendar-selection">
-            <input type="radio" id="shamsiCalendar" name="calendar" value="shamsi" checked>
-            <label for="shamsiCalendar">شمسی</label>
             <input type="radio" id="hijriCalendar" name="calendar" value="hijri">
             <label for="hijriCalendar">قمری</label>
+            <input type="radio" id="shamsiCalendar" name="calendar" value="shamsi" checked>
+            <label for="shamsiCalendar">شمسی</label>
         </div>
 
         <div id="shamsiDateControls">
