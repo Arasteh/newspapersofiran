@@ -1635,5 +1635,332 @@
       "wikimedia_hash": "24"
     }
   ]
+},
+  {
+  "id": "Q2664606",
+  "title": "مجله ملانصرالدین",
+  "calendar_type": "hijri",
+  "issues": [
+    {
+      "issue_number": 1,
+      "year": 1324,
+      "month": 2,
+      "day": 25,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_1",
+      "wikimedia_hash": "46"
+    },
+    {
+      "issue_number": 2,
+      "year": 1324,
+      "month": 3,
+      "day": 2,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_2",
+      "wikimedia_hash": "86"
+    },
+    {
+      "issue_number": 3,
+      "year": 1324,
+      "month": 3,
+      "day": 9,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_3",
+      "wikimedia_hash": "d2"
+    },
+    {
+      "issue_number": 4,
+      "year": 1324,
+      "month": 3,
+      "day": 17,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_4",
+      "wikimedia_hash": "16"
+    },
+    {
+      "issue_number": 5,
+      "year": 1324,
+      "month": 3,
+      "day": 24,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_5",
+      "wikimedia_hash": "4f"
+    },
+    {
+      "issue_number": 6,
+      "year": 1324,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_6",
+      "wikimedia_hash": "60"
+    },
+    {
+      "issue_number": 7,
+      "year": 1324,
+      "month": 4,
+      "day": 8,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_7",
+      "wikimedia_hash": "13"
+    },
+    {
+      "issue_number": 8,
+      "year": 1324,
+      "month": 4,
+      "day": 15,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_8",
+      "wikimedia_hash": "e0"
+    },
+    {
+      "issue_number": 9,
+      "year": 1324,
+      "month": 4,
+      "day": 22,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_9",
+      "wikimedia_hash": "18"
+    },
+    {
+      "issue_number": 10,
+      "year": 1324,
+      "month": 4,
+      "day": 29,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_10",
+      "wikimedia_hash": "70"
+    },
+    {
+      "issue_number": 11,
+      "year": 1324,
+      "month": 5,
+      "day": 7,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_11",
+      "wikimedia_hash": "9c"
+    },
+    {
+      "issue_number": 12,
+      "year": 1324,
+      "month": 5,
+      "day": 14,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_12",
+      "wikimedia_hash": "b5"
+    },
+    {
+      "issue_number": 13,
+      "year": 1324,
+      "month": 5,
+      "day": 21,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_13",
+      "wikimedia_hash": "19"
+    },
+    {
+      "issue_number": 14,
+      "year": 1324,
+      "month": 5,
+      "day": 28,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_14",
+      "wikimedia_hash": "b5"
+    },
+    {
+      "issue_number": 15,
+      "year": 1324,
+      "month": 6,
+      "day": 5,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_15",
+      "wikimedia_hash": "21"
+    },
+    {
+      "issue_number": 16,
+      "year": 1324,
+      "month": 6,
+      "day": 12,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_16",
+      "wikimedia_hash": "eb"
+    },
+    {
+      "issue_number": 17,
+      "year": 1324,
+      "month": 6,
+      "day": 19,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_17",
+      "wikimedia_hash": "d4"
+    },
+    {
+      "issue_number": 18,
+      "year": 1324,
+      "month": 6,
+      "day": 26,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_18",
+      "wikimedia_hash": "74"
+    },
+    {
+      "issue_number": 19,
+      "year": 1324,
+      "month": 7,
+      "day": 4,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_19",
+      "wikimedia_hash": "a2"
+    },
+    {
+      "issue_number": 20,
+      "year": 1324,
+      "month": 7,
+      "day": 11,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_20",
+      "wikimedia_hash": "a7"
+    },
+    {
+      "issue_number": 21,
+      "year": 1324,
+      "month": 7,
+      "day": 17,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_21",
+      "wikimedia_hash": "6e"
+    },
+    {
+      "issue_number": 22,
+      "year": 1324,
+      "month": 7,
+      "day": 24,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_22",
+      "wikimedia_hash": "9e"
+    },
+    {
+      "issue_number": 23,
+      "year": 1324,
+      "month": 8,
+      "day": 2,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_23",
+      "wikimedia_hash": "6b"
+    },
+    {
+      "issue_number": 24,
+      "year": 1324,
+      "month": 8,
+      "day": 9,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_24",
+      "wikimedia_hash": "44"
+    },
+    {
+      "issue_number": 25,
+      "year": 1324,
+      "month": 8,
+      "day": 16,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_25",
+      "wikimedia_hash": "35"
+    },
+    {
+      "issue_number": 26,
+      "year": 1324,
+      "month": 8,
+      "day": 23,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_26",
+      "wikimedia_hash": "76"
+    },
+    {
+      "issue_number": 27,
+      "year": 1324,
+      "month": 8,
+      "day": 30,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_27",
+      "wikimedia_hash": "a0"
+    },
+    {
+      "issue_number": 28,
+      "year": 1324,
+      "month": 9,
+      "day": 7,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_28",
+      "wikimedia_hash": "d4"
+    },
+    {
+      "issue_number": 29,
+      "year": 1324,
+      "month": 9,
+      "day": 14,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_29",
+      "wikimedia_hash": "ec"
+    },
+    {
+      "issue_number": 30,
+      "year": 1324,
+      "month": 9,
+      "day": 21,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_30",
+      "wikimedia_hash": "12"
+    },
+    {
+      "issue_number": 31,
+      "year": 1324,
+      "month": 9,
+      "day": 29,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_31",
+      "wikimedia_hash": "03"
+    },
+    {
+      "issue_number": 32,
+      "year": 1324,
+      "month": 10,
+      "day": 6,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_32",
+      "wikimedia_hash": "2e"
+    },
+    {
+      "issue_number": 33,
+      "year": 1324,
+      "month": 10,
+      "day": 13,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_33",
+      "wikimedia_hash": "63"
+    },
+    {
+      "issue_number": 34,
+      "year": 1324,
+      "month": 10,
+      "day": 24,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_34",
+      "wikimedia_hash": "99"
+    },
+    {
+      "issue_number": 35,
+      "year": 1324,
+      "month": 10,
+      "day": 27,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_35",
+      "wikimedia_hash": "b7"
+    },
+    {
+      "issue_number": 36,
+      "year": 1324,
+      "month": 11,
+      "day": 5,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_36",
+      "wikimedia_hash": "fd"
+    },
+    {
+      "issue_number": 37,
+      "year": 1324,
+      "month": 11,
+      "day": 12,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_37",
+      "wikimedia_hash": "a6"
+    },
+    {
+      "issue_number": 38,
+      "year": 1324,
+      "month": 11,
+      "day": 19,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_38",
+      "wikimedia_hash": "89"
+    },
+    {
+      "issue_number": 39,
+      "year": 1324,
+      "month": 11,
+      "day": 26,
+      "filename_base": "Molla_Nəsrəddin._1906,_№_39",
+      "wikimedia_hash": "62"
+    },
+    {
+      "issue_number": 101,
+      "year": 1347,
+      "month": 7,
+      "day": 21,
+      "filename_base": "Molla_Nəsrəddin._1929,_№_1",
+      "wikimedia_hash": "99"
+    }
+  ]
 }
 ]
