@@ -443,6 +443,7 @@
         <button id="goToFirstNowruzGlobal" style="display: none;" class="hijri-nav-btn">نوروز</button>
         <button id="goToFirstMollaNasreddinGlobal" style="display: none;" class="hijri-nav-btn">ملانصرالدین</button>
         <button id="goToFirstKhorshidGlobal" style="display: none;" class="hijri-nav-btn">خورشید</button>
+        <button id="goToFirstHablAlMatinGlobal" style="display: none;" class="hijri-nav-btn">حبل‌المتین</button>
         <button id="goToFirstSureEsrafilGlobal" style="display: none;" class="hijri-nav-btn">صور اسرافیل</button>
         <button id="goToFirstRoohAlQodsGlobal" style="display: none;" class="hijri-nav-btn">روح‌القدس</button>
         <button id="goToFirstBamdadRoshanGlobal" style="display: none;" class="hijri-nav-btn">بامداد روشن</button>
@@ -595,6 +596,22 @@
                         <input type="number" id="Q64941184IssueNumber">
                     </div>
                     <button id="nextQ64941184Issue">شماره بعد &gt;</button>
+                </div>
+            </div>
+        </div>
+        <div id="Q12840502Section" class="newspaper-section" style="display: none;">
+            <h2>حبل‌المتین</h2>
+            <img id="Q12840502NewspaperImage" src="" alt="تصویر حبل‌المتین" class="newspaper-image">
+            <p id="Q12840502StatusMessage" class="status-message" style="display: none;"></p>
+            <p id="Q12840502ErrorMessage" class="error-message" style="display: none;"></p>
+            <div id="Q12840502Navigation" class="issue-navigation-controls">
+                 <div>
+                    <button id="prevQ12840502Issue">&lt; شماره قبل</button>
+                    <div>
+                        <span>شماره:</span>
+                        <input type="number" id="Q12840502IssueNumber">
+                    </div>
+                    <button id="nextQ12840502Issue">شماره بعد &gt;</button>
                 </div>
             </div>
         </div>
@@ -783,6 +800,7 @@
             const goToFirstDaneshGlobalBtn = document.getElementById('goToFirstDaneshGlobal');
             const goToFirstSharafGlobalBtn = document.getElementById('goToFirstSharafGlobal');
             const goToFirstNowruzGlobalBtn = document.getElementById('goToFirstNowruzGlobal');
+            const goToFirstHablAlMatinGlobalBtn = document.getElementById('goToFirstHablAlMatinGlobal');
             const goToFirstMollaNasreddinGlobalBtn = document.getElementById('goToFirstMollaNasreddinGlobal');
             const goToFirstKhorshidGlobalBtn = document.getElementById('goToFirstKhorshidGlobal');
             const goToFirstSureEsrafilGlobalBtn = document.getElementById('goToFirstSureEsrafilGlobal');
@@ -1676,6 +1694,7 @@
                     { btn: goToFirstDaneshGlobalBtn, id: 'Q60745684' },
                     { btn: goToFirstSharafGlobalBtn, id: 'Q5686829'},
                     { btn: goToFirstNowruzGlobalBtn, id: 'Q64941184'},
+                    { btn: goToFirstHablAlMatinGlobalBtn, id: 'Q12840502' },
                     { btn: goToFirstMollaNasreddinGlobalBtn, id: 'Q2664606' },
                     { btn: goToFirstKhorshidGlobalBtn, id: 'Q134006001' },
                     { btn: goToFirstSureEsrafilGlobalBtn, id: 'Q6467762'},
@@ -1725,6 +1744,7 @@
             if(goToFirstDaneshGlobalBtn) goToFirstDaneshGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q60745684'));
             if(goToFirstSharafGlobalBtn) goToFirstSharafGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q5686829'));
             if(goToFirstNowruzGlobalBtn) goToFirstNowruzGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q64941184'));
+            if(goToFirstHablAlMatinGlobalBtn) goToFirstHablAlMatinGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q12840502'));
             if(goToFirstMollaNasreddinGlobalBtn) goToFirstMollaNasreddinGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q2664606'));
             if(goToFirstKhorshidGlobalBtn) goToFirstKhorshidGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q134006001'));
             if(goToFirstSureEsrafilGlobalBtn) goToFirstSureEsrafilGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q6467762'));
