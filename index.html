@@ -1126,8 +1126,8 @@
             };
 
             const handleCalendarChange = (targetDate = null) => {
-                shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'flex' : 'none';
-                hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'flex' : 'none';
+                shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'block' : 'none';
+                hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'block' : 'none';
 
                 if (targetDate) {
                     if (currentCalendarMode === 'shamsi') {
