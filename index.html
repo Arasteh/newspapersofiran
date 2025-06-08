@@ -393,7 +393,7 @@
 
         <div id="shamsiDateControls">
             <label for="shamsiYear">سال:</label>
-            <input type="number" id="shamsiYear" value="1350" min="1300" max="1450">
+            <select id="shamsiYear"></select>
             <label for="shamsiMonth">ماه:</label>
             <select id="shamsiMonth">
                 <option value="1">فروردین</option>
@@ -410,12 +410,12 @@
                 <option value="12">اسفند</option>
             </select>
             <label for="shamsiDay">روز:</label>
-            <input type="number" id="shamsiDay" value="4" min="1" max="31">
+            <select id="shamsiDay"></select>
         </div>
 
         <div id="hijriDateControls" style="display: none;">
             <label for="hijriYear">سال قمری:</label>
-            <input type="number" id="hijriYear" value="1325" min="1300" max="1500">
+            <select id="hijriYear"></select>
             <label for="hijriMonth">ماه قمری:</label>
             <select id="hijriMonth">
                 <option value="1">محرم</option>
@@ -432,7 +432,7 @@
                 <option value="12">ذی‌الحجه</option>
             </select>
             <label for="hijriDay">روز قمری:</label>
-            <input type="number" id="hijriDay" value="21" min="1" max="30">
+            <select id="hijriDay"></select>
         </div>
     </div>
     <div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
@@ -713,7 +713,41 @@
     </div>
 
     <script>
+        const populateDateDropdowns = () => {
+            const shamsiYearSelect = document.getElementById('shamsiYear');
+            const shamsiDaySelect = document.getElementById('shamsiDay');
+            const hijriYearSelect = document.getElementById('hijriYear');
+            const hijriDaySelect = document.getElementById('hijriDay');
+
+            // Populate Shamsi Year (1305 to 1373)
+            for (let year = 1305; year <= 1373; year++) {
+                const option = new Option(year, year);
+                shamsiYearSelect.add(option);
+            }
+            shamsiYearSelect.value = "1350"; // Default value
+
+            // Populate Hijri Year (1277 to 1336)
+            for (let year = 1277; year <= 1336; year++) {
+                const option = new Option(year, year);
+                hijriYearSelect.add(option);
+            }
+            hijriYearSelect.value = "1325"; // Default value
+
+            // Populate Day (1 to 31)
+            for (let day = 1; day <= 31; day++) {
+                const option = new Option(day, day);
+                shamsiDaySelect.add(option);
+                hijriDaySelect.add(option.cloneNode(true)); // Use cloneNode for the second dropdown
+            }
+            shamsiDaySelect.value = "4";   // Default value
+            hijriDaySelect.value = "21";  // Default value
+        };
+
+
         document.addEventListener('DOMContentLoaded', async () => {
+            // Populate dropdowns first
+            populateDateDropdowns();
+
             // DOM Element References
             const shamsiCalendarRadio = document.getElementById('shamsiCalendar');
             const hijriCalendarRadio = document.getElementById('hijriCalendar');
