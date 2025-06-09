@@ -77,11 +77,11 @@
         .global-issue-nav-controls button {
             padding: 8px 15px;
             color: white;
-            border: none;
+            border: 2px solid transparent; /* Added for smooth transition */
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .global-issue-nav-controls button {
             background-color: var(--button-bg);
@@ -103,9 +103,25 @@
             background-color: var(--button-hover-bg);
         }
 
+        /* Style for buttons of available newspapers on the selected date */
+        .global-issue-nav-controls button.available-on-date {
+             box-shadow: 0 0 8px;
+        }
+        .global-issue-nav-controls button.hijri-nav-btn.available-on-date {
+            border-color: var(--button-hover-bg);
+            box-shadow: 0 0 8px var(--button-hover-bg);
+        }
+        .global-issue-nav-controls button.shamsi-nav-btn.available-on-date {
+            border-color: var(--lightbox-button-hover-bg);
+            box-shadow: 0 0 8px var(--lightbox-button-hover-bg);
+        }
+
+
         .global-issue-nav-controls button:disabled {
             background-color: var(--button-disabled-bg);
             cursor: not-allowed;
+            border-color: transparent;
+            box-shadow: none;
         }
         .controls label {
             margin-left: 5px;
@@ -1717,27 +1733,33 @@
                     { btn: goToFirstJangalGlobalBtn, id: 'jangal_qamari'}
                 ];
 
-                hijriDbButtons.forEach(item => {
-                    if (item.btn && newspaperData[item.id] && newspaperData[item.id].type === 'database' && newspaperData[item.id].issues && newspaperData[item.id].issues.length > 0) {
-                        item.btn.style.display = 'inline-block';
-                    } else if (item.btn) {
-                        item.btn.style.display = 'none';
-                    }
-                });
-                shamsiFormulaButtons.forEach(item => {
-                    if (item.btn && newspaperData[item.id] && newspaperData[item.id].type === 'formula' && firstShamsiIssueDates[item.id]) {
-                        item.btn.style.display = 'inline-block';
-                    } else if (item.btn) {
-                        item.btn.style.display = 'none';
-                    }
-                });
-                hijriFormulaButtons.forEach(item => {
-                    if (item.btn && newspaperData[item.id] && newspaperData[item.id].type === 'formula' && newspaperData[item.id].calendar_type === 'hijri' && firstHijriFormulaIssueDates[item.id]) {
-                        item.btn.style.display = 'inline-block';
-                    } else if (item.btn) {
-                        item.btn.style.display = 'none';
-                    }
-                });
+                const processButtons = (buttonArray) => {
+                    buttonArray.forEach(item => {
+                        if (item.btn) {
+                            const paper = newspaperData[item.id];
+                            const isPermanentlyAvailable = paper &&
+                                ((paper.type === 'database' && paper.issues && paper.issues.length > 0) ||
+                                 (paper.type === 'formula' && (firstShamsiIssueDates[item.id] || firstHijriFormulaIssueDates[item.id])));
+
+                            if (isPermanentlyAvailable) {
+                                item.btn.style.display = 'inline-block';
+                                // Check if it's available on the *current* date and apply/remove the style
+                                if (paper.available) {
+                                    item.btn.classList.add('available-on-date');
+                                } else {
+                                    item.btn.classList.remove('available-on-date');
+                                }
+                            } else {
+                                item.btn.style.display = 'none';
+                                item.btn.classList.remove('available-on-date'); // Cleanup
+                            }
+                        }
+                    });
+                };
+
+                processButtons(hijriDbButtons);
+                processButtons(shamsiFormulaButtons);
+                processButtons(hijriFormulaButtons);
             };
 
             if(goToFirstDawlatIranGlobalBtn) goToFirstDawlatIranGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q_Dawlat_e_Alliya_ye_Iran'));
