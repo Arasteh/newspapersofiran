@@ -453,6 +453,7 @@
     </div>
     <div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
         <!-- Hijri Buttons -->
+        <button id="goToFirstQ5671136Global" style="display: none;" class="hijri-nav-btn">الاسلام</button>
         <button id="goToFirstDawlatIranGlobal" style="display: none;" class="hijri-nav-btn">دولت علیه ایران</button>
         <button id="goToFirstDaneshGlobal" style="display: none;" class="hijri-nav-btn">دانش</button>
         <button id="goToFirstSharafGlobal" style="display: none;" class="hijri-nav-btn">شرف</button>
@@ -464,7 +465,6 @@
         <button id="goToFirstRoohAlQodsGlobal" style="display: none;" class="hijri-nav-btn">روح‌القدس</button>
         <button id="goToFirstBamdadRoshanGlobal" style="display: none;" class="hijri-nav-btn">بامداد روشن</button>
         <button id="goToFirstJangalGlobal" style="display: none;" class="hijri-nav-btn">جنگل</button>
-        <button id="goToFirstQ5671136Global" style="display: none;" class="hijri-nav-btn">الاسلام</button>
 
         <!-- Shamsi Buttons -->
         <button id="goToFirstEttelaatGlobal" style="display: none;" class="shamsi-nav-btn">اطلاعات</button>
@@ -1021,9 +1021,19 @@
                     }
                     paper.currentIssue = null;
                 } else if (paper.type === 'database') {
-                    const foundIssue = paper.issues && paper.issues.find(issue =>
-                        issue.year == year && issue.month == month && issue.day == day
-                    );
+                    let foundIssue;
+                    if (type === 'Q5671136') {
+                        // For this monthly, ignore the day and find the issue for the selected month and year.
+                        foundIssue = paper.issues && paper.issues.find(issue =>
+                            issue.year == year && issue.month == month
+                        );
+                    } else {
+                        // For daily newspapers, match the exact date.
+                        foundIssue = paper.issues && paper.issues.find(issue =>
+                            issue.year == year && issue.month == month && issue.day == day
+                        );
+                    }
+
                     if (foundIssue) {
                         fileNameBase = foundIssue.filename_base;
                         maxPages = foundIssue.pages || null;
@@ -1617,11 +1627,21 @@
                 const currentYear = hijriYearInput.value;
                 const currentMonth = pad(hijriMonthSelect.value);
                 const currentDay = pad(hijriDayInput.value);
-                const foundIndex = issuesArray.findIndex(issue =>
-                    issue.year == currentYear &&
-                    issue.month == parseInt(currentMonth) &&
-                    issue.day == parseInt(currentDay)
-                );
+                
+                let foundIndex = -1;
+                if (paper.id === 'Q5671136') {
+                     foundIndex = issuesArray.findIndex(issue =>
+                        issue.year == currentYear &&
+                        issue.month == parseInt(currentMonth)
+                    );
+                } else {
+                     foundIndex = issuesArray.findIndex(issue =>
+                        issue.year == currentYear &&
+                        issue.month == parseInt(currentMonth) &&
+                        issue.day == parseInt(currentDay)
+                    );
+                }
+
                 paper.navState.currentIndex = foundIndex;
                 if (issueNumberInput) {
                     if (foundIndex >= 0 && issuesArray[foundIndex]) {
