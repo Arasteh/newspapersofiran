@@ -453,7 +453,6 @@
     </div>
     <div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
         <!-- Hijri Buttons -->
-        <button id="goToFirstQ5671136Global" style="display: none;" class="hijri-nav-btn">الاسلام</button>
         <button id="goToFirstDawlatIranGlobal" style="display: none;" class="hijri-nav-btn">دولت علیه ایران</button>
         <button id="goToFirstDaneshGlobal" style="display: none;" class="hijri-nav-btn">دانش</button>
         <button id="goToFirstSharafGlobal" style="display: none;" class="hijri-nav-btn">شرف</button>
@@ -465,6 +464,7 @@
         <button id="goToFirstRoohAlQodsGlobal" style="display: none;" class="hijri-nav-btn">روح‌القدس</button>
         <button id="goToFirstBamdadRoshanGlobal" style="display: none;" class="hijri-nav-btn">بامداد روشن</button>
         <button id="goToFirstJangalGlobal" style="display: none;" class="hijri-nav-btn">جنگل</button>
+        <button id="goToFirstQ5671136Global" style="display: none;" class="hijri-nav-btn">الاسلام</button>
 
         <!-- Shamsi Buttons -->
         <button id="goToFirstEttelaatGlobal" style="display: none;" class="shamsi-nav-btn">اطلاعات</button>
@@ -776,8 +776,8 @@
             }
             shamsiYearSelect.value = "1350"; // Default value
 
-            // Populate Hijri Year (1277 to 1336)
-            for (let year = 1277; year <= 1336; year++) {
+            // Populate Hijri Year (1277 to 1361)
+            for (let year = 1277; year <= 1361; year++) {
                 const option = new Option(year, year);
                 hijriYearSelect.add(option);
             }
