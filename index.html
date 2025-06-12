@@ -453,6 +453,7 @@
     </div>
     <div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
         <!-- Hijri Buttons -->
+        <button id="goToFirstQ5671136Global" style="display: none;" class="hijri-nav-btn">الاسلام</button>
         <button id="goToFirstDawlatIranGlobal" style="display: none;" class="hijri-nav-btn">دولت علیه ایران</button>
         <button id="goToFirstDaneshGlobal" style="display: none;" class="hijri-nav-btn">دانش</button>
         <button id="goToFirstSharafGlobal" style="display: none;" class="hijri-nav-btn">شرف</button>
@@ -550,6 +551,22 @@
             <img id="jangal_qamariNewspaperImage" src="" alt="تصویر جنگل" class="newspaper-image">
             <p id="jangal_qamariStatusMessage" class="status-message" style="display: none;"></p>
             <p id="jangal_qamariErrorMessage" class="error-message" style="display: none;"></p>
+        </div>
+        <div id="Q5671136Section" class="newspaper-section" style="display: none;">
+            <h2>الاسلام</h2>
+            <img id="Q5671136NewspaperImage" src="" alt="تصویر الاسلام" class="newspaper-image">
+            <p id="Q5671136StatusMessage" class="status-message" style="display: none;"></p>
+            <p id="Q5671136ErrorMessage" class="error-message" style="display: none;"></p>
+            <div id="Q5671136Navigation" class="issue-navigation-controls">
+                 <div>
+                    <button id="prevQ5671136Issue">&lt; شماره قبل</button>
+                    <div>
+                        <span>شماره:</span>
+                        <input type="number" id="Q5671136IssueNumber">
+                    </div>
+                    <button id="nextQ5671136Issue">شماره بعد &gt;</button>
+                </div>
+            </div>
         </div>
         <div id="Q_Dawlat_e_Alliya_ye_IranSection" class="newspaper-section" style="display: none;">
             <h2>دولت علیه ایران</h2>
@@ -812,6 +829,7 @@
 
 
             // Global "Go to First Issue" Buttons
+            const goToFirstAlIslamGlobalBtn = document.getElementById('goToFirstQ5671136Global');
             const goToFirstDawlatIranGlobalBtn = document.getElementById('goToFirstDawlatIranGlobal');
             const goToFirstDaneshGlobalBtn = document.getElementById('goToFirstDaneshGlobal');
             const goToFirstSharafGlobalBtn = document.getElementById('goToFirstSharafGlobal');
@@ -1706,6 +1724,7 @@
 
             const updateGlobalGoToFirstIssueButtonsVisibility = () => {
                 const hijriDbButtons = [
+                    { btn: goToFirstAlIslamGlobalBtn, id: 'Q5671136'},
                     { btn: goToFirstDawlatIranGlobalBtn, id: 'Q_Dawlat_e_Alliya_ye_Iran' },
                     { btn: goToFirstDaneshGlobalBtn, id: 'Q60745684' },
                     { btn: goToFirstSharafGlobalBtn, id: 'Q5686829'},
@@ -1762,6 +1781,7 @@
                 processButtons(hijriFormulaButtons);
             };
 
+            if(goToFirstAlIslamGlobalBtn) goToFirstAlIslamGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q5671136'));
             if(goToFirstDawlatIranGlobalBtn) goToFirstDawlatIranGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q_Dawlat_e_Alliya_ye_Iran'));
             if(goToFirstDaneshGlobalBtn) goToFirstDaneshGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q60745684'));
             if(goToFirstSharafGlobalBtn) goToFirstSharafGlobalBtn.addEventListener('click', () => handleGlobalGoToFirstHijriDbIssue('Q5686829'));
