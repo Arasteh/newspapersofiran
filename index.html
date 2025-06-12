@@ -453,7 +453,6 @@
     </div>
     <div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
         <!-- Hijri Buttons -->
-        <button id="goToFirstQ5671136Global" style="display: none;" class="hijri-nav-btn">الاسلام</button>
         <button id="goToFirstDawlatIranGlobal" style="display: none;" class="hijri-nav-btn">دولت علیه ایران</button>
         <button id="goToFirstDaneshGlobal" style="display: none;" class="hijri-nav-btn">دانش</button>
         <button id="goToFirstSharafGlobal" style="display: none;" class="hijri-nav-btn">شرف</button>
@@ -465,6 +464,7 @@
         <button id="goToFirstRoohAlQodsGlobal" style="display: none;" class="hijri-nav-btn">روح‌القدس</button>
         <button id="goToFirstBamdadRoshanGlobal" style="display: none;" class="hijri-nav-btn">بامداد روشن</button>
         <button id="goToFirstJangalGlobal" style="display: none;" class="hijri-nav-btn">جنگل</button>
+        <button id="goToFirstQ5671136Global" style="display: none;" class="hijri-nav-btn">الاسلام</button>
 
         <!-- Shamsi Buttons -->
         <button id="goToFirstEttelaatGlobal" style="display: none;" class="shamsi-nav-btn">اطلاعات</button>
@@ -958,6 +958,12 @@
                     paper.imageElement.alt = `تصویر ${paper.title}`;
                 }
 
+                const titleElement = paper.sectionElement.querySelector('h2');
+                if (titleElement) {
+                    titleElement.textContent = paper.title; // Reset title
+                }
+
+
                 paper.sectionElement.style.display = shouldDisplaySectionBasedOnModeAndType ? 'flex' : 'none';
                 if (!shouldDisplaySectionBasedOnModeAndType) {
                     paper.available = false;
@@ -1039,6 +1045,11 @@
                         maxPages = foundIssue.pages || null;
                         paper.currentIssue = foundIssue;
                         issueExistsForDate = true;
+                        
+                        if (titleElement && foundIssue.issue_number) {
+                            titleElement.textContent = `${paper.title} (شماره ${foundIssue.issue_number})`;
+                        }
+
                     } else {
                         paper.errorElement.textContent = 'نشریه در این تاریخ موجود نیست';
                         paper.errorElement.style.display = 'block';
@@ -1314,8 +1325,12 @@
                      formattedDate = `${pad(day)}/${pad(month)}/${year}`;
                 }
 
-
-                lightboxNewspaperTitle.textContent = `${paper.title} - ${formattedDate} - صفحه: ${lightboxCurrentPage}`;
+                let titleText = `${paper.title}`;
+                if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.issue_number) {
+                    titleText += ` (شماره ${paper.currentIssue.issue_number})`;
+                }
+                
+                lightboxNewspaperTitle.textContent = `${titleText} - ${formattedDate} - صفحه: ${lightboxCurrentPage}`;
                 lightboxPageNumberInput.value = lightboxCurrentPage;
                 lightboxImage.alt = `تصویر ${paper.title} در لایت‌باکس - صفحه ${lightboxCurrentPage}`;
 
@@ -1849,6 +1864,7 @@
 
                 if (imageElement && statusElement && errorElement && sectionElement) {
                     newspaperData[paperId] = {
+                        id: paperId, // Add id to newspaperData object
                         type: 'database',
                         title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
                         currentPage: 1,
