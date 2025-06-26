@@ -1000,7 +1000,8 @@
             const goToFirstNeginGlobalBtn = document.getElementById('goToFirstNeginGlobal');
 
             // Reference to all "View All Issues" buttons on main sections
-            const allViewAllIssuesBtns = document.querySelectorAll('.view-all-issues-btn');
+            // This needs to be queried AFTER dbNewspapersData is processed and buttons might be visible
+            let allViewAllIssuesBtns = [];
 
 
             // Global State
@@ -1105,8 +1106,12 @@
                 }
 
                 // Show/hide the 'view all issues' button based on availability and type
-                const viewAllIssuesBtn = paper.sectionElement.querySelector('.view-all-issues-btn');
+                const viewAllIssuesBtn = paper.viewAllIssuesBtn; // Use the stored reference
                 if (viewAllIssuesBtn) {
+                    // The button should be visible only if the paper is database-driven, has issues,
+                    // and its section is being displayed (i.e., matches the calendar mode).
+                    // Its clickability (active or disabled) depends on if an issue exists for *this specific date*,
+                    // but the display property is based on whether it *can* show all issues (database-driven with issues).
                     if (paper.type === 'database' && paper.issues && paper.issues.length > 0 && shouldDisplaySectionBasedOnModeAndType) {
                         viewAllIssuesBtn.style.display = 'block';
                     } else {
@@ -2056,9 +2061,16 @@
                 }
             });
 
-            // No longer attach click listeners to individual view-all-issues-btn here
-            // because they will be dynamically shown/hidden and their logic will be handled
-            // by the main loadImage function.
+            // After processing all dbPapersData and setting up newspaperData objects,
+            // query all .view-all-issues-btn and attach event listeners
+            allViewAllIssuesBtns = document.querySelectorAll('.view-all-issues-btn');
+            allViewAllIssuesBtns.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const paperId = event.target.dataset.newspaperId;
+                    openAllNewspapersIssuesModal(paperId); // Call with the specific paperId
+                });
+            });
+
 
             Object.keys(newspaperData).forEach(type => {
                 const paper = newspaperData[type];
@@ -2087,7 +2099,7 @@
                 openAllNewspapersIssuesModal();
             });
 
-            const openAllNewspapersIssuesModal = () => {
+            const openAllNewspapersIssuesModal = (initialPaperId = null) => {
                 allIssuesModalErrorMessage.style.display = 'none';
                 allIssuesModalNewspaperTitle.textContent = 'فهرست شماره‌های نشریات'; // Main title for the modal
                 newspaperSelectionContainer.innerHTML = ''; // Clear previous newspaper list
@@ -2102,6 +2114,8 @@
                     allIssuesModalErrorMessage.textContent = 'هیچ نشریه‌ای با فهرست شماره در دیتابیس یافت نشد.';
                     allIssuesModalErrorMessage.style.display = 'block';
                 } else {
+                    let paperToSelectId = initialPaperId;
+
                     dbPapersWithIssues.forEach(paper => {
                         const paperButton = document.createElement('button');
                         paperButton.textContent = paper.title;
@@ -2115,12 +2129,28 @@
                             paperButton.classList.add('selected');
                         });
                         newspaperSelectionContainer.appendChild(paperButton);
+
+                        // If an initial paper ID is provided, and it matches this paper, we'll select it later.
+                        // This ensures the button exists before trying to select it.
+                        if (initialPaperId && paper.id === initialPaperId) {
+                            paperToSelectId = paper.id;
+                        }
                     });
-                    // Automatically select the first newspaper and display its issues
-                    if (dbPapersWithIssues.length > 0) {
+
+                    // Select the specific paper if initialPaperId was provided and valid, otherwise select the first one
+                    if (paperToSelectId) {
+                        displayIssuesForSelectedNewspaper(paperToSelectId);
+                        const selectedButton = newspaperSelectionContainer.querySelector(`button[data-paper-id="${paperToSelectId}"]`);
+                        if (selectedButton) {
+                            selectedButton.classList.add('selected');
+                        }
+                    } else if (dbPapersWithIssues.length > 0) {
+                        // Default to first paper if no specific one was requested or found
                         const firstPaperId = dbPapersWithIssues[0].id;
                         displayIssuesForSelectedNewspaper(firstPaperId);
-                        newspaperSelectionContainer.children[0].classList.add('selected'); // Highlight first button
+                        if (newspaperSelectionContainer.children[0]) {
+                            newspaperSelectionContainer.children[0].classList.add('selected');
+                        }
                     }
                 }
                 allIssuesModalOverlay.classList.add('visible');
