@@ -23,6 +23,8 @@
             --lightbox-button-bg: #007bff; /* Blue for lightbox buttons */
             --lightbox-button-hover-bg: #000;
             --lightbox-close-button-color: #333;
+            --highlight-color: #28a745; /* Color for highlighted dates */
+            --highlight-text-color: white;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -43,6 +45,8 @@
                 --lightbox-button-bg: #0056b3; /* Darker blue for dark mode */
                 --lightbox-button-hover-bg: #aaa;
                 --lightbox-close-button-color: #e0e0e0;
+                --highlight-color: #1e7e34; /* Darker green for dark mode */
+                --highlight-text-color: white;
             }
         }
 
@@ -395,7 +399,7 @@
             font-family: system-ui;
         }
 
-        /* Styles for the new "All Issues" modal */
+        /* Styles for the new "All Issues" modal (reused for calendar modal too) */
         .all-issues-modal-overlay {
             position: fixed;
             top: 0;
@@ -505,6 +509,116 @@
         .global-all-issues-btn:hover {
             background-color: #0056b3;
         }
+
+        /* Calendar specific styles */
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .calendar-nav button {
+            padding: 8px 15px;
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        .calendar-nav button:hover {
+            background-color: var(--button-hover-bg);
+        }
+        .calendar-nav button:disabled {
+            background-color: var(--button-disabled-bg);
+            cursor: not-allowed;
+        }
+        #currentCalendarYear {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+        .calendar-grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 months per row */
+            gap: 20px;
+            width: 100%;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        .calendar-month {
+            background-color: var(--control-bg);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .calendar-month h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: var(--section-title-color);
+            font-size: 1.1em;
+        }
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr); /* Max 6 days per row for better spacing */
+            gap: 5px;
+            width: 100%;
+        }
+        .calendar-day-btn {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            border: 1px solid var(--border-color);
+            border-radius: 50%; /* Circle shape */
+            background-color: var(--control-bg);
+            color: var(--text-color);
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .calendar-day-btn:hover {
+            background-color: var(--border-color);
+            transform: scale(1.05);
+        }
+        .calendar-day-btn.has-issue {
+            background-color: var(--highlight-color);
+            color: var(--highlight-text-color);
+            font-weight: bold;
+            border-color: var(--highlight-color);
+        }
+        .calendar-day-btn:disabled {
+            background-color: var(--button-disabled-bg);
+            cursor: not-allowed;
+            color: #888;
+            border-color: #888;
+        }
+
+        /* Adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .calendar-grid-container {
+                grid-template-columns: repeat(2, 1fr); /* 2 months per row on smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calendar-grid-container {
+                grid-template-columns: 1fr; /* 1 month per row on very small screens */
+            }
+            .calendar-day-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8em;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -562,6 +676,7 @@
             <select id="hijriDay"></select>
         </div>
         <button id="openAllNewspapersIssuesModalBtn" class="global-all-issues-btn">فهرست شماره‌های نشریات</button>
+        <button id="openCalendarModalBtn" class="global-all-issues-btn">تقویم</button>
     </div>
     <div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
         <!-- Hijri Buttons -->
@@ -900,6 +1015,23 @@
         </div>
     </div>
 
+    <!-- Calendar Modal -->
+    <div id="calendarModalOverlay" class="all-issues-modal-overlay">
+        <div class="all-issues-modal-content">
+            <button id="calendarModalCloseButton" class="all-issues-modal-close-button">&times;</button>
+            <h2 id="calendarModalTitle">تقویم قمری</h2>
+            <div class="calendar-nav">
+                <button id="prevYearBtn">&lt; سال قبل</button>
+                <span id="currentCalendarYear"></span>
+                <button id="nextYearBtn">سال بعد &gt;</button>
+            </div>
+            <div id="calendarGridContainer" class="calendar-grid-container">
+                <!-- Months and days will be rendered here -->
+            </div>
+            <p id="calendarModalErrorMessage" class="error-message" style="display: none;"></p>
+        </div>
+    </div>
+
     <script>
         const populateDateDropdowns = () => {
             const shamsiYearSelect = document.getElementById('shamsiYear');
@@ -974,6 +1106,17 @@
             const issuesListContainer = document.getElementById('issuesListContainer');
             const allIssuesModalErrorMessage = document.getElementById('allIssuesModalErrorMessage');
 
+            // Calendar Modal Elements
+            const openCalendarModalBtn = document.getElementById('openCalendarModalBtn');
+            const calendarModalOverlay = document.getElementById('calendarModalOverlay');
+            const calendarModalCloseButton = document.getElementById('calendarModalCloseButton');
+            const calendarModalTitle = document.getElementById('calendarModalTitle');
+            const prevYearBtn = document.getElementById('prevYearBtn');
+            const nextYearBtn = document.getElementById('nextYearBtn');
+            const currentCalendarYearSpan = document.getElementById('currentCalendarYear');
+            const calendarGridContainer = document.getElementById('calendarGridContainer');
+            const calendarModalErrorMessage = document.getElementById('calendarModalErrorMessage');
+
 
             // Global "Go to First Issue" Buttons
             const goToFirstAlIslamGlobalBtn = document.getElementById('goToFirstQ5671136Global');
@@ -1000,13 +1143,17 @@
             const goToFirstNeginGlobalBtn = document.getElementById('goToFirstNeginGlobal');
 
             // Reference to all "View All Issues" buttons on main sections
-            // This needs to be queried AFTER dbNewspapersData is processed and buttons might be visible
             let allViewAllIssuesBtns = [];
 
+            // Global State for calendar
+            let currentCalendarYear = parseInt(hijriYearInput.value, 10);
+            const minCalendarYear = 1277; // Matches hijriYearSelect min
+            const maxCalendarYear = 1361; // Matches hijriYearSelect max
+            const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
+            const availableHijriDates = new Set(); // Stores "YYYYMMDD" strings for quick lookup
 
-            // Global State
-            let currentCalendarMode = 'shamsi';
-            let dbNewspapersData = [];
+
+            // Global State for newspaper data
             let newspaperData = {
                 ettelaat: { type: 'formula', prefix: 'Ettelaat', title: 'اطلاعات', currentPage: 1, available: false, imageElement: document.getElementById('ettelaatNewspaperImage'), statusElement: document.getElementById('ettelaatStatusMessage'), errorElement: document.getElementById('ettelaatErrorMessage'), sectionElement: document.getElementById('ettelaatSection'), calendar_type: 'shamsi' },
                 mardom: { type: 'formula', prefix: 'Mardom', title: 'مردم', currentPage: 1, available: false, imageElement: document.getElementById('mardomNewspaperImage'), statusElement: document.getElementById('mardomStatusMessage'), errorElement: document.getElementById('mardomErrorMessage'), sectionElement: document.getElementById('mardomSection'), calendar_type: 'shamsi' },
@@ -1110,8 +1257,6 @@
                 if (viewAllIssuesBtn) {
                     // The button should be visible only if the paper is database-driven, has issues,
                     // and its section is being displayed (i.e., matches the calendar mode).
-                    // Its clickability (active or disabled) depends on if an issue exists for *this specific date*,
-                    // but the display property is based on whether it *can* show all issues (database-driven with issues).
                     if (paper.type === 'database' && paper.issues && paper.issues.length > 0 && shouldDisplaySectionBasedOnModeAndType) {
                         viewAllIssuesBtn.style.display = 'block';
                     } else {
@@ -1469,7 +1614,6 @@
 
 
                 if (paper.calendar_type === 'hijri') {
-                    const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
                     const hijriDate = (paper.type === 'database' && paper.currentIssue)
                                       ? {y:paper.currentIssue.year, m:paper.currentIssue.month, d:paper.currentIssue.day }
                                       : {y:year, m:parseInt(month), d:parseInt(day)};
@@ -2006,60 +2150,73 @@
             try {
                 const response = await fetch('db.json');
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                dbNewspapersData = await response.json();
+                const dbNewspapersRawData = await response.json();
                 console.log("db.json loaded successfully.");
-            } catch (error) {
-                console.error("Error loading db.json:", error);
-                mainErrorMessage.textContent = "خطا در بارگذاری دیتابیس نشریات.";
-                mainErrorMessage.style.display = 'block';
-                mainStatusMessage.style.display = 'none';
-            }
 
-            dbNewspapersData.forEach(dbPaper => {
-                const paperId = dbPaper.id;
-                const imageElement = document.getElementById(`${paperId}NewspaperImage`);
-                const statusElement = document.getElementById(`${paperId}StatusMessage`);
-                const errorElement = document.getElementById(`${paperId}ErrorMessage`);
-                const sectionElement = document.getElementById(`${paperId}Section`);
-                const navigationDiv = document.getElementById(`${paperId}Navigation`);
-                const viewAllIssuesBtn = sectionElement ? sectionElement.querySelector('.view-all-issues-btn') : null;
+                dbNewspapersRawData.forEach(dbPaper => {
+                    const paperId = dbPaper.id;
+                    const imageElement = document.getElementById(`${paperId}NewspaperImage`);
+                    const statusElement = document.getElementById(`${paperId}StatusMessage`);
+                    const errorElement = document.getElementById(`${paperId}ErrorMessage`);
+                    const sectionElement = document.getElementById(`${paperId}Section`);
+                    const navigationDiv = document.getElementById(`${paperId}Navigation`);
+                    const viewAllIssuesBtn = sectionElement ? sectionElement.querySelector('.view-all-issues-btn') : null;
 
-                if (imageElement && statusElement && errorElement && sectionElement) {
-                    newspaperData[paperId] = {
-                        id: paperId, // Add id to newspaperData object
-                        type: 'database',
-                        title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
-                        currentPage: 1,
-                        available: false,
-                        imageElement: imageElement,
-                        statusElement: statusElement,
-                        errorElement: errorElement,
-                        sectionElement: sectionElement,
-                        issues: dbPaper.issues,
-                        calendar_type: dbPaper.calendar_type,
-                        viewAllIssuesBtn: viewAllIssuesBtn, // Store reference to the button
-                        ...( (dbPaper.calendar_type === 'hijri' && navigationDiv) ? {
-                            navState: {
+                    if (imageElement && statusElement && errorElement && sectionElement) {
+                        const paperDataEntry = {
+                            id: paperId,
+                            type: 'database',
+                            title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
+                            currentPage: 1,
+                            available: false,
+                            imageElement: imageElement,
+                            statusElement: statusElement,
+                            errorElement: errorElement,
+                            sectionElement: sectionElement,
+                            issues: dbPaper.issues,
+                            calendar_type: dbPaper.calendar_type,
+                            viewAllIssuesBtn: viewAllIssuesBtn,
+                        };
+                        newspaperData[paperId] = paperDataEntry;
+
+                        if (dbPaper.calendar_type === 'hijri' && navigationDiv) {
+                            paperDataEntry.navState = {
                                 issuesArray: [],
                                 currentIndex: -1,
                                 prevIssueBtn: document.getElementById(`prev${paperId}Issue`),
                                 nextIssueBtn: document.getElementById(`next${paperId}Issue`),
                                 issueNumberInput: document.getElementById(`${paperId}IssueNumber`),
                                 navigationDiv: navigationDiv
-                            }
-                        } : {})
-                    };
-                    if (newspaperData[paperId].navState) {
-                        loadNewspaperIssues(paperId);
-                        const navState = newspaperData[paperId].navState;
-                        if (navState.prevIssueBtn) navState.prevIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue(paperId));
-                        if (navState.nextIssueBtn) navState.nextIssueBtn.addEventListener('click', () => goToNextNewspaperIssue(paperId));
-                        if (navState.issueNumberInput) navState.issueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber(paperId));
+                            };
+                            loadNewspaperIssues(paperId); // Populate issuesArray for navState
+
+                            const navState = paperDataEntry.navState;
+                            if (navState.prevIssueBtn) navState.prevIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue(paperId));
+                            if (navState.nextIssueBtn) navState.nextIssueBtn.addEventListener('click', () => goToNextNewspaperIssue(paperId));
+                            if (navState.issueNumberInput) navState.issueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber(paperId));
+                        }
+                    } else {
+                        console.warn(`HTML elements for newspaper '${dbPaper.title}' (ID: ${paperId}) are incomplete. Skipping full setup for this DB paper.`);
                     }
-                } else {
-                    console.warn(`HTML elements for newspaper '${dbPaper.title}' (ID: ${paperId}) are incomplete. Skipping full setup for this DB paper.`);
-                }
-            });
+                });
+
+                // Populate availableHijriDates Set for calendar highlighting
+                Object.values(newspaperData).forEach(paper => {
+                    if (paper.type === 'database' && paper.calendar_type === 'hijri' && paper.issues) {
+                        paper.issues.forEach(issue => {
+                            const dateString = `${issue.year}${pad(issue.month)}${pad(issue.day)}`;
+                            availableHijriDates.add(dateString);
+                        });
+                    }
+                });
+
+
+            } catch (error) {
+                console.error("Error loading db.json:", error);
+                mainErrorMessage.textContent = "خطا در بارگذاری دیتابیس نشریات.";
+                mainErrorMessage.style.display = 'block';
+                mainStatusMessage.style.display = 'none';
+            }
 
             // After processing all dbPapersData and setting up newspaperData objects,
             // query all .view-all-issues-btn and attach event listeners
@@ -2168,8 +2325,6 @@
                 allIssuesModalErrorMessage.style.display = 'none';
                 issuesListContainer.innerHTML = ''; // Clear previous issues
 
-                const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
-                
                 // Use the already sorted issuesArray from navState if available, otherwise sort here.
                 const issuesToDisplay = paper.navState && paper.navState.issuesArray
                                         ? paper.navState.issuesArray
@@ -2181,7 +2336,7 @@
 
                 issuesToDisplay.forEach(issue => {
                     const issueButton = document.createElement('button');
-                    const monthName = hijriMonthNames[issue.month - 1];
+                    const monthName = hijriMonthNames[issue.month - 1]; // Use global hijriMonthNames
                     issueButton.textContent = `شمارهٔ ${issue.issue_number}, روز ${issue.day} ${monthName} ${issue.year}`;
                     issueButton.classList.add('issue-item-button');
                     issueButton.addEventListener('click', () => {
@@ -2226,6 +2381,122 @@
                     closeAllIssuesModal();
                 }
             });
+
+            // --- Calendar Modal Functions ---
+            openCalendarModalBtn.addEventListener('click', () => {
+                currentCalendarYear = parseInt(hijriYearInput.value, 10); // Sync with current main year
+                openCalendarModal();
+            });
+
+            const openCalendarModal = () => {
+                calendarModalErrorMessage.style.display = 'none';
+                calendarModalOverlay.classList.add('visible');
+                renderCalendar(currentCalendarYear);
+            };
+
+            const closeCalendarModal = () => {
+                calendarModalOverlay.classList.remove('visible');
+            };
+
+            const renderCalendar = (year) => {
+                currentCalendarYear = year; // Update global year
+                currentCalendarYearSpan.textContent = year;
+                calendarGridContainer.innerHTML = ''; // Clear previous months
+
+                // Enable/disable navigation buttons
+                prevYearBtn.disabled = currentCalendarYear <= minCalendarYear;
+                nextYearBtn.disabled = currentCalendarYear >= maxCalendarYear;
+
+                // Simple assumption for Hijri month days for display purposes.
+                // Actual highlighting comes from availableHijriDates Set.
+                const daysInMonth = (month) => {
+                     // Moharram, Rabi' al-Awwal, Jumada al-Ula, Rajab, Ramadan, Dhu al-Qi'dah have 30 days.
+                     // Safar, Rabi' al-Thani, Jumada al-Thani, Sha'ban, Shawwal have 29 days.
+                     // Dhu al-Hijjah has 29 or 30 days (leap year).
+                     // For simplification in display grid, let's use 30 for long and 29 for short.
+                     // But data from db.json is definitive for actual dates.
+                    if ([1, 3, 5, 7, 9, 11].includes(month)) return 30; // 1-indexed for month
+                    return 29; // Most common length for others, Dhu al-Hijjah can vary
+                };
+
+
+                for (let month = 1; month <= 12; month++) {
+                    const monthDiv = document.createElement('div');
+                    monthDiv.classList.add('calendar-month');
+
+                    const monthTitle = document.createElement('h3');
+                    monthTitle.textContent = hijriMonthNames[month - 1];
+                    monthDiv.appendChild(monthTitle);
+
+                    const daysGrid = document.createElement('div');
+                    daysGrid.classList.add('calendar-days');
+
+                    // Loop for days 1-30 (or 31 if needed for display, but 30 is safer for Hijri grids)
+                    // The `has-issue` class will ensure only valid days with issues are highlighted.
+                    // For display, we can show up to 30 days consistently.
+                    const maxDaysToDisplay = 30; // Max days to show in grid for visual consistency
+                    for (let day = 1; day <= maxDaysToDisplay; day++) {
+                        const dayBtn = document.createElement('button');
+                        dayBtn.textContent = day;
+                        dayBtn.classList.add('calendar-day-btn');
+                        
+                        const dateString = `${year}${pad(month)}${pad(day)}`;
+
+                        // Check if an issue exists for this specific day in the available data
+                        if (availableHijriDates.has(dateString)) {
+                            dayBtn.classList.add('has-issue');
+                        }
+
+                        dayBtn.addEventListener('click', () => {
+                            goToDateFromCalendar(year, month, day);
+                        });
+                        daysGrid.appendChild(dayBtn);
+                    }
+                    monthDiv.appendChild(daysGrid);
+                    calendarGridContainer.appendChild(monthDiv);
+                }
+            };
+
+            const goToDateFromCalendar = (year, month, day) => {
+                // Ensure calendar mode is Hijri when selecting from Hijri calendar
+                if (currentCalendarMode !== 'hijri') {
+                    hijriCalendarRadio.checked = true;
+                    currentCalendarMode = 'hijri';
+                    // handleCalendarChange will be implicitly called by loadImage('date')
+                }
+                
+                hijriYearInput.value = year;
+                hijriMonthSelect.value = month;
+                hijriDayInput.value = day;
+
+                closeCalendarModal();
+                loadImage('date'); // Load content for the selected date
+            };
+
+            prevYearBtn.addEventListener('click', () => {
+                if (currentCalendarYear > minCalendarYear) {
+                    renderCalendar(currentCalendarYear - 1);
+                }
+            });
+
+            nextYearBtn.addEventListener('click', () => {
+                if (currentCalendarYear < maxCalendarYear) {
+                    renderCalendar(currentCalendarYear + 1);
+                }
+            });
+
+            calendarModalCloseButton.addEventListener('click', closeCalendarModal);
+            calendarModalOverlay.addEventListener('click', (e) => {
+                if (e.target === calendarModalOverlay) {
+                    closeCalendarModal();
+                }
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && calendarModalOverlay.classList.contains('visible')) {
+                    closeCalendarModal();
+                }
+            });
+
         });
     </script>
 </body>
