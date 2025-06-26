@@ -25,6 +25,7 @@
             --lightbox-close-button-color: #333;
             --highlight-color: #28a745; /* Color for highlighted dates */
             --highlight-text-color: white;
+            --multiple-issues-color: #ffc107; /* Yellow for multiple issues */
         }
 
         @media (prefers-color-scheme: dark) {
@@ -47,6 +48,7 @@
                 --lightbox-close-button-color: #e0e0e0;
                 --highlight-color: #1e7e34; /* Darker green for dark mode */
                 --highlight-text-color: white;
+                --multiple-issues-color: #d4a700; /* Darker yellow for dark mode */
             }
         }
 
@@ -427,7 +429,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             color: var(--lightbox-text-color);
             max-width: 90%;
-            max-height: 90vh;
+            max-height: 95vh; /* Adjusted for more height */
             display: flex;
             flex-direction: column;
             overflow: hidden; /* For scrolling content */
@@ -535,10 +537,14 @@
             background-color: var(--button-disabled-bg);
             cursor: not-allowed;
         }
-        #currentCalendarYear {
+        #calendarYearSelect { /* Style for the new select dropdown */
             font-size: 1.2em;
             font-weight: bold;
             color: var(--text-color);
+            background-color: var(--control-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 5px 10px;
         }
         .calendar-grid-container {
             display: grid;
@@ -565,7 +571,7 @@
         }
         .calendar-days {
             display: grid;
-            grid-template-columns: repeat(6, 1fr); /* Max 6 days per row for better spacing */
+            grid-template-columns: repeat(7, 1fr); /* 7 days per row for week view */
             gap: 5px;
             width: 100%;
         }
@@ -593,6 +599,12 @@
             color: var(--highlight-text-color);
             font-weight: bold;
             border-color: var(--highlight-color);
+        }
+        .calendar-day-btn.has-multiple-issues {
+            background-color: var(--multiple-issues-color); /* Different color for multiple issues */
+            transform: scale(1.15); /* Slightly larger */
+            box-shadow: 0 0 5px 2px var(--multiple-issues-color); /* Add a subtle shadow */
+            color: var(--text-color); /* Ensure text is readable on yellow */
         }
         .calendar-day-btn:disabled {
             background-color: var(--button-disabled-bg);
@@ -1022,7 +1034,7 @@
             <h2 id="calendarModalTitle">تقویم قمری</h2>
             <div class="calendar-nav">
                 <button id="prevYearBtn">&lt; سال قبل</button>
-                <span id="currentCalendarYear"></span>
+                <select id="calendarYearSelect"></select> <!-- Changed from span to select -->
                 <button id="nextYearBtn">سال بعد &gt;</button>
             </div>
             <div id="calendarGridContainer" class="calendar-grid-container">
@@ -1113,7 +1125,7 @@
             const calendarModalTitle = document.getElementById('calendarModalTitle');
             const prevYearBtn = document.getElementById('prevYearBtn');
             const nextYearBtn = document.getElementById('nextYearBtn');
-            const currentCalendarYearSpan = document.getElementById('currentCalendarYear');
+            const calendarYearSelect = document.getElementById('calendarYearSelect'); // Changed from span to select
             const calendarGridContainer = document.getElementById('calendarGridContainer');
             const calendarModalErrorMessage = document.getElementById('calendarModalErrorMessage');
 
@@ -1150,7 +1162,8 @@
             const minCalendarYear = 1277; // Matches hijriYearSelect min
             const maxCalendarYear = 1361; // Matches hijriYearSelect max
             const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
-            const availableHijriDates = new Set(); // Stores "YYYYMMDD" strings for quick lookup
+            // Changed from Set to Map to store issue counts per date
+            const availableHijriDates = new Map(); // Stores "YYYYMMDD" -> count of newspapers for that date
 
 
             // Global State for newspaper data
@@ -2200,12 +2213,12 @@
                     }
                 });
 
-                // Populate availableHijriDates Set for calendar highlighting
+                // Populate availableHijriDates Map for calendar highlighting
                 Object.values(newspaperData).forEach(paper => {
                     if (paper.type === 'database' && paper.calendar_type === 'hijri' && paper.issues) {
                         paper.issues.forEach(issue => {
                             const dateString = `${issue.year}${pad(issue.month)}${pad(issue.day)}`;
-                            availableHijriDates.add(dateString);
+                            availableHijriDates.set(dateString, (availableHijriDates.get(dateString) || 0) + 1);
                         });
                     }
                 });
@@ -2355,7 +2368,7 @@
                 if (newspaperData[paperId].calendar_type === 'hijri' && currentCalendarMode !== 'hijri') {
                     hijriCalendarRadio.checked = true;
                     currentCalendarMode = 'hijri';
-                    // The handleCalendarChange will be called by loadImage('date') implicitly
+                    // handleCalendarChange will be implicitly called by loadImage('date')
                 }
 
                 // Set the date inputs
@@ -2388,9 +2401,24 @@
                 openCalendarModal();
             });
 
+            const populateCalendarYearDropdown = () => {
+                for (let year = minCalendarYear; year <= maxCalendarYear; year++) {
+                    const option = new Option(year, year);
+                    calendarYearSelect.add(option);
+                }
+            };
+            populateCalendarYearDropdown(); // Call once to populate dropdown
+
+            calendarYearSelect.addEventListener('change', (event) => {
+                renderCalendar(parseInt(event.target.value, 10));
+            });
+
+
             const openCalendarModal = () => {
                 calendarModalErrorMessage.style.display = 'none';
                 calendarModalOverlay.classList.add('visible');
+                // Set the dropdown to the current year
+                calendarYearSelect.value = currentCalendarYear;
                 renderCalendar(currentCalendarYear);
             };
 
@@ -2400,10 +2428,10 @@
 
             const renderCalendar = (year) => {
                 currentCalendarYear = year; // Update global year
-                currentCalendarYearSpan.textContent = year;
+                calendarYearSelect.value = year; // Update dropdown selection
                 calendarGridContainer.innerHTML = ''; // Clear previous months
 
-                // Enable/disable navigation buttons
+                // Enable/disable navigation buttons based on current year and min/max
                 prevYearBtn.disabled = currentCalendarYear <= minCalendarYear;
                 nextYearBtn.disabled = currentCalendarYear >= maxCalendarYear;
 
@@ -2441,10 +2469,14 @@
                         dayBtn.classList.add('calendar-day-btn');
                         
                         const dateString = `${year}${pad(month)}${pad(day)}`;
+                        const issueCount = availableHijriDates.get(dateString) || 0; // Get count of issues
 
                         // Check if an issue exists for this specific day in the available data
-                        if (availableHijriDates.has(dateString)) {
+                        if (issueCount > 0) {
                             dayBtn.classList.add('has-issue');
+                            if (issueCount > 1) { // Apply specific class for multiple issues
+                                dayBtn.classList.add('has-multiple-issues');
+                            }
                         }
 
                         dayBtn.addEventListener('click', () => {
