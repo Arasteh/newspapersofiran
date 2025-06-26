@@ -25,7 +25,7 @@
             --lightbox-close-button-color: #333;
             --highlight-color: #28a745; /* Color for highlighted dates */
             --highlight-text-color: white;
-            --multiple-issues-color: #ffc107; /* Yellow for multiple issues */
+            /* --multiple-issues-color: #ffc107; Removed, handled by opacity */
         }
 
         @media (prefers-color-scheme: dark) {
@@ -48,7 +48,7 @@
                 --lightbox-close-button-color: #e0e0e0;
                 --highlight-color: #1e7e34; /* Darker green for dark mode */
                 --highlight-text-color: white;
-                --multiple-issues-color: #d4a700; /* Darker yellow for dark mode */
+                /* --multiple-issues-color: #d4a700; Removed, handled by opacity */
             }
         }
 
@@ -216,182 +216,6 @@
         .pagination-controls input[type="number"] {
             width: 60px;
             text-align: center;
-            background-color: var(--control-bg);
-            color: var(--text-color);
-        }
-
-        .lightbox-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .lightbox-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        .lightbox-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: var(--lightbox-bg);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            color: var(--lightbox-text-color);
-            overflow-y: auto;
-        }
-        .lightbox-image {
-            max-width: 100%;
-            max-height: calc(90vh - 200px);
-            height: auto;
-            display: block;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-            margin: 0 auto;
-            object-fit: contain;
-        }
-        .lightbox-controls {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            width: 100%;
-            margin-top: 15px;
-            gap: 10px;
-        }
-        .lightbox-controls .page-nav, .lightbox-controls .newspaper-nav {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .lightbox-controls button {
-            padding: 10px 20px;
-            background-color: var(--lightbox-button-bg);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-        .lightbox-controls button:hover {
-            background-color: var(--lightbox-button-hover-bg);
-        }
-        .lightbox-controls button:disabled {
-            background-color: var(--button-disabled-bg);
-            cursor: not-allowed;
-        }
-        .lightbox-controls input[type="number"] {
-            width: 70px;
-            text-align: center;
-            padding: 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 16px;
-            background-color: var(--control-bg);
-            color: var(--text-color);
-        }
-        .lightbox-close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--lightbox-close-button-color);
-        }
-        .lightbox-links {
-            margin-top: 15px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .lightbox-links a {
-            padding: 8px 15px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
-        .lightbox-links a:hover {
-            background-color: #45a049;
-        }
-        .calendar-selection {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            align-items: center;
-        }
-        .calendar-selection label {
-            cursor: pointer;
-            padding: 8px 15px;
-            border-radius: 5px;
-            border: 1px solid var(--border-color);
-            background-color: var(--control-bg);
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-        .calendar-selection input[type="radio"] {
-            display: none;
-        }
-        .calendar-selection input[type="radio"]:checked + label {
-            color: white;
-        }
-        .calendar-selection input[type="radio"]#shamsiCalendar:checked + label {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-        .calendar-selection input[type="radio"]#hijriCalendar:checked + label {
-            background-color: var(--button-bg);
-            border-color: var(--button-bg);
-        }
-        .issue-navigation-controls {
-            margin-top: 10px;
-            display: none;
-            text-align: center;
-            width: 100%; /* Ensure it takes full width of parent */
-        }
-        .issue-navigation-controls > div {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-        .issue-navigation-controls button {
-            padding: 8px 15px;
-            background-color: var(--button-bg);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-         .issue-navigation-controls button:hover {
-            background-color: var(--button-hover-bg);
-        }
-        .issue-navigation-controls button:disabled {
-            background-color: var(--button-disabled-bg);
-            cursor: not-allowed;
-        }
-        .issue-navigation-controls input[type="number"] {
-            width: 60px;
-            padding: 8px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
             background-color: var(--control-bg);
             color: var(--text-color);
         }
@@ -594,18 +418,14 @@
             background-color: var(--border-color);
             transform: scale(1.05);
         }
+        /* No fixed background-color or border-color for .has-issue, set by JS */
         .calendar-day-btn.has-issue {
-            background-color: var(--highlight-color);
             color: var(--highlight-text-color);
             font-weight: bold;
-            border-color: var(--highlight-color);
+            /* background-color and border-color are set inline by JS */
+            /* transform and box-shadow removed for has-multiple-issues are handled by JS */
         }
-        .calendar-day-btn.has-multiple-issues {
-            background-color: var(--multiple-issues-color); /* Different color for multiple issues */
-            transform: scale(1.15); /* Slightly larger */
-            box-shadow: 0 0 5px 2px var(--multiple-issues-color); /* Add a subtle shadow */
-            color: var(--text-color); /* Ensure text is readable on yellow */
-        }
+        /* .calendar-day-btn.has-multiple-issues removed from CSS */
         .calendar-day-btn:disabled {
             background-color: var(--button-disabled-bg);
             cursor: not-allowed;
@@ -2435,17 +2255,9 @@
                 prevYearBtn.disabled = currentCalendarYear <= minCalendarYear;
                 nextYearBtn.disabled = currentCalendarYear >= maxCalendarYear;
 
-                // Simple assumption for Hijri month days for display purposes.
-                // Actual highlighting comes from availableHijriDates Set.
-                const daysInMonth = (month) => {
-                     // Moharram, Rabi' al-Awwal, Jumada al-Ula, Rajab, Ramadan, Dhu al-Qi'dah have 30 days.
-                     // Safar, Rabi' al-Thani, Jumada al-Thani, Sha'ban, Shawwal have 29 days.
-                     // Dhu al-Hijjah has 29 or 30 days (leap year).
-                     // For simplification in display grid, let's use 30 for long and 29 for short.
-                     // But data from db.json is definitive for actual dates.
-                    if ([1, 3, 5, 7, 9, 11].includes(month)) return 30; // 1-indexed for month
-                    return 29; // Most common length for others, Dhu al-Hijjah can vary
-                };
+                // Get computed highlight color from CSS variables
+                const computedHighlightColor = getComputedStyle(document.body).getPropertyValue('--highlight-color').trim();
+                const rgbValues = computedHighlightColor.match(/\d+/g).map(Number); // [R, G, B]
 
 
                 for (let month = 1; month <= 12; month++) {
@@ -2459,10 +2271,7 @@
                     const daysGrid = document.createElement('div');
                     daysGrid.classList.add('calendar-days');
 
-                    // Loop for days 1-30 (or 31 if needed for display, but 30 is safer for Hijri grids)
-                    // The `has-issue` class will ensure only valid days with issues are highlighted.
-                    // For display, we can show up to 30 days consistently.
-                    const maxDaysToDisplay = 30; // Max days to show in grid for visual consistency
+                    const maxDaysToDisplay = 30; 
                     for (let day = 1; day <= maxDaysToDisplay; day++) {
                         const dayBtn = document.createElement('button');
                         dayBtn.textContent = day;
@@ -2471,12 +2280,30 @@
                         const dateString = `${year}${pad(month)}${pad(day)}`;
                         const issueCount = availableHijriDates.get(dateString) || 0; // Get count of issues
 
-                        // Check if an issue exists for this specific day in the available data
+                        // Apply styling based on issue count
                         if (issueCount > 0) {
-                            dayBtn.classList.add('has-issue');
-                            if (issueCount > 1) { // Apply specific class for multiple issues
-                                dayBtn.classList.add('has-multiple-issues');
+                            let alpha;
+                            if (issueCount === 1) {
+                                alpha = 0.33;
+                            } else if (issueCount === 2) {
+                                alpha = 0.66;
+                            } else { // 3 or more issues
+                                alpha = 1;
                             }
+                            dayBtn.style.backgroundColor = `rgba(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}, ${alpha})`;
+                            dayBtn.style.borderColor = `rgba(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]}, ${alpha})`;
+                            dayBtn.style.color = 'var(--highlight-text-color)'; // Keep text white/light for contrast
+                            dayBtn.style.fontWeight = 'bold';
+                            dayBtn.style.transform = ''; // Ensure no lingering transforms
+                            dayBtn.style.boxShadow = ''; // Ensure no lingering shadows (removed for multiple issues)
+                        } else {
+                            // Reset styles for days without issues to default
+                            dayBtn.style.backgroundColor = '';
+                            dayBtn.style.borderColor = '';
+                            dayBtn.style.color = '';
+                            dayBtn.style.fontWeight = '';
+                            dayBtn.style.transform = '';
+                            dayBtn.style.boxShadow = '';
                         }
 
                         dayBtn.addEventListener('click', () => {
@@ -2499,8 +2326,8 @@
                 
                 hijriYearInput.value = year;
                 hijriMonthSelect.value = month;
-                hijriDayInput.value = day;
-
+                hijriDayInput.value = day; // Update the day dropdown
+                
                 closeCalendarModal();
                 loadImage('date'); // Load content for the selected date
             };
