@@ -422,8 +422,8 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             color: var(--lightbox-text-color);
-            max-width: 80%;
-            max-height: 80vh;
+            max-width: 90%;
+            max-height: 90vh;
             display: flex;
             flex-direction: column;
             overflow: hidden; /* For scrolling content */
@@ -438,6 +438,35 @@
             cursor: pointer;
             color: var(--lightbox-close-button-color);
         }
+        .newspaper-selection-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            max-height: 20vh; /* Limit height for newspaper selection */
+            overflow-y: auto;
+        }
+        .newspaper-selection-container button {
+            padding: 8px 15px;
+            background-color: #6c757d; /* Grey for newspaper selection buttons */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background-color 0.3s ease;
+            white-space: nowrap;
+        }
+        .newspaper-selection-container button:hover {
+            background-color: #5a6268;
+        }
+        .newspaper-selection-container button.selected {
+            background-color: #007bff; /* Blue for selected newspaper */
+        }
+
         .issues-list-container {
             display: flex;
             flex-wrap: wrap;
@@ -462,10 +491,10 @@
         .issues-list-container button:hover {
             background-color: var(--button-hover-bg);
         }
-        .view-all-issues-btn {
-            margin-top: 15px; /* Space above the button */
+        .global-all-issues-btn {
+            margin-right: 15px; /* Adjust spacing as needed */
             padding: 8px 15px;
-            background-color: #007bff; /* Blue for "View All Issues" */
+            background-color: #007bff; /* Blue for the global button */
             color: white;
             border: none;
             border-radius: 4px;
@@ -473,8 +502,8 @@
             font-size: 14px;
             transition: background-color 0.3s ease;
         }
-        .view-all-issues-btn:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+        .global-all-issues-btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -532,6 +561,7 @@
             <label for="hijriDay">روز قمری:</label>
             <select id="hijriDay"></select>
         </div>
+        <button id="openAllNewspapersIssuesModalBtn" class="global-all-issues-btn">فهرست شماره‌های نشریات</button>
     </div>
     <div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
         <!-- Hijri Buttons -->
@@ -649,7 +679,7 @@
                     <button id="nextQ5671136Issue">شماره بعد &gt;</button>
                 </div>
             </div>
-            <button class="view-all-issues-btn" data-newspaper-id="Q5671136">مشاهده تمام شماره‌ها</button>
+            <button class="view-all-issues-btn" data-newspaper-id="Q5671136" style="display: none;">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q_Dawlat_e_Alliya_ye_IranSection" class="newspaper-section" style="display: none;">
             <h2>دولت علیه ایران</h2>
@@ -666,7 +696,7 @@
                     <button id="nextQ_Dawlat_e_Alliya_ye_IranIssue">شماره بعد &gt;</button>
                 </div>
             </div>
-            <button class="view-all-issues-btn" data-newspaper-id="Q_Dawlat_e_Alliya_ye_Iran">مشاهده تمام شماره‌ها</button>
+            <button class="view-all-issues-btn" data-newspaper-id="Q_Dawlat_e_Alliya_ye_Iran" style="display: none;">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q60745684Section" class="newspaper-section" style="display: none;">
             <h2>دانش</h2>
@@ -683,7 +713,7 @@
                     <button id="nextQ60745684Issue">شماره بعد &gt;</button>
                 </div>
             </div>
-            <button class="view-all-issues-btn" data-newspaper-id="Q60745684">مشاهده تمام شماره‌ها</button>
+            <button class="view-all-issues-btn" data-newspaper-id="Q60745684" style="display: none;">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q5686829Section" class="newspaper-section" style="display: none;">
             <h2>شرف</h2>
@@ -700,7 +730,7 @@
                     <button id="nextQ5686829Issue">شماره بعد &gt;</button>
                 </div>
             </div>
-            <button class="view-all-issues-btn" data-newspaper-id="Q5686829">مشاهده تمام شماره‌ها</button>
+            <button class="view-all-issues-btn" data-newspaper-id="Q5686829" style="display: none;">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q64941184Section" class="newspaper-section" style="display: none;">
             <h2>نوروز</h2>
@@ -717,7 +747,7 @@
                     <button id="nextQ64941184Issue">شماره بعد &gt;</button>
                 </div>
             </div>
-            <button class="view-all-issues-btn" data-newspaper-id="Q64941184">مشاهده تمام شماره‌ها</button>
+            <button class="view-all-issues-btn" data-newspaper-id="Q64941184" style="display: none;">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q12840502Section" class="newspaper-section" style="display: none;">
             <h2>حبل‌المتین</h2>
@@ -734,7 +764,7 @@
                     <button id="nextQ12840502Issue">شماره بعد &gt;</button>
                 </div>
             </div>
-            <button class="view-all-issues-btn" data-newspaper-id="Q12840502">مشاهده تمام شماره‌ها</button>
+            <button class="view-all-issues-btn" data-newspaper-id="Q12840502" style="display: none;">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q2664606Section" class="newspaper-section" style="display: none;">
             <h2>ملانصرالدین</h2>
@@ -751,7 +781,7 @@
                     <button id="nextQ2664606Issue">شماره بعد &gt;</button>
                 </div>
             </div>
-            <button class="view-all-issues-btn" data-newspaper-id="Q2664606">مشاهده تمام شماره‌ها</button>
+            <button class="view-all-issues-btn" data-newspaper-id="Q2664606" style="display: none;">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q134006001Section" class="newspaper-section" style="display: none;">
             <h2>خورشید</h2>
@@ -768,7 +798,7 @@
                     <button id="nextQ134006001Issue">شماره بعد &gt;</button>
                 </div>
             </div>
-            <button class="view-all-issues-btn" data-newspaper-id="Q134006001">مشاهده تمام شماره‌ها</button>
+            <button class="view-all-issues-btn" data-newspaper-id="Q134006001" style="display: none;">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q6467762Section" class="newspaper-section" style="display: none;">
             <h2>صور اسرافیل</h2>
@@ -785,7 +815,7 @@
                     <button id="nextQ6467762Issue">شماره بعد &gt;</button>
                 </div>
             </div>
-            <button class="view-all-issues-btn" data-newspaper-id="Q6467762">مشاهده تمام شماره‌ها</button>
+            <button class="view-all-issues-btn" data-newspaper-id="Q6467762" style="display: none;">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q54943808Section" class="newspaper-section" style="display: none;">
             <h2>روح‌القدس</h2>
@@ -802,7 +832,7 @@
                     <button id="nextQ54943808Issue">شماره بعد &gt;</button>
                 </div>
             </div>
-            <button class="view-all-issues-btn" data-newspaper-id="Q54943808">مشاهده تمام شماره‌ها</button>
+            <button class="view-all-issues-btn" data-newspaper-id="Q54943808" style="display: none;">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q134311191Section" class="newspaper-section" style="display: none;">
             <h2>بامداد روشن</h2>
@@ -819,7 +849,7 @@
                     <button id="nextQ134311191Issue">شماره بعد &gt;</button>
                 </div>
             </div>
-            <button class="view-all-issues-btn" data-newspaper-id="Q134311191">مشاهده تمام شماره‌ها</button>
+            <button class="view-all-issues-btn" data-newspaper-id="Q134311191" style="display: none;">مشاهده تمام شماره‌ها</button>
         </div>
     </div>
 
@@ -859,7 +889,10 @@
     <div id="allIssuesModalOverlay" class="all-issues-modal-overlay">
         <div class="all-issues-modal-content">
             <button id="allIssuesModalCloseButton" class="all-issues-modal-close-button">&times;</button>
-            <h2 id="allIssuesModalNewspaperTitle"></h2>
+            <h2 id="allIssuesModalNewspaperTitle">فهرست شماره‌های نشریات</h2>
+            <div id="newspaperSelectionContainer" class="newspaper-selection-container">
+                <!-- Newspaper selection buttons will be loaded here -->
+            </div>
             <div id="issuesListContainer" class="issues-list-container">
                 <!-- Issue buttons will be loaded here -->
             </div>
@@ -932,10 +965,12 @@
             const viewLargeLink = document.getElementById('viewLargeLink');
             const newspaperContainer = document.querySelector('.newspaper-container');
 
-            // All Issues Modal Elements
+            // All Issues Modal Elements (for the new global modal)
+            const openAllNewspapersIssuesModalBtn = document.getElementById('openAllNewspapersIssuesModalBtn');
             const allIssuesModalOverlay = document.getElementById('allIssuesModalOverlay');
             const allIssuesModalCloseButton = document.getElementById('allIssuesModalCloseButton');
-            const allIssuesModalNewspaperTitle = document.getElementById('allIssuesModalNewspaperTitle');
+            const allIssuesModalNewspaperTitle = document.getElementById('allIssuesModalNewspaperTitle'); // This will be the main title of the modal
+            const newspaperSelectionContainer = document.getElementById('newspaperSelectionContainer');
             const issuesListContainer = document.getElementById('issuesListContainer');
             const allIssuesModalErrorMessage = document.getElementById('allIssuesModalErrorMessage');
 
@@ -963,6 +998,9 @@
             const goToFirstTamashaGlobalBtn = document.getElementById('goToFirstTamashaGlobal');
             const goToFirstYaghmaGlobalBtn = document.getElementById('goToFirstYaghmaGlobal');
             const goToFirstNeginGlobalBtn = document.getElementById('goToFirstNeginGlobal');
+
+            // Reference to all "View All Issues" buttons on main sections
+            const allViewAllIssuesBtns = document.querySelectorAll('.view-all-issues-btn');
 
 
             // Global State
@@ -1065,6 +1103,17 @@
                         shouldDisplaySectionBasedOnModeAndType = true;
                     }
                 }
+
+                // Show/hide the 'view all issues' button based on availability and type
+                const viewAllIssuesBtn = paper.sectionElement.querySelector('.view-all-issues-btn');
+                if (viewAllIssuesBtn) {
+                    if (paper.type === 'database' && paper.issues && paper.issues.length > 0 && shouldDisplaySectionBasedOnModeAndType) {
+                        viewAllIssuesBtn.style.display = 'block';
+                    } else {
+                        viewAllIssuesBtn.style.display = 'none';
+                    }
+                }
+
 
                 if (paper.imageElement) {
                     paper.imageElement.alt = `تصویر ${paper.title}`;
@@ -1277,7 +1326,7 @@
 
                 Object.values(newspaperData).forEach(paper => {
                     if (paper) {
-                        paper.available = false;
+                        paper.available = false; // Reset availability for all papers
                     }
                 });
 
@@ -1315,16 +1364,11 @@
                 newspaperKeys.forEach(key => {
                     const paper = newspaperData[key];
                     if (paper && paper.sectionElement) {
-                        let displayThisInContainer = false;
-                        if (currentCalendarMode === 'hijri') {
-                            if (paper.calendar_type === 'hijri') {
-                                displayThisInContainer = true; // Always display Hijri sections if in Hijri mode, availability determined by checkAndLoadNewspaper
-                            }
-                        } else {
-                            if ((paper.calendar_type === 'shamsi' || (paper.type === 'formula' && !paper.calendar_type))) {
-                                displayThisInContainer = true; // Always display Shamsi sections if in Shamsi mode
-                            }
-                        }
+                        // Only display the section if it is available for the current date AND matches the current calendar mode
+                        let displayThisInContainer = paper.available &&
+                            ((currentCalendarMode === 'hijri' && paper.calendar_type === 'hijri') ||
+                             (currentCalendarMode === 'shamsi' && (paper.calendar_type === 'shamsi' || (paper.type === 'formula' && !paper.calendar_type))));
+
                         paper.sectionElement.style.display = displayThisInContainer ? 'flex' : 'none';
                         if (displayThisInContainer) {
                             newspaperContainer.appendChild(paper.sectionElement);
@@ -1973,6 +2017,7 @@
                 const errorElement = document.getElementById(`${paperId}ErrorMessage`);
                 const sectionElement = document.getElementById(`${paperId}Section`);
                 const navigationDiv = document.getElementById(`${paperId}Navigation`);
+                const viewAllIssuesBtn = sectionElement ? sectionElement.querySelector('.view-all-issues-btn') : null;
 
                 if (imageElement && statusElement && errorElement && sectionElement) {
                     newspaperData[paperId] = {
@@ -1987,6 +2032,7 @@
                         sectionElement: sectionElement,
                         issues: dbPaper.issues,
                         calendar_type: dbPaper.calendar_type,
+                        viewAllIssuesBtn: viewAllIssuesBtn, // Store reference to the button
                         ...( (dbPaper.calendar_type === 'hijri' && navigationDiv) ? {
                             navState: {
                                 issuesArray: [],
@@ -2010,14 +2056,9 @@
                 }
             });
 
-            // Set up "View All Issues" buttons
-            document.querySelectorAll('.view-all-issues-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const paperId = event.target.dataset.newspaperId;
-                    openAllIssuesModal(paperId);
-                });
-            });
-
+            // No longer attach click listeners to individual view-all-issues-btn here
+            // because they will be dynamically shown/hidden and their logic will be handled
+            // by the main loadImage function.
 
             Object.keys(newspaperData).forEach(type => {
                 const paper = newspaperData[type];
@@ -2040,20 +2081,61 @@
                 loadImage('initial');
             }, 100);
 
-            // All Issues Modal Functions
-            const openAllIssuesModal = (paperId) => {
+            // --- All Issues Modal Functions (New Global Approach) ---
+
+            openAllNewspapersIssuesModalBtn.addEventListener('click', () => {
+                openAllNewspapersIssuesModal();
+            });
+
+            const openAllNewspapersIssuesModal = () => {
+                allIssuesModalErrorMessage.style.display = 'none';
+                allIssuesModalNewspaperTitle.textContent = 'فهرست شماره‌های نشریات'; // Main title for the modal
+                newspaperSelectionContainer.innerHTML = ''; // Clear previous newspaper list
+                issuesListContainer.innerHTML = ''; // Clear previous issues list
+
+                // Filter for database-driven newspapers that have issues
+                const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
+                    paper.type === 'database' && paper.issues && paper.issues.length > 0
+                ).sort((a, b) => a.title.localeCompare(b.title, 'fa')); // Sort alphabetically
+
+                if (dbPapersWithIssues.length === 0) {
+                    allIssuesModalErrorMessage.textContent = 'هیچ نشریه‌ای با فهرست شماره در دیتابیس یافت نشد.';
+                    allIssuesModalErrorMessage.style.display = 'block';
+                } else {
+                    dbPapersWithIssues.forEach(paper => {
+                        const paperButton = document.createElement('button');
+                        paperButton.textContent = paper.title;
+                        paperButton.dataset.paperId = paper.id;
+                        paperButton.addEventListener('click', () => {
+                            displayIssuesForSelectedNewspaper(paper.id);
+                            // Highlight the selected newspaper button
+                            Array.from(newspaperSelectionContainer.children).forEach(btn => {
+                                btn.classList.remove('selected');
+                            });
+                            paperButton.classList.add('selected');
+                        });
+                        newspaperSelectionContainer.appendChild(paperButton);
+                    });
+                    // Automatically select the first newspaper and display its issues
+                    if (dbPapersWithIssues.length > 0) {
+                        const firstPaperId = dbPapersWithIssues[0].id;
+                        displayIssuesForSelectedNewspaper(firstPaperId);
+                        newspaperSelectionContainer.children[0].classList.add('selected'); // Highlight first button
+                    }
+                }
+                allIssuesModalOverlay.classList.add('visible');
+            };
+
+            const displayIssuesForSelectedNewspaper = (paperId) => {
                 const paper = newspaperData[paperId];
                 if (!paper || !paper.issues || paper.issues.length === 0) {
+                    issuesListContainer.innerHTML = '';
                     allIssuesModalErrorMessage.textContent = 'اطلاعات شماره‌ها برای این نشریه موجود نیست.';
                     allIssuesModalErrorMessage.style.display = 'block';
-                    issuesListContainer.innerHTML = '';
-                    allIssuesModalNewspaperTitle.textContent = paper ? paper.title : 'ناشناس';
-                    allIssuesModalOverlay.classList.add('visible');
                     return;
                 }
 
                 allIssuesModalErrorMessage.style.display = 'none';
-                allIssuesModalNewspaperTitle.textContent = `تمام شماره‌های ${paper.title}`;
                 issuesListContainer.innerHTML = ''; // Clear previous issues
 
                 const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
@@ -2073,12 +2155,10 @@
                     issueButton.textContent = `شمارهٔ ${issue.issue_number}, روز ${issue.day} ${monthName} ${issue.year}`;
                     issueButton.classList.add('issue-item-button');
                     issueButton.addEventListener('click', () => {
-                        goToIssueFromModal(paperId, issue);
+                        goToIssueFromModal(paper.id, issue); // Pass paper.id to goToIssueFromModal
                     });
                     issuesListContainer.appendChild(issueButton);
                 });
-
-                allIssuesModalOverlay.classList.add('visible');
             };
 
             const closeAllIssuesModal = () => {
@@ -2086,11 +2166,11 @@
             };
 
             const goToIssueFromModal = (paperId, issue) => {
-                // Set calendar mode to Hijri if not already
-                if (currentCalendarMode !== 'hijri') {
+                // Ensure the correct calendar mode is set for Hijri database papers
+                if (newspaperData[paperId].calendar_type === 'hijri' && currentCalendarMode !== 'hijri') {
                     hijriCalendarRadio.checked = true;
                     currentCalendarMode = 'hijri';
-                    // No need to call handleCalendarChange here, as loadImage('date') will do the work
+                    // The handleCalendarChange will be called by loadImage('date') implicitly
                 }
 
                 // Set the date inputs
