@@ -357,6 +357,7 @@
             margin-top: 10px;
             display: none;
             text-align: center;
+            width: 100%; /* Ensure it takes full width of parent */
         }
         .issue-navigation-controls > div {
             display: flex;
@@ -394,6 +395,87 @@
             font-family: system-ui;
         }
 
+        /* Styles for the new "All Issues" modal */
+        .all-issues-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001; /* Higher than lightbox */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .all-issues-modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .all-issues-modal-content {
+            position: relative;
+            background-color: var(--lightbox-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            color: var(--lightbox-text-color);
+            max-width: 80%;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* For scrolling content */
+        }
+        .all-issues-modal-close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--lightbox-close-button-color);
+        }
+        .issues-list-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+            padding-right: 10px; /* For scrollbar */
+            overflow-y: auto;
+            flex-grow: 1; /* Allow container to grow and fill space */
+            align-content: flex-start; /* Align items to the start of the cross axis */
+        }
+        .issues-list-container button {
+            padding: 8px 12px;
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        .issues-list-container button:hover {
+            background-color: var(--button-hover-bg);
+        }
+        .view-all-issues-btn {
+            margin-top: 15px; /* Space above the button */
+            padding: 8px 15px;
+            background-color: #007bff; /* Blue for "View All Issues" */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        .view-all-issues-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
     </style>
 </head>
 <body>
@@ -567,6 +649,7 @@
                     <button id="nextQ5671136Issue">شماره بعد &gt;</button>
                 </div>
             </div>
+            <button class="view-all-issues-btn" data-newspaper-id="Q5671136">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q_Dawlat_e_Alliya_ye_IranSection" class="newspaper-section" style="display: none;">
             <h2>دولت علیه ایران</h2>
@@ -583,6 +666,7 @@
                     <button id="nextQ_Dawlat_e_Alliya_ye_IranIssue">شماره بعد &gt;</button>
                 </div>
             </div>
+            <button class="view-all-issues-btn" data-newspaper-id="Q_Dawlat_e_Alliya_ye_Iran">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q60745684Section" class="newspaper-section" style="display: none;">
             <h2>دانش</h2>
@@ -599,6 +683,7 @@
                     <button id="nextQ60745684Issue">شماره بعد &gt;</button>
                 </div>
             </div>
+            <button class="view-all-issues-btn" data-newspaper-id="Q60745684">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q5686829Section" class="newspaper-section" style="display: none;">
             <h2>شرف</h2>
@@ -615,6 +700,7 @@
                     <button id="nextQ5686829Issue">شماره بعد &gt;</button>
                 </div>
             </div>
+            <button class="view-all-issues-btn" data-newspaper-id="Q5686829">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q64941184Section" class="newspaper-section" style="display: none;">
             <h2>نوروز</h2>
@@ -631,6 +717,7 @@
                     <button id="nextQ64941184Issue">شماره بعد &gt;</button>
                 </div>
             </div>
+            <button class="view-all-issues-btn" data-newspaper-id="Q64941184">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q12840502Section" class="newspaper-section" style="display: none;">
             <h2>حبل‌المتین</h2>
@@ -647,6 +734,7 @@
                     <button id="nextQ12840502Issue">شماره بعد &gt;</button>
                 </div>
             </div>
+            <button class="view-all-issues-btn" data-newspaper-id="Q12840502">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q2664606Section" class="newspaper-section" style="display: none;">
             <h2>ملانصرالدین</h2>
@@ -663,6 +751,7 @@
                     <button id="nextQ2664606Issue">شماره بعد &gt;</button>
                 </div>
             </div>
+            <button class="view-all-issues-btn" data-newspaper-id="Q2664606">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q134006001Section" class="newspaper-section" style="display: none;">
             <h2>خورشید</h2>
@@ -679,6 +768,7 @@
                     <button id="nextQ134006001Issue">شماره بعد &gt;</button>
                 </div>
             </div>
+            <button class="view-all-issues-btn" data-newspaper-id="Q134006001">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q6467762Section" class="newspaper-section" style="display: none;">
             <h2>صور اسرافیل</h2>
@@ -695,6 +785,7 @@
                     <button id="nextQ6467762Issue">شماره بعد &gt;</button>
                 </div>
             </div>
+            <button class="view-all-issues-btn" data-newspaper-id="Q6467762">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q54943808Section" class="newspaper-section" style="display: none;">
             <h2>روح‌القدس</h2>
@@ -711,6 +802,7 @@
                     <button id="nextQ54943808Issue">شماره بعد &gt;</button>
                 </div>
             </div>
+            <button class="view-all-issues-btn" data-newspaper-id="Q54943808">مشاهده تمام شماره‌ها</button>
         </div>
         <div id="Q134311191Section" class="newspaper-section" style="display: none;">
             <h2>بامداد روشن</h2>
@@ -727,6 +819,7 @@
                     <button id="nextQ134311191Issue">شماره بعد &gt;</button>
                 </div>
             </div>
+            <button class="view-all-issues-btn" data-newspaper-id="Q134311191">مشاهده تمام شماره‌ها</button>
         </div>
     </div>
 
@@ -759,6 +852,18 @@
                     <button id="lightboxNextNewspaperButton" style="display: none;">نشریه بعد</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- All Issues Modal -->
+    <div id="allIssuesModalOverlay" class="all-issues-modal-overlay">
+        <div class="all-issues-modal-content">
+            <button id="allIssuesModalCloseButton" class="all-issues-modal-close-button">&times;</button>
+            <h2 id="allIssuesModalNewspaperTitle"></h2>
+            <div id="issuesListContainer" class="issues-list-container">
+                <!-- Issue buttons will be loaded here -->
+            </div>
+            <p id="allIssuesModalErrorMessage" class="error-message" style="display: none;"></p>
         </div>
     </div>
 
@@ -826,6 +931,13 @@
             const downloadLink = document.getElementById('downloadLink');
             const viewLargeLink = document.getElementById('viewLargeLink');
             const newspaperContainer = document.querySelector('.newspaper-container');
+
+            // All Issues Modal Elements
+            const allIssuesModalOverlay = document.getElementById('allIssuesModalOverlay');
+            const allIssuesModalCloseButton = document.getElementById('allIssuesModalCloseButton');
+            const allIssuesModalNewspaperTitle = document.getElementById('allIssuesModalNewspaperTitle');
+            const issuesListContainer = document.getElementById('issuesListContainer');
+            const allIssuesModalErrorMessage = document.getElementById('allIssuesModalErrorMessage');
 
 
             // Global "Go to First Issue" Buttons
@@ -1205,12 +1317,12 @@
                     if (paper && paper.sectionElement) {
                         let displayThisInContainer = false;
                         if (currentCalendarMode === 'hijri') {
-                            if (paper.calendar_type === 'hijri' && paper.available) {
-                                displayThisInContainer = true;
+                            if (paper.calendar_type === 'hijri') {
+                                displayThisInContainer = true; // Always display Hijri sections if in Hijri mode, availability determined by checkAndLoadNewspaper
                             }
                         } else {
-                            if (((paper.calendar_type === 'shamsi') || (paper.type === 'formula' && !paper.calendar_type)) && paper.available) {
-                                displayThisInContainer = true;
+                            if ((paper.calendar_type === 'shamsi' || (paper.type === 'formula' && !paper.calendar_type))) {
+                                displayThisInContainer = true; // Always display Shamsi sections if in Shamsi mode
                             }
                         }
                         paper.sectionElement.style.display = displayThisInContainer ? 'flex' : 'none';
@@ -1898,6 +2010,15 @@
                 }
             });
 
+            // Set up "View All Issues" buttons
+            document.querySelectorAll('.view-all-issues-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const paperId = event.target.dataset.newspaperId;
+                    openAllIssuesModal(paperId);
+                });
+            });
+
+
             Object.keys(newspaperData).forEach(type => {
                 const paper = newspaperData[type];
                 if (paper && paper.imageElement) {
@@ -1918,61 +2039,84 @@
             setTimeout(() => {
                 loadImage('initial');
             }, 100);
-        });
-    
-function showAllIssues(paperId) {
-    const paper = newspaperData[paperId];
-    if (!paper || !paper.issues) return;
 
-    const listContainer = document.getElementById('issuesList');
-    listContainer.innerHTML = '';
+            // All Issues Modal Functions
+            const openAllIssuesModal = (paperId) => {
+                const paper = newspaperData[paperId];
+                if (!paper || !paper.issues || paper.issues.length === 0) {
+                    allIssuesModalErrorMessage.textContent = 'اطلاعات شماره‌ها برای این نشریه موجود نیست.';
+                    allIssuesModalErrorMessage.style.display = 'block';
+                    issuesListContainer.innerHTML = '';
+                    allIssuesModalNewspaperTitle.textContent = paper ? paper.title : 'ناشناس';
+                    allIssuesModalOverlay.classList.add('visible');
+                    return;
+                }
 
-    paper.issues.forEach(issue => {
-        const btn = document.createElement('button');
-        btn.textContent = `شمارهٔ ${issue.issue_number}، روز ${issue.date_text}`;
-        btn.className = paper.calendar_type === 'hijri' ? 'hijri-nav-btn' : 'shamsi-nav-btn';
-        btn.style.padding = '6px 10px';
-        btn.onclick = () => {
-            closeIssuesModal();
-            if (paper.calendar_type === 'hijri') {
+                allIssuesModalErrorMessage.style.display = 'none';
+                allIssuesModalNewspaperTitle.textContent = `تمام شماره‌های ${paper.title}`;
+                issuesListContainer.innerHTML = ''; // Clear previous issues
+
+                const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
+                
+                // Use the already sorted issuesArray from navState if available, otherwise sort here.
+                const issuesToDisplay = paper.navState && paper.navState.issuesArray
+                                        ? paper.navState.issuesArray
+                                        : [...paper.issues].sort((a,b) => {
+                                            if(a.year !== b.year) return a.year - b.year;
+                                            if(a.month !== b.month) return a.month - b.month;
+                                            return a.day - b.day;
+                                        });
+
+                issuesToDisplay.forEach(issue => {
+                    const issueButton = document.createElement('button');
+                    const monthName = hijriMonthNames[issue.month - 1];
+                    issueButton.textContent = `شمارهٔ ${issue.issue_number}, روز ${issue.day} ${monthName} ${issue.year}`;
+                    issueButton.classList.add('issue-item-button');
+                    issueButton.addEventListener('click', () => {
+                        goToIssueFromModal(paperId, issue);
+                    });
+                    issuesListContainer.appendChild(issueButton);
+                });
+
+                allIssuesModalOverlay.classList.add('visible');
+            };
+
+            const closeAllIssuesModal = () => {
+                allIssuesModalOverlay.classList.remove('visible');
+            };
+
+            const goToIssueFromModal = (paperId, issue) => {
+                // Set calendar mode to Hijri if not already
+                if (currentCalendarMode !== 'hijri') {
+                    hijriCalendarRadio.checked = true;
+                    currentCalendarMode = 'hijri';
+                    // No need to call handleCalendarChange here, as loadImage('date') will do the work
+                }
+
+                // Set the date inputs
                 hijriYearInput.value = issue.year;
                 hijriMonthSelect.value = issue.month;
                 hijriDayInput.value = issue.day;
-                hijriCalendarRadio.checked = true;
-                currentCalendarMode = 'hijri';
-                hijriDateControls.style.display = 'flex';
-                shamsiDateControls.style.display = 'none';
-            } else {
-                shamsiYearInput.value = issue.year;
-                shamsiMonthSelect.value = issue.month;
-                shamsiDayInput.value = issue.day;
-                shamsiCalendarRadio.checked = true;
-                currentCalendarMode = 'shamsi';
-                shamsiDateControls.style.display = 'flex';
-                hijriDateControls.style.display = 'none';
-            }
-            loadImage('date');
-        };
-        listContainer.appendChild(btn);
-    });
 
-    document.getElementById('issuesModalTitle').textContent = `شماره‌های ${paper.title}`;
-    document.getElementById('issuesModal').classList.add('visible');
-}
+                // Close the modal
+                closeAllIssuesModal();
 
-function closeIssuesModal() {
-    document.getElementById('issuesModal').classList.remove('visible');
-}
+                // Load images for the new date
+                loadImage('date');
+            };
 
-</script>
-
-<div id="issuesModal" class="lightbox-overlay">
-  <div class="lightbox-content" style="max-width: 600px;">
-    <button class="lightbox-close-button" onclick="closeIssuesModal()">×</button>
-    <h3 id="issuesModalTitle">شماره‌های نشریه</h3>
-    <div id="issuesList" style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;"></div>
-  </div>
-</div>
-
+            allIssuesModalCloseButton.addEventListener('click', closeAllIssuesModal);
+            allIssuesModalOverlay.addEventListener('click', (e) => {
+                if (e.target === allIssuesModalOverlay) {
+                    closeAllIssuesModal();
+                }
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && allIssuesModalOverlay.classList.contains('visible')) {
+                    closeAllIssuesModal();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
