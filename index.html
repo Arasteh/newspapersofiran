@@ -1919,6 +1919,60 @@
                 loadImage('initial');
             }, 100);
         });
-    </script>
+    
+function showAllIssues(paperId) {
+    const paper = newspaperData[paperId];
+    if (!paper || !paper.issues) return;
+
+    const listContainer = document.getElementById('issuesList');
+    listContainer.innerHTML = '';
+
+    paper.issues.forEach(issue => {
+        const btn = document.createElement('button');
+        btn.textContent = `شمارهٔ ${issue.issue_number}، روز ${issue.date_text}`;
+        btn.className = paper.calendar_type === 'hijri' ? 'hijri-nav-btn' : 'shamsi-nav-btn';
+        btn.style.padding = '6px 10px';
+        btn.onclick = () => {
+            closeIssuesModal();
+            if (paper.calendar_type === 'hijri') {
+                hijriYearInput.value = issue.year;
+                hijriMonthSelect.value = issue.month;
+                hijriDayInput.value = issue.day;
+                hijriCalendarRadio.checked = true;
+                currentCalendarMode = 'hijri';
+                hijriDateControls.style.display = 'flex';
+                shamsiDateControls.style.display = 'none';
+            } else {
+                shamsiYearInput.value = issue.year;
+                shamsiMonthSelect.value = issue.month;
+                shamsiDayInput.value = issue.day;
+                shamsiCalendarRadio.checked = true;
+                currentCalendarMode = 'shamsi';
+                shamsiDateControls.style.display = 'flex';
+                hijriDateControls.style.display = 'none';
+            }
+            loadImage('date');
+        };
+        listContainer.appendChild(btn);
+    });
+
+    document.getElementById('issuesModalTitle').textContent = `شماره‌های ${paper.title}`;
+    document.getElementById('issuesModal').classList.add('visible');
+}
+
+function closeIssuesModal() {
+    document.getElementById('issuesModal').classList.remove('visible');
+}
+
+</script>
+
+<div id="issuesModal" class="lightbox-overlay">
+  <div class="lightbox-content" style="max-width: 600px;">
+    <button class="lightbox-close-button" onclick="closeIssuesModal()">×</button>
+    <h3 id="issuesModalTitle">شماره‌های نشریه</h3>
+    <div id="issuesList" style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;"></div>
+  </div>
+</div>
+
 </body>
 </html>
