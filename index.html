@@ -1110,6 +1110,8 @@
 	    window.history.pushState({}, '', newUrl);
 	};
 
+	let shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput;
+	
 	document.addEventListener('DOMContentLoaded', async () => {
 		// Populate dropdowns first
 		populateDateDropdowns();
