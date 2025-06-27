@@ -576,20 +576,21 @@
             width: 100%;
         }
         .calendar-day-btn {
-            width: 30px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-            border: 1px solid var(--border-color);
-            border-radius: 50%; /* Circle shape */
-            background-color: var(--control-bg);
-            color: var(--text-color);
-            font-size: 0.9em;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        background-color: var(--control-bg);
+        color: var(--text-color);
+        font-size: 0.75em;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.1s;
         }
+        
         .calendar-day-btn:hover {
             background-color: var(--border-color);
             transform: scale(1.05);
@@ -597,14 +598,15 @@
         .calendar-day-btn.has-issue {
             background-color: var(--highlight-color);
             color: var(--highlight-text-color);
-            font-weight: bold;
+            font-weight: normal;
             border-color: var(--highlight-color);
         }
         .calendar-day-btn.has-multiple-issues {
-            background-color: var(--multiple-issues-color); /* Different color for multiple issues */
-            transform: scale(1.15); /* Slightly larger */
-            box-shadow: 0 0 5px 2px var(--multiple-issues-color); /* Add a subtle shadow */
-            color: var(--text-color); /* Ensure text is readable on yellow */
+            background-color: var(--highlight-color);
+            transform: scale(1.2);
+            color: var(--text-color);
+            font-weight: bold;
+            font-size: .7em;
         }
         .calendar-day-btn:disabled {
             background-color: var(--button-disabled-bg);
