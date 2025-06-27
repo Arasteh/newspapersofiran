@@ -2368,54 +2368,6 @@
 		allIssuesModalOverlay.classList.remove('visible');
 		};
 
-		function updateURLParams(calendar, year, month, day) {
-			const url = new URL(window.location);
-			url.searchParams.set('calendar', calendar);
-			url.searchParams.set('year', year);
-			url.searchParams.set('month', month);
-			url.searchParams.set('day', day);
-			window.history.replaceState({}, '', url);
-		}
-	
-		function getURLParams() {
-			const urlParams = new URLSearchParams(window.location.search);
-			return {
-				calendar: urlParams.get('calendar'),
-				year: parseInt(urlParams.get('year')),
-				month: parseInt(urlParams.get('month')),
-				day: parseInt(urlParams.get('day')),
-			};
-		}
-	
-		// cleaned
-		const originalGoToDateFromCalendar = goToDateFromCalendar;
-		goToDateFromCalendar = (year, month, day) => {
-			originalGoToDateFromCalendar(year, month, day);
-			updateURLParams(currentCalendarMode, year, month, day);
-		};
-	
-		// Set initial state from URL if available
-		window.addEventListener('DOMContentLoaded', () => {
-			const { calendar, year, month, day } = getURLParams();
-			if (calendar === 'hijri' || calendar === 'shamsi') {
-				document.querySelector(`#${calendar}CalendarRadio`).checked = true;
-				currentCalendarMode = calendar;
-				handleCalendarChange(); // update input visibility
-				if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
-					if (calendar === 'hijri') {
-						hijriYearInput.value = year;
-						hijriMonthSelect.value = month;
-						hijriDayInput.value = day;
-					} else {
-						shamsiYearInput.value = year;
-						shamsiMonthSelect.value = month;
-						shamsiDayInput.value = day;
-					}
-					loadImage('date');
-				}
-			}
-		});
-			
 		const goToIssueFromModal = (paperId, issue) => {
 		// Ensure the correct calendar mode is set for Hijri database papers
 		if (newspaperData[paperId].calendar_type === 'hijri' && currentCalendarMode !== 'hijri') {
@@ -2584,55 +2536,5 @@
 
 	});
 	</script>
-
-<script>
-	function updateURLParams(calendar, year, month, day) {
-		const url = new URL(window.location);
-		url.searchParams.set('calendar', calendar);
-		url.searchParams.set('year', year);
-		url.searchParams.set('month', month);
-		url.searchParams.set('day', day);
-		window.history.replaceState({}, '', url);
-	}
-
-	function getURLParams() {
-		const urlParams = new URLSearchParams(window.location.search);
-		return {
-			calendar: urlParams.get('calendar'),
-			year: parseInt(urlParams.get('year')),
-			month: parseInt(urlParams.get('month')),
-			day: parseInt(urlParams.get('day')),
-		};
-	}
-
-	window.addEventListener('DOMContentLoaded', () => {
-		// Override safely AFTER goToDateFromCalendar is defined
-		const originalGoToDateFromCalendar = goToDateFromCalendar;
-		goToDateFromCalendar = (year, month, day) => {
-			originalGoToDateFromCalendar(year, month, day);
-			updateURLParams(currentCalendarMode, year, month, day);
-		};
-
-		const { calendar, year, month, day } = getURLParams();
-		if (calendar === 'hijri' || calendar === 'shamsi') {
-			document.querySelector(`#${calendar}CalendarRadio`).checked = true;
-			currentCalendarMode = calendar;
-			handleCalendarChange(); // update input visibility
-			if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
-				if (calendar === 'hijri') {
-					hijriYearInput.value = year;
-					hijriMonthSelect.value = month;
-					hijriDayInput.value = day;
-				} else {
-					shamsiYearInput.value = year;
-					shamsiMonthSelect.value = month;
-					shamsiDayInput.value = day;
-				}
-				loadImage('date');
-			}
-		}
-	});
-</script>
-
 </body>
 </html>
