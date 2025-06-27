@@ -1080,6 +1080,35 @@
 		hijriDaySelect.value = "21";  // Default value
 	};
 
+		// Helper functions for URL parameters
+	const getUrlParameter = (name) => {
+	    const urlParams = new URLSearchParams(window.location.search);
+	    return urlParams.get(name);
+	};
+	
+	const updateUrlParameters = () => {
+	    const urlParams = new URLSearchParams();
+	    let year, month, day;
+	    
+	    if (currentCalendarMode === 'shamsi') {
+	        urlParams.set('calendar', 'shamsi');
+	        year = shamsiYearInput.value;
+	        month = pad(shamsiMonthSelect.value);
+	        day = pad(shamsiDayInput.value);
+	    } else {
+	        urlParams.set('calendar', 'hijri');
+	        year = hijriYearInput.value;
+	        month = pad(hijriMonthSelect.value);
+	        day = pad(hijriDayInput.value);
+	    }
+	    
+	    urlParams.set('year', year);
+	    urlParams.set('month', month);
+	    urlParams.set('day', day);
+	    
+	    const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+	    window.history.pushState({}, '', newUrl);
+	};
 
 	document.addEventListener('DOMContentLoaded', async () => {
 		// Populate dropdowns first
@@ -1169,6 +1198,29 @@
 		const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
 		// Changed from Set to Map to store issue counts per date
 		const availableHijriDates = new Map(); // Stores "YYYYMMDD" -> count of newspapers for that date
+
+		// Read URL parameters and set initial values
+		const calendarParam = getUrlParameter('calendar');
+		const yearParam = getUrlParameter('year');
+		const monthParam = getUrlParameter('month');
+		const dayParam = getUrlParameter('day');
+		
+		if (calendarParam && (calendarParam === 'shamsi' || calendarParam === 'hijri')) {
+		    currentCalendarMode = calendarParam;
+		    document.getElementById(`${calendarParam}Calendar`).checked = true;
+		    
+		    if (yearParam && monthParam && dayParam) {
+		        const targetDate = {
+		            year: yearParam,
+		            month: monthParam,
+		            day: dayParam
+		        };
+		        handleCalendarChange(targetDate);
+		    } else {
+		        handleCalendarChange();
+		    }
+		}
+
 
 
 		// Global State for newspaper data
@@ -1561,28 +1613,41 @@
 		};
 
 		const handleCalendarChange = (targetDate = null) => {
-		shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'block' : 'none';
-		hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'block' : 'none';
-
-		if (targetDate) {
-			if (currentCalendarMode === 'shamsi') {
-			shamsiYearInput.value = targetDate.year;
-			shamsiMonthSelect.value = targetDate.month;
-			shamsiDayInput.value = targetDate.day;
-			} else if (currentCalendarMode === 'hijri') {
-			hijriYearInput.value = targetDate.year;
-			hijriMonthSelect.value = targetDate.month;
-			hijriDayInput.value = targetDate.day;
-			}
-			mainPageNumberInput.value = 1;
-			Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
-		}
-		loadImage('date');
-		updateGlobalGoToFirstIssueButtonsVisibility();
+		    shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'block' : 'none';
+		    hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'block' : 'none';
+		
+		    if (targetDate) {
+		        if (currentCalendarMode === 'shamsi') {
+		            shamsiYearInput.value = targetDate.year;
+		            shamsiMonthSelect.value = targetDate.month;
+		            shamsiDayInput.value = targetDate.day;
+		        } else if (currentCalendarMode === 'hijri') {
+		            hijriYearInput.value = targetDate.year;
+		            hijriMonthSelect.value = targetDate.month;
+		            hijriDayInput.value = targetDate.day;
+		        }
+		        mainPageNumberInput.value = 1;
+		        Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
+		    }
+		    
+		    // Update URL parameters whenever calendar or date changes
+		    updateUrlParameters();
+		    
+		    loadImage('date');
+		updateUrlParameters();
+		    updateGlobalGoToFirstIssueButtonsVisibility();
 		};
 
-		shamsiCalendarRadio.addEventListener('change', () => { currentCalendarMode = 'shamsi'; handleCalendarChange(); });
-		hijriCalendarRadio.addEventListener('change', () => { currentCalendarMode = 'hijri'; handleCalendarChange(); });
+		shamsiCalendarRadio.addEventListener('change', () => { 
+		    currentCalendarMode = 'shamsi'; 
+		    handleCalendarChange(); 
+		    updateUrlParameters(); // Add this line
+		});
+		hijriCalendarRadio.addEventListener('change', () => { 
+		    currentCalendarMode = 'hijri'; 
+		    handleCalendarChange(); 
+		    updateUrlParameters(); // Add this line
+		});
 
 		[shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput].forEach(el => {
 		if(el) el.addEventListener('change', () => loadImage('date'));
@@ -1899,23 +1964,24 @@
 		};
 
 		const goToNewspaperIssue = (newspaperId, index) => {
-		const paper = newspaperData[newspaperId];
-		if (!paper || !paper.navState) return;
-		const { issuesArray, issueNumberInput } = paper.navState;
-		if (index < 0 || index >= issuesArray.length) return;
-		paper.navState.currentIndex = index;
-		const issue = issuesArray[index];
-		if (!issueNumberInput || !issue) return;
-		issueNumberInput.value = issue.issue_number || '';
-		if (paper.calendar_type === 'hijri') {
-			hijriYearInput.value = issue.year;
-			hijriMonthSelect.value = issue.month;
-			hijriDayInput.value = issue.day;
-		}
-		mainPageNumberInput.value = 1;
-		Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
-		loadImage('date');
-		updateIssueNavButtons(newspaperId);
+		    const paper = newspaperData[newspaperId];
+		    if (!paper || !paper.navState) return;
+		    const { issuesArray, issueNumberInput } = paper.navState;
+		    if (index < 0 || index >= issuesArray.length) return;
+		    paper.navState.currentIndex = index;
+		    const issue = issuesArray[index];
+		    if (!issueNumberInput || !issue) return;
+		    issueNumberInput.value = issue.issue_number || '';
+		    if (paper.calendar_type === 'hijri') {
+		        hijriYearInput.value = issue.year;
+		        hijriMonthSelect.value = issue.month;
+		        hijriDayInput.value = issue.day;
+		    }
+		    mainPageNumberInput.value = 1;
+		    Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
+		    loadImage('date');
+		    updateIssueNavButtons(newspaperId);
+		    updateUrlParameters(); // Add this line
 		};
 
 
@@ -2024,6 +2090,7 @@
 			mainPageNumberInput.value = 1;
 			Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 			loadImage('date');
+			updateUrlParameters();	
 			}
 		}
 		};
@@ -2051,6 +2118,7 @@
 			mainPageNumberInput.value = 1;
 			Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 			loadImage('date');
+			updateUrlParameters();
 		}
 		};
 
@@ -2077,6 +2145,7 @@
 			mainPageNumberInput.value = 1;
 			Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 			loadImage('date');
+			updateUrlParameters();
 		}
 		};
 
@@ -2369,23 +2438,18 @@
 		};
 
 		const goToIssueFromModal = (paperId, issue) => {
-		// Ensure the correct calendar mode is set for Hijri database papers
-		if (newspaperData[paperId].calendar_type === 'hijri' && currentCalendarMode !== 'hijri') {
-			hijriCalendarRadio.checked = true;
-			currentCalendarMode = 'hijri';
-			// handleCalendarChange will be implicitly called by loadImage('date')
-		}
-
-		// Set the date inputs
-		hijriYearInput.value = issue.year;
-		hijriMonthSelect.value = issue.month;
-		hijriDayInput.value = issue.day;
-
-		// Close the modal
-		closeAllIssuesModal();
-
-		// Load images for the new date
-		loadImage('date');
+		    if (newspaperData[paperId].calendar_type === 'hijri' && currentCalendarMode !== 'hijri') {
+		        hijriCalendarRadio.checked = true;
+		        currentCalendarMode = 'hijri';
+		    }
+		
+		    hijriYearInput.value = issue.year;
+		    hijriMonthSelect.value = issue.month;
+		    hijriDayInput.value = issue.day;
+		
+		    closeAllIssuesModal();
+		    loadImage('date');
+		    updateUrlParameters(); // Add this line
 		};
 
 		allIssuesModalCloseButton.addEventListener('click', closeAllIssuesModal);
@@ -2495,21 +2559,20 @@
 		};
 
 		const goToDateFromCalendar = (year, month, day) => {
-		// Ensure calendar mode is Hijri when selecting from Hijri calendar
-		if (currentCalendarMode !== 'hijri') {
-			hijriCalendarRadio.checked = true;
-			currentCalendarMode = 'hijri';
-			// handleCalendarChange will be implicitly called by loadImage('date')
-		}
+		    if (currentCalendarMode !== 'hijri') {
+		        hijriCalendarRadio.checked = true;
+		        currentCalendarMode = 'hijri';
+		    }
+		    
+		    hijriYearInput.value = year;
+		    hijriMonthSelect.value = month;
+		    hijriDayInput.value = day;
 		
-		hijriYearInput.value = year;
-		hijriMonthSelect.value = month;
-		hijriDayInput.value = day;
-
-		closeCalendarModal();
-		loadImage('date'); // Load content for the selected date
+		    closeCalendarModal();
+		    loadImage('date');
+		    updateUrlParameters(); // Add this line
 		};
-
+		
 		prevYearBtn.addEventListener('click', () => {
 		if (currentCalendarYear > minCalendarYear) {
 			renderCalendar(currentCalendarYear - 1);
