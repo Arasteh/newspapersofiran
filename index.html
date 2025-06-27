@@ -1112,10 +1112,6 @@
 
 	let shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput;
 
-	if (!shamsiYearInput || !hijriYearInput) {
-	    console.error('عناصر ورودی تاریخ یافت نشدند!');
-	    return;
-	}
 	document.addEventListener('DOMContentLoaded', async () => {
 		// Populate dropdowns first
 		populateDateDropdowns();
