@@ -1111,7 +1111,11 @@
 	};
 
 	let shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput;
-	
+
+	if (!shamsiYearInput || !hijriYearInput) {
+	    console.error('عناصر ورودی تاریخ یافت نشدند!');
+	    return;
+	}
 	document.addEventListener('DOMContentLoaded', async () => {
 		// Populate dropdowns first
 		populateDateDropdowns();
@@ -1194,6 +1198,7 @@
 		let allViewAllIssuesBtns = [];
 
 		// Global State for calendar
+		let currentCalendarMode = 'shamsi'; 
 		let currentCalendarYear = parseInt(hijriYearInput.value, 10);
 		const minCalendarYear = 1277; // Matches hijriYearSelect min
 		const maxCalendarYear = 1361; // Matches hijriYearSelect max
