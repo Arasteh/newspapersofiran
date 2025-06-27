@@ -1087,6 +1087,11 @@
 	};
 	
 	const updateUrlParameters = () => {
+	    if (!shamsiYearInput || !hijriYearInput) {
+	        console.error('عناصر ورودی تاریخ یافت نشدند!');
+	        return;
+	    }
+	    
 	    const urlParams = new URLSearchParams();
 	    let year, month, day;
 	    
@@ -1109,7 +1114,8 @@
 	    const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
 	    window.history.pushState({}, '', newUrl);
 	};
-
+		
+		let currentCalendarMode = 'shamsi'; // مقدار پیش‌فرض
 	let shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput;
 
 	document.addEventListener('DOMContentLoaded', async () => {
@@ -1193,8 +1199,6 @@
 		// Reference to all "View All Issues" buttons on main sections
 		let allViewAllIssuesBtns = [];
 
-		// Global State for calendar
-		let currentCalendarMode = 'shamsi'; 
 		let currentCalendarYear = parseInt(hijriYearInput.value, 10);
 		const minCalendarYear = 1277; // Matches hijriYearSelect min
 		const maxCalendarYear = 1361; // Matches hijriYearSelect max
