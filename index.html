@@ -352,8 +352,8 @@
 		color: white;
 	}
 	.calendar-selection input[type="radio"]#shamsiCalendar:checked + label {
-		background-color: #007bff;
-		border-color: #007bff;
+		background-color: var(--lightbox-button-bg);
+		border-color: var(--lightbox-button-bg);
 	}
 	.calendar-selection input[type="radio"]#hijriCalendar:checked + label {
 		background-color: var(--button-bg);
@@ -412,7 +412,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		z-index: 1001; /* Higher than lightbox */
+		z-index: 1001;
 		opacity: 0;
 		visibility: hidden;
 		transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -429,10 +429,10 @@
 		box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 		color: var(--lightbox-text-color);
 		max-width: 90%;
-		max-height: 95vh; /* Adjusted for more height */
+		max-height: 95vh;
 		display: flex;
 		flex-direction: column;
-		overflow: hidden; /* For scrolling content */
+		overflow: hidden;
 	}
 	.all-issues-modal-close-button {
 		position: absolute;
@@ -452,12 +452,11 @@
 		justify-content: center;
 		padding-bottom: 10px;
 		border-bottom: 1px solid var(--border-color);
-		max-height: 20vh; /* Limit height for newspaper selection */
-		overflow-y: auto;
+		max-height: 20vh;
 	}
 	.newspaper-selection-container button {
 		padding: 8px 15px;
-		background-color: #6c757d; /* Grey for newspaper selection buttons */
+		background-color: #6c757d;
 		color: white;
 		border: none;
 		border-radius: 4px;
@@ -470,7 +469,7 @@
 		background-color: #5a6268;
 	}
 	.newspaper-selection-container button.selected {
-		background-color: #007bff; /* Blue for selected newspaper */
+		background-color: #007bff;
 	}
 
 	.issues-list-container {
@@ -478,10 +477,10 @@
 		flex-wrap: wrap;
 		gap: 8px;
 		margin-top: 15px;
-		padding-right: 10px; /* For scrollbar */
+		padding-right: 10px;
 		overflow-y: auto;
-		flex-grow: 1; /* Allow container to grow and fill space */
-		align-content: flex-start; /* Align items to the start of the cross axis */
+		flex-grow: 1;
+		align-content: flex-start;
 	}
 	.issues-list-container button {
 		padding: 8px 12px;
@@ -498,9 +497,9 @@
 		background-color: var(--button-hover-bg);
 	}
 	.global-all-issues-btn {
-		margin-right: 15px; /* Adjust spacing as needed */
+		margin-right: 10px;
 		padding: 8px 15px;
-		background-color: #007bff; /* Blue for the global button */
+		background-color: var(--lightbox-button-bg);
 		color: white;
 		border: none;
 		border-radius: 4px;
@@ -509,7 +508,7 @@
 		transition: background-color 0.3s ease;
 	}
 	.global-all-issues-btn:hover {
-		background-color: #0056b3;
+		background-color: var(--lightbox-button-hover-bg);
 	}
 
 	/* Calendar specific styles */
@@ -622,13 +621,13 @@
 	/* Adjustments for smaller screens */
 	@media (max-width: 768px) {
 		.calendar-grid-container {
-		grid-template-columns: repeat(2, 1fr); /* 2 months per row on smaller screens */
+		grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
 	@media (max-width: 480px) {
 		.calendar-grid-container {
-		grid-template-columns: 1fr; /* 1 month per row on very small screens */
+		grid-template-columns: 1fr;
 		}
 		.calendar-day-btn {
 		width: 28px;
@@ -673,9 +672,9 @@
 	</div>
 
 	<div id="hijriDateControls" style="display: none;">
-		<label for="hijriYear">سال قمری:</label>
+		<label for="hijriYear">سال:</label>
 		<select id="hijriYear"></select>
-		<label for="hijriMonth">ماه قمری:</label>
+		<label for="hijriMonth">ماه:</label>
 		<select id="hijriMonth">
 		<option value="1">محرم</option>
 		<option value="2">صفر</option>
@@ -690,11 +689,11 @@
 		<option value="11">ذی‌القعده</option>
 		<option value="12">ذی‌الحجه</option>
 		</select>
-		<label for="hijriDay">روز قمری:</label>
+		<label for="hijriDay">روز:</label>
 		<select id="hijriDay"></select>
 	</div>
-	<button id="openAllNewspapersIssuesModalBtn" class="global-all-issues-btn">فهرست شماره‌های نشریات</button>
 	<button id="openCalendarModalBtn" class="global-all-issues-btn">تقویم</button>
+	<button id="openAllNewspapersIssuesModalBtn" class="global-all-issues-btn">فهرست شماره‌های نشریات</button>
 	</div>
 	<div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
 	<!-- Hijri Buttons -->
