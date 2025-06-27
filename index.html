@@ -631,7 +631,71 @@
             }
         }
 
-    </style>
+    
+        .calendar-day-btn.has-issue {
+            color: var(--highlight-text-color);
+            font-weight: bold;
+            border-color: var(--highlight-color);
+        }
+        .calendar-day-btn.has-one-issue {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: var(--text-color);
+        }
+        @media (prefers-color-scheme: dark) {
+            .calendar-day-btn.has-one-issue {
+                background-color: rgba(30, 126, 52, 0.2);
+                color: var(--text-color);
+            }
+        }
+        .calendar-day-btn.has-two-issues {
+            background-color: rgba(40, 167, 69, 0.5);
+        }
+        @media (prefers-color-scheme: dark) {
+            .calendar-day-btn.has-two-issues {
+                background-color: rgba(30, 126, 52, 0.5);
+            }
+        }
+        .calendar-day-btn.has-three-or-more-issues {
+            background-color: var(--highlight-color);
+        }
+        .calendar-day-btn.no-issue-font {
+            font-weight: normal;
+        }
+        .calendar-day-btn.one-issue-font {
+            font-weight: 500;
+        }
+        .calendar-day-btn.two-issues-font {
+            font-weight: 600;
+        }
+        .calendar-day-btn.multiple-issues-font {
+            font-weight: bold;
+        }
+        .all-issues-modal-content {
+            max-height: 95vh;
+            width: 90%;
+            max-width: 1000px;
+        }
+        @media (max-width: 1024px) {
+            .calendar-grid-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+        @media (max-width: 600px) {
+            .calendar-grid-container {
+                grid-template-columns: 1fr;
+            }
+            .calendar-day-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9em;
+            }
+            .calendar-month h3 {
+                font-size: 1em;
+            }
+        }
+
+</style>
 </head>
 <body>
     <h1>بایگانی نشریات ایران</h1>
