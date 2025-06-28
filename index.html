@@ -1097,26 +1097,28 @@
 	};
 	
 	const updateUrlParameters = () => {
-	    if (!shamsiYearInput || !hijriYearInput) {
-	        console.error('عناصر ورودی تاریخ یافت نشدند!');
-	        return;
+	    // Ensure that shamsiYearInput and hijriYearInput are defined globally or within scope
+	    // The fix for this is included by moving their definitions earlier or ensuring they are accessible.
+	    // For now, these are guaranteed to be defined by the DOMContentLoaded block.
+	    let year, month, day;
+	    let calendarTypeToSet;
+
+	    if (currentCalendarMode === 'shamsi') {
+	        calendarTypeToSet = 'shamsi';
+	        // Access the elements after they are guaranteed to be initialized in DOMContentLoaded
+	        year = document.getElementById('shamsiYear').value;
+	        month = pad(document.getElementById('shamsiMonth').value);
+	        day = pad(document.getElementById('shamsiDay').value);
+	    } else { // hijri
+	        calendarTypeToSet = 'hijri';
+	        // Access the elements after they are guaranteed to be initialized in DOMContentLoaded
+	        year = document.getElementById('hijriYear').value;
+	        month = pad(document.getElementById('hijriMonth').value);
+	        day = pad(document.getElementById('hijriDay').value);
 	    }
 	    
 	    const urlParams = new URLSearchParams();
-	    let year, month, day;
-	    
-	    if (currentCalendarMode === 'shamsi') {
-	        urlParams.set('calendar', 'shamsi');
-	        year = shamsiYearInput.value;
-	        month = pad(shamsiMonthSelect.value);
-	        day = pad(shamsiDayInput.value);
-	    } else {
-	        urlParams.set('calendar', 'hijri');
-	        year = hijriYearInput.value;
-	        month = pad(hijriMonthSelect.value);
-	        day = pad(hijriDayInput.value);
-	    }
-	    
+	    urlParams.set('calendar', calendarTypeToSet);
 	    urlParams.set('year', year);
 	    urlParams.set('month', month);
 	    urlParams.set('day', day);
@@ -1125,24 +1127,26 @@
 	    window.history.pushState({}, '', newUrl);
 	};
 		
-		let currentCalendarMode = 'shamsi'; // مقدار پیش‌فرض
+	let currentCalendarMode = 'shamsi'; // مقدار پیش‌فرض
+	// Define these globally or ensure they are accessible in updateUrlParameters
 	let shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput;
+
 
 	document.addEventListener('DOMContentLoaded', async () => {
 		// Populate dropdowns first
 		populateDateDropdowns();
 
-		// DOM Element References
+		// DOM Element References (now assigned to the global variables)
 		const shamsiCalendarRadio = document.getElementById('shamsiCalendar');
 		const hijriCalendarRadio = document.getElementById('hijriCalendar');
 		const shamsiDateControls = document.getElementById('shamsiDateControls');
 		const hijriDateControls = document.getElementById('hijriDateControls');
-		const shamsiYearInput = document.getElementById('shamsiYear');
-		const shamsiMonthSelect = document.getElementById('shamsiMonth');
-		const shamsiDayInput = document.getElementById('shamsiDay');
-		const hijriYearInput = document.getElementById('hijriYear');
-		const hijriMonthSelect = document.getElementById('hijriMonth');
-		const hijriDayInput = document.getElementById('hijriDay');
+		shamsiYearInput = document.getElementById('shamsiYear'); // Assigned to global variable
+		shamsiMonthSelect = document.getElementById('shamsiMonth'); // Assigned to global variable
+		shamsiDayInput = document.getElementById('shamsiDay'); // Assigned to global variable
+		hijriYearInput = document.getElementById('hijriYear'); // Assigned to global variable
+		hijriMonthSelect = document.getElementById('hijriMonth'); // Assigned to global variable
+		hijriDayInput = document.getElementById('hijriDay'); // Assigned to global variable
 		const mainErrorMessage = document.getElementById('mainErrorMessage');
 		const mainStatusMessage = document.getElementById('mainStatusMessage');
 		const mainPageNumberInput = document.getElementById('mainPageNumberInput');
@@ -1236,8 +1240,10 @@
 		    } else {
 		        handleCalendarChange();
 		    }
-		}
-
+		} else {
+            // If no URL parameters, set initial calendar mode and update URL
+            handleCalendarChange(); // This will use the default `currentCalendarMode` ('shamsi') and current dropdown values
+        }
 
 
 		// Global State for newspaper data
@@ -1333,7 +1339,7 @@
 			(paper.type === 'formula' && paper.calendar_type === 'hijri')) {
 			shouldDisplaySectionBasedOnModeAndType = true;
 			}
-		} else {
+		} else { // currentCalendarMode is 'shamsi'
 			if (paper.calendar_type === 'shamsi' || (paper.type === 'formula' && !paper.calendar_type)) {
 			shouldDisplaySectionBasedOnModeAndType = true;
 			}
@@ -1650,24 +1656,24 @@
 		    // Update URL parameters whenever calendar or date changes
 		    updateUrlParameters();
 		    
-		    loadImage('date');
-		updateUrlParameters();
+		    loadImage('date'); // Load images based on the new date/calendar
 		    updateGlobalGoToFirstIssueButtonsVisibility();
 		};
 
 		shamsiCalendarRadio.addEventListener('change', () => { 
 		    currentCalendarMode = 'shamsi'; 
 		    handleCalendarChange(); 
-		    updateUrlParameters(); // Add this line
 		});
 		hijriCalendarRadio.addEventListener('change', () => { 
 		    currentCalendarMode = 'hijri'; 
 		    handleCalendarChange(); 
-		    updateUrlParameters(); // Add this line
 		});
 
 		[shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput].forEach(el => {
-		if(el) el.addEventListener('change', () => loadImage('date'));
+		if(el) el.addEventListener('change', () => {
+             loadImage('date');
+             updateUrlParameters(); // Ensure URL is updated on direct date control changes
+        });
 		});
 		if(mainPageNumberInput) mainPageNumberInput.addEventListener('change', () => loadImage('pageInput'));
 
@@ -1716,14 +1722,14 @@
 		if (paper.calendar_type === 'hijri') {
 			const hijriDate = (paper.type === 'database' && paper.currentIssue)
 					  ? {y:paper.currentIssue.year, m:paper.currentIssue.month, d:paper.currentIssue.day }
-					  : {y:year, m:parseInt(month), d:parseInt(day)};
+					  : {y:parseInt(year), m:parseInt(month), d:parseInt(day)}; // Parse to integer
 			const hijriMonthName = hijriMonthNames[hijriDate.m - 1];
 			formattedDate = `${pad(hijriDate.d)} ${hijriMonthName} ${hijriDate.y} (قمری)`;
 		} else if (paper.calendar_type === 'shamsi' || (paper.type === 'formula' && !paper.calendar_type) ) {
 			const monthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
 			const shamsiDate = (paper.type === 'database' && paper.currentIssue)
 					 ? {y:paper.currentIssue.year, m:paper.currentIssue.month, d:paper.currentIssue.day }
-					 : {y:year, m:parseInt(month), d:parseInt(displayDayForDate)};
+					 : {y:parseInt(year), m:parseInt(month), d:parseInt(displayDayForDate)}; // Parse to integer
 			const persianMonthName = monthNames[shamsiDate.m - 1];
 			formattedDate = `${pad(shamsiDate.d)} ${persianMonthName} ${shamsiDate.y}`;
 		} else {
@@ -1997,8 +2003,7 @@
 		    mainPageNumberInput.value = 1;
 		    Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 		    loadImage('date');
-		    updateIssueNavButtons(newspaperId);
-		    updateUrlParameters(); // Add this line
+		    updateUrlParameters(); // Added: Update URL when navigating to a specific issue
 		};
 
 
@@ -2099,7 +2104,7 @@
 			if (currentCalendarMode !== 'hijri') {
 			hijriCalendarRadio.checked = true;
 			currentCalendarMode = 'hijri';
-			handleCalendarChange(targetDate);
+			handleCalendarChange(targetDate); // This calls loadImage and updateUrlParameters
 			} else {
 			hijriYearInput.value = targetDate.year;
 			hijriMonthSelect.value = targetDate.month;
@@ -2107,7 +2112,7 @@
 			mainPageNumberInput.value = 1;
 			Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 			loadImage('date');
-			updateUrlParameters();	
+			updateUrlParameters();	// Ensure URL is updated
 			}
 		}
 		};
@@ -2127,7 +2132,7 @@
 		 if (currentCalendarMode !== 'shamsi') {
 			 shamsiCalendarRadio.checked = true;
 			 currentCalendarMode = 'shamsi';
-			 handleCalendarChange(targetDate);
+			 handleCalendarChange(targetDate); // This calls loadImage and updateUrlParameters
 		} else {
 			shamsiYearInput.value = targetDate.year;
 			shamsiMonthSelect.value = targetDate.month;
@@ -2135,7 +2140,7 @@
 			mainPageNumberInput.value = 1;
 			Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 			loadImage('date');
-			updateUrlParameters();
+			updateUrlParameters(); // Ensure URL is updated
 		}
 		};
 
@@ -2154,7 +2159,7 @@
 		if (currentCalendarMode !== 'hijri') {
 			 hijriCalendarRadio.checked = true;
 			 currentCalendarMode = 'hijri';
-			 handleCalendarChange(targetDate);
+			 handleCalendarChange(targetDate); // This calls loadImage and updateUrlParameters
 		} else {
 			hijriYearInput.value = targetDate.year;
 			hijriMonthSelect.value = targetDate.month;
@@ -2162,7 +2167,7 @@
 			mainPageNumberInput.value = 1;
 			Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 			loadImage('date');
-			updateUrlParameters();
+			updateUrlParameters(); // Ensure URL is updated
 		}
 		};
 
@@ -2340,6 +2345,9 @@
 		}
 		});
 
+		// This block is now mostly redundant as handleCalendarChange is called first
+		// based on URL params or default, which sets visibility and calls loadImage/updateUrl
+		/*
 		if (shamsiCalendarRadio.checked) {
 		 currentCalendarMode = 'shamsi';
 		 shamsiDateControls.style.display = 'flex';
@@ -2353,6 +2361,7 @@
 		setTimeout(() => {
 		loadImage('initial');
 		}, 100);
+		*/
 
 		// --- All Issues Modal Functions (New Global Approach) ---
 
@@ -2466,7 +2475,7 @@
 		
 		    closeAllIssuesModal();
 		    loadImage('date');
-		    updateUrlParameters(); // Add this line
+		    updateUrlParameters(); // Added: Update URL when selecting issue from modal
 		};
 
 		allIssuesModalCloseButton.addEventListener('click', closeAllIssuesModal);
@@ -2587,7 +2596,7 @@
 		
 		    closeCalendarModal();
 		    loadImage('date');
-		    updateUrlParameters(); // Add this line
+		    updateUrlParameters(); // Added: Update URL when selecting date from calendar modal
 		};
 		
 		prevYearBtn.addEventListener('click', () => {
