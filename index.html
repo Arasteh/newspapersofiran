@@ -1097,24 +1097,19 @@
 	};
 	
 	const updateUrlParameters = () => {
-	    // Ensure that shamsiYearInput and hijriYearInput are defined globally or within scope
-	    // The fix for this is included by moving their definitions earlier or ensuring they are accessible.
-	    // For now, these are guaranteed to be defined by the DOMContentLoaded block.
 	    let year, month, day;
 	    let calendarTypeToSet;
 
 	    if (currentCalendarMode === 'shamsi') {
 	        calendarTypeToSet = 'shamsi';
-	        // Access the elements after they are guaranteed to be initialized in DOMContentLoaded
-	        year = document.getElementById('shamsiYear').value;
-	        month = pad(document.getElementById('shamsiMonth').value);
-	        day = pad(document.getElementById('shamsiDay').value);
+	        year = shamsiYearInput.value; // Use globally accessible variables
+	        month = pad(shamsiMonthSelect.value); // Use globally accessible variables
+	        day = pad(shamsiDayInput.value); // Use globally accessible variables
 	    } else { // hijri
 	        calendarTypeToSet = 'hijri';
-	        // Access the elements after they are guaranteed to be initialized in DOMContentLoaded
-	        year = document.getElementById('hijriYear').value;
-	        month = pad(document.getElementById('hijriMonth').value);
-	        day = pad(document.getElementById('hijriDay').value);
+	        year = hijriYearInput.value; // Use globally accessible variables
+	        month = pad(hijriMonthSelect.value); // Use globally accessible variables
+	        day = pad(hijriDayInput.value); // Use globally accessible variables
 	    }
 	    
 	    const urlParams = new URLSearchParams();
@@ -1219,31 +1214,6 @@
 		const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
 		// Changed from Set to Map to store issue counts per date
 		const availableHijriDates = new Map(); // Stores "YYYYMMDD" -> count of newspapers for that date
-
-		// Read URL parameters and set initial values
-		const calendarParam = getUrlParameter('calendar');
-		const yearParam = getUrlParameter('year');
-		const monthParam = getUrlParameter('month');
-		const dayParam = getUrlParameter('day');
-		
-		if (calendarParam && (calendarParam === 'shamsi' || calendarParam === 'hijri')) {
-		    currentCalendarMode = calendarParam;
-		    document.getElementById(`${calendarParam}Calendar`).checked = true;
-		    
-		    if (yearParam && monthParam && dayParam) {
-		        const targetDate = {
-		            year: yearParam,
-		            month: monthParam,
-		            day: dayParam
-		        };
-		        handleCalendarChange(targetDate);
-		    } else {
-		        handleCalendarChange();
-		    }
-		} else {
-            // If no URL parameters, set initial calendar mode and update URL
-            handleCalendarChange(); // This will use the default `currentCalendarMode` ('shamsi') and current dropdown values
-        }
 
 
 		// Global State for newspaper data
@@ -2345,23 +2315,40 @@
 		}
 		});
 
-		// This block is now mostly redundant as handleCalendarChange is called first
-		// based on URL params or default, which sets visibility and calls loadImage/updateUrl
-		/*
-		if (shamsiCalendarRadio.checked) {
-		 currentCalendarMode = 'shamsi';
-		 shamsiDateControls.style.display = 'flex';
-		 hijriDateControls.style.display = 'none';
-		} else if (hijriCalendarRadio.checked) {
-		 currentCalendarMode = 'hijri';
-		 hijriDateControls.style.display = 'flex';
-		 shamsiDateControls.style.display = 'none';
-		}
-		updateGlobalGoToFirstIssueButtonsVisibility();
-		setTimeout(() => {
-		loadImage('initial');
-		}, 100);
-		*/
+        // Moved the URL parameter parsing and initial handling INSIDE DOMContentLoaded
+		// This block ensures handleCalendarChange is defined before being called.
+		const calendarParam = getUrlParameter('calendar');
+		const yearParam = getUrlParameter('year');
+		const monthParam = getUrlParameter('month');
+		const dayParam = getUrlParameter('day');
+		
+		if (calendarParam && (calendarParam === 'shamsi' || calendarParam === 'hijri')) {
+		    currentCalendarMode = calendarParam;
+		    document.getElementById(`${calendarParam}Calendar`).checked = true;
+		    
+		    if (yearParam && monthParam && dayParam) {
+		        const targetDate = {
+		            year: yearParam,
+		            month: monthParam,
+		            day: dayParam
+		        };
+		        handleCalendarChange(targetDate);
+		    } else {
+		        handleCalendarChange();
+		    }
+		} else {
+            // If no URL parameters, set initial calendar mode and update URL
+            handleCalendarChange(); // This will use the default `currentCalendarMode` ('shamsi') and current dropdown values
+        }
+		
+		// The original setTimeout is no longer strictly necessary because handleCalendarChange
+		// already initiates loadImage and updateUrlParameters.
+		// However, keeping a small timeout might help with very complex DOM structures if needed.
+		// For now, removing it as handleCalendarChange already triggers the loading.
+		// setTimeout(() => {
+		// loadImage('initial');
+		// }, 100);
+
 
 		// --- All Issues Modal Functions (New Global Approach) ---
 
