@@ -1080,6 +1080,19 @@
 		hijriDaySelect.value = "21";  // Default value
 	};
 
+		function getUrlParameter(name) {
+		    name = name.replace(/[\[\]]/g, '\\$&');
+		    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+		    const results = regex.exec(window.location.href);
+		    if (!results) return null;
+		    if (!results[2]) return '';
+		    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+		}
+		
+		function updateUrlParameters(calendar, year, month, day) {
+		    const newUrl = `${window.location.pathname}?calendar=${calendar}&year=${year}&month=${month}&day=${day}`;
+		    window.history.pushState({}, '', newUrl);
+		}
 
 	document.addEventListener('DOMContentLoaded', async () => {
 		// Populate dropdowns first
@@ -1561,31 +1574,83 @@
 		};
 
 		const handleCalendarChange = (targetDate = null) => {
-		shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'block' : 'none';
-		hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'block' : 'none';
-
-		if (targetDate) {
-			if (currentCalendarMode === 'shamsi') {
-			shamsiYearInput.value = targetDate.year;
-			shamsiMonthSelect.value = targetDate.month;
-			shamsiDayInput.value = targetDate.day;
-			} else if (currentCalendarMode === 'hijri') {
-			hijriYearInput.value = targetDate.year;
-			hijriMonthSelect.value = targetDate.month;
-			hijriDayInput.value = targetDate.day;
-			}
-			mainPageNumberInput.value = 1;
-			Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
-		}
-		loadImage('date');
-		updateGlobalGoToFirstIssueButtonsVisibility();
+		    shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'block' : 'none';
+		    hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'block' : 'none';
+		
+		    if (targetDate) {
+		        if (currentCalendarMode === 'shamsi') {
+		            shamsiYearInput.value = targetDate.year;
+		            shamsiMonthSelect.value = targetDate.month;
+		            shamsiDayInput.value = targetDate.day;
+		        } else if (currentCalendarMode === 'hijri') {
+		            hijriYearInput.value = targetDate.year;
+		            hijriMonthSelect.value = targetDate.month;
+		            hijriDayInput.value = targetDate.day;
+		        }
+		        mainPageNumberInput.value = 1;
+		        Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
+		    }
+		    
+		    // به‌روزرسانی URL با پارامترهای جدید
+		    if (currentCalendarMode === 'shamsi') {
+		        updateUrlParameters(
+		            'shamsi',
+		            shamsiYearInput.value,
+		            shamsiMonthSelect.value,
+		            shamsiDayInput.value
+		        );
+		    } else {
+		        updateUrlParameters(
+		            'hijri',
+		            hijriYearInput.value,
+		            hijriMonthSelect.value,
+		            hijriDayInput.value
+		        );
+		    }
+		    
+		    loadImage('date');
 		};
 
-		shamsiCalendarRadio.addEventListener('change', () => { currentCalendarMode = 'shamsi'; handleCalendarChange(); });
-		hijriCalendarRadio.addEventListener('change', () => { currentCalendarMode = 'hijri'; handleCalendarChange(); });
-
+		shamsiCalendarRadio.addEventListener('change', () => { 
+		    currentCalendarMode = 'shamsi'; 
+		    handleCalendarChange();
+		    updateUrlParameters(
+		        'shamsi',
+		        shamsiYearInput.value,
+		        shamsiMonthSelect.value,
+		        shamsiDayInput.value
+		    );
+		});
+		
+		hijriCalendarRadio.addEventListener('change', () => { 
+		    currentCalendarMode = 'hijri'; 
+		    handleCalendarChange();
+		    updateUrlParameters(
+		        'hijri',
+		        hijriYearInput.value,
+		        hijriMonthSelect.value,
+		        hijriDayInput.value
+		    );
+		});
 		[shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput].forEach(el => {
-		if(el) el.addEventListener('change', () => loadImage('date'));
+		    if(el) el.addEventListener('change', () => {
+		        loadImage('date');
+		        if (currentCalendarMode === 'shamsi') {
+		            updateUrlParameters(
+		                'shamsi',
+		                shamsiYearInput.value,
+		                shamsiMonthSelect.value,
+		                shamsiDayInput.value
+		            );
+		        } else {
+		            updateUrlParameters(
+		                'hijri',
+		                hijriYearInput.value,
+		                hijriMonthSelect.value,
+		                hijriDayInput.value
+		            );
+		        }
+		    });
 		});
 		if(mainPageNumberInput) mainPageNumberInput.addEventListener('change', () => loadImage('pageInput'));
 
@@ -2262,6 +2327,34 @@
 		 currentCalendarMode = 'hijri';
 		 hijriDateControls.style.display = 'flex';
 		 shamsiDateControls.style.display = 'none';
+		}
+		// خواندن پارامترهای URL هنگام بارگذاری صفحه
+		const urlCalendar = getUrlParameter('calendar');
+		const urlYear = getUrlParameter('year');
+		const urlMonth = getUrlParameter('month');
+		const urlDay = getUrlParameter('day');
+		
+		if (urlCalendar && urlYear && urlMonth && urlDay) {
+		    if (urlCalendar === 'shamsi') {
+		        shamsiCalendarRadio.checked = true;
+		        currentCalendarMode = 'shamsi';
+		        handleCalendarChange({
+		            year: urlYear,
+		            month: urlMonth,
+		            day: urlDay
+		        });
+		    } else if (urlCalendar === 'hijri') {
+		        hijriCalendarRadio.checked = true;
+		        currentCalendarMode = 'hijri';
+		        handleCalendarChange({
+		            year: urlYear,
+		            month: urlMonth,
+		            day: urlDay
+		        });
+		    }
+		} else {
+		    // اگر پارامتری وجود نداشت، از مقادیر پیش‌فرض استفاده شود
+		    loadImage('initial');
 		}
 		updateGlobalGoToFirstIssueButtonsVisibility();
 		setTimeout(() => {
