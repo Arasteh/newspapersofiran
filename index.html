@@ -1652,7 +1652,24 @@
 		        }
 		    });
 		});
-		if(mainPageNumberInput) mainPageNumberInput.addEventListener('change', () => loadImage('pageInput'));
+		if(mainPageNumberInput) mainPageNumberInput.addEventListener('change', () => {
+		    loadImage('pageInput');
+		    if (currentCalendarMode === 'shamsi') {
+		        updateUrlParameters(
+		            'shamsi',
+		            shamsiYearInput.value,
+		            shamsiMonthSelect.value,
+		            shamsiDayInput.value
+		        );
+		    } else {
+		        updateUrlParameters(
+		            'hijri',
+		            hijriYearInput.value,
+		            hijriMonthSelect.value,
+		            hijriDayInput.value
+		        );
+		    }
+		});
 
 
 		const openLightbox = async (type) => {
