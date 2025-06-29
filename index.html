@@ -1144,6 +1144,23 @@
 					const dbNewspapersRawData = await response.json();
 					console.log("db.json loaded successfully.");
 
+					// Manually add data for "نشریه مهر" (Mehr)
+					const mehrNewspaperData = {
+						id: "Q25433419",
+						title: "روزنامه مهر",
+						calendar_type: "shamsi",
+						frequency: "daily",
+						issues: [
+							{"issue_number": 1, "year": 1330, "month": 1, "day": 1, "filename_base": "Mehr 13300101"},
+							{"issue_number": 2, "year": 1330, "month": 1, "day": 2, "filename_base": "Mehr 13300102"},
+							{"issue_number": 3, "year": 1330, "month": 1, "day": 3, "filename_base": "Mehr 13300103"},
+							{"issue_number": 4, "year": 1330, "month": 1, "day": 4, "filename_base": "Mehr 13300104"},
+							{"issue_number": 5, "year": 1330, "month": 1, "day": 5, "filename_base": "Mehr 13300105"}
+						]
+					};
+					dbNewspapersRawData.push(mehrNewspaperData);
+
+
 					dbNewspapersRawData.forEach(dbPaper => {
 						const paperId = dbPaper.id;
 
@@ -1506,7 +1523,8 @@
 						if (titleElement) {
 							let baseTitle = paper.title;
 							if (foundIssue.issue_number) {
-								titleElement.textContent = `${baseTitle} (شماره ${englishToPersianDigits(foundIssue.issue_number)})`;
+								titleText = `${baseTitle} (شماره ${englishToPersianDigits(foundIssue.issue_number)})`;
+								titleElement.textContent = titleText;
 							} else {
 								titleElement.textContent = baseTitle; // Fallback if issue_number is missing
 							}
