@@ -5,13 +5,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>بایگانی نشریات ایران</title>
 	<style>
-		/* CSS Variables for Light/Dark Mode */
 		body {
 			--body-bg: #f4f4f4;
 			--text-color: #333;
 			--control-bg: #fff;
 			--border-color: #ddd;
-			--button-bg: #28a745; /* Green for main buttons */
+			--button-bg: #28a745;
 			--button-hover-bg: #000;
 			--button-disabled-bg: #cccccc;
 			--error-color: red;
@@ -20,18 +19,17 @@
 			--section-title-color: #555;
 			--lightbox-bg: #fff;
 			--lightbox-text-color: #333;
-			--lightbox-button-bg: #007bff; /* Blue for lightbox buttons */
+			--lightbox-button-bg: #007bff;
 			--lightbox-button-hover-bg: #000;
 			--lightbox-close-button-color: #333;
 
-			/* Define highlight color components for RGBA */
-			--highlight-color-r: 40; /* R component of #28a745 */
-			--highlight-color-g: 167; /* G component of #28a745 */
-			--highlight-color-b: 69;  /* B component of #28a745 */
+			--highlight-color-r: 40;
+			--highlight-color-g: 167;
+			--highlight-color-b: 69;
 
-			--highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b)); /* Original color for full opacity */
+			--highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
 			--highlight-text-color: white;
-			--multiple-issues-color: #ffc107; /* Yellow for multiple issues */
+			--multiple-issues-color: #ffc107;
 		}
 
 		@media (prefers-color-scheme: dark) {
@@ -40,7 +38,7 @@
 				--text-color: #e0e0e0;
 				--control-bg: #2a2a2a;
 				--border-color: #555;
-				--button-bg: #1e7e34; /* Darker green for dark mode */
+				--button-bg: #1e7e34;
 				--button-hover-bg: #aaa;
 				--button-disabled-bg: #555555;
 				--error-color: #ff6666;
@@ -49,18 +47,17 @@
 				--section-title-color: #cccccc;
 				--lightbox-bg: #3a3a3a;
 				--lightbox-text-color: #e0e0e0;
-				--lightbox-button-bg: #0056b3; /* Darker blue for dark mode */
+				--lightbox-button-bg: #0056b3;
 				--lightbox-button-hover-bg: #aaa;
 				--lightbox-close-button-color: #e0e0e0;
 
-				/* Define dark mode highlight color components for RGBA */
-				--highlight-color-r: 30; /* R component of #1e7e34 */
-				--highlight-color-g: 126; /* G component of #1e7e34 */
-				--highlight-color-b: 52;  /* B component of #1e7e34 */
+				--highlight-color-r: 30;
+				--highlight-color-g: 126;
+				--highlight-color-b: 52;
 
-				--highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b)); /* Original color for full opacity */
+				--highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
 				--highlight-text-color: white;
-				--multiple-issues-color: #d4a700; /* Darker yellow for dark mode */
+				--multiple-issues-color: #d4a700;
 			}
 		}
 
@@ -95,7 +92,7 @@
 		.global-issue-nav-controls button {
 			padding: 8px 15px;
 			color: white;
-			border: 2px solid transparent; /* Added for smooth transition */
+			border: 2px solid transparent;
 			border-radius: 4px;
 			cursor: pointer;
 			font-size: 14px;
@@ -121,7 +118,6 @@
 			background-color: var(--button-hover-bg);
 		}
 
-		/* Style for buttons of available newspapers on the selected date */
 		.global-issue-nav-controls button.available-on-date {
 			 box-shadow: 0px 6px 0px 0px;
 		}
@@ -232,198 +228,11 @@
 			color: var(--text-color);
 		}
 
-		.lightbox-overlay {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.8);
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			z-index: 1000;
-			opacity: 0;
-			visibility: hidden;
-			transition: opacity 0.3s ease, visibility 0.3s ease;
-		}
-		.lightbox-overlay.visible {
-			opacity: 1;
-			visibility: visible;
-		}
-		.lightbox-content {
-			position: relative;
-			max-width: 90%;
-			max-height: 90vh;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			background-color: var(--lightbox-bg);
-			padding: 20px;
-			border-radius: 8px;
-			box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-			color: var(--lightbox-text-color);
-			overflow-y: auto;
-		}
-		.lightbox-image {
-			max-width: 100%;
-			max-height: calc(90vh - 200px);
-			height: auto;
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			cursor: pointer;
-			margin: 0 auto;
-			display: block;
-		}
-		.lightbox-controls {
-			display: flex;
-			justify-content: center;
-			flex-wrap: wrap;
-			width: 100%;
-			margin-top: 15px;
-			gap: 10px;
-		}
-		.lightbox-controls .page-nav,
-		.lightbox-controls .newspaper-nav,
-		.lightbox-controls .issue-nav-lightbox { /* Added for the new issue nav in lightbox */
-			display: flex;
-			align-items: center;
-			gap: 5px;
-		}
-		.lightbox-controls button {
-			padding: 10px 20px;
-			background-color: var(--lightbox-button-bg);
-			color: white;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 16px;
-			transition: background-color 0.3s ease;
-		}
-		.lightbox-controls button:hover {
-			background-color: var(--lightbox-button-hover-bg);
-		}
-		.lightbox-controls button:disabled {
-			background-color: var(--button-disabled-bg);
-			cursor: not-allowed;
-		}
-		.lightbox-controls input[type="number"] {
-			width: 70px;
-			text-align: center;
-			padding: 8px;
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			font-size: 16px;
-			background-color: var(--control-bg);
-			color: var(--text-color);
-		}
-		.lightbox-controls .view-all-issues-btn { /* Style specifically for the "view all issues" button */
-			background-color: #6c757d;
-		}
-		.lightbox-controls .view-all-issues-btn:hover {
-			background-color: #5a6268;
-		}
-
-
-		.lightbox-close-button {
-			position: absolute;
-			top: 10px;
-			right: 10px;
-			background: none;
-			border: none;
-			font-size: 24px;
-			cursor: pointer;
-			color: var(--lightbox-close-button-color);
-		}
-		.lightbox-links {
-			margin-top: 15px;
-			display: flex;
-			gap: 15px;
-			justify-content: center;
-			flex-wrap: wrap;
-		}
-		.lightbox-links a {
-			padding: 8px 15px;
-			background-color: #4CAF50;
-			color: white;
-			text-decoration: none;
-			border-radius: 4px;
-			transition: background-color 0.3s ease;
-		}
-		.lightbox-links a:hover {
-			background-color: #45a049;
-		}
-		.calendar-selection {
-			display: flex;
-			gap: 15px;
-			justify-content: center;
-			align-items: center;
-		}
-		.calendar-selection label {
-			cursor: pointer;
-			padding: 8px 15px;
-			border-radius: 5px;
-			border: 1px solid var(--border-color);
-			background-color: var(--control-bg);
-			transition: background-color 0.3s, border-color 0.3s;
-		}
-		.calendar-selection input[type="radio"] {
-			display: none;
-		}
-		.calendar-selection input[type="radio"]:checked + label {
-			color: white;
-		}
-		.calendar-selection input[type="radio"]#shamsiCalendar:checked + label {
-			background-color: var(--lightbox-button-bg);
-			border-color: var(--lightbox-button-bg);
-		}
-		.calendar-selection input[type="radio"]#hijriCalendar:checked + label {
-			background-color: var(--button-bg);
-			border-color: var(--button-bg);
-		}
-		.issue-navigation-controls {
-			margin-top: 10px;
-			display: none; /* Controlled by JS based on whether a database issue is found */
-			text-align: center;
-			width: 100%; /* Ensure it takes full width of parent */
-		}
-		.issue-navigation-controls > div {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			gap: 10px;
-		}
-		.issue-navigation-controls button {
-			padding: 8px 15px;
-			background-color: var(--button-bg);
-			color: white;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-		}
-		 .issue-navigation-controls button:hover {
-			background-color: var(--button-hover-bg);
-		}
-		.issue-navigation-controls button:disabled {
-			background-color: var(--button-disabled-bg);
-			cursor: not-allowed;
-		}
-		.issue-navigation-controls input[type="number"] {
-			width: 60px;
-			padding: 8px;
-			text-align: center;
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			background-color: var(--control-bg);
-			color: var(--text-color);
-		}
-
 		button
 		{
 			font-family: system-ui;
 		}
 
-		/* Styles for the new "All Issues" modal (reused for calendar modal too) */
 		.all-issues-modal-overlay {
 			position: fixed;
 			top: 0;
@@ -459,7 +268,7 @@
 		h2#allIssuesModalNewspaperTitle {
 			text-align: center;
 			margin-top: 0;
-			margin-bottom: 15px; /* Added margin for spacing */
+			margin-bottom: 15px;
 		}
 		.all-issues-modal-close-button {
 			position: absolute;
@@ -528,7 +337,7 @@
 			cursor: pointer;
 			font-size: 14px;
 			transition: background-color 0.3s ease;
-			white-space: nowrap; /* Prevent text wrapping */
+			white-space: nowrap;
 		}
 		.issues-list-container button:hover {
 			background-color: var(--button-hover-bg);
@@ -562,7 +371,6 @@
 			background-color: var(--lightbox-button-hover-bg);
 		}
 
-		/* Added styles for the new checkbox in All Issues Modal */
 		.modal-controls {
 			display: flex;
 			align-items: center;
@@ -574,13 +382,204 @@
 			width: 18px;
 			height: 18px;
 			cursor: pointer;
-			accent-color: var(--button-bg); /* Highlight color for checkbox */
+			accent-color: var(--button-bg);
 		}
 		.modal-controls label {
 			font-size: 16px;
 			color: var(--text-color);
 		}
 
+
+		.lightbox-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.8);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 1000;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.3s ease, visibility 0.3s ease;
+		}
+		.lightbox-overlay.visible {
+			opacity: 1;
+			visibility: visible;
+		}
+		.lightbox-content {
+			position: relative;
+			max-width: 90%;
+			max-height: 90vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background-color: var(--lightbox-bg);
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+			color: var(--lightbox-text-color);
+			overflow-y: auto;
+		}
+		.lightbox-image {
+			max-width: 100%;
+			max-height: calc(90vh - 200px);
+			height: auto;
+			border: 1px solid var(--border-color);
+			border-radius: 4px;
+			cursor: pointer;
+			margin: 0 auto;
+			display: block;
+		}
+		.lightbox-controls {
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+			width: 100%;
+			margin-top: 15px;
+			gap: 10px;
+		}
+		.lightbox-controls .page-nav,
+		.lightbox-controls .newspaper-nav,
+		.lightbox-controls .issue-nav-lightbox {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+		}
+		.lightbox-controls button {
+			padding: 10px 20px;
+			background-color: var(--lightbox-button-bg);
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+			transition: background-color 0.3s ease;
+		}
+		.lightbox-controls button:hover {
+			background-color: var(--lightbox-button-hover-bg);
+		}
+		.lightbox-controls button:disabled {
+			background-color: var(--button-disabled-bg);
+			cursor: not-allowed;
+		}
+		.lightbox-controls input[type="number"] {
+			width: 70px;
+			text-align: center;
+			padding: 8px;
+			border: 1px solid var(--border-color);
+			border-radius: 4px;
+			font-size: 16px;
+			background-color: var(--control-bg);
+			color: var(--text-color);
+		}
+		.lightbox-controls .view-all-issues-btn {
+			background-color: #6c757d;
+		}
+		.lightbox-controls .view-all-issues-btn:hover {
+			background-color: #5a6268;
+		}
+
+
+		.lightbox-close-button {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			background: none;
+			border: none;
+			font-size: 24px;
+			cursor: pointer;
+			color: var(--lightbox-close-button-color);
+		}
+		.lightbox-links {
+			margin-top: 15px;
+			display: flex;
+			gap: 15px;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+		.lightbox-links a {
+			padding: 8px 15px;
+			background-color: #4CAF50;
+			color: white;
+			text-decoration: none;
+			border-radius: 4px;
+			transition: background-color 0.3s ease;
+		}
+		.lightbox-links a:hover {
+			background-color: #45a049;
+		}
+		.calendar-selection {
+			display: flex;
+			gap: 15px;
+			justify-content: center;
+			align-items: center;
+		}
+		.calendar-selection label {
+			cursor: pointer;
+			padding: 8px 15px;
+			border-radius: 5px;
+			border: 1px solid var(--border-color);
+			background-color: var(--control-bg);
+			transition: background-color 0.3s, border-color 0.3s;
+		}
+		.calendar-selection input[type="radio"] {
+			display: none;
+		}
+		.calendar-selection input[type="radio"]:checked + label {
+			color: white;
+		}
+		.calendar-selection input[type="radio"]#shamsiCalendar:checked + label {
+			background-color: var(--lightbox-button-bg);
+			border-color: var(--lightbox-button-bg);
+		}
+		.calendar-selection input[type="radio"]#hijriCalendar:checked + label {
+			background-color: var(--button-bg);
+			border-color: var(--button-bg);
+		}
+		.issue-navigation-controls {
+			margin-top: 10px;
+			display: none;
+			text-align: center;
+			width: 100%;
+		}
+		.issue-navigation-controls > div {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 10px;
+		}
+		.issue-navigation-controls button {
+			padding: 8px 15px;
+			background-color: var(--button-bg);
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		 .issue-navigation-controls button:hover {
+			background-color: var(--button-hover-bg);
+		}
+		.issue-navigation-controls button:disabled {
+			background-color: var(--button-disabled-bg);
+			cursor: not-allowed;
+		}
+		.issue-navigation-controls input[type="number"] {
+			width: 60px;
+			padding: 8px;
+			text-align: center;
+			border: 1px solid var(--border-color);
+			border-radius: 4px;
+			background-color: var(--control-bg);
+			color: var(--text-color);
+		}
+
+		button
+		{
+			font-family: system-ui;
+		}
 
 		/* Calendar specific styles */
 		h2#calendarModalTitle{
@@ -611,7 +610,7 @@
 			background-color: var(--button-disabled-bg);
 			cursor: not-allowed;
 		}
-		#calendarYearSelect { /* Style for the new select dropdown */
+		#calendarYearSelect {
 			font-size: 1.2em;
 			font-weight: bold;
 			color: var(--text-color);
@@ -622,7 +621,7 @@
 		}
 		.calendar-grid-container {
 			display: grid;
-			grid-template-columns: repeat(3, 1fr); /* 3 months per row */
+			grid-template-columns: repeat(3, 1fr);
 			gap: 10px;
 			width: 100%;
 			overflow-y: auto;
@@ -645,7 +644,7 @@
 		}
 		.calendar-days {
 			display: grid;
-			grid-template-columns: repeat(7, 1fr); /* 7 days per row for week view */
+			grid-template-columns: repeat(7, 1fr);
 			gap: 5px;
 			width: 100%;
 		}
@@ -658,12 +657,11 @@
 			padding: 0;
 			border: 1px solid var(--border-color);
 			border-radius: 50%;
-			/* background-color will be set by issue-count classes */
-			color: var(--section-title-color); /* Default text color */
-			font-size: 0.8em; /* Slightly larger font */
+			color: var(--section-title-color);
+			font-size: 0.8em;
 			cursor: pointer;
-			transition: background-color 0.2s, transform 0.1s; /* Removed opacity transition */
-			box-sizing: border-box; /* Ensure padding/border included in size */
+			transition: background-color 0.2s, transform 0.1s;
+			box-sizing: border-box;
 			background: none;
 		}
 
@@ -672,36 +670,36 @@
 			transform: scale(1.05);
 		}
 		.calendar-day-btn.has-issue {
-			color: var(--text-color); /* Text color when there's an issue (e.g., white) */
+			color: var(--text-color);
 			font-weight: normal;
 			border-color: var(--highlight-color);
 		}
-		/* Opacity variations based on issue count applied to background only */
 		.calendar-day-btn.issue-count-1 {
 			background-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.2);
 		}
 		.calendar-day-btn.issue-count-2 {
 			background-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.5);
+			box-shadow: 0 0 0 1px var(--multiple-issues-color);
 		}
 		.calendar-day-btn.issue-count-3plus {
-			background-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b)); /* Full opacity */
+			background-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
+			box-shadow: 0 0 0 2px var(--multiple-issues-color);
 		}
 
-		.calendar-day-btn.has-multiple-issues { /* For 2 or more issues, overrides some of has-issue */
-			transform: scale(1.1); /* Slightly smaller scale for clarity */
+		.calendar-day-btn.has-multiple-issues {
+			transform: scale(1.1);
 			font-weight: bold;
 		}
 
 		.calendar-day-btn.selected-day {
-			border: 2px solid black; /* Thicker black border */
-			box-shadow: 0 0 0 3px black; /* Adds a subtle outer glow */
+			border: 2px solid black;
+			box-shadow: 0 0 0 3px black;
 		}
-		/* For dark mode, maybe a lighter color */
 		@media (prefers-color-scheme: dark) {
 			.calendar-day-btn.selected-day {
-			        border: 2px solid var(--multiple-issues-color);
-			        background-color: var(--multiple-issues-color);
-			        color: black;
+					border: 2px solid var(--multiple-issues-color);
+					background-color: var(--multiple-issues-color);
+					color: black;
 			}
 		}
 
@@ -710,41 +708,38 @@
 			cursor: not-allowed;
 			color: #888;
 			border-color: #888;
-			opacity: 1; /* Disabled state should be clear, not faded */
+			opacity: 1;
 		}
 
-		/* Adjustments for smaller screens */
 		@media (max-width: 768px) {
 			.calendar-grid-container {
-				grid-template-columns: repeat(2, 1fr); /* Two months per row for tablets and smaller */
+				grid-template-columns: repeat(2, 1fr);
 			}
-			/* Change order of year, month, day for Shamsi and Hijri controls */
 			#shamsiDateControls, #hijriDateControls {
 				display: flex;
-				flex-direction: row; /* Keep as row, but rearrange order */
+				flex-direction: row;
 				align-items: center;
 				justify-content: center;
-				flex-wrap: wrap; /* Allow wrapping on very small screens */
+				flex-wrap: wrap;
 			}
 			#shamsiDateControls label[for="shamsiYear"], #shamsiYear,
 			#hijriDateControls label[for="hijriYear"], #hijriYear {
-				order: 1; /* Year first */
+				order: 1;
 			}
 			#shamsiDateControls label[for="shamsiMonth"], #shamsiMonth,
 			#hijriDateControls label[for="hijriMonth"], #hijriMonth {
-				order: 2; /* Month second */
+				order: 2;
 			}
 			#shamsiDateControls label[for="shamsiDay"], #shamsiDay,
 			#hijriDateControls label[for="hijriDay"], #hijriDay {
-				order: 3; /* Day last */
+				order: 3;
 			}
 		}
 
 		@media (max-width: 480px) {
 			.calendar-grid-container {
-				grid-template-columns: repeat(2, 1fr); /* Two months per row even on smaller phones */
+				grid-template-columns: repeat(2, 1fr);
 			}
-			/* Keep day button size consistent for better touch on small screens */
 			.calendar-day-btn {
 				width: 32px;
 				height: 32px;
@@ -812,14 +807,12 @@
 		<button id="openAllNewspapersIssuesModalBtn" class="global-all-issues-btn">فهرست شماره‌های نشریات</button>
 	</div>
 	<div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
-		<!-- Global "Go to First Issue" Buttons will be dynamically generated here and sorted by date -->
 	</div>
 
 	<p id="mainErrorMessage" class="error-message" style="display: none;"></p>
 	<p id="mainStatusMessage" class="status-message">در حال بارگذاری نشریات...</p>
 
 	<div class="newspaper-container">
-		<!-- Newspaper sections will be dynamically generated here -->
 	</div>
 
 	<div class="pagination-controls" style="margin-top: 20px;">
@@ -831,7 +824,6 @@
 		<div class="lightbox-content">
 			<button id="lightboxCloseButton" class="lightbox-close-button">&times;</button>
 			<h2 id="lightboxNewspaperTitle"></h2>
-			<!-- Modified: Image click will open Wikimedia Commons link -->
 			<img id="lightboxImage" src="" alt="تصویر نشریه در لایت‌باکس" class="lightbox-image">
 			<p id="lightboxStatusMessage" class="status-message" style="display: none;"></p>
 			<p id="lightboxErrorMessage" class="error-message" style="display: none;"></p>
@@ -847,14 +839,12 @@
 					<input type="number" id="lightboxPageNumberInput" value="1" min="1">
 					<button id="lightboxNextPageButton">&gt;</button>
 				</div>
-				<!-- New: Issue navigation controls for database-driven newspapers -->
 				<div class="issue-nav-lightbox" style="display: none;">
 					<button id="lightboxPrevIssueButton" class="lightbox-issue-nav-btn">&lt; شماره قبل</button>
 					<input type="number" id="lightboxIssueNumberInput" value="" min="1" disabled>
 					<button id="lightboxNextIssueButton" class="lightbox-issue-nav-btn">شماره بعد &gt;</button>
 					<button id="lightboxViewAllIssuesButton" class="lightbox-issue-nav-btn view-all-issues-btn">مشاهده تمام شماره‌ها</button>
 				</div>
-				<!-- Original: Newspaper navigation (between different papers on same date) -->
 				<div class="newspaper-nav">
 					<button id="lightboxPrevNewspaperButton" style="display: none;">نشریه قبل</button>
 					<button id="lightboxNextNewspaperButton" style="display: none;">نشریه بعد</button>
@@ -863,49 +853,41 @@
 		</div>
 	</div>
 
-	<!-- All Issues Modal -->
 	<div id="allIssuesModalOverlay" class="all-issues-modal-overlay">
 		<div class="all-issues-modal-content">
 			<button id="allIssuesModalCloseButton" class="all-issues-modal-close-button">&times;</button>
 			<h2 id="allIssuesModalNewspaperTitle">فهرست شماره‌های نشریات</h2>
-			<!-- New checkbox for displaying dates -->
 			<div class="modal-controls">
 				<input type="checkbox" id="showDatesCheckbox">
 				<label for="showDatesCheckbox">نمایش تاریخ‌ها</label>
 			</div>
 			<div id="newspaperSelectionContainer" class="newspaper-selection-container">
-				<!-- Newspaper selection buttons will be loaded here -->
 			</div>
 			<div id="issuesListContainer" class="issues-list-container">
-				<!-- Issue buttons will be loaded here -->
 			</div>
 			<p id="allIssuesModalErrorMessage" class="error-message" style="display: none;"></p>
 		</div>
 	</div>
 
-	<!-- Calendar Modal -->
 	<div id="calendarModalOverlay" class="all-issues-modal-overlay">
 		<div class="all-issues-modal-content">
 			<button id="calendarModalCloseButton" class="calendar-modal-close-button">&times;</button>
 			<h2 id="calendarModalTitle">تقویم قمری</h2>
 			<div class="calendar-nav">
 				<button id="prevYearBtn">&lt; سال قبل</button>
-				<select id="calendarYearSelect"></select> <!-- Changed from span to select -->
+				<select id="calendarYearSelect"></select>
 				<button id="nextYearBtn">سال بعد &gt;</button>
 			</div>
 			<div id="calendarGridContainer" class="calendar-grid-container">
-				<!-- Months and days will be rendered here -->
 			</div>
 			<p id="calendarModalErrorMessage" class="error-message" style="display: none;"></p>
 		</div>
 	</div>
 
 	<script>
-		// MD5 utility function (copied as-is from original code)
 		var MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}function bit_rol(d,_){return d<<_|d>>>32-_}
 
 		document.addEventListener('DOMContentLoaded', async () => {
-			// Helper functions
 			const pad = (num) => num.toString().padStart(2, '0');
 			const persianToEnglishDigits = (str) => {
 				if (typeof str !== 'string') return str;
@@ -916,7 +898,6 @@
 					return index !== -1 ? englishNumbers[index] : char;
 				}).join('');
 			};
-			// New helper function for English to Persian digits
 			const englishToPersianDigits = (str) => {
 				if (typeof str !== 'string' && typeof str !== 'number') return str;
 				str = String(str);
@@ -941,7 +922,6 @@
 				window.history.pushState({}, '', newUrl);
 			};
 
-			// DOM Element References
 			const shamsiCalendarRadio = document.getElementById('shamsiCalendar');
 			const hijriCalendarRadio = document.getElementById('hijriCalendar');
 			const shamsiDateControls = document.getElementById('shamsiDateControls');
@@ -971,7 +951,6 @@
 			const newspaperContainer = document.querySelector('.newspaper-container');
 			const globalGoToFirstIssueControls = document.getElementById('globalGoToFirstIssueControls');
 
-			// New Lightbox Issue Navigation Elements
 			const issueNavLightbox = document.querySelector('.issue-nav-lightbox');
 			const lightboxPrevIssueButton = document.getElementById('lightboxPrevIssueButton');
 			const lightboxIssueNumberInput = document.getElementById('lightboxIssueNumberInput');
@@ -979,7 +958,6 @@
 			const lightboxViewAllIssuesButton = document.getElementById('lightboxViewAllIssuesButton');
 
 
-			// All Issues Modal Elements
 			const openAllNewspapersIssuesModalBtn = document.getElementById('openAllNewspapersIssuesModalBtn');
 			const allIssuesModalOverlay = document.getElementById('allIssuesModalOverlay');
 			const allIssuesModalCloseButton = document.getElementById('allIssuesModalCloseButton');
@@ -987,9 +965,8 @@
 			const newspaperSelectionContainer = document.getElementById('newspaperSelectionContainer');
 			const issuesListContainer = document.getElementById('issuesListContainer');
 			const allIssuesModalErrorMessage = document.getElementById('allIssuesModalErrorMessage');
-			const showDatesCheckbox = document.getElementById('showDatesCheckbox'); // New: Checkbox for showing dates
+			const showDatesCheckbox = document.getElementById('showDatesCheckbox');
 
-			// Calendar Modal Elements
 			const openCalendarModalBtn = document.getElementById('openCalendarModalBtn');
 			const calendarModalOverlay = document.getElementById('calendarModalOverlay');
 			const calendarModalCloseButton = document.getElementById('calendarModalCloseButton');
@@ -1000,21 +977,17 @@
 			const calendarGridContainer = document.getElementById('calendarGridContainer');
 			const calendarModalErrorMessage = document.getElementById('calendarModalErrorMessage');
 
-			// Global State
-			let currentCalendarMode = 'shamsi'; // Default to shamsi
+			let currentCalendarMode = 'shamsi';
 			let currentCalendarYear = parseInt(hijriYearInput.value, 10);
-			const minCalendarYear = 1277; // Matches hijriYearSelect min
-			const maxCalendarYear = 1361; // Matches hijriYearSelect max
+			const minCalendarYear = 1277;
+			const maxCalendarYear = 1361;
 			const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
 			const shamsiMonthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
-			const availableHijriDates = new Map(); // Stores "YYYYMMDD" -> count of newspapers for that date
+			const availableHijriDates = new Map();
 
 			let currentLightboxNewspaperId = null;
 			let lightboxCurrentPage = 1;
 
-			// Centralized Newspaper Configuration Data
-			// This object defines all newspapers and their static properties.
-			// Dynamically assign elements later.
 			const newspaperConfigurations = {
 				ettelaat: { type: 'formula', prefix: 'Ettelaat', title: 'اطلاعات', calendar_type: 'shamsi', firstIssueDate: "13050419" },
 				mardom: { type: 'formula', prefix: 'Mardom', title: 'مردم', calendar_type: 'shamsi', firstIssueDate: "13571223" },
@@ -1027,51 +1000,40 @@
 				yaghma: { type: 'formula', prefix: 'Yaghma', title: 'یغما', calendar_type: 'shamsi', firstIssueDate: "13270101" },
 				negin: { type: 'formula', prefix: 'Negin', title: 'نگین', calendar_type: 'shamsi', firstIssueDate: "13440301" },
 				jangal_qamari: { type: 'formula', prefix: 'Jangal', title: 'جنگل', calendar_type: 'hijri', firstIssueDate: "13350819" },
-				// Database-driven newspapers will be added here dynamically from db.json
-				// with their respective IDs and titles.
 			};
 
-			// `newspaperData` will be a dynamic object to hold references to DOM elements
-			// and runtime state for each newspaper.
 			let newspaperData = {};
 
-			// --- Initialization Functions ---
-
 			const populateDateDropdowns = () => {
-				// Populate Shamsi Year (1305 to 1373)
 				for (let year = 1305; year <= 1373; year++) {
-					const option = new Option(englishToPersianDigits(year), year); // Convert to Persian for display
+					const option = new Option(englishToPersianDigits(year), year);
 					shamsiYearInput.add(option);
 				}
-				shamsiYearInput.value = "1350"; // Default value
+				shamsiYearInput.value = "1350";
 
-				// Populate Hijri Year (1277 to 1361)
 				for (let year = 1277; year <= 1361; year++) {
-					const option = new Option(englishToPersianDigits(year), year); // Convert to Persian for display
+					const option = new Option(englishToPersianDigits(year), year);
 					hijriYearInput.add(option);
 				}
-				hijriYearInput.value = "1325"; // Default value
+				hijriYearInput.value = "1325";
 
-				// Populate Day (1 to 31)
 				for (let day = 1; day <= 31; day++) {
-					const option = new Option(englishToPersianDigits(day), day); // Convert to Persian for display
+					const option = new Option(englishToPersianDigits(day), day);
 					shamsiDayInput.add(option);
-					hijriDayInput.add(option.cloneNode(true)); // Use cloneNode for the second dropdown
+					hijriDayInput.add(option.cloneNode(true));
 				}
-				shamsiDayInput.value = "4";   // Default value
-				hijriDayInput.value = "21";  // Default value
+				shamsiDayInput.value = "4";
+				hijriDayInput.value = "21";
 			};
 
 			const generateNewspaperSectionsAndButtons = () => {
-				// Create elements for all initially defined newspapers (formula-based)
 				Object.keys(newspaperConfigurations).forEach(id => {
 					const config = newspaperConfigurations[id];
 
-					// Create Newspaper Section
 					const sectionDiv = document.createElement('div');
 					sectionDiv.id = `${id}Section`;
 					sectionDiv.classList.add('newspaper-section');
-					sectionDiv.style.display = 'none'; // Initially hidden
+					sectionDiv.style.display = 'none';
 
 					sectionDiv.innerHTML = `
 						<h2>${config.title}</h2>
@@ -1092,18 +1054,14 @@
 					`;
 					newspaperContainer.appendChild(sectionDiv);
 
-					// Create Global "Go to First Issue" Button
 					const firstIssueBtn = document.createElement('button');
 					firstIssueBtn.id = `goToFirst${id.charAt(0).toUpperCase() + id.slice(1)}Global`;
 					firstIssueBtn.textContent = config.title;
-					firstIssueBtn.style.display = 'none'; // Initially hidden
+					firstIssueBtn.style.display = 'none';
 					firstIssueBtn.classList.add(config.calendar_type === 'shamsi' ? 'shamsi-nav-btn' : 'hijri-nav-btn');
-					// Do not append to globalGoToFirstIssueControls yet, will be sorted and appended later
-					// globalGoToFirstIssueControls.appendChild(firstIssueBtn);
 
-					// Initialize `newspaperData` entry with references to created elements
 					newspaperData[id] = {
-						id: id, // Store id for easy access
+						id: id,
 						type: config.type,
 						prefix: config.prefix,
 						title: config.title,
@@ -1114,15 +1072,14 @@
 						errorElement: document.getElementById(`${id}ErrorMessage`),
 						sectionElement: document.getElementById(`${id}Section`),
 						calendar_type: config.calendar_type,
-						firstIssueDate: config.firstIssueDate, // For formula papers
-						globalFirstIssueBtn: firstIssueBtn, // Reference to the global button
-						currentIssue: null, // For database-driven papers
-						fileNameBase: null, // For current loaded issue
-						maxPages: null,	 // For current loaded issue
-						frequency: config.frequency || 'daily', // Default to daily
+						firstIssueDate: config.firstIssueDate,
+						globalFirstIssueBtn: firstIssueBtn,
+						currentIssue: null,
+						fileNameBase: null,
+						maxPages: null,
+						frequency: config.frequency || 'daily',
 					};
 
-					// Issue navigation elements are always created, but their visibility is controlled by JS
 					newspaperData[id].navState = {
 						issuesArray: [],
 						currentIndex: -1,
@@ -1138,32 +1095,26 @@
 
 			const loadNewspaperDbData = async () => {
 				try {
-					// Fetch db.json content
 					const response = await fetch('db.json');
 					if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 					const dbNewspapersRawData = await response.json();
 					console.log("db.json loaded successfully.");
 
-					// The application now solely relies on db.json for all newspaper data.
-					// Ensure your db.json includes the correct data for "Mehr" (Q25433419)
-					// with its earliest issue on 1 Khordad 1312, and its filename_base.
-
 					dbNewspapersRawData.forEach(dbPaper => {
 						const paperId = dbPaper.id;
 
-						// If this newspaper doesn't exist in initial newspaperConfigurations, create its elements
 						if (!newspaperConfigurations[paperId]) {
 							newspaperConfigurations[paperId] = {
 								type: 'database',
 								title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
 								calendar_type: dbPaper.calendar_type,
-								frequency: dbPaper.frequency || 'daily', // Set frequency from DB data
+								frequency: dbPaper.frequency || 'daily',
 							};
 
 							const sectionDiv = document.createElement('div');
 							sectionDiv.id = `${paperId}Section`;
 							sectionDiv.classList.add('newspaper-section');
-							sectionDiv.style.display = 'none'; // Initially hidden
+							sectionDiv.style.display = 'none';
 
 							sectionDiv.innerHTML = `
 								<h2>${newspaperConfigurations[paperId].title}</h2>
@@ -1187,7 +1138,7 @@
 							const firstIssueBtn = document.createElement('button');
 							firstIssueBtn.id = `goToFirst${paperId}Global`;
 							firstIssueBtn.textContent = newspaperConfigurations[paperId].title;
-							firstIssueBtn.style.display = 'none'; // Initially hidden
+							firstIssueBtn.style.display = 'none';
 							firstIssueBtn.classList.add(newspaperConfigurations[paperId].calendar_type === 'shamsi' ? 'shamsi-nav-btn' : 'hijri-nav-btn');
 
 							newspaperData[paperId] = {
@@ -1206,11 +1157,10 @@
 								currentIssue: null,
 								fileNameBase: null,
 								maxPages: null,
-								frequency: newspaperConfigurations[paperId].frequency, // Set frequency
+								frequency: newspaperConfigurations[paperId].frequency,
 							};
 						}
 
-						// Calculate firstIssueDate for database papers
 						let calculatedFirstIssueDate = null;
 						if (dbPaper.issues && dbPaper.issues.length > 0) {
 							const sortedIssues = [...dbPaper.issues].sort((a, b) => {
@@ -1222,9 +1172,8 @@
 							calculatedFirstIssueDate = `${firstIssue.year}${pad(firstIssue.month)}${pad(firstIssue.day)}`;
 						}
 						newspaperData[paperId].firstIssueDate = calculatedFirstIssueDate;
-						newspaperData[paperId].issues = dbPaper.issues; // Store issues directly here
+						newspaperData[paperId].issues = dbPaper.issues;
 
-						// Re-initialize navState for database papers, ensuring elements are linked
 						newspaperData[paperId].navState = {
 							issuesArray: [...dbPaper.issues].sort((a, b) => {
 								if (a.year !== b.year) return a.year - b.year;
@@ -1238,15 +1187,11 @@
 							navigationDiv: document.getElementById(`${paperId}Navigation`)
 						};
 
-						// Add event listeners for issue navigation
 						const navState = newspaperData[paperId].navState;
 						if (navState.prevIssueBtn) navState.prevIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue(paperId));
 						if (navState.nextIssueBtn) navState.nextIssueBtn.addEventListener('click', () => goToNextNewspaperIssue(paperId));
 						if (navState.issueNumberInput) navState.issueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber(paperId));
 
-						// Populate availableHijriDates Map for calendar highlighting (only for Hijri papers)
-						// This needs to be generalized for Shamsi database papers as well, if the calendar modal were to show Shamsi.
-						// For now, it only populates for Hijri calendar.
 						if (dbPaper.calendar_type === 'hijri') {
 							dbPaper.issues.forEach(issue => {
 								const dateString = `${issue.year}${pad(issue.month)}${pad(issue.day)}`;
@@ -1255,7 +1200,6 @@
 						}
 					});
 
-					// Now that all newspaperData is initialized, attach listeners for global first issue buttons and view all issues buttons
 					Object.values(newspaperData).forEach(paper => {
 						if (paper.globalFirstIssueBtn) {
 							paper.globalFirstIssueBtn.addEventListener('click', () => handleGlobalGoToFirstIssue(paper.id));
@@ -1290,29 +1234,22 @@
 						};
 					});
 
-				// Sort: Hijri first, then Shamsi. Within each, by date, then by title.
 				sortablePapers.sort((a, b) => {
-					// Primary sort: calendar_type (hijri before shamsi)
 					if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
 					if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
 
-					// Secondary sort: firstIssueDate
 					const dateA = parseInt(a.firstIssueDate, 10);
 					const dateB = parseInt(b.firstIssueDate, 10);
 					if (dateA !== dateB) return dateA - dateB;
 
-					// Tertiary sort: by title (for identical dates)
 					return a.title.localeCompare(b.title, 'fa');
 				});
 
-				// Clear existing buttons
 				globalGoToFirstIssueControls.innerHTML = '';
 
-				// Append sorted buttons
 				sortablePapers.forEach(paper => {
 					if (paper.globalFirstIssueBtn) {
 						globalGoToFirstIssueControls.appendChild(paper.globalFirstIssueBtn);
-						// Ensure visibility for those that have a first issue date
 						paper.globalFirstIssueBtn.style.display = 'inline-block';
 					}
 				});
@@ -1322,19 +1259,14 @@
 			const initializeApp = async () => {
 				populateDateDropdowns();
 
-				// Generate initial sections and buttons for formula papers
 				generateNewspaperSectionsAndButtons();
 
-				// Load database papers and populate `newspaperData` with their info including firstIssueDate
 				await loadNewspaperDbData();
 
-				// Now that all newspaperData is complete, sort and render global first issue buttons
 				sortAndRenderGlobalFirstIssueButtons();
 
-				// Set default state for showDatesCheckbox based on screen size
 				setShowDatesCheckboxDefault();
 
-				// Set initial calendar mode and load images based on URL parameters or defaults
 				const urlCalendar = getUrlParameter('calendar');
 				const urlYear = getUrlParameter('year');
 				const urlMonth = getUrlParameter('month');
@@ -1359,16 +1291,12 @@
 						});
 					}
 				} else {
-					// If no URL parameters, load with default date
 					loadImage('initial');
 				}
 				updateGlobalGoToFirstIssueButtonsVisibility();
 			};
 
-			// --- Core Logic Functions ---
-
 			const getWikimediaHash = (paper, fullFileNameWithPdf) => {
-				// این تابع انتظار دارد که filename_base از داده‌های بارگذاری شده (و نه ساخته‌شده) باشد.
 				if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.wikimedia_hash) {
 					return paper.currentIssue.wikimedia_hash;
 				}
@@ -1389,18 +1317,16 @@
 				let shouldDisplaySectionBasedOnModeAndType = false;
 				let issueExistsForDate = false;
 
-				// تعیین می‌کند که آیا بخش نشریه باید بر اساس حالت تقویم نمایش داده شود یا خیر
 				if (currentCalendarMode === 'hijri') {
 					if (paper.calendar_type === 'hijri') {
 						shouldDisplaySectionBasedOnModeAndType = true;
 					}
-				} else { // shamsi
+				} else {
 					if (paper.calendar_type === 'shamsi') {
 						shouldDisplaySectionBasedOnModeAndType = true;
 					}
 				}
 
-				// نمایش/پنهان کردن دکمه 'مشاهده تمام شماره‌ها' بر اساس در دسترس بودن و نوع
 				if (paper.viewAllIssuesBtn) {
 					if (paper.type === 'database' && paper.issues && paper.issues.length > 0 && shouldDisplaySectionBasedOnModeAndType) {
 						paper.viewAllIssuesBtn.style.display = 'block';
@@ -1415,13 +1341,12 @@
 
 				const titleElement = paper.sectionElement.querySelector('h2');
 				if (titleElement) {
-					titleElement.textContent = paper.title; // عنوان را در ابتدا بازنشانی می‌کند
+					titleElement.textContent = paper.title;
 				}
 
 				paper.sectionElement.style.display = shouldDisplaySectionBasedOnModeAndType ? 'flex' : 'none';
 				if (!shouldDisplaySectionBasedOnModeAndType) {
 					paper.available = false;
-					// اطمینان حاصل می‌کند که ناوبری شماره در صورت عدم نمایش بخش پنهان شود
 					if (paper.navState && paper.navState.navigationDiv) {
 						paper.navState.navigationDiv.style.display = 'none';
 					}
@@ -1433,8 +1358,8 @@
 				paper.statusElement.style.display = 'none';
 
 				if (paper.type === 'formula') {
-					if (id === 'jangal_qamari') { // مدیریت خاص برای جنگل
-						fileNameBase = `${paper.prefix} ${year}${month}${day} AH`; // اضافه کردن فاصله طبق قرارداد نام فایل
+					if (id === 'jangal_qamari') {
+						fileNameBase = `${paper.prefix} ${year}${month}${day} AH`;
 						issueExistsForDate = true;
 					}
 					else if (id === 'yaghma' && paper.calendar_type === 'shamsi') {
@@ -1484,37 +1409,34 @@
 				} else if (paper.type === 'database') {
 					let foundIssue;
 					if (paper.frequency === 'monthly') {
-						// برای نشریات ماهانه، فقط سال و ماه را مطابقت می‌دهد
 						foundIssue = paper.issues && paper.issues.find(issue =>
 							issue.year == year && issue.month == month
 						);
-					} else { // پیش‌فرض به روزانه (تطابق تاریخ دقیق)
+					} else {
 						foundIssue = paper.issues && paper.issues.find(issue =>
 							issue.year == year && issue.month == month && issue.day == day
 						);
 					}
 
 					if (foundIssue) {
-						fileNameBase = foundIssue.filename_base; // استفاده از filename_base از دیتابیس
+						fileNameBase = foundIssue.filename_base;
 						maxPages = foundIssue.pages || null;
 						paper.currentIssue = foundIssue;
 						issueExistsForDate = true;
 
-						// به‌روزرسانی شاخص فعلی در navState برای این نشریه
 						if (paper.navState) {
 							paper.navState.currentIndex = paper.navState.issuesArray.findIndex(issue =>
 								issue.filename_base === foundIssue.filename_base
 							);
 						}
 
-						// به‌روزرسانی عنوان برای شامل شدن شماره شماره برای نشریات مبتنی بر دیتابیس
 						if (titleElement) {
 							let baseTitle = paper.title;
 							if (foundIssue.issue_number) {
 								titleText = `${baseTitle} (شماره ${englishToPersianDigits(foundIssue.issue_number)})`;
 								titleElement.textContent = titleText;
 							} else {
-								titleElement.textContent = baseTitle; // بازگشت به عقب اگر issue_number موجود نباشد
+								titleElement.textContent = baseTitle;
 							}
 						}
 
@@ -1522,11 +1444,9 @@
 						paper.errorElement.textContent = 'نشریه در این تاریخ موجود نیست';
 						paper.errorElement.style.display = 'block';
 						paper.available = false;
-						// بازنشانی عنوان اگر هیچ شماره‌ای برای تاریخ پیدا نشد
 						if (titleElement) {
 							titleElement.textContent = paper.title;
 						}
-						// اطمینان حاصل می‌کند که ناوبری شماره پنهان شود اگر هیچ شماره‌ای برای تاریخ پیدا نشد
 						if (paper.navState && paper.navState.navigationDiv) {
 							paper.navState.navigationDiv.style.display = 'none';
 						}
@@ -1539,7 +1459,6 @@
 
 				if (!issueExistsForDate) {
 					paper.available = false;
-					// اطمینان حاصل می‌کند که ناوبری شماره پنهان شود اگر هیچ شماره‌ای برای تاریخ موجود نباشد
 					if (paper.navState && paper.navState.navigationDiv) {
 						paper.navState.navigationDiv.style.display = 'none';
 					}
@@ -1563,7 +1482,7 @@
 						paper.errorElement.style.display = 'none';
 						paper.available = true;
 						if (paper.navState) {
-							updateIssueNavigationVisibility(id); // فراخوانی برای اطمینان از به‌روزرسانی صحیح دیداری ناوبری شماره
+							updateIssueNavigationVisibility(id);
 						}
 						paper.fileNameBase = fileNameBase;
 						paper.maxPages = maxPages;
@@ -1580,7 +1499,6 @@
 						}
 						paper.errorElement.style.display = 'block';
 						paper.available = false;
-						// اطمینان حاصل می‌کند که ناوبری شماره پنهان شود اگر بارگذاری تصویر با شکست مواجه شد
 						if (paper.navState && paper.navState.navigationDiv) {
 							paper.navState.navigationDiv.style.display = 'none';
 						}
@@ -1589,7 +1507,6 @@
 					paper.imageElement.src = imageUrl;
 				}).catch(() => {
 					paper.available = false;
-					// اطمینان حاصل می‌کند که ناوبری شماره پنهان شود اگر خطای promise rejection رخ داد
 					if (paper.navState && paper.navState.navigationDiv) {
 						paper.navState.navigationDiv.style.display = 'none';
 					}
@@ -1636,7 +1553,6 @@
 					mainStatusMessage.style.display = 'none';
 					Object.values(newspaperData).forEach(paper => {
 						if(paper && paper.sectionElement) paper.sectionElement.style.display = 'none';
-						// Also hide issue navigation for all papers if date is incomplete
 						if(paper && paper.navState && paper.navState.navigationDiv) {
 							paper.navState.navigationDiv.style.display = 'none';
 						}
@@ -1654,8 +1570,7 @@
 
 				Object.values(newspaperData).forEach(paper => {
 					if (paper) {
-						paper.available = false; // بازنشانی در دسترس بودن برای همه نشریات
-						// همچنین ناوبری شماره را در ابتدا برای همه نشریات پنهان می‌کند
+						paper.available = false;
 						if (paper.navState && paper.navState.navigationDiv) {
 							paper.navState.navigationDiv.style.display = 'none';
 						}
@@ -1706,7 +1621,6 @@
 					}
 				});
 
-				// Re-evaluate issue navigation visibility for all displayed papers after sorting/re-rendering
 				Object.keys(newspaperData).forEach(paperId => {
 					if (newspaperData[paperId] && newspaperData[paperId].navState) {
 						updateIssueNavigationVisibility(paperId);
@@ -1731,7 +1645,7 @@
 						shamsiYearInput.value = targetDate.year;
 						shamsiMonthSelect.value = targetDate.month;
 						shamsiDayInput.value = targetDate.day;
-					} else if (targetDate.calendar_type === 'hijri') { // اطمینان حاصل می‌کند که نوع تقویم برای قمری مطابقت دارد
+					} else if (targetDate.calendar_type === 'hijri') {
 						hijriYearInput.value = targetDate.year;
 						hijriMonthSelect.value = targetDate.month;
 						hijriDayInput.value = targetDate.day;
@@ -1740,7 +1654,6 @@
 					Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 				}
 
-				// همیشه پارامترهای URL را هنگام تغییر تقویم به‌روزرسانی می‌کند
 				if (currentCalendarMode === 'shamsi') {
 					updateUrlParameters(
 						'shamsi',
@@ -1760,7 +1673,6 @@
 				loadImage('date');
 			};
 
-			// --- Lightbox Functions ---
 			const openLightbox = async (id) => {
 				currentLightboxNewspaperId = id;
 				const paper = newspaperData[id];
@@ -1774,7 +1686,6 @@
 			};
 
 			const closeLightbox = () => {
-					// همچنین مقدار ورودی صفحه را هنگام بستن لایت‌باکس به 1 بازنشانی می‌کند
 					if (currentLightboxNewspaperId && newspaperData[currentLightboxNewspaperId]) {
 							newspaperData[currentLightboxNewspaperId].currentPage = 1;
 					}
@@ -1811,7 +1722,7 @@
 									  ? {y:paper.currentIssue.year, m:paper.currentIssue.month, d:paper.currentIssue.day }
 									  : {y:year, m:parseInt(month), d:parseInt(day)};
 					const hijriMonthName = hijriMonthNames[hijriDate.m - 1];
-					formattedDate = `${englishToPersianDigits(pad(hijriDate.d))} ${hijriMonthName} ${englishToPersianDigits(hijriDate.y)} (قمری)`; // محلی‌سازی اعداد
+					formattedDate = `${englishToPersianDigits(pad(hijriDate.d))} ${hijriMonthName} ${englishToPersianDigits(hijriDate.y)} (قمری)`;
 				} else if (paper.calendar_type === 'shamsi') {
 					const shamsiDate = (paper.type === 'database' && paper.currentIssue)
 									 ? {y:paper.currentIssue.year, m:paper.currentIssue.month, d:paper.currentIssue.day }
@@ -1819,22 +1730,22 @@
 					const persianMonthName = shamsiMonthNames[shamsiDate.m - 1];
 
 					if (paper.type === 'database' && paper.frequency === 'monthly') {
-						formattedDate = `${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`; // فقط ماه و سال برای ماهانه
+						formattedDate = `${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`;
 					} else {
-						formattedDate = `${englishToPersianDigits(pad(shamsiDate.d))} ${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`; // محلی‌سازی اعداد
+						formattedDate = `${englishToPersianDigits(pad(shamsiDate.d))} ${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`;
 					}
 				} else {
-					formattedDate = `${englishToPersianDigits(pad(day))}/${englishToPersianDigits(pad(month))}/${englishToPersianDigits(year)}`; // محلی‌سازی اعداد
+					formattedDate = `${englishToPersianDigits(pad(day))}/${englishToPersianDigits(pad(month))}/${englishToPersianDigits(year)}`;
 				}
 
 				let titleText = `${paper.title}`;
 				if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.issue_number) {
-					titleText += ` (شماره ${englishToPersianDigits(paper.currentIssue.issue_number)})`; // محلی‌سازی عدد
+					titleText += ` (شماره ${englishToPersianDigits(paper.currentIssue.issue_number)})`;
 				}
 
-				lightboxNewspaperTitle.textContent = `${titleText} - ${formattedDate} - صفحه: ${englishToPersianDigits(lightboxCurrentPage)}`; // محلی‌سازی عدد
+				lightboxNewspaperTitle.textContent = `${titleText} - ${formattedDate} - صفحه: ${englishToPersianDigits(lightboxCurrentPage)}`;
 				lightboxPageNumberInput.value = lightboxCurrentPage;
-				lightboxImage.alt = `تصویر ${paper.title} در لایت‌باکس - صفحه ${englishToPersianDigits(lightboxCurrentPage)}`; // محلی‌سازی عدد
+				lightboxImage.alt = `تصویر ${paper.title} در لایت‌باکس - صفحه ${englishToPersianDigits(lightboxCurrentPage)}`;
 
 				lightboxStatusMessage.textContent = 'در حال بارگذاری...';
 				lightboxStatusMessage.style.display = 'block';
@@ -1849,7 +1760,7 @@
 
 				if (paper.type === 'formula') {
 					dateForFilename = {y: year, m: month, d: day};
-					if (id === 'jangal_qamari') { // مدیریت خاص برای جنگل
+					if (id === 'jangal_qamari') {
 						fileNameBase = `${paper.prefix} ${dateForFilename.y}${dateForFilename.m}${dateForFilename.d} AH`;
 					} else if (id === 'yaghma' && paper.calendar_type === 'shamsi') {
 						const shamsiInputYear = parseInt(dateForFilename.y, 10);
@@ -1894,7 +1805,6 @@
 						fileNameBase = `${paper.prefix}${dateForFilename.y}${dateForFilename.m}${dateForFilename.d}${paper.calendar_type === 'hijri' ? ' AH' : ''}`;
 					}
 				} else if (paper.type === 'database' && paper.currentIssue) {
-					// استفاده از filename_base مستقیماً از شماره فعلی بارگذاری شده از db.json
 					fileNameBase = paper.currentIssue.filename_base;
 					maxPages = paper.currentIssue.pages || null;
 					dateForFilename = {y: paper.currentIssue.year, m: pad(paper.currentIssue.month), d: pad(paper.currentIssue.day)};
@@ -1915,12 +1825,11 @@
 
 				lightboxImage.src = imageUrl;
 
-				// --- اصلاح ۱: باز کردن لینک Wikimedia Commons با کلیک بر روی تصویر ---
 				const wikimediaFileLink = `https://commons.wikimedia.org/w/index.php?title=File%3A${fileNameForUrlPath}&page=${lightboxCurrentPage}`;
 				lightboxImage.onclick = () => {
 					window.open(wikimediaFileLink, '_blank');
 				};
-				lightboxImage.style.cursor = 'pointer'; // نشان دادن قابل کلیک بودن
+				lightboxImage.style.cursor = 'pointer';
 
 				try {
 					await new Promise((resolve, reject) => {
@@ -1940,7 +1849,7 @@
 				} catch (error) {
 					lightboxStatusMessage.style.display = 'none';
 					lightboxImage.style.display = 'none';
-					lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${englishToPersianDigits(lightboxCurrentPage)} یافت نشد.`; // محلی‌سازی عدد
+					lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${englishToPersianDigits(lightboxCurrentPage)} یافت نشد.`;
 					lightboxErrorMessage.style.display = 'block';
 					downloadLink.style.display = 'none';
 					viewLargeLink.style.display = 'none';
@@ -1949,11 +1858,10 @@
 				lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
 				lightboxNextPageButton.disabled = (maxPages !== null && maxPages !== Infinity && lightboxCurrentPage >= maxPages);
 
-				// --- اصلاح: نمایش ناوبری شماره و "مشاهده تمام شماره‌ها" در لایت‌باکس، و ناوبری جداگانه نشریات ---
 				const isDatabasePaperWithIssues = paper.type === 'database' && paper.issues && paper.issues.length > 0;
 
 				if (isDatabasePaperWithIssues) {
-					issueNavLightbox.style.display = 'flex'; // نمایش ناوبری شماره
+					issueNavLightbox.style.display = 'flex';
 					const navState = paper.navState;
 					if (navState && navState.currentIssue) {
 						lightboxIssueNumberInput.value = navState.currentIssue.issue_number || '';
@@ -1966,30 +1874,26 @@
 						lightboxPrevIssueButton.disabled = true;
 						lightboxNextIssueButton.disabled = true;
 					}
-					lightboxViewAllIssuesButton.style.display = 'inline-block'; // همیشه برای نشریات دیتابیس در لایت‌باکس نمایش داده می‌شود
+					lightboxViewAllIssuesButton.style.display = 'inline-block';
 				} else {
-					issueNavLightbox.style.display = 'none'; // پنهان کردن ناوبری شماره
-					lightboxViewAllIssuesButton.style.display = 'none'; // پنهان کردن "مشاهده تمام شماره‌ها"
+					issueNavLightbox.style.display = 'none';
+					lightboxViewAllIssuesButton.style.display = 'none';
 				}
 
-				// تعیین دیداری ناوبری نشریات (بین نشریات مختلف در یک تاریخ)
-				// این منطق اکنون مستقل از دیداری `issueNavLightbox` است
 				const availableNewspapersForCurrentDate = Object.keys(newspaperData)
 					.filter(key => {
 						const p = newspaperData[key];
 						if (!p || !p.available) return false;
-						// فقط نشریات مطابق با حالت تقویم فعلی را در نظر بگیرید
 						const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
 											(currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
 						return matchesMode;
 					});
-                
-                // مرتب‌سازی اصلاح‌شده: مرتب‌سازی بر اساس عنوان به فارسی برای ترتیب ثابت
-                availableNewspapersForCurrentDate.sort((aId, bId) => { // این خط اصلاح شده است
-                    const paperA = newspaperData[aId];
-                    const paperB = newspaperData[bId];
-                    return paperA.title.localeCompare(paperB.title, 'fa');
-                });
+				
+				availableNewspapersForCurrentDate.sort((aId, bId) => {
+					const paperA = newspaperData[aId];
+					const paperB = newspaperData[bId];
+					return paperA.title.localeCompare(paperB.title, 'fa');
+				});
 
 
 				if (availableNewspapersForCurrentDate.length <= 1) {
@@ -2015,7 +1919,7 @@
 					lightboxCurrentPage++;
 				}
 				if (currentPageBeforeChange !== lightboxCurrentPage) {
-					paper.currentPage = lightboxCurrentPage; // به‌روزرسانی صفحه فعلی نشریه
+					paper.currentPage = lightboxCurrentPage;
 					updateLightboxContent();
 				}
 			};
@@ -2025,18 +1929,16 @@
 					.filter(key => {
 						const p = newspaperData[key];
 						if (!p || !p.available) return false;
-						// فقط نشریات مطابق با حالت تقویم فعلی را در نظر بگیرید
 						const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
 										   (currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
 						return matchesMode;
 					});
-                
-                // مرتب‌سازی اصلاح‌شده: مرتب‌سازی بر اساس عنوان به فارسی برای ترتیب ثابت
-                availableNewspapers.sort((aId, bId) => {
-                    const paperA = newspaperData[aId];
-                    const paperB = newspaperData[bId];
-                    return paperA.title.localeCompare(paperB.title, 'fa');
-                });
+				
+				availableNewspapers.sort((aId, bId) => {
+					const paperA = newspaperData[aId];
+					const paperB = newspaperData[bId];
+					return paperA.title.localeCompare(paperB.title, 'fa');
+				});
 
 
 				if (availableNewspapers.length <= 1) return;
@@ -2050,14 +1952,12 @@
 				currentLightboxNewspaperId = availableNewspapers[newIndex];
 				const newPaper = newspaperData[currentLightboxNewspaperId];
 				if (newPaper) {
-					lightboxCurrentPage = newPaper.currentPage; // تنظیم صفحه لایت‌باکس به آخرین صفحه مشاهده شده نشریه جدید
+					lightboxCurrentPage = newPaper.currentPage;
 				} else {
 					lightboxCurrentPage = 1;
 				}
-				updateLightboxContent(); // تازه‌سازی محتوای لایت‌باکس
+				updateLightboxContent();
 			};
-
-			// --- Issue Navigation (for database-driven papers) ---
 
 			const updateIssueNavButtons = (newspaperId) => {
 				const paper = newspaperData[newspaperId];
@@ -2074,15 +1974,13 @@
 				const { issuesArray, issueNumberInput } = paper.navState;
 				if (index < 0 || index >= issuesArray.length) return;
 				
-				paper.navState.currentIndex = index; // به‌روزرسانی شاخص فعلی
-				paper.navState.currentIssue = issuesArray[index]; // به‌روزرسانی ارجاع شماره فعلی
+				paper.navState.currentIndex = index;
+				paper.navState.currentIssue = issuesArray[index];
 
 				const issue = issuesArray[index];
 				if (!issueNumberInput || !issue) return;
 				issueNumberInput.value = issue.issue_number || '';
 				
-				// تنظیم ورودی‌های تاریخ اصلی به تاریخ این شماره
-				// نکته: در حال حاضر برای نشریات دیتابیس قمری فرض می‌شود، اگر نشریات دیتابیس شمسی اضافه شوند ممکن است نیاز به تبدیل تقویم پیچیده‌تری باشد.
 				if (paper.calendar_type === 'hijri') {
 					hijriYearInput.value = issue.year;
 					hijriMonthSelect.value = issue.month;
@@ -2093,22 +1991,19 @@
 					shamsiDayInput.value = issue.day;
 				}
 
-				// برای ناوبری شماره خاص لایت‌باکس
-				currentLightboxNewspaperId = newspaperId; // اطمینان حاصل می‌کند که لایت‌باکس روی این نشریه متمرکز است
-				lightboxCurrentPage = 1; // بازنشانی به صفحه ۱ برای شماره جدید
+				currentLightboxNewspaperId = newspaperId;
+				lightboxCurrentPage = 1;
 
-				mainPageNumberInput.value = 1; // بازنشانی ورودی صفحه اصلی
-				Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; }); // بازنشانی صفحه فعلی همه نشریات
+				mainPageNumberInput.value = 1;
+				Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 
-				loadImage('date'); // بارگذاری مجدد محتوا برای تاریخ/شماره جدید
-				updateIssueNavButtons(newspaperId); // به‌روزرسانی دکمه‌های ناوبری نمای اصلی
+				loadImage('date');
+				updateIssueNavButtons(newspaperId);
 				
-				// اگر لایت‌باکس باز است، محتوای آن را نیز به‌روزرسانی می‌کند
 				if (lightboxOverlay.classList.contains('visible') && currentLightboxNewspaperId === newspaperId) {
 					updateLightboxContent();
 				}
 
-				// به‌روزرسانی پارامترهای URL
 				updateUrlParameters(
 					currentCalendarMode,
 					currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value,
@@ -2145,7 +2040,6 @@
 
 			const updateIssueNavigationVisibility = (newspaperId) => {
 				const paper = newspaperData[newspaperId];
-				// نمایش ناوبری شماره فقط برای نشریات مبتنی بر دیتابیس که موجود هستند
 				if (!paper || paper.type !== 'database' || !paper.available || !paper.navState || !paper.navState.navigationDiv ||
 					!paper.issues || paper.issues.length === 0) {
 					if (paper && paper.navState && paper.navState.navigationDiv) {
@@ -2155,37 +2049,36 @@
 				}
 
 				const { navigationDiv, issueNumberInput, issuesArray } = paper.navState;
-				navigationDiv.style.display = 'block'; // نمایش برای نشریات دیتابیس موجود
+				navigationDiv.style.display = 'block';
 
 				let currentYear, currentMonth, currentDay;
 				if (currentCalendarMode === 'shamsi') {
 					currentYear = parseInt(shamsiYearInput.value);
 					currentMonth = parseInt(shamsiMonthSelect.value);
 					currentDay = parseInt(shamsiDayInput.value);
-				} else { // hijri
+				} else {
 					currentYear = parseInt(hijriYearInput.value);
 					currentMonth = parseInt(hijriMonthSelect.value);
 					currentDay = parseInt(hijriDayInput.value);
 				}
 
 				let foundIndex = -1;
-				// پیدا کردن شماره مربوط به تاریخ فعلی انتخاب شده در کنترل‌های اصلی
 				if (paper.calendar_type === 'hijri') {
-					if (paper.frequency === 'monthly') { // برای نشریات ماهانه قمری، روز را نادیده می‌گیرد
+					if (paper.frequency === 'monthly') {
 						foundIndex = issuesArray.findIndex(issue =>
 							issue.year === currentYear && issue.month === currentMonth
 						);
-					} else { // روزانه
+					} else {
 						foundIndex = issuesArray.findIndex(issue =>
 							issue.year === currentYear && issue.month === currentMonth && issue.day === currentDay
 						);
 					}
 				} else if (paper.calendar_type === 'shamsi') {
-					if (paper.frequency === 'monthly') { // برای نشریات ماهانه شمسی، روز را نادیده می‌گیرد
+					if (paper.frequency === 'monthly') {
 						foundIndex = issuesArray.findIndex(issue =>
 							issue.year === currentYear && issue.month === currentMonth
 						);
-					} else { // روزانه
+					} else {
 						foundIndex = issuesArray.findIndex(issue =>
 							issue.year === currentYear && issue.month === currentMonth && issue.day === currentDay
 						);
@@ -2206,7 +2099,6 @@
 				updateIssueNavButtons(newspaperId);
 			};
 
-			// --- Global "Go to First Issue" Logic ---
 			const handleGlobalGoToFirstIssue = (paperId) => {
 				const paper = newspaperData[paperId];
 				if (!paper) {
@@ -2216,7 +2108,6 @@
 
 				let targetDate = null;
 				if (paper.type === 'database' && paper.issues && paper.issues.length > 0) {
-					// برای نشریات مبتنی بر دیتابیس، از اولین شماره زمانی از شماره‌های بارگذاری شده استفاده می‌کند.
 					const issuesToConsider = paper.navState && paper.navState.issuesArray
 										   ? paper.navState.issuesArray
 										   : [...paper.issues].sort((a,b) => {
@@ -2230,22 +2121,20 @@
 							year: firstChronologicalIssue.year,
 							month: firstChronologicalIssue.month,
 							day: firstChronologicalIssue.day,
-                            calendar_type: paper.calendar_type // ارسال calendar_type به handleCalendarChange
+							calendar_type: paper.calendar_type
 						};
 					}
 				} else if (paper.type === 'formula' && paper.firstIssueDate) {
-					// برای نشریات مبتنی بر فرمول، از firstIssueDate از پیش تعریف شده استفاده می‌کند.
 					const dateStr = paper.firstIssueDate;
 					targetDate = {
 						year: parseInt(dateStr.substring(0, 4)),
 						month: parseInt(dateStr.substring(4, 6)),
 						day: parseInt(dateStr.substring(6, 8)),
-                        calendar_type: paper.calendar_type // ارسال calendar_type به handleCalendarChange
+						calendar_type: paper.calendar_type
 					};
 				}
 
 				if (targetDate) {
-					// اطمینان حاصل می‌کند که حالت تقویم صحیح فعال است
 					if (targetDate.calendar_type === 'shamsi' && currentCalendarMode !== 'shamsi') {
 						shamsiCalendarRadio.checked = true;
 						currentCalendarMode = 'shamsi';
@@ -2253,10 +2142,8 @@
 						hijriCalendarRadio.checked = true;
 						currentCalendarMode = 'hijri';
 					}
-					// اعمال تاریخ و بارگذاری تصاویر
 					handleCalendarChange(targetDate);
 
-					// به‌روزرسانی پارامترهای URL پس از تغییر تاریخ
 					updateUrlParameters(
 						currentCalendarMode,
 						currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value,
@@ -2289,7 +2176,6 @@
 				});
 			};
 
-			// --- All Issues Modal Functions ---
 			const openAllNewspapersIssuesModal = (initialPaperId = null) => {
 				allIssuesModalErrorMessage.style.display = 'none';
 				allIssuesModalNewspaperTitle.textContent = 'فهرست شماره‌های نشریات';
@@ -2368,11 +2254,10 @@
 					let buttonText = `شمارهٔ ${englishToPersianDigits(issue.issue_number)}`;
 
 					if (displayDates) {
-						// تعیین نام ماه بر اساس نوع تقویم و فرکانس
 						let monthNamesArray = [];
 						if (paper.calendar_type === 'shamsi') {
 							monthNamesArray = shamsiMonthNames;
-						} else { // فرض بر قمری
+						} else {
 							monthNamesArray = hijriMonthNames;
 						}
 
@@ -2380,8 +2265,8 @@
 
 						if (paper.frequency === 'monthly') {
 							buttonText += `, ${monthName} ${englishToPersianDigits(issue.year)}`;
-						} else { // روزانه یا فرکانس‌های دیگر
-							buttonText += `, روز ${englishToPersianDigits(issue.day)} ${monthName} ${englishToPersianDigits(issue.year)}`; // محلی‌سازی اعداد
+						} else {
+							buttonText += `, روز ${englishToPersianDigits(issue.day)} ${monthName} ${englishToPersianDigits(issue.year)}`;
 						}
 					}
 
@@ -2399,7 +2284,6 @@
 			};
 
 			const goToIssueFromModal = (paperId, issue) => {
-				// اطمینان از انتخاب حالت تقویم صحیح بر اساس نوع تقویم نشریه
 				if (newspaperData[paperId].calendar_type === 'shamsi') {
 					if (currentCalendarMode !== 'shamsi') {
 						shamsiCalendarRadio.checked = true;
@@ -2408,7 +2292,7 @@
 					shamsiYearInput.value = issue.year;
 					shamsiMonthSelect.value = issue.month;
 					shamsiDayInput.value = issue.day;
-				} else { // فرض بر قمری
+				} else {
 					if (currentCalendarMode !== 'hijri') {
 						hijriCalendarRadio.checked = true;
 						currentCalendarMode = 'hijri';
@@ -2418,7 +2302,6 @@
 					hijriDayInput.value = issue.day;
 				}
 
-				// به‌روزرسانی پارامترهای URL
 				updateUrlParameters(
 					currentCalendarMode,
 					currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value,
@@ -2430,10 +2313,9 @@
 				loadImage('date');
 			};
 
-			// --- Calendar Modal Functions ---
 			const populateCalendarYearDropdown = () => {
 				for (let year = minCalendarYear; year <= maxCalendarYear; year++) {
-					const option = new Option(englishToPersianDigits(year), year); // محلی‌سازی عدد
+					const option = new Option(englishToPersianDigits(year), year);
 					calendarYearSelect.add(option);
 				}
 			};
@@ -2457,16 +2339,14 @@
 				prevYearBtn.disabled = currentCalendarYear <= minCalendarYear;
 				nextYearBtn.disabled = currentCalendarYear >= maxCalendarYear;
 
-				// محلی‌سازی سال در عنوان
 				calendarModalTitle.textContent = `تقویم قمری سال ${englishToPersianDigits(currentCalendarYear)}`;
 
-				// دریافت روز انتخاب‌شده فعلی از ورودی‌های اصلی
 				const selectedHijriYear = parseInt(hijriYearInput.value, 10);
 				const selectedHijriMonth = parseInt(hijriMonthSelect.value, 10);
 				const selectedHijriDay = parseInt(hijriDayInput.value, 10);
 
 
-				const maxDaysToDisplay = 30; // حداکثر روزهای قابل نمایش در گرید برای یکنواختی بصری (تمام ماه‌های قمری حداکثر ۳۰ روز دارند)
+				const maxDaysToDisplay = 30;
 
 				for (let month = 1; month <= 12; month++) {
 					const monthDiv = document.createElement('div');
@@ -2481,7 +2361,7 @@
 
 					for (let day = 1; day <= maxDaysToDisplay; day++) {
 						const dayBtn = document.createElement('button');
-						dayBtn.textContent = englishToPersianDigits(day); // محلی‌سازی عدد
+						dayBtn.textContent = englishToPersianDigits(day);
 						dayBtn.classList.add('calendar-day-btn');
 
 						const dateString = `${year}${pad(month)}${pad(day)}`;
@@ -2489,19 +2369,17 @@
 
 						if (issueCount > 0) {
 							dayBtn.classList.add('has-issue');
-							// اضافه کردن کلاس‌های کدورت بر اساس تعداد شماره‌ها
 							if (issueCount === 1) {
 								dayBtn.classList.add('issue-count-1');
 							} else if (issueCount === 2) {
 								dayBtn.classList.add('issue-count-2');
-								dayBtn.classList.add('has-multiple-issues'); // اعمال استایل چند شماره‌ای
-							} else { // ۳ یا بیشتر
+								dayBtn.classList.add('has-multiple-issues');
+							} else {
 								dayBtn.classList.add('issue-count-3plus');
-								dayBtn.classList.add('has-multiple-issues'); // اعمال استایل چند شماره‌ای
+								dayBtn.classList.add('has-multiple-issues');
 							}
 						}
 
-						// اضافه کردن کلاس selected-day اگر این روز در حال حاضر انتخاب شده باشد
 						if (year === selectedHijriYear && month === selectedHijriMonth && day === selectedHijriDay) {
 							dayBtn.classList.add('selected-day');
 						}
@@ -2517,17 +2395,14 @@
 			};
 
 			const goToDateFromCalendar = (year, month, day) => {
-				// تغییر حالت تقویم به قمری و انتخاب رادیو دکمه قمری
 				hijriCalendarRadio.checked = true;
 				currentCalendarMode = 'hijri';
-				handleCalendarChange(); // فراخوانی handleCalendarChange برای به‌روزرسانی نمایش کنترل‌ها
+				handleCalendarChange();
 
-				// تنظیم ورودی‌های تاریخ قمری به روز انتخاب‌شده
 				hijriYearInput.value = year;
 				hijriMonthSelect.value = month;
 				hijriDayInput.value = day;
 
-				// به‌روزرسانی پارامترهای URL
 				updateUrlParameters(
 					currentCalendarMode,
 					hijriYearInput.value,
@@ -2539,13 +2414,10 @@
 				loadImage('date');
 			};
 
-			// New function to set default state of showDatesCheckbox
 			const setShowDatesCheckboxDefault = () => {
-				// Default checked if desktop (width > 768px), unchecked if mobile
 				showDatesCheckbox.checked = window.innerWidth > 768;
 			};
 
-			// --- Event Listeners ---
 			shamsiCalendarRadio.addEventListener('change', () => {
 				currentCalendarMode = 'shamsi';
 				handleCalendarChange();
@@ -2558,8 +2430,6 @@
 
 			[shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput].forEach(el => {
 				if(el) el.addEventListener('change', () => {
-					// The handleCalendarChange function (called on radio change) or the loadImage('date') will call updateUrlParameters.
-					// For direct year/month/day changes without changing calendar mode, call updateUrlParameters here.
 					if (currentCalendarMode === 'shamsi') {
 						updateUrlParameters(
 							'shamsi',
@@ -2567,7 +2437,7 @@
 							shamsiMonthSelect.value,
 							shamsiDayInput.value
 						);
-					} else { // currentCalendarMode === 'hijri'
+					} else {
 						updateUrlParameters(
 							'hijri',
 							hijriYearInput.value,
@@ -2581,7 +2451,6 @@
 
 			if(mainPageNumberInput) mainPageNumberInput.addEventListener('change', () => {
 				loadImage('pageInput');
-				// Update URL parameters when main page number changes
 				if (currentCalendarMode === 'shamsi') {
 					updateUrlParameters(
 						'shamsi',
@@ -2615,7 +2484,7 @@
 						} else {
 							lightboxCurrentPage = parsedInputPage;
 						}
-						paper.currentPage = lightboxCurrentPage; // به‌روزرسانی صفحه فعلی نشریه
+						paper.currentPage = lightboxCurrentPage;
 						updateLightboxContent();
 					}
 				} else {
@@ -2625,7 +2494,6 @@
 			lightboxPrevNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('prev'));
 			lightboxNextNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('next'));
 
-			// New Lightbox Issue Navigation Event Listeners
 			lightboxPrevIssueButton.addEventListener('click', () => {
 				goToPrevNewspaperIssue(currentLightboxNewspaperId);
 			});
@@ -2634,7 +2502,7 @@
 			});
 			lightboxViewAllIssuesButton.addEventListener('click', () => {
 				openAllNewspapersIssuesModal(currentLightboxNewspaperId);
-				closeLightbox(); // بستن لایت‌باکس قبل از باز کردن حالت تمام شماره‌ها
+				closeLightbox();
 			});
 
 
@@ -2667,22 +2535,20 @@
 				}
 			});
 
-			// Event listener for the new showDatesCheckbox
 			showDatesCheckbox.addEventListener('change', () => {
 				const currentSelectedPaperButton = newspaperSelectionContainer.querySelector('button.selected');
 				if (currentSelectedPaperButton) {
 					const paperId = currentSelectedPaperButton.dataset.paperId;
-					displayIssuesForSelectedNewspaper(paperId); // رندر مجدد لیست شماره‌های فعلی
+					displayIssuesForSelectedNewspaper(paperId);
 				} else {
-                    // اگر نشریه‌ای انتخاب نشده است، برای اولین نشریه موجود رندر مجدد انجام دهید
-                    const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
-                        paper.type === 'database' && paper.issues && paper.issues.length > 0
-                    ).sort((a, b) => a.title.localeCompare(b.title, 'fa'));
+					const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
+						paper.type === 'database' && paper.issues && paper.issues.length > 0
+					).sort((a, b) => a.title.localeCompare(b.title, 'fa'));
 
-                    if (dbPapersWithIssues.length > 0) {
-                        displayIssuesForSelectedNewspaper(dbPapersWithIssues[0].id);
-                    }
-                }
+					if (dbPapersWithIssues.length > 0) {
+						displayIssuesForSelectedNewspaper(dbPapersWithIssues[0].id);
+					}
+				}
 			});
 
 
@@ -2716,7 +2582,6 @@
 				}
 			});
 
-			// --- App Start ---
 			initializeApp();
 		});
 	</script>
