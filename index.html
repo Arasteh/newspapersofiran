@@ -1138,7 +1138,7 @@
 
 			const loadNewspaperDbData = async () => {
 				try {
-					// Fetch db.json content
+					// Fetch db.json content - this is the corrected line
 					const response = await fetch('db.json');
 					if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 					const dbNewspapersRawData = await response.json();
@@ -1241,6 +1241,8 @@
 						if (navState.issueNumberInput) navState.issueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber(paperId));
 
 						// Populate availableHijriDates Map for calendar highlighting (only for Hijri papers)
+						// This needs to be generalized for Shamsi database papers as well, if the calendar modal were to show Shamsi.
+						// For now, it only populates for Hijri calendar.
 						if (dbPaper.calendar_type === 'hijri') {
 							dbPaper.issues.forEach(issue => {
 								const dateString = `${issue.year}${pad(issue.month)}${pad(issue.day)}`;
@@ -1723,7 +1725,7 @@
 						shamsiYearInput.value = targetDate.year;
 						shamsiMonthSelect.value = targetDate.month;
 						shamsiDayInput.value = targetDate.day;
-					} else if (currentCalendarMode === 'hijri') {
+					} else if (targetDate.calendar_type === 'hijri') { // Ensure calendar type matches for Hijri
 						hijriYearInput.value = targetDate.year;
 						hijriMonthSelect.value = targetDate.month;
 						hijriDayInput.value = targetDate.day;
@@ -1966,14 +1968,15 @@
 
 				// Determine visibility of newspaper navigation (between different papers on same date)
 				// This logic is now independent of `issueNavLightbox`'s visibility
-				const availableNewspapersForCurrentDate = Object.keys(newspaperData).filter(key => {
-					const p = newspaperData[key];
-					if (!p || !p.available) return false;
-					// Only consider newspapers matching the current calendar mode
-					const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
-										(currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
-					return matchesMode;
-				});
+				const availableNewspapersForCurrentDate = Object.keys(newspaperData)
+					.filter(key => {
+						const p = newspaperData[key];
+						if (!p || !p.available) return false;
+						// Only consider newspapers matching the current calendar mode
+						const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
+											(currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
+						return matchesMode;
+					});
                 
                 // Corrected sort: Sort by title in Persian for consistent ordering
                 availableNewspapers.sort((aId, bId) => {
@@ -2220,7 +2223,8 @@
 						targetDate = {
 							year: firstChronologicalIssue.year,
 							month: firstChronologicalIssue.month,
-							day: firstChronologicalIssue.day
+							day: firstChronologicalIssue.day,
+                            calendar_type: paper.calendar_type // Pass calendar_type to handleCalendarChange
 						};
 					}
 				} else if (paper.type === 'formula' && paper.firstIssueDate) {
@@ -2229,16 +2233,17 @@
 					targetDate = {
 						year: parseInt(dateStr.substring(0, 4)),
 						month: parseInt(dateStr.substring(4, 6)),
-						day: parseInt(dateStr.substring(6, 8))
+						day: parseInt(dateStr.substring(6, 8)),
+                        calendar_type: paper.calendar_type // Pass calendar_type to handleCalendarChange
 					};
 				}
 
 				if (targetDate) {
 					// Ensure the correct calendar mode is active
-					if (paper.calendar_type === 'shamsi' && currentCalendarMode !== 'shamsi') {
+					if (targetDate.calendar_type === 'shamsi' && currentCalendarMode !== 'shamsi') {
 						shamsiCalendarRadio.checked = true;
 						currentCalendarMode = 'shamsi';
-					} else if (paper.calendar_type === 'hijri' && currentCalendarMode !== 'hijri') {
+					} else if (targetDate.calendar_type === 'hijri' && currentCalendarMode !== 'hijri') {
 						hijriCalendarRadio.checked = true;
 						currentCalendarMode = 'hijri';
 					}
@@ -2357,13 +2362,19 @@
 					let buttonText = `شمارهٔ ${englishToPersianDigits(issue.issue_number)}`;
 
 					if (displayDates) {
+						// Determine month name based on calendar_type and frequency
+						let monthNamesArray = [];
+						if (paper.calendar_type === 'shamsi') {
+							monthNamesArray = shamsiMonthNames;
+						} else { // Assume hijri
+							monthNamesArray = hijriMonthNames;
+						}
+
+						const monthName = monthNamesArray[issue.month - 1];
+
 						if (paper.frequency === 'monthly') {
-							const monthName = shamsiMonthNames[issue.month - 1]; // Assuming Shamsi for Yadegar (as per original request)
 							buttonText += `, ${monthName} ${englishToPersianDigits(issue.year)}`;
-						} else {
-							// Determine month name based on calendar_type for daily papers
-							const monthNamesArray = paper.calendar_type === 'shamsi' ? shamsiMonthNames : hijriMonthNames;
-							const monthName = monthNamesArray[issue.month - 1];
+						} else { // Daily or other frequencies
 							buttonText += `, روز ${englishToPersianDigits(issue.day)} ${monthName} ${englishToPersianDigits(issue.year)}`; // Localize numbers
 						}
 					}
