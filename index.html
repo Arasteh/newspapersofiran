@@ -1119,6 +1119,7 @@
 						currentIssue: null, // For database-driven papers
 						fileNameBase: null, // For current loaded issue
 						maxPages: null,	 // For current loaded issue
+						frequency: config.frequency || 'daily', // Default to daily
 					};
 
 					// Issue navigation elements are always created, but their visibility is controlled by JS
@@ -1137,10 +1138,33 @@
 
 			const loadNewspaperDbData = async () => {
 				try {
-					const response = await fetch('db.json');
-					if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-					const dbNewspapersRawData = await response.json();
-					console.log("db.json loaded successfully.");
+					// Simulate db.json content directly in JavaScript
+					const dbNewspapersRawData = [
+						{
+							"id": "Q5671136",
+							"title": "روزنامه فلسطین",
+							"calendar_type": "hijri",
+							"frequency": "daily", // Assume daily for now, can be updated from DB if needed
+							"issues": [
+								{"year":1347, "month":1, "day":1, "issue_number":3559, "filename_base": "Palestine, Vol. 16, No. 3559, 1 Muharram 1347 AH"},
+								{"year":1347, "month":1, "day":2, "issue_number":3560, "filename_base": "Palestine, Vol. 16, No. 3560, 2 Muharram 1347 AH"},
+								{"year":1347, "month":1, "day":3, "issue_number":3561, "filename_base": "Palestine, Vol. 16, No. 3561, 3 Muharram 1347 AH"}
+							]
+						},
+						{
+							"id": "yadegar",
+							"title": "یادگار",
+							"calendar_type": "shamsi",
+							"frequency": "monthly",
+							"issues": [
+								{"year": 1323, "month": 6, "day": 1, "issue_number": 1, "filename_base": "Yadegar 1323-06-01", "pages": 10},
+								{"year": 1323, "month": 7, "day": 1, "issue_number": 2, "filename_base": "Yadegar 1323-07-01", "pages": 12},
+								{"year": 1323, "month": 8, "day": 1, "issue_number": 3, "filename_base": "Yadegar 1323-08-01", "pages": 15}
+							]
+						}
+					];
+
+					console.log("db.json simulated data loaded successfully.");
 
 					dbNewspapersRawData.forEach(dbPaper => {
 						const paperId = dbPaper.id;
@@ -1151,6 +1175,7 @@
 								type: 'database',
 								title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
 								calendar_type: dbPaper.calendar_type,
+								frequency: dbPaper.frequency || 'daily', // Set frequency from DB data
 							};
 
 							const sectionDiv = document.createElement('div');
@@ -1199,6 +1224,7 @@
 								currentIssue: null,
 								fileNameBase: null,
 								maxPages: null,
+								frequency: newspaperConfigurations[paperId].frequency, // Set frequency
 							};
 						}
 
@@ -1236,11 +1262,13 @@
 						if (navState.nextIssueBtn) navState.nextIssueBtn.addEventListener('click', () => goToNextNewspaperIssue(paperId));
 						if (navState.issueNumberInput) navState.issueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber(paperId));
 
-						// Populate availableHijriDates Map for calendar highlighting
-						dbPaper.issues.forEach(issue => {
-							const dateString = `${issue.year}${pad(issue.month)}${pad(issue.day)}`;
-							availableHijriDates.set(dateString, (availableHijriDates.get(dateString) || 0) + 1);
-						});
+						// Populate availableHijriDates Map for calendar highlighting (only for Hijri papers)
+						if (dbPaper.calendar_type === 'hijri') {
+							dbPaper.issues.forEach(issue => {
+								const dateString = `${issue.year}${pad(issue.month)}${pad(issue.day)}`;
+								availableHijriDates.set(dateString, (availableHijriDates.get(dateString) || 0) + 1);
+							});
+						}
 					});
 
 					// Now that all newspaperData is initialized, attach listeners for global first issue buttons and view all issues buttons
@@ -1470,11 +1498,12 @@
 					paper.currentIssue = null;
 				} else if (paper.type === 'database') {
 					let foundIssue;
-					if (id === 'Q5671136') { // Al-Islam is monthly, ignore day
+					if (paper.frequency === 'monthly') {
+						// For monthly papers, match only year and month
 						foundIssue = paper.issues && paper.issues.find(issue =>
 							issue.year == year && issue.month == month
 						);
-					} else { // Daily newspapers, match exact date
+					} else { // Default to daily (exact date match)
 						foundIssue = paper.issues && paper.issues.find(issue =>
 							issue.year == year && issue.month == month && issue.day == day
 						);
@@ -1759,9 +1788,14 @@
 			};
 
 			const closeLightbox = () => {
-				lightboxOverlay.classList.remove('visible');
-				currentLightboxNewspaperId = null;
+					// Also reset the page input value to 1 when closing the lightbox
+					if (currentLightboxNewspaperId && newspaperData[currentLightboxNewspaperId]) {
+							newspaperData[currentLightboxNewspaperId].currentPage = 1;
+					}
+					lightboxOverlay.classList.remove('visible');
+					currentLightboxNewspaperId = null;
 			};
+
 
 			const updateLightboxContent = async () => {
 				const id = currentLightboxNewspaperId;
@@ -1797,7 +1831,12 @@
 									 ? {y:paper.currentIssue.year, m:paper.currentIssue.month, d:paper.currentIssue.day }
 									 : {y:year, m:parseInt(month), d:parseInt(displayDayForDate)};
 					const persianMonthName = shamsiMonthNames[shamsiDate.m - 1];
-					formattedDate = `${englishToPersianDigits(pad(shamsiDate.d))} ${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`; // Localize numbers
+
+					if (paper.type === 'database' && paper.frequency === 'monthly') {
+						formattedDate = `${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`; // Only month and year for monthly
+					} else {
+						formattedDate = `${englishToPersianDigits(pad(shamsiDate.d))} ${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`; // Localize numbers
+					}
 				} else {
 					formattedDate = `${englishToPersianDigits(pad(day))}/${englishToPersianDigits(pad(month))}/${englishToPersianDigits(year)}`; // Localize numbers
 				}
@@ -1957,13 +1996,21 @@
 										(currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
 					return matchesMode;
 				});
+                
+                // Corrected sort: Sort by title in Persian for consistent ordering
+                availableNewspapers.sort((aId, bId) => {
+                    const paperA = newspaperData[aId];
+                    const paperB = newspaperData[bId];
+                    return paperA.title.localeCompare(paperB.title, 'fa');
+                });
 
-				if (availableNewspapersForCurrentDate.length > 1) {
-					lightboxPrevNewspaperButton.style.display = 'inline-block';
-					lightboxNextNewspaperButton.style.display = 'inline-block';
-				} else {
+
+				if (availableNewspapers.length <= 1) {
 					lightboxPrevNewspaperButton.style.display = 'none';
 					lightboxNextNewspaperButton.style.display = 'none';
+				} else {
+					lightboxPrevNewspaperButton.style.display = 'inline-block';
+					lightboxNextNewspaperButton.style.display = 'inline-block';
 				}
 			};
 
@@ -2125,11 +2172,11 @@
 
 				let currentYear, currentMonth, currentDay;
 				if (currentCalendarMode === 'shamsi') {
-					currentYear = shamsiYearInput.value;
+					currentYear = parseInt(shamsiYearInput.value);
 					currentMonth = parseInt(shamsiMonthSelect.value);
 					currentDay = parseInt(shamsiDayInput.value);
 				} else { // hijri
-					currentYear = hijriYearInput.value;
+					currentYear = parseInt(hijriYearInput.value);
 					currentMonth = parseInt(hijriMonthSelect.value);
 					currentDay = parseInt(hijriDayInput.value);
 				}
@@ -2137,21 +2184,25 @@
 				let foundIndex = -1;
 				// Find the issue corresponding to the current date selected in the main controls
 				if (paper.calendar_type === 'hijri') {
-					// For Hijri database papers, we match with the Hijri date selected in main controls
-					if (newspaperId === 'Q5671136') { // Al-Islam is monthly, ignore day
+					if (paper.frequency === 'monthly') { // For Hijri monthly papers, ignore day
 						foundIndex = issuesArray.findIndex(issue =>
-							issue.year == currentYear && issue.month == currentMonth
+							issue.year === currentYear && issue.month === currentMonth
 						);
 					} else { // Daily
 						foundIndex = issuesArray.findIndex(issue =>
-							issue.year == currentYear && issue.month == currentMonth && issue.day == currentDay
+							issue.year === currentYear && issue.month === currentMonth && issue.day === currentDay
 						);
 					}
 				} else if (paper.calendar_type === 'shamsi') {
-					// If we add Shamsi database papers, this logic would apply
-					foundIndex = issuesArray.findIndex(issue =>
-						issue.year == currentYear && issue.month == currentMonth && issue.day == currentDay
-					);
+					if (paper.frequency === 'monthly') { // For Shamsi monthly papers, ignore day
+						foundIndex = issuesArray.findIndex(issue =>
+							issue.year === currentYear && issue.month === currentMonth
+						);
+					} else { // Daily
+						foundIndex = issuesArray.findIndex(issue =>
+							issue.year === currentYear && issue.month === currentMonth && issue.day === currentDay
+						);
+					}
 				}
 
 
@@ -2328,8 +2379,13 @@
 					let buttonText = `شمارهٔ ${englishToPersianDigits(issue.issue_number)}`;
 
 					if (displayDates) {
-						const monthName = hijriMonthNames[issue.month - 1];
-						buttonText += `, روز ${englishToPersianDigits(issue.day)} ${monthName} ${englishToPersianDigits(issue.year)}`; // Localize numbers
+						if (paper.frequency === 'monthly') {
+							const monthName = shamsiMonthNames[issue.month - 1]; // Assuming Shamsi for Yadegar
+							buttonText += `, ${monthName} ${englishToPersianDigits(issue.year)}`;
+						} else {
+							const monthName = hijriMonthNames[issue.month - 1]; // Default for daily (currently mostly Hijri)
+							buttonText += `, روز ${englishToPersianDigits(issue.day)} ${monthName} ${englishToPersianDigits(issue.year)}`; // Localize numbers
+						}
 					}
 
 					issueButton.textContent = buttonText;
