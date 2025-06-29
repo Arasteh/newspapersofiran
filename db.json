@@ -4424,5 +4424,1012 @@
       "wikimedia_hash": "e0"
     }
   ]
+},
+	{
+  "id": "Q25433419",
+  "title": "مهر",
+  "calendar_type": "shamsi",
+  "issues": [
+    {
+      "issue_number": 101,
+      "year": 1312,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Mehr_Volume_1_Issue_1",
+      "wikimedia_hash": "f8"
+    },
+    {
+      "issue_number": 102,
+      "year": 1312,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Mehr_Volume_1_Issue_2",
+      "wikimedia_hash": "a6"
+    },
+    {
+      "issue_number": 103,
+      "year": 1312,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Mehr_Volume_1_Issue_3",
+      "wikimedia_hash": "d0"
+    },
+    {
+      "issue_number": 104,
+      "year": 1312,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Mehr_Volume_1_Issue_4",
+      "wikimedia_hash": "df"
+    },
+    {
+      "issue_number": 105,
+      "year": 1312,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Mehr_Volume_1_Issue_5",
+      "wikimedia_hash": "d9"
+    },
+    {
+      "issue_number": 106,
+      "year": 1312,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Mehr_Volume_1_Issue_6",
+      "wikimedia_hash": "ce"
+    },
+    {
+      "issue_number": 107,
+      "year": 1312,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Mehr_Volume_1_Issue_7",
+      "wikimedia_hash": "0e"
+    },
+    {
+      "issue_number": 108,
+      "year": 1312,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Mehr_Volume_1_Issue_8",
+      "wikimedia_hash": "dd"
+    },
+    {
+      "issue_number": 109,
+      "year": 1312,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Mehr_Volume_1_Issue_9",
+      "wikimedia_hash": "f3"
+    },
+    {
+      "issue_number": 110,
+      "year": 1312,
+      "month": 12,
+      "day": 1,
+      "filename_base": "Mehr_Volume_1_Issue_10",
+      "wikimedia_hash": "cb"
+    },
+    {
+      "issue_number": 111,
+      "year": 1313,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Mehr_Volume_1_Issue_11",
+      "wikimedia_hash": "6b"
+    },
+    {
+      "issue_number": 112,
+      "year": 1313,
+      "month": 2,
+      "day": 1,
+      "filename_base": "Mehr_Volume_1_Issue_12",
+      "wikimedia_hash": "9e"
+    },
+    {
+      "issue_number": 201,
+      "year": 1313,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Mehr_Volume_2_Issue_1",
+      "wikimedia_hash": "0f"
+    },
+    {
+      "issue_number": 202,
+      "year": 1313,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Mehr_Volume_2_Issue_2",
+      "wikimedia_hash": "45"
+    },
+    {
+      "issue_number": 203,
+      "year": 1313,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Mehr_Volume_2_Issue_3",
+      "wikimedia_hash": "b6"
+    },
+    {
+      "issue_number": 204,
+      "year": 1313,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Mehr_Volume_2_Issue_4",
+      "wikimedia_hash": "43"
+    },
+    {
+      "issue_number": 205,
+      "year": 1313,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Mehr_Volume_2_Issue_5",
+      "wikimedia_hash": "e8"
+    },
+    {
+      "issue_number": 206,
+      "year": 1313,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Mehr_Volume_2_Issue_6",
+      "wikimedia_hash": "6e"
+    },
+    {
+      "issue_number": 207,
+      "year": 1313,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._2,_No._7,_1313_SH",
+      "wikimedia_hash": "90"
+    },
+    {
+      "issue_number": 208,
+      "year": 1313,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._2,_No._8,_1313_SH",
+      "wikimedia_hash": "0f"
+    },
+    {
+      "issue_number": 209,
+      "year": 1313,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._2,_No._9,_1313_SH",
+      "wikimedia_hash": "68"
+    },
+    {
+      "issue_number": 210,
+      "year": 1313,
+      "month": 12,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._2,_No._10,_1313_SH",
+      "wikimedia_hash": "0a"
+    },
+    {
+      "issue_number": 211,
+      "year": 1314,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._2,_No._11,_1314_SH",
+      "wikimedia_hash": "54"
+    },
+    {
+      "issue_number": 212,
+      "year": 1314,
+      "month": 2,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._2,_No._12,_1314_SH",
+      "wikimedia_hash": "d8"
+    },
+    {
+      "issue_number": 301,
+      "year": 1314,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Mehr_Volume_3_Issue_1",
+      "wikimedia_hash": "e3"
+    },
+    {
+      "issue_number": 302,
+      "year": 1314,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Mehr_Volume_3_Issue_2",
+      "wikimedia_hash": "c0"
+    },
+    {
+      "issue_number": 303,
+      "year": 1314,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Mehr_Volume_3_Issue_3",
+      "wikimedia_hash": "5e"
+    },
+    {
+      "issue_number": 304,
+      "year": 1314,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Mehr_Volume_3_Issue_4",
+      "wikimedia_hash": "20"
+    },
+    {
+      "issue_number": 305,
+      "year": 1314,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Mehr_Volume_3_Issue_5",
+      "wikimedia_hash": "ca"
+    },
+    {
+      "issue_number": 306,
+      "year": 1314,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Mehr_Volume_3_Issue_6",
+      "wikimedia_hash": "ae"
+    },
+    {
+      "issue_number": 307,
+      "year": 1314,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Mehr_Volume_3_Issue_7",
+      "wikimedia_hash": "ad"
+    },
+    {
+      "issue_number": 308,
+      "year": 1314,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Mehr_Volume_3_Issue_8",
+      "wikimedia_hash": "7b"
+    },
+    {
+      "issue_number": 309,
+      "year": 1314,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Mehr_Volume_3_Issue_9",
+      "wikimedia_hash": "7d"
+    },
+    {
+      "issue_number": 310,
+      "year": 1314,
+      "month": 12,
+      "day": 1,
+      "filename_base": "Mehr_Volume_3_Issue_10",
+      "wikimedia_hash": "13"
+    },
+    {
+      "issue_number": 311,
+      "year": 1315,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Mehr_Volume_3_Issue_11",
+      "wikimedia_hash": "f4"
+    },
+    {
+      "issue_number": 312,
+      "year": 1315,
+      "month": 2,
+      "day": 1,
+      "filename_base": "Mehr_Volume_3_Issue_12",
+      "wikimedia_hash": "79"
+    },
+    {
+      "issue_number": 401,
+      "year": 1315,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._4,_No._1,_1315_SH",
+      "wikimedia_hash": "a6"
+    },
+    {
+      "issue_number": 402,
+      "year": 1315,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._4,_No._2,_1315_SH",
+      "wikimedia_hash": "90"
+    },
+    {
+      "issue_number": 403,
+      "year": 1315,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._4,_No._3,_1315_SH",
+      "wikimedia_hash": "58"
+    },
+    {
+      "issue_number": 404,
+      "year": 1315,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._4,_No._4,_1315_SH",
+      "wikimedia_hash": "41"
+    },
+    {
+      "issue_number": 405,
+      "year": 1315,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._4,_No._5,_1315_SH",
+      "wikimedia_hash": "23"
+    },
+    {
+      "issue_number": 406,
+      "year": 1315,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._4,_No._6,_1315_SH",
+      "wikimedia_hash": "47"
+    },
+    {
+      "issue_number": 407,
+      "year": 1315,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._4,_No._7,_1315_SH",
+      "wikimedia_hash": "c4"
+    },
+    {
+      "issue_number": 408,
+      "year": 1315,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._4,_No._8,_1315_SH",
+      "wikimedia_hash": "c8"
+    },
+    {
+      "issue_number": 409,
+      "year": 1315,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._4,_No._9,_1315_SH",
+      "wikimedia_hash": "9d"
+    },
+    {
+      "issue_number": 410,
+      "year": 1315,
+      "month": 12,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._4,_No._10,_1315_SH",
+      "wikimedia_hash": "69"
+    },
+    {
+      "issue_number": 411,
+      "year": 1316,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._4,_No._11,_1316_SH",
+      "wikimedia_hash": "38"
+    },
+    {
+      "issue_number": 412,
+      "year": 1316,
+      "month": 2,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._4,_No._12,_1316_SH",
+      "wikimedia_hash": "12"
+    },
+    {
+      "issue_number": 501,
+      "year": 1316,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._5,_No._1,_1316_SH",
+      "wikimedia_hash": "c5"
+    },
+    {
+      "issue_number": 502,
+      "year": 1316,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._5,_No._2,_1316_SH",
+      "wikimedia_hash": "01"
+    },
+    {
+      "issue_number": 503,
+      "year": 1316,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._5,_No._3,_1316_SH",
+      "wikimedia_hash": "fd"
+    },
+    {
+      "issue_number": 504,
+      "year": 1316,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._5,_No._4,_1316_SH",
+      "wikimedia_hash": "2c"
+    },
+    {
+      "issue_number": 505,
+      "year": 1316,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._5,_No._5,_1316_SH",
+      "wikimedia_hash": "1d"
+    },
+    {
+      "issue_number": 506,
+      "year": 1316,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._5,_No._6,_1316_SH",
+      "wikimedia_hash": "c9"
+    },
+    {
+      "issue_number": 507,
+      "year": 1316,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._5,_No._7,_1316_SH",
+      "wikimedia_hash": "13"
+    },
+    {
+      "issue_number": 508,
+      "year": 1316,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._5,_No._8,_1316_SH",
+      "wikimedia_hash": "00"
+    },
+    {
+      "issue_number": 509,
+      "year": 1316,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._5,_No._9,_1316_SH",
+      "wikimedia_hash": "25"
+    },
+    {
+      "issue_number": 510,
+      "year": 1316,
+      "month": 12,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._5,_No._10,_1316_SH",
+      "wikimedia_hash": "e6"
+    },
+    {
+      "issue_number": 511,
+      "year": 1317,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._5,_No._11,_1317_SH",
+      "wikimedia_hash": "55"
+    },
+    {
+      "issue_number": 601,
+      "year": 1317,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._6,_No._1,_1317_SH",
+      "wikimedia_hash": "95"
+    },
+    {
+      "issue_number": 602,
+      "year": 1317,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._6,_No._2,_1317_SH",
+      "wikimedia_hash": "0c"
+    },
+    {
+      "issue_number": 603,
+      "year": 1317,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._6,_No._3,_1317_SH",
+      "wikimedia_hash": "6c"
+    },
+    {
+      "issue_number": 604,
+      "year": 1317,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._6,_No._4,_1317_SH",
+      "wikimedia_hash": "a5"
+    },
+    {
+      "issue_number": 605,
+      "year": 1317,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._6,_No._5,_1317_SH",
+      "wikimedia_hash": "21"
+    },
+    {
+      "issue_number": 606,
+      "year": 1317,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._6,_No._6-7,_1317_SH",
+      "wikimedia_hash": "0f"
+    },
+    {
+      "issue_number": 607,
+      "year": 1317,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._6,_No._6-7,_1317_SH",
+      "wikimedia_hash": "0f"
+    },
+    {
+      "issue_number": 701,
+      "year": 1321,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._7,_No._1,_1321_SH",
+      "wikimedia_hash": "93"
+    },
+    {
+      "issue_number": 702,
+      "year": 1321,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._7,_No._2,_1321_SH",
+      "wikimedia_hash": "6c"
+    },
+    {
+      "issue_number": 703,
+      "year": 1321,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._7,_No._3,_1321_SH",
+      "wikimedia_hash": "30"
+    },
+    {
+      "issue_number": 704,
+      "year": 1321,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._7,_No._4,_1321_SH",
+      "wikimedia_hash": "d5"
+    },
+    {
+      "issue_number": 705,
+      "year": 1321,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._7,_No._5-6,_1321_SH",
+      "wikimedia_hash": "03"
+    },
+    {
+      "issue_number": 706,
+      "year": 1321,
+      "month": 12,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._7,_No._5-6,_1321_SH",
+      "wikimedia_hash": "03"
+    },
+    {
+      "issue_number": 707,
+      "year": 1322,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._7,_No._7-8,_1322_SH",
+      "wikimedia_hash": "6a"
+    },
+    {
+      "issue_number": 708,
+      "year": 1322,
+      "month": 2,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._7,_No._7-8,_1322_SH",
+      "wikimedia_hash": "6a"
+    },
+    {
+      "issue_number": 801,
+      "year": 1331,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._8,_No._1,_1331_SH",
+      "wikimedia_hash": "18"
+    },
+    {
+      "issue_number": 802,
+      "year": 1331,
+      "month": 2,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._8,_No._2,_1331_SH",
+      "wikimedia_hash": "07"
+    },
+    {
+      "issue_number": 803,
+      "year": 1331,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._8,_No._3,_1331_SH",
+      "wikimedia_hash": "0b"
+    },
+    {
+      "issue_number": 804,
+      "year": 1331,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._8,_No._4,_1331_SH",
+      "wikimedia_hash": "89"
+    },
+    {
+      "issue_number": 805,
+      "year": 1331,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._8,_No._5,_1331_SH",
+      "wikimedia_hash": "f5"
+    },
+    {
+      "issue_number": 806,
+      "year": 1331,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._8,_No._6,_1331_SH",
+      "wikimedia_hash": "ca"
+    },
+    {
+      "issue_number": 807,
+      "year": 1331,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._8,_No._7,_1331_SH",
+      "wikimedia_hash": "03"
+    },
+    {
+      "issue_number": 808,
+      "year": 1331,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._8,_No._8,_1331_SH",
+      "wikimedia_hash": "71"
+    },
+    {
+      "issue_number": 809,
+      "year": 1331,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._8,_No._9,_1331_SH",
+      "wikimedia_hash": "e1"
+    },
+    {
+      "issue_number": 810,
+      "year": 1331,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._8,_No._10,_1331_SH",
+      "wikimedia_hash": "5a"
+    },
+    {
+      "issue_number": 811,
+      "year": 1331,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._8,_No._11,_1331_SH",
+      "wikimedia_hash": "46"
+    },
+    {
+      "issue_number": 812,
+      "year": 1331,
+      "month": 12,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._8,_No._12,_1331_SH",
+      "wikimedia_hash": "42"
+    },
+    {
+      "issue_number": 901,
+      "year": 1332,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._9,_No._1,_1332_SH",
+      "wikimedia_hash": "1d"
+    },
+    {
+      "issue_number": 902,
+      "year": 1332,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._9,_No._2,_1332_SH",
+      "wikimedia_hash": "f4"
+    },
+    {
+      "issue_number": 903,
+      "year": 1332,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._9,_No._3,_1332_SH",
+      "wikimedia_hash": "8c"
+    },
+    {
+      "issue_number": 904,
+      "year": 1332,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._9,_No._4,_1332_SH",
+      "wikimedia_hash": "0c"
+    },
+    {
+      "issue_number": 905,
+      "year": 1332,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._9,_No._5,_1332_SH",
+      "wikimedia_hash": "38"
+    },
+    {
+      "issue_number": 1001,
+      "year": 1343,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._10,_No._1,_1343_SH",
+      "wikimedia_hash": "1b"
+    },
+    {
+      "issue_number": 1002,
+      "year": 1343,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._10,_No._2,_1343_SH",
+      "wikimedia_hash": "85"
+    },
+    {
+      "issue_number": 1003,
+      "year": 1343,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._10,_No._3,_1343_SH",
+      "wikimedia_hash": "5b"
+    },
+    {
+      "issue_number": 1004,
+      "year": 1343,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._10,_No._4,_1343_SH",
+      "wikimedia_hash": "d2"
+    },
+    {
+      "issue_number": 1103,
+      "year": 1344,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._11,_No._3-4,_1344_SH",
+      "wikimedia_hash": "bd"
+    },
+    {
+      "issue_number": 1104,
+      "year": 1344,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._11,_No._3-4,_1344_SH",
+      "wikimedia_hash": "bd"
+    },
+    {
+      "issue_number": 1105,
+      "year": 1344,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._11,_No._5,_1344_SH",
+      "wikimedia_hash": "4c"
+    },
+    {
+      "issue_number": 1106,
+      "year": 1344,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._11,_No._6,_1344_SH",
+      "wikimedia_hash": "fb"
+    },
+    {
+      "issue_number": 1107,
+      "year": 1344,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._11,_No._7,_1344_SH",
+      "wikimedia_hash": "5f"
+    },
+    {
+      "issue_number": 1108,
+      "year": 1344,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._11,_No._8,_1344_SH",
+      "wikimedia_hash": "91"
+    },
+    {
+      "issue_number": 1109,
+      "year": 1344,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._11,_No._9,_1344_SH",
+      "wikimedia_hash": "e8"
+    },
+    {
+      "issue_number": 1110,
+      "year": 1344,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._11,_No._10,_1344_SH",
+      "wikimedia_hash": "7e"
+    },
+    {
+      "issue_number": 1111,
+      "year": 1344,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._11,_No._11,_1344_SH",
+      "wikimedia_hash": "19"
+    },
+    {
+      "issue_number": 1112,
+      "year": 1344,
+      "month": 12,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._11,_No._12,_1344_SH",
+      "wikimedia_hash": "7c"
+    },
+    {
+      "issue_number": 1201,
+      "year": 1345,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._12,_No._1,_1345_SH",
+      "wikimedia_hash": "f0"
+    },
+    {
+      "issue_number": 1202,
+      "year": 1345,
+      "month": 2,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._12,_No._2,_1345_SH",
+      "wikimedia_hash": "35"
+    },
+    {
+      "issue_number": 1203,
+      "year": 1345,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._12,_No._3,_1345_SH",
+      "wikimedia_hash": "4c"
+    },
+    {
+      "issue_number": 1204,
+      "year": 1345,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._12,_No._4,_1345_SH",
+      "wikimedia_hash": "62"
+    },
+    {
+      "issue_number": 1205,
+      "year": 1345,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._12,_No._5,_1345_SH",
+      "wikimedia_hash": "55"
+    },
+    {
+      "issue_number": 1206,
+      "year": 1345,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._12,_No._6,_1345_SH",
+      "wikimedia_hash": "63"
+    },
+    {
+      "issue_number": 1207,
+      "year": 1345,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._12,_No._7,_1345_SH",
+      "wikimedia_hash": "a8"
+    },
+    {
+      "issue_number": 1208,
+      "year": 1345,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._12,_No._8,_1345_SH",
+      "wikimedia_hash": "e7"
+    },
+    {
+      "issue_number": 1209,
+      "year": 1345,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._12,_No._9,_1345_SH",
+      "wikimedia_hash": "05"
+    },
+    {
+      "issue_number": 1210,
+      "year": 1345,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._12,_No._10,_1345_SH",
+      "wikimedia_hash": "14"
+    },
+    {
+      "issue_number": 1211,
+      "year": 1345,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._12,_No._11,_1345_SH",
+      "wikimedia_hash": "64"
+    },
+    {
+      "issue_number": 1212,
+      "year": 1345,
+      "month": 12,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._12,_No._12,_1345_SH",
+      "wikimedia_hash": "b3"
+    },
+    {
+      "issue_number": 1301,
+      "year": 1346,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._13,_No._1,_1346_SH",
+      "wikimedia_hash": "45"
+    },
+    {
+      "issue_number": 1302,
+      "year": 1346,
+      "month": 2,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._13,_No._2,_1346_SH",
+      "wikimedia_hash": "e5"
+    },
+    {
+      "issue_number": 1303,
+      "year": 1346,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._13,_No._3,_1346_SH",
+      "wikimedia_hash": "e2"
+    },
+    {
+      "issue_number": 1304,
+      "year": 1346,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._13,_No._4,_1346_SH",
+      "wikimedia_hash": "87"
+    },
+    {
+      "issue_number": 1305,
+      "year": 1346,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._13,_No._5,_1346_SH",
+      "wikimedia_hash": "0f"
+    },
+    {
+      "issue_number": 1306,
+      "year": 1346,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._13,_No._6,_1346_SH",
+      "wikimedia_hash": "aa"
+    },
+    {
+      "issue_number": 1307,
+      "year": 1346,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._13,_No._7,_1346_SH",
+      "wikimedia_hash": "02"
+    },
+    {
+      "issue_number": 1308,
+      "year": 1346,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Mehr,_Vol._13,_No._8,_1346_SH",
+      "wikimedia_hash": "80"
+    }
+  ]
 }
 ]
