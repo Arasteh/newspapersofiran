@@ -1064,6 +1064,19 @@
 	};
 
 	const loadImage = async (source = 'initial') => {
+		// DOM element references need to be local or accessed from closure if they're not global
+		const shamsiYearInput = document.getElementById('shamsiYear');
+		const shamsiMonthSelect = document.getElementById('shamsiMonth');
+		const shamsiDayInput = document.getElementById('shamsiDay');
+		const hijriYearInput = document.getElementById('hijriYear');
+		const hijriMonthSelect = document.getElementById('hijriMonth');
+		const hijriDayInput = document.getElementById('hijriDay');
+		const mainPageNumberInput = document.getElementById('mainPageNumberInput');
+		const mainErrorMessage = document.getElementById('mainErrorMessage');
+		const mainStatusMessage = document.getElementById('mainStatusMessage');
+		const newspaperContainer = document.querySelector('.newspaper-container');
+
+
 		let year, month, day;
 
 		if (currentCalendarMode === 'shamsi') {
@@ -1196,6 +1209,17 @@
 	};
 
 	const handleCalendarChange = (targetDate = null) => {
+		const shamsiDateControls = document.getElementById('shamsiDateControls');
+		const hijriDateControls = document.getElementById('hijriDateControls');
+		const shamsiYearInput = document.getElementById('shamsiYear');
+		const shamsiMonthSelect = document.getElementById('shamsiMonth');
+		const shamsiDayInput = document.getElementById('shamsiDay');
+		const hijriYearInput = document.getElementById('hijriYear');
+		const hijriMonthSelect = document.getElementById('hijriMonth');
+		const hijriDayInput = document.getElementById('hijriDay');
+		const mainPageNumberInput = document.getElementById('mainPageNumberInput');
+
+
 		shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'block' : 'none';
 		hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'block' : 'none';
 		
@@ -1246,6 +1270,7 @@
 	};
 
 	const closeLightbox = () => {
+		const lightboxOverlay = document.getElementById('lightboxOverlay');
 		lightboxOverlay.classList.remove('visible');
 		currentLightboxNewspaperId = null;
 	};
@@ -1256,6 +1281,24 @@
 			closeLightbox();
 			return;
 		}
+		const shamsiYearInput = document.getElementById('shamsiYear');
+		const shamsiMonthSelect = document.getElementById('shamsiMonth');
+		const shamsiDayInput = document.getElementById('shamsiDay');
+		const hijriYearInput = document.getElementById('hijriYear');
+		const hijriMonthSelect = document.getElementById('hijriMonth');
+		const hijriDayInput = document.getElementById('hijriDay');
+		const lightboxNewspaperTitle = document.getElementById('lightboxNewspaperTitle');
+		const lightboxPageNumberInput = document.getElementById('lightboxPageNumberInput');
+		const lightboxImage = document.getElementById('lightboxImage');
+		const lightboxStatusMessage = document.getElementById('lightboxStatusMessage');
+		const lightboxErrorMessage = document.getElementById('lightboxErrorMessage');
+		const downloadLink = document.getElementById('downloadLink');
+		const viewLargeLink = document.getElementById('viewLargeLink');
+		const lightboxPrevPageButton = document.getElementById('lightboxPrevPageButton');
+		const lightboxNextPageButton = document.getElementById('lightboxNextPageButton');
+		const lightboxPrevNewspaperButton = document.getElementById('lightboxPrevNewspaperButton');
+		const lightboxNextNewspaperButton = document.getElementById('lightboxNextNewspaperButton');
+
 
 		const paper = newspaperData[paperId];
 		let year, month, day;
@@ -1401,6 +1444,11 @@
 
 
 	const lightboxGoToPage = (direction) => {
+		const lightboxOverlay = document.getElementById('lightboxOverlay');
+		const lightboxPrevPageButton = document.getElementById('lightboxPrevPageButton');
+		const lightboxNextPageButton = document.getElementById('lightboxNextPageButton');
+		const lightboxPageNumberInput = document.getElementById('lightboxPageNumberInput');
+
 		const paper = newspaperData[currentLightboxNewspaperId];
 		if (!paper) return;
 		let currentPageBeforeChange = lightboxCurrentPage;
@@ -1471,6 +1519,11 @@
 	};
 
 	const goToNewspaperIssue = (paperId, index) => {
+		const hijriYearInput = document.getElementById('hijriYear');
+		const hijriMonthSelect = document.getElementById('hijriMonth');
+		const hijriDayInput = document.getElementById('hijriDay');
+		const mainPageNumberInput = document.getElementById('mainPageNumberInput');
+
 		const paper = newspaperData[paperId];
 		if (!paper || !paper.navState) return;
 		const { issuesArray, issueNumberInput } = paper.navState;
@@ -1517,6 +1570,10 @@
 	};
 
 	const updateIssueNavigationVisibility = (paperId) => {
+		const hijriYearInput = document.getElementById('hijriYear');
+		const hijriMonthSelect = document.getElementById('hijriMonth');
+		const hijriDayInput = document.getElementById('hijriDay');
+
 		const paper = newspaperData[paperId];
 		if (!paper || !paper.navState || !paper.navState.navigationDiv ||
 			paper.type !== 'database' || paper.calendar_type !== 'hijri' ||
@@ -1563,6 +1620,17 @@
 	};
 
 	const handleGlobalGoToFirstIssue = (paperId) => {
+		const shamsiCalendarRadio = document.getElementById('shamsiCalendar');
+		const hijriCalendarRadio = document.getElementById('hijriCalendar');
+		const shamsiYearInput = document.getElementById('shamsiYear');
+		const shamsiMonthSelect = document.getElementById('shamsiMonth');
+		const shamsiDayInput = document.getElementById('shamsiDay');
+		const hijriYearInput = document.getElementById('hijriYear');
+		const hijriMonthSelect = document.getElementById('hijriMonth');
+		const hijriDayInput = document.getElementById('hijriDay');
+		const mainPageNumberInput = document.getElementById('mainPageNumberInput');
+
+
 		const paper = newspaperData[paperId];
 		if (!paper) {
 			console.warn(`Cannot go to first issue for ${paperId}: Newspaper data not found.`);
@@ -1672,7 +1740,7 @@
 		// Populate dropdowns first
 		populateDateDropdowns();
 
-		// DOM Element References
+		// DOM Element References (made available in this scope)
 		const shamsiCalendarRadio = document.getElementById('shamsiCalendar');
 		const hijriCalendarRadio = document.getElementById('hijriCalendar');
 		const shamsiDateControls = document.getElementById('shamsiDateControls');
@@ -1745,11 +1813,11 @@
 				...config,
 				currentPage: 1,
 				available: false,
+				sectionElement: sectionElement, // Assign element reference
 				imageElement: sectionElement.querySelector('.newspaper-image'),
 				statusElement: sectionElement.querySelector('.status-message'),
 				errorElement: sectionElement.querySelector('.error-message'),
-				sectionElement: sectionElement,
-				viewAllIssuesBtn: sectionElement.querySelector('.view-all-issues-btn') // These will be hidden for formula-based papers
+				viewAllIssuesBtn: sectionElement.querySelector('.view-all-issues-btn')
 			};
 			// Hide "View All Issues" button for formula-based papers initially
 			if (newspaperData[paperId].viewAllIssuesBtn) {
@@ -1784,10 +1852,10 @@
 					title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
 					currentPage: 1,
 					available: false,
+					sectionElement: sectionElement, // Assign element reference
 					imageElement: sectionElement.querySelector('.newspaper-image'),
 					statusElement: sectionElement.querySelector('.status-message'),
 					errorElement: sectionElement.querySelector('.error-message'),
-					sectionElement: sectionElement,
 					issues: dbPaper.issues,
 					calendar_type: dbPaper.calendar_type,
 					viewAllIssuesBtn: sectionElement.querySelector('.view-all-issues-btn')
@@ -1928,6 +1996,12 @@
 		});
 
 		const openAllNewspapersIssuesModal = (initialPaperId = null) => {
+			const allIssuesModalErrorMessage = document.getElementById('allIssuesModalErrorMessage');
+			const allIssuesModalNewspaperTitle = document.getElementById('allIssuesModalNewspaperTitle');
+			const newspaperSelectionContainer = document.getElementById('newspaperSelectionContainer');
+			const issuesListContainer = document.getElementById('issuesListContainer');
+			const allIssuesModalOverlay = document.getElementById('allIssuesModalOverlay');
+
 			allIssuesModalErrorMessage.style.display = 'none';
 			allIssuesModalNewspaperTitle.textContent = 'فهرست شماره‌های نشریات'; // Main title for the modal
 			newspaperSelectionContainer.innerHTML = ''; // Clear previous newspaper list
@@ -1981,6 +2055,9 @@
 		};
 
 		const displayIssuesForSelectedNewspaper = (paperId) => {
+			const issuesListContainer = document.getElementById('issuesListContainer');
+			const allIssuesModalErrorMessage = document.getElementById('allIssuesModalErrorMessage');
+
 			const paper = newspaperData[paperId];
 			if (!paper || !paper.issues || paper.issues.length === 0) {
 				issuesListContainer.innerHTML = '';
@@ -2013,10 +2090,16 @@
 		};
 
 		const closeAllIssuesModal = () => {
+			const allIssuesModalOverlay = document.getElementById('allIssuesModalOverlay');
 			allIssuesModalOverlay.classList.remove('visible');
 		};
 
 		const goToIssueFromModal = (paperId, issue) => {
+			const hijriCalendarRadio = document.getElementById('hijriCalendar');
+			const hijriYearInput = document.getElementById('hijriYear');
+			const hijriMonthSelect = document.getElementById('hijriMonth');
+			const hijriDayInput = document.getElementById('hijriDay');
+
 			if (newspaperData[paperId].calendar_type === 'hijri' && currentCalendarMode !== 'hijri') {
 				hijriCalendarRadio.checked = true;
 				currentCalendarMode = 'hijri';
@@ -2061,6 +2144,10 @@
 		});
 
 		const openCalendarModal = () => {
+			const calendarModalErrorMessage = document.getElementById('calendarModalErrorMessage');
+			const calendarModalOverlay = document.getElementById('calendarModalOverlay');
+			const calendarYearSelect = document.getElementById('calendarYearSelect');
+
 			calendarModalErrorMessage.style.display = 'none';
 			calendarModalOverlay.classList.add('visible');
 			calendarYearSelect.value = currentCalendarYear;
@@ -2068,10 +2155,16 @@
 		};
 
 		const closeCalendarModal = () => {
+			const calendarModalOverlay = document.getElementById('calendarModalOverlay');
 			calendarModalOverlay.classList.remove('visible');
 		};
 
 		const renderCalendar = (year) => {
+			const calendarYearSelect = document.getElementById('calendarYearSelect');
+			const calendarGridContainer = document.getElementById('calendarGridContainer');
+			const prevYearBtn = document.getElementById('prevYearBtn');
+			const nextYearBtn = document.getElementById('nextYearBtn');
+
 			currentCalendarYear = year;
 			calendarYearSelect.value = year;
 			calendarGridContainer.innerHTML = '';
@@ -2117,6 +2210,11 @@
 		};
 
 		const goToDateFromCalendar = (year, month, day) => {
+			const hijriCalendarRadio = document.getElementById('hijriCalendar');
+			const hijriYearInput = document.getElementById('hijriYear');
+			const hijriMonthSelect = document.getElementById('hijriMonth');
+			const hijriDayInput = document.getElementById('hijriDay');
+
 			if (currentCalendarMode !== 'hijri') {
 				hijriCalendarRadio.checked = true;
 				currentCalendarMode = 'hijri';
