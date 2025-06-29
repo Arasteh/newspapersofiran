@@ -528,7 +528,7 @@
 			background-color: var(--button-bg);
 			color: white;
 			border: none;
-			border-radius: 4px;
+			border-radius: 4样的;
 			cursor: pointer;
 			font-size: 14px;
 			transition: background-color 0.3s ease;
@@ -579,8 +579,8 @@
 			width: 100%;
 		}
 		.calendar-day-btn {
-		width: 20px;
-		height: 20px;
+		width: 28px; /* Increased for better touch target */
+		height: 28px; /* Increased for better touch target */
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -589,9 +589,9 @@
 		border-radius: 50%;
 		background-color: var(--control-bg);
 		color: var(--text-color);
-		font-size: 0.75em;
+		font-size: 0.8em; /* Slightly larger font */
 		cursor: pointer;
-		transition: background-color 0.2s, transform 0.1s;
+		transition: background-color 0.2s, transform 0.1s, opacity 0.2s; /* Added opacity transition */
 		}
 
 		.calendar-day-btn:hover {
@@ -604,18 +604,24 @@
 			font-weight: normal;
 			border-color: var(--highlight-color);
 		}
-		.calendar-day-btn.has-multiple-issues {
-			background-color: var(--highlight-color);
-			transform: scale(1.2);
+		/* Opacity variations based on issue count */
+		.calendar-day-btn.issue-count-1 { opacity: 0.2; }
+		.calendar-day-btn.issue-count-2 { opacity: 0.5; }
+		.calendar-day-btn.issue-count-3plus { opacity: 1; }
+
+		.calendar-day-btn.has-multiple-issues { /* For 2 or more issues, overrides some of has-issue */
+			transform: scale(1.1); /* Slightly smaller scale for clarity */
 			color: var(--text-color);
 			font-weight: bold;
-			font-size: .7em;
+			font-size: .75em; /* Adjusted font size */
 		}
+
 		.calendar-day-btn:disabled {
 			background-color: var(--button-disabled-bg);
 			cursor: not-allowed;
 			color: #888;
 			border-color: #888;
+			opacity: 1; /* Disabled state should be clear, not faded */
 		}
 
 		/* Adjustments for smaller screens */
@@ -629,10 +635,11 @@
 			.calendar-grid-container {
 			grid-template-columns: 1fr;
 			}
+			/* Keep day button size consistent for better touch on small screens */
 			.calendar-day-btn {
-			width: 28px;
-			height: 28px;
-			font-size: 0.8em;
+				width: 32px;
+				height: 32px;
+				font-size: 0.9em;
 			}
 		}
 
@@ -696,7 +703,7 @@
 		<button id="openAllNewspapersIssuesModalBtn" class="global-all-issues-btn">فهرست شماره‌های نشریات</button>
 	</div>
 	<div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
-		<!-- Global "Go to First Issue" Buttons will be dynamically generated here -->
+		<!-- Global "Go to First Issue" Buttons will be dynamically generated here and sorted by date -->
 	</div>
 
 	<p id="mainErrorMessage" class="error-message" style="display: none;"></p>
@@ -756,7 +763,7 @@
 	<!-- Calendar Modal -->
 	<div id="calendarModalOverlay" class="all-issues-modal-overlay">
 		<div class="all-issues-modal-content">
-			<button id="calendarModalCloseButton" class="all-issues-modal-close-button">&times;</button>
+			<button id="calendarModalCloseButton" class="calendar-modal-close-button">&times;</button>
 			<h2 id="calendarModalTitle">تقویم قمری</h2>
 			<div class="calendar-nav">
 				<button id="prevYearBtn">&lt; سال قبل</button>
@@ -912,13 +919,8 @@
 			};
 
 			const generateNewspaperSectionsAndButtons = () => {
-				const sortedConfigKeys = Object.keys(newspaperConfigurations).sort((a, b) => {
-					const titleA = newspaperConfigurations[a].title;
-					const titleB = newspaperConfigurations[b].title;
-					return titleA.localeCompare(titleB, 'fa');
-				});
-
-				sortedConfigKeys.forEach(id => {
+				// Create elements for all initially defined newspapers (formula-based)
+				Object.keys(newspaperConfigurations).forEach(id => {
 					const config = newspaperConfigurations[id];
 
 					// Create Newspaper Section
@@ -954,7 +956,8 @@
 					firstIssueBtn.textContent = config.title;
 					firstIssueBtn.style.display = 'none'; // Initially hidden
 					firstIssueBtn.classList.add(config.calendar_type === 'shamsi' ? 'shamsi-nav-btn' : 'hijri-nav-btn');
-					globalGoToFirstIssueControls.appendChild(firstIssueBtn);
+					// Do not append to globalGoToFirstIssueControls yet, will be sorted and appended later
+					// globalGoToFirstIssueControls.appendChild(firstIssueBtn);
 
 					// Initialize `newspaperData` entry with references to created elements
 					newspaperData[id] = {
@@ -969,7 +972,7 @@
 						errorElement: document.getElementById(`${id}ErrorMessage`),
 						sectionElement: document.getElementById(`${id}Section`),
 						calendar_type: config.calendar_type,
-						firstIssueDate: config.firstIssueDate,
+						firstIssueDate: config.firstIssueDate, // For formula papers
 						globalFirstIssueBtn: firstIssueBtn, // Reference to the global button
 						currentIssue: null, // For database-driven papers
 						fileNameBase: null, // For current loaded issue
@@ -999,65 +1002,95 @@
 
 					dbNewspapersRawData.forEach(dbPaper => {
 						const paperId = dbPaper.id;
-						// Add or update the newspaperConfiguration for database papers
-						newspaperConfigurations[paperId] = {
-							type: 'database',
-							title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
-							calendar_type: dbPaper.calendar_type,
-							// firstIssueDate is not directly needed for database papers at config level
-						};
-						
-						// Regenerate sections and buttons to include the newly loaded database papers
-						// This is inefficient. A better approach is to merge db data into a pre-defined
-						// newspaperConfigurations object before initial HTML generation.
-						// For now, let's just make sure the `newspaperData` object is correctly populated.
-						// This re-initiation would involve clearing and regenerating entire sections, which is bad.
-						// Instead, let's assume `newspaperConfigurations` already has all papers, or dynamically
-						// add and initialize `newspaperData` entries after `db.json` is loaded.
 
-						// Initialize `newspaperData` entry for this DB paper
-						const sectionDiv = document.getElementById(`${paperId}Section`);
-						const navigationDiv = document.getElementById(`${paperId}Navigation`);
-						const viewAllIssuesBtn = sectionDiv ? sectionDiv.querySelector('.view-all-issues-btn') : null;
-
-						newspaperData[paperId] = {
-							id: paperId,
-							type: 'database',
-							title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
-							currentPage: 1,
-							available: false,
-							imageElement: document.getElementById(`${paperId}NewspaperImage`),
-							statusElement: document.getElementById(`${paperId}StatusMessage`),
-							errorElement: document.getElementById(`${paperId}ErrorMessage`),
-							sectionElement: document.getElementById(`${paperId}Section`),
-							issues: dbPaper.issues, // Store issues directly here
-							calendar_type: dbPaper.calendar_type,
-							globalFirstIssueBtn: document.getElementById(`goToFirst${paperId}Global`),
-							viewAllIssuesBtn: viewAllIssuesBtn,
-							currentIssue: null,
-							fileNameBase: null,
-							maxPages: null,
-						};
-
-						if (dbPaper.calendar_type === 'hijri' && navigationDiv) {
-							newspaperData[paperId].navState = {
-								issuesArray: [...dbPaper.issues].sort((a, b) => {
-									if (a.year !== b.year) return a.year - b.year;
-									if (a.month !== b.month) return a.month - b.month;
-									return a.day - b.day;
-								}),
-								currentIndex: -1,
-								prevIssueBtn: document.getElementById(`prev${paperId}Issue`),
-								nextIssueBtn: document.getElementById(`next${paperId}Issue`),
-								issueNumberInput: document.getElementById(`${paperId}IssueNumber`),
-								navigationDiv: navigationDiv
+						// If this newspaper doesn't exist in initial newspaperConfigurations, create its elements
+						if (!newspaperConfigurations[paperId]) {
+							newspaperConfigurations[paperId] = {
+								type: 'database',
+								title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
+								calendar_type: dbPaper.calendar_type,
 							};
-							// Add event listeners for issue navigation
-							const navState = newspaperData[paperId].navState;
-							if (navState.prevIssueBtn) navState.prevIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue(paperId));
-							if (navState.nextIssueBtn) navState.nextIssueBtn.addEventListener('click', () => goToNextNewspaperIssue(paperId));
-							if (navState.issueNumberInput) navState.issueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber(paperId));
+
+							const sectionDiv = document.createElement('div');
+							sectionDiv.id = `${paperId}Section`;
+							sectionDiv.classList.add('newspaper-section');
+							sectionDiv.style.display = 'none'; // Initially hidden
+
+							sectionDiv.innerHTML = `
+								<h2>${newspaperConfigurations[paperId].title}</h2>
+								<img id="${paperId}NewspaperImage" src="" alt="تصویر ${newspaperConfigurations[paperId].title}" class="newspaper-image">
+								<p id="${paperId}StatusMessage" class="status-message" style="display: none;"></p>
+								<p id="${paperId}ErrorMessage" class="error-message" style="display: none;"></p>
+								<div id="${paperId}Navigation" class="issue-navigation-controls">
+									<div>
+										<button id="prev${paperId}Issue">&lt; شماره قبل</button>
+										<div>
+											<span>شماره:</span>
+											<input type="number" id="${paperId}IssueNumber">
+										</div>
+										<button id="next${paperId}Issue">شماره بعد &gt;</button>
+									</div>
+								</div>
+								<button class="view-all-issues-btn" data-newspaper-id="${paperId}" style="display: none;">مشاهده تمام شماره‌ها</button>
+							`;
+							newspaperContainer.appendChild(sectionDiv);
+
+							const firstIssueBtn = document.createElement('button');
+							firstIssueBtn.id = `goToFirst${paperId}Global`;
+							firstIssueBtn.textContent = newspaperConfigurations[paperId].title;
+							firstIssueBtn.style.display = 'none'; // Initially hidden
+							firstIssueBtn.classList.add(newspaperConfigurations[paperId].calendar_type === 'shamsi' ? 'shamsi-nav-btn' : 'hijri-nav-btn');
+
+							newspaperData[paperId] = {
+								id: paperId,
+								type: 'database',
+								title: newspaperConfigurations[paperId].title,
+								currentPage: 1,
+								available: false,
+								imageElement: document.getElementById(`${paperId}NewspaperImage`),
+								statusElement: document.getElementById(`${paperId}StatusMessage`),
+								errorElement: document.getElementById(`${paperId}ErrorMessage`),
+								sectionElement: document.getElementById(`${paperId}Section`),
+								calendar_type: newspaperConfigurations[paperId].calendar_type,
+								globalFirstIssueBtn: firstIssueBtn,
+								viewAllIssuesBtn: sectionDiv.querySelector('.view-all-issues-btn'),
+								currentIssue: null,
+								fileNameBase: null,
+								maxPages: null,
+							};
 						}
+
+						// Calculate firstIssueDate for database papers
+						let calculatedFirstIssueDate = null;
+						if (dbPaper.issues && dbPaper.issues.length > 0) {
+							const sortedIssues = [...dbPaper.issues].sort((a, b) => {
+								const dateA = a.year * 10000 + a.month * 100 + a.day;
+								const dateB = b.year * 10000 + b.month * 100 + b.day;
+								return dateA - dateB;
+							});
+							const firstIssue = sortedIssues[0];
+							calculatedFirstIssueDate = `${firstIssue.year}${pad(firstIssue.month)}${pad(firstIssue.day)}`;
+						}
+						newspaperData[paperId].firstIssueDate = calculatedFirstIssueDate;
+						newspaperData[paperId].issues = dbPaper.issues; // Store issues directly here
+
+						newspaperData[paperId].navState = {
+							issuesArray: [...dbPaper.issues].sort((a, b) => {
+								if (a.year !== b.year) return a.year - b.year;
+								if (a.month !== b.month) return a.month - b.month;
+								return a.day - b.day;
+							}),
+							currentIndex: -1,
+							prevIssueBtn: document.getElementById(`prev${paperId}Issue`),
+							nextIssueBtn: document.getElementById(`next${paperId}Issue`),
+							issueNumberInput: document.getElementById(`${paperId}IssueNumber`),
+							navigationDiv: document.getElementById(`${paperId}Navigation`)
+						};
+						// Add event listeners for issue navigation
+						const navState = newspaperData[paperId].navState;
+						if (navState.prevIssueBtn) navState.prevIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue(paperId));
+						if (navState.nextIssueBtn) navState.nextIssueBtn.addEventListener('click', () => goToNextNewspaperIssue(paperId));
+						if (navState.issueNumberInput) navState.issueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber(paperId));
 
 						// Populate availableHijriDates Map for calendar highlighting
 						dbPaper.issues.forEach(issue => {
@@ -1066,8 +1099,7 @@
 						});
 					});
 
-					// Now that all newspaperData is initialized, populate and attach listeners
-					// for global first issue buttons and view all issues buttons
+					// Now that all newspaperData is initialized, attach listeners for global first issue buttons and view all issues buttons
 					Object.values(newspaperData).forEach(paper => {
 						if (paper.globalFirstIssueBtn) {
 							paper.globalFirstIssueBtn.addEventListener('click', () => handleGlobalGoToFirstIssue(paper.id));
@@ -1088,51 +1120,61 @@
 				}
 			};
 
-			// Combine `newspaperConfigurations` with `db.json` data BEFORE `generateNewspaperSectionsAndButtons`
-			// This requires modifying the flow slightly.
-			// First, load db.json, then merge it into a temporary configuration object, then generate.
-			const initialNewspaperConfigs = {
-				ettelaat: { type: 'formula', prefix: 'Ettelaat', title: 'اطلاعات', calendar_type: 'shamsi', firstIssueDate: "13050419" },
-				mardom: { type: 'formula', prefix: 'Mardom', title: 'مردم', calendar_type: 'shamsi', firstIssueDate: "13571223" },
-				kayhan: { type: 'formula', prefix: 'Kayhan', title: 'کیهان', calendar_type: 'shamsi', firstIssueDate: "13320525" },
-				bakhtarEmrooz: { type: 'formula', prefix: 'BakhtarEmrooz', title: 'باختر امروز', calendar_type: 'shamsi', firstIssueDate: "13300329" },
-				jashnShahanshahiIran: { type: 'formula', prefix: 'JashneShahanshahieIran', title: 'جشن شاهنشاهی ایران', calendar_type: 'shamsi', firstIssueDate: "13500503" },
-				zaneRooz: { type: 'formula', prefix: 'ZaneRooz', title: 'زن روز', calendar_type: 'shamsi', firstIssueDate: "13461017" },
-				babashamal: { type: 'formula', prefix: 'BabaShamal', title: 'باباشمل', calendar_type: 'shamsi', firstIssueDate: "13220125" },
-				tamasha: { type: 'formula', prefix: 'Tamasha', title: 'تماشا', calendar_type: 'shamsi', firstIssueDate: "13491227" },
-				yaghma: { type: 'formula', prefix: 'Yaghma', title: 'یغما', calendar_type: 'shamsi', firstIssueDate: "13270101" },
-				negin: { type: 'formula', prefix: 'Negin', title: 'نگین', calendar_type: 'shamsi', firstIssueDate: "13440301" },
-				jangal_qamari: { type: 'formula', prefix: 'Jangal', title: 'جنگل', calendar_type: 'hijri', firstIssueDate: "13350819" },
+			const sortAndRenderGlobalFirstIssueButtons = () => {
+				const allPapers = Object.values(newspaperData);
+
+				const sortablePapers = allPapers.filter(paper => paper.firstIssueDate)
+					.map(paper => {
+						return {
+							id: paper.id,
+							calendar_type: paper.calendar_type,
+							firstIssueDate: paper.firstIssueDate,
+							globalFirstIssueBtn: paper.globalFirstIssueBtn,
+							title: paper.title
+						};
+					});
+
+				// Sort: Hijri first, then Shamsi. Within each, by date, then by title.
+				sortablePapers.sort((a, b) => {
+					// Primary sort: calendar_type (hijri before shamsi)
+					if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
+					if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+
+					// Secondary sort: firstIssueDate
+					const dateA = parseInt(a.firstIssueDate, 10);
+					const dateB = parseInt(b.firstIssueDate, 10);
+					if (dateA !== dateB) return dateA - dateB;
+
+					// Tertiary sort: by title (for identical dates)
+					return a.title.localeCompare(b.title, 'fa');
+				});
+
+				// Clear existing buttons
+				globalGoToFirstIssueControls.innerHTML = '';
+
+				// Append sorted buttons
+				sortablePapers.forEach(paper => {
+					if (paper.globalFirstIssueBtn) {
+						globalGoToFirstIssueControls.appendChild(paper.globalFirstIssueBtn);
+						// Ensure visibility for those that have a first issue date
+						paper.globalFirstIssueBtn.style.display = 'inline-block';
+					}
+				});
 			};
+
 
 			const initializeApp = async () => {
 				populateDateDropdowns();
 
-				// Load database papers and merge into initial configurations
-				try {
-					const response = await fetch('db.json');
-					if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-					const dbNewspapersRawData = await response.json();
-					dbNewspapersRawData.forEach(dbPaper => {
-						const paperId = dbPaper.id;
-						initialNewspaperConfigs[paperId] = {
-							type: 'database',
-							title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
-							calendar_type: dbPaper.calendar_type,
-							issues: dbPaper.issues // Store issues here for easy access during generation
-						};
-					});
-				} catch (error) {
-					console.error("Error loading db.json during initialization:", error);
-					mainErrorMessage.textContent = "خطا در بارگذاری دیتابیس نشریات. ممکن است برخی نشریات نمایش داده نشوند.";
-					mainErrorMessage.style.display = 'block';
-				}
-
-				// Use the merged configurations to generate HTML sections and buttons
-				Object.assign(newspaperConfigurations, initialNewspaperConfigs);
+				// Generate initial sections and buttons for formula papers
 				generateNewspaperSectionsAndButtons();
-				// After generation, populate dynamic `newspaperData` with references and issues
-				await loadNewspaperDbData(); // This now mainly sets up event listeners and `navState`
+
+				// Load database papers and populate `newspaperData` with their info including firstIssueDate
+				await loadNewspaperDbData();
+
+				// Now that all newspaperData is complete, sort and render global first issue buttons
+				sortAndRenderGlobalFirstIssueButtons();
+
 
 				// Set initial calendar mode and load images based on URL parameters or defaults
 				const urlCalendar = getUrlParameter('calendar');
@@ -1486,6 +1528,7 @@
 					Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 				}
 
+				// Always update URL parameters when calendar changes
 				if (currentCalendarMode === 'shamsi') {
 					updateUrlParameters(
 						'shamsi',
@@ -1775,6 +1818,14 @@
 				Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 				loadImage('date');
 				updateIssueNavButtons(newspaperId);
+
+				// Update URL parameters
+				updateUrlParameters(
+					currentCalendarMode,
+					hijriYearInput.value,
+					hijriMonthSelect.value,
+					hijriDayInput.value
+				);
 			};
 
 			const goToPrevNewspaperIssue = (newspaperId) => {
@@ -1896,6 +1947,14 @@
 					}
 					// Apply date and load images
 					handleCalendarChange(targetDate);
+
+					// Update URL parameters after date change
+					updateUrlParameters(
+						currentCalendarMode,
+						targetDate.year,
+						targetDate.month,
+						targetDate.day
+					);
 				} else {
 					console.warn(`No first issue date defined or available for ${paperId}.`);
 				}
@@ -2020,6 +2079,14 @@
 				hijriMonthSelect.value = issue.month;
 				hijriDayInput.value = issue.day;
 
+				// Update URL parameters
+				updateUrlParameters(
+					currentCalendarMode,
+					hijriYearInput.value,
+					hijriMonthSelect.value,
+					hijriDayInput.value
+				);
+
 				closeAllIssuesModal();
 				loadImage('date');
 			};
@@ -2051,7 +2118,7 @@
 				prevYearBtn.disabled = currentCalendarYear <= minCalendarYear;
 				nextYearBtn.disabled = currentCalendarYear >= maxCalendarYear;
 
-				const maxDaysToDisplay = 30; // Max days to show in grid for visual consistency
+				const maxDaysToDisplay = 30; // Max days to show in grid for visual consistency (all Hijri months have at most 30 days)
 
 				for (let month = 1; month <= 12; month++) {
 					const monthDiv = document.createElement('div');
@@ -2074,8 +2141,15 @@
 
 						if (issueCount > 0) {
 							dayBtn.classList.add('has-issue');
-							if (issueCount > 1) {
-								dayBtn.classList.add('has-multiple-issues');
+							// Add opacity classes based on issue count
+							if (issueCount === 1) {
+								dayBtn.classList.add('issue-count-1');
+							} else if (issueCount === 2) {
+								dayBtn.classList.add('issue-count-2');
+								dayBtn.classList.add('has-multiple-issues'); // Apply multiple issues style
+							} else { // 3 or more
+								dayBtn.classList.add('issue-count-3plus');
+								dayBtn.classList.add('has-multiple-issues'); // Apply multiple issues style
 							}
 						}
 
@@ -2099,6 +2173,14 @@
 				hijriMonthSelect.value = month;
 				hijriDayInput.value = day;
 
+				// Update URL parameters
+				updateUrlParameters(
+					currentCalendarMode,
+					hijriYearInput.value,
+					hijriMonthSelect.value,
+					hijriDayInput.value
+				);
+
 				closeCalendarModal();
 				loadImage('date');
 			};
@@ -2116,7 +2198,8 @@
 
 			[shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput].forEach(el => {
 				if(el) el.addEventListener('change', () => {
-					loadImage('date');
+					// The handleCalendarChange function (called on radio change) or the loadImage('date') will call updateUrlParameters.
+					// For direct year/month/day changes without changing calendar mode, call updateUrlParameters here.
 					if (currentCalendarMode === 'shamsi') {
 						updateUrlParameters(
 							'shamsi',
@@ -2124,7 +2207,7 @@
 							shamsiMonthSelect.value,
 							shamsiDayInput.value
 						);
-					} else {
+					} else { // currentCalendarMode === 'hijri'
 						updateUrlParameters(
 							'hijri',
 							hijriYearInput.value,
@@ -2132,11 +2215,13 @@
 							hijriDayInput.value
 						);
 					}
+					loadImage('date');
 				});
 			});
 
 			if(mainPageNumberInput) mainPageNumberInput.addEventListener('change', () => {
 				loadImage('pageInput');
+				// Update URL parameters when main page number changes
 				if (currentCalendarMode === 'shamsi') {
 					updateUrlParameters(
 						'shamsi',
