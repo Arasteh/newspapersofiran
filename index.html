@@ -260,7 +260,7 @@
 			align-items: center;
 			background-color: var(--lightbox-bg);
 			padding: 20px;
-			border-radius: 8踐px;
+			border-radius: 8px;
 			box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 			color: var(--lightbox-text-color);
 			overflow-y: auto;
@@ -846,6 +846,18 @@
 					return index !== -1 ? englishNumbers[index] : char;
 				}).join('');
 			};
+			// New helper function for English to Persian digits
+			const englishToPersianDigits = (str) => {
+				if (typeof str !== 'string' && typeof str !== 'number') return str;
+				str = String(str);
+				const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+				const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+				return str.split('').map(char => {
+					const index = englishNumbers.indexOf(char);
+					return index !== -1 ? persianNumbers[index] : char;
+				}).join('');
+			};
+
 			const getUrlParameter = (name) => {
 				name = name.replace(/[\[\]]/g, '\\$&');
 				const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
@@ -957,21 +969,21 @@
 			const populateDateDropdowns = () => {
 				// Populate Shamsi Year (1305 to 1373)
 				for (let year = 1305; year <= 1373; year++) {
-					const option = new Option(year, year);
+					const option = new Option(englishToPersianDigits(year), year); // Convert to Persian for display
 					shamsiYearInput.add(option);
 				}
 				shamsiYearInput.value = "1350"; // Default value
 
 				// Populate Hijri Year (1277 to 1361)
 				for (let year = 1277; year <= 1361; year++) {
-					const option = new Option(year, year);
+					const option = new Option(englishToPersianDigits(year), year); // Convert to Persian for display
 					hijriYearInput.add(option);
 				}
 				hijriYearInput.value = "1325"; // Default value
 
 				// Populate Day (1 to 31)
 				for (let day = 1; day <= 31; day++) {
-					const option = new Option(day, day);
+					const option = new Option(englishToPersianDigits(day), day); // Convert to Persian for display
 					shamsiDayInput.add(option);
 					hijriDayInput.add(option.cloneNode(true)); // Use cloneNode for the second dropdown
 				}
@@ -1402,7 +1414,7 @@
 
 
 						if (titleElement && foundIssue.issue_number) {
-							titleElement.textContent = `${paper.title} (شماره ${foundIssue.issue_number})`;
+							titleElement.textContent = `${paper.title} (شماره ${englishToPersianDigits(foundIssue.issue_number)})`; // Localize number
 						}
 					} else {
 						paper.errorElement.textContent = 'نشریه در این تاریخ موجود نیست';
@@ -1446,11 +1458,11 @@
 					paper.imageElement.onerror = () => {
 						paper.statusElement.style.display = 'none';
 						if (paper.type === 'formula' && paper.calendar_type === 'shamsi' && (id === 'yaghma' || id === 'negin')) {
-							paper.errorElement.textContent = `صفحه ${page} برای شماره ${shamsiMonthSelect.options[parseInt(month,10)-1].text} سال ${year} از نشریه ${paper.title} یافت نشد.`;
+							paper.errorElement.textContent = `صفحه ${englishToPersianDigits(page)} برای شماره ${shamsiMonthSelect.options[parseInt(month,10)-1].text} سال ${englishToPersianDigits(year)} از نشریه ${paper.title} یافت نشد.`;
 						} else if (paper.type === 'formula' || (paper.type === 'database' && paper.calendar_type === 'shamsi')) {
 							paper.errorElement.textContent = 'نشریه در این تاریخ موجود نیست.';
 						} else {
-							paper.errorElement.textContent = `تصویر صفحه ${page} یافت نشد.`;
+							paper.errorElement.textContent = `تصویر صفحه ${englishToPersianDigits(page)} یافت نشد.`;
 						}
 						paper.errorElement.style.display = 'block';
 						paper.available = false;
@@ -1663,25 +1675,25 @@
 									  ? {y:paper.currentIssue.year, m:paper.currentIssue.month, d:paper.currentIssue.day }
 									  : {y:year, m:parseInt(month), d:parseInt(day)};
 					const hijriMonthName = hijriMonthNames[hijriDate.m - 1];
-					formattedDate = `${pad(hijriDate.d)} ${hijriMonthName} ${hijriDate.y} (قمری)`;
+					formattedDate = `${englishToPersianDigits(pad(hijriDate.d))} ${hijriMonthName} ${englishToPersianDigits(hijriDate.y)} (قمری)`; // Localize numbers
 				} else if (paper.calendar_type === 'shamsi') {
 					const shamsiDate = (paper.type === 'database' && paper.currentIssue)
 									 ? {y:paper.currentIssue.year, m:paper.currentIssue.month, d:paper.currentIssue.day }
 									 : {y:year, m:parseInt(month), d:parseInt(displayDayForDate)};
 					const persianMonthName = shamsiMonthNames[shamsiDate.m - 1];
-					formattedDate = `${pad(shamsiDate.d)} ${persianMonthName} ${shamsiDate.y}`;
+					formattedDate = `${englishToPersianDigits(pad(shamsiDate.d))} ${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`; // Localize numbers
 				} else {
-					formattedDate = `${pad(day)}/${pad(month)}/${year}`;
+					formattedDate = `${englishToPersianDigits(pad(day))}/${englishToPersianDigits(pad(month))}/${englishToPersianDigits(year)}`; // Localize numbers
 				}
 
 				let titleText = `${paper.title}`;
 				if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.issue_number) {
-					titleText += ` (شماره ${paper.currentIssue.issue_number})`;
+					titleText += ` (شماره ${englishToPersianDigits(paper.currentIssue.issue_number)})`; // Localize number
 				}
 
-				lightboxNewspaperTitle.textContent = `${titleText} - ${formattedDate} - صفحه: ${lightboxCurrentPage}`;
+				lightboxNewspaperTitle.textContent = `${titleText} - ${formattedDate} - صفحه: ${englishToPersianDigits(lightboxCurrentPage)}`; // Localize number
 				lightboxPageNumberInput.value = lightboxCurrentPage;
-				lightboxImage.alt = `تصویر ${paper.title} در لایت‌باکس - صفحه ${lightboxCurrentPage}`;
+				lightboxImage.alt = `تصویر ${paper.title} در لایت‌باکس - صفحه ${englishToPersianDigits(lightboxCurrentPage)}`; // Localize number
 
 				lightboxStatusMessage.textContent = 'در حال بارگذاری...';
 				lightboxStatusMessage.style.display = 'block';
@@ -1785,7 +1797,7 @@
 				} catch (error) {
 					lightboxStatusMessage.style.display = 'none';
 					lightboxImage.style.display = 'none';
-					lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${lightboxCurrentPage} یافت نشد.`;
+					lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${englishToPersianDigits(lightboxCurrentPage)} یافت نشد.`; // Localize number
 					lightboxErrorMessage.style.display = 'block';
 					downloadLink.style.display = 'none';
 					viewLargeLink.style.display = 'none';
@@ -1799,8 +1811,9 @@
 
 				if (isDatabasePaperWithIssues) {
 					issueNavLightbox.style.display = 'flex'; // Show issue navigation
-					lightboxPrevNewspaperButton.style.display = 'none'; // Hide newspaper nav
-					lightboxNextNewspaperButton.style.display = 'none'; // Hide newspaper nav
+					// The existing newspaper-nav should remain hidden if issue-nav-lightbox is shown
+					lightboxPrevNewspaperButton.style.display = 'none';
+					lightboxNextNewspaperButton.style.display = 'none';
 
 					// Update issue number input and buttons
 					const navState = paper.navState;
@@ -1865,11 +1878,10 @@
 					.filter(key => {
 						const p = newspaperData[key];
 						if (!p || !p.available) return false;
-						if (currentCalendarMode === 'shamsi') {
-							return p.calendar_type === 'shamsi';
-						} else {
-							return p.calendar_type === 'hijri';
-						}
+						// Only consider newspapers matching the current calendar mode
+						const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
+										   (currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
+						return matchesMode;
 					})
 					.sort((aKey, bKey) => {
 						const paperA = newspaperData[aKey];
@@ -1892,7 +1904,7 @@
 				} else {
 					lightboxCurrentPage = 1;
 				}
-				updateLightboxContent();
+				updateLightboxContent(); // Refresh lightbox content
 			};
 
 			// --- Issue Navigation (for database-driven papers) ---
@@ -2015,7 +2027,7 @@
 
 				if (issueNumberInput) {
 					if (foundIndex >= 0 && issuesArray[foundIndex]) {
-						issueNumberInput.value = issuesArray[foundIndex].issue_number || '';
+						issueNumberInput.value = englishToPersianDigits(issuesArray[foundIndex].issue_number) || ''; // Localize number
 					} else {
 						issueNumberInput.value = '';
 					}
@@ -2179,7 +2191,7 @@
 				issuesToDisplay.forEach(issue => {
 					const issueButton = document.createElement('button');
 					const monthName = hijriMonthNames[issue.month - 1];
-					issueButton.textContent = `شمارهٔ ${issue.issue_number}, روز ${issue.day} ${monthName} ${issue.year}`;
+					issueButton.textContent = `شمارهٔ ${englishToPersianDigits(issue.issue_number)}, روز ${englishToPersianDigits(issue.day)} ${monthName} ${englishToPersianDigits(issue.year)}`; // Localize numbers
 					issueButton.classList.add('issue-item-button');
 					issueButton.addEventListener('click', () => {
 						goToIssueFromModal(paper.id, issue);
@@ -2217,7 +2229,7 @@
 			// --- Calendar Modal Functions ---
 			const populateCalendarYearDropdown = () => {
 				for (let year = minCalendarYear; year <= maxCalendarYear; year++) {
-					const option = new Option(year, year);
+					const option = new Option(englishToPersianDigits(year), year); // Localize number
 					calendarYearSelect.add(option);
 				}
 			};
@@ -2241,6 +2253,10 @@
 				prevYearBtn.disabled = currentCalendarYear <= minCalendarYear;
 				nextYearBtn.disabled = currentCalendarYear >= maxCalendarYear;
 
+				// Localize year in title
+				calendarModalTitle.textContent = `تقویم قمری سال ${englishToPersianDigits(currentCalendarYear)}`;
+
+
 				const maxDaysToDisplay = 30; // Max days to show in grid for visual consistency (all Hijri months have at most 30 days)
 
 				for (let month = 1; month <= 12; month++) {
@@ -2256,7 +2272,7 @@
 
 					for (let day = 1; day <= maxDaysToDisplay; day++) {
 						const dayBtn = document.createElement('button');
-						dayBtn.textContent = day;
+						dayBtn.textContent = englishToPersianDigits(day); // Localize number
 						dayBtn.classList.add('calendar-day-btn');
 
 						const dateString = `${year}${pad(month)}${pad(day)}`;
@@ -2389,13 +2405,14 @@
 			lightboxNextNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('next'));
 
 			// New Lightbox Issue Navigation Event Listeners
+			// --- Modified: Removed closeLightbox() call ---
 			lightboxPrevIssueButton.addEventListener('click', () => {
 				goToPrevNewspaperIssue(currentLightboxNewspaperId);
-				closeLightbox(); // Close lightbox after navigating to a new issue
+				// Removed closeLightbox()
 			});
 			lightboxNextIssueButton.addEventListener('click', () => {
 				goToNextNewspaperIssue(currentLightboxNewspaperId);
-				closeLightbox(); // Close lightbox after navigating to a new issue
+				// Removed closeLightbox()
 			});
 			lightboxViewAllIssuesButton.addEventListener('click', () => {
 				openAllNewspapersIssuesModal(currentLightboxNewspaperId);
