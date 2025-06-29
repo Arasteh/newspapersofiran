@@ -1144,22 +1144,9 @@
 					const dbNewspapersRawData = await response.json();
 					console.log("db.json loaded successfully.");
 
-					// Manually add data for "نشریه مهر" (Mehr)
-					const mehrNewspaperData = {
-						id: "Q25433419",
-						title: "روزنامه مهر",
-						calendar_type: "shamsi",
-						frequency: "daily",
-						issues: [
-							{"issue_number": 1, "year": 1330, "month": 1, "day": 1, "filename_base": "Mehr 13300101"},
-							{"issue_number": 2, "year": 1330, "month": 1, "day": 2, "filename_base": "Mehr 13300102"},
-							{"issue_number": 3, "year": 1330, "month": 1, "day": 3, "filename_base": "Mehr 13300103"},
-							{"issue_number": 4, "year": 1330, "month": 1, "day": 4, "filename_base": "Mehr 13300104"},
-							{"issue_number": 5, "year": 1330, "month": 1, "day": 5, "filename_base": "Mehr 13300105"}
-						]
-					};
-					dbNewspapersRawData.push(mehrNewspaperData);
-
+					// IMPORTANT: Removed the hardcoded 'mehrNewspaperData' and its push operation.
+					// The application will now solely rely on db.json for all newspaper data,
+					// including the 'Mehr' newspaper if it is present in the db.json file.
 
 					dbNewspapersRawData.forEach(dbPaper => {
 						const paperId = dbPaper.id;
@@ -1381,6 +1368,7 @@
 			// --- Core Logic Functions ---
 
 			const getWikimediaHash = (paper, fullFileNameWithPdf) => {
+				// This function now expects filename_base to be from the loaded data, not constructed.
 				if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.wikimedia_hash) {
 					return paper.currentIssue.wikimedia_hash;
 				}
@@ -1507,7 +1495,7 @@
 					}
 
 					if (foundIssue) {
-						fileNameBase = foundIssue.filename_base;
+						fileNameBase = foundIssue.filename_base; // Use filename_base from database
 						maxPages = foundIssue.pages || null;
 						paper.currentIssue = foundIssue;
 						issueExistsForDate = true;
@@ -1906,6 +1894,7 @@
 						fileNameBase = `${paper.prefix}${dateForFilename.y}${dateForFilename.m}${dateForFilename.d}${paper.calendar_type === 'hijri' ? ' AH' : ''}`;
 					}
 				} else if (paper.type === 'database' && paper.currentIssue) {
+					// Use filename_base directly from the current issue loaded from db.json
 					fileNameBase = paper.currentIssue.filename_base;
 					maxPages = paper.currentIssue.pages || null;
 					dateForFilename = {y: paper.currentIssue.year, m: pad(paper.currentIssue.month), d: pad(paper.currentIssue.day)};
