@@ -1368,7 +1368,7 @@
 			// --- Core Logic Functions ---
 
 			const getWikimediaHash = (paper, fullFileNameWithPdf) => {
-				// This function now expects filename_base to be from the loaded data, not constructed.
+				// این تابع انتظار دارد که filename_base از داده‌های بارگذاری شده (و نه ساخته‌شده) باشد.
 				if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.wikimedia_hash) {
 					return paper.currentIssue.wikimedia_hash;
 				}
@@ -1389,7 +1389,7 @@
 				let shouldDisplaySectionBasedOnModeAndType = false;
 				let issueExistsForDate = false;
 
-				// Determine if the newspaper section should be displayed based on calendar mode
+				// تعیین می‌کند که آیا بخش نشریه باید بر اساس حالت تقویم نمایش داده شود یا خیر
 				if (currentCalendarMode === 'hijri') {
 					if (paper.calendar_type === 'hijri') {
 						shouldDisplaySectionBasedOnModeAndType = true;
@@ -1400,7 +1400,7 @@
 					}
 				}
 
-				// Show/hide the 'view all issues' button based on availability and type
+				// نمایش/پنهان کردن دکمه 'مشاهده تمام شماره‌ها' بر اساس در دسترس بودن و نوع
 				if (paper.viewAllIssuesBtn) {
 					if (paper.type === 'database' && paper.issues && paper.issues.length > 0 && shouldDisplaySectionBasedOnModeAndType) {
 						paper.viewAllIssuesBtn.style.display = 'block';
@@ -1415,13 +1415,13 @@
 
 				const titleElement = paper.sectionElement.querySelector('h2');
 				if (titleElement) {
-					titleElement.textContent = paper.title; // Reset title initially
+					titleElement.textContent = paper.title; // عنوان را در ابتدا بازنشانی می‌کند
 				}
 
 				paper.sectionElement.style.display = shouldDisplaySectionBasedOnModeAndType ? 'flex' : 'none';
 				if (!shouldDisplaySectionBasedOnModeAndType) {
 					paper.available = false;
-					// Ensure issue navigation is hidden if paper section is not displayed
+					// اطمینان حاصل می‌کند که ناوبری شماره در صورت عدم نمایش بخش پنهان شود
 					if (paper.navState && paper.navState.navigationDiv) {
 						paper.navState.navigationDiv.style.display = 'none';
 					}
@@ -1433,8 +1433,8 @@
 				paper.statusElement.style.display = 'none';
 
 				if (paper.type === 'formula') {
-					if (id === 'jangal_qamari') { // Specific handling for Jangal
-						fileNameBase = `${paper.prefix} ${year}${month}${day} AH`; // Add a space as per filename convention
+					if (id === 'jangal_qamari') { // مدیریت خاص برای جنگل
+						fileNameBase = `${paper.prefix} ${year}${month}${day} AH`; // اضافه کردن فاصله طبق قرارداد نام فایل
 						issueExistsForDate = true;
 					}
 					else if (id === 'yaghma' && paper.calendar_type === 'shamsi') {
@@ -1465,7 +1465,7 @@
 								issueNumber = shamsiInputMonth - 2;
 							} else {
 								const yearsAfter1344 = shamsiInputYear - 1345;
-								const issuesInFullYears = yearsAfter1944 * 12;
+								const issuesInFullYears = yearsAfter1344 * 12;
 								issueNumber = 10 + issuesInFullYears + shamsiInputMonth;
 							}
 							fileNameBase = `Negin, Vol. ${volume}, No. ${issueNumber}, ${shamsiInputYear} SH`;
@@ -1484,37 +1484,37 @@
 				} else if (paper.type === 'database') {
 					let foundIssue;
 					if (paper.frequency === 'monthly') {
-						// For monthly papers, match only year and month
+						// برای نشریات ماهانه، فقط سال و ماه را مطابقت می‌دهد
 						foundIssue = paper.issues && paper.issues.find(issue =>
 							issue.year == year && issue.month == month
 						);
-					} else { // Default to daily (exact date match)
+					} else { // پیش‌فرض به روزانه (تطابق تاریخ دقیق)
 						foundIssue = paper.issues && paper.issues.find(issue =>
 							issue.year == year && issue.month == month && issue.day == day
 						);
 					}
 
 					if (foundIssue) {
-						fileNameBase = foundIssue.filename_base; // Use filename_base from database
+						fileNameBase = foundIssue.filename_base; // استفاده از filename_base از دیتابیس
 						maxPages = foundIssue.pages || null;
 						paper.currentIssue = foundIssue;
 						issueExistsForDate = true;
 
-						// Update the current index in navState for this newspaper
+						// به‌روزرسانی شاخص فعلی در navState برای این نشریه
 						if (paper.navState) {
 							paper.navState.currentIndex = paper.navState.issuesArray.findIndex(issue =>
 								issue.filename_base === foundIssue.filename_base
 							);
 						}
 
-						// Update the title to include the issue number for database papers
+						// به‌روزرسانی عنوان برای شامل شدن شماره شماره برای نشریات مبتنی بر دیتابیس
 						if (titleElement) {
 							let baseTitle = paper.title;
 							if (foundIssue.issue_number) {
 								titleText = `${baseTitle} (شماره ${englishToPersianDigits(foundIssue.issue_number)})`;
 								titleElement.textContent = titleText;
 							} else {
-								titleElement.textContent = baseTitle; // Fallback if issue_number is missing
+								titleElement.textContent = baseTitle; // بازگشت به عقب اگر issue_number موجود نباشد
 							}
 						}
 
@@ -1522,11 +1522,11 @@
 						paper.errorElement.textContent = 'نشریه در این تاریخ موجود نیست';
 						paper.errorElement.style.display = 'block';
 						paper.available = false;
-						// Reset title if no issue found for the date
+						// بازنشانی عنوان اگر هیچ شماره‌ای برای تاریخ پیدا نشد
 						if (titleElement) {
 							titleElement.textContent = paper.title;
 						}
-						// Ensure issue navigation is hidden if no issue is found for the date
+						// اطمینان حاصل می‌کند که ناوبری شماره پنهان شود اگر هیچ شماره‌ای برای تاریخ پیدا نشد
 						if (paper.navState && paper.navState.navigationDiv) {
 							paper.navState.navigationDiv.style.display = 'none';
 						}
@@ -1539,7 +1539,7 @@
 
 				if (!issueExistsForDate) {
 					paper.available = false;
-					// Ensure issue navigation is hidden if no issue exists for the date
+					// اطمینان حاصل می‌کند که ناوبری شماره پنهان شود اگر هیچ شماره‌ای برای تاریخ موجود نباشد
 					if (paper.navState && paper.navState.navigationDiv) {
 						paper.navState.navigationDiv.style.display = 'none';
 					}
@@ -1563,7 +1563,7 @@
 						paper.errorElement.style.display = 'none';
 						paper.available = true;
 						if (paper.navState) {
-							updateIssueNavigationVisibility(id); // Call to ensure issue navigation visibility is correctly updated
+							updateIssueNavigationVisibility(id); // فراخوانی برای اطمینان از به‌روزرسانی صحیح دیداری ناوبری شماره
 						}
 						paper.fileNameBase = fileNameBase;
 						paper.maxPages = maxPages;
@@ -1580,7 +1580,7 @@
 						}
 						paper.errorElement.style.display = 'block';
 						paper.available = false;
-						// Ensure issue navigation is hidden if image fails to load
+						// اطمینان حاصل می‌کند که ناوبری شماره پنهان شود اگر بارگذاری تصویر با شکست مواجه شد
 						if (paper.navState && paper.navState.navigationDiv) {
 							paper.navState.navigationDiv.style.display = 'none';
 						}
@@ -1589,7 +1589,7 @@
 					paper.imageElement.src = imageUrl;
 				}).catch(() => {
 					paper.available = false;
-					// Ensure issue navigation is hidden if promise rejection occurs
+					// اطمینان حاصل می‌کند که ناوبری شماره پنهان شود اگر خطای promise rejection رخ داد
 					if (paper.navState && paper.navState.navigationDiv) {
 						paper.navState.navigationDiv.style.display = 'none';
 					}
@@ -1654,8 +1654,8 @@
 
 				Object.values(newspaperData).forEach(paper => {
 					if (paper) {
-						paper.available = false; // Reset availability for all papers
-						// Also hide issue navigation for all papers initially
+						paper.available = false; // بازنشانی در دسترس بودن برای همه نشریات
+						// همچنین ناوبری شماره را در ابتدا برای همه نشریات پنهان می‌کند
 						if (paper.navState && paper.navState.navigationDiv) {
 							paper.navState.navigationDiv.style.display = 'none';
 						}
@@ -1731,7 +1731,7 @@
 						shamsiYearInput.value = targetDate.year;
 						shamsiMonthSelect.value = targetDate.month;
 						shamsiDayInput.value = targetDate.day;
-					} else if (targetDate.calendar_type === 'hijri') { // Ensure calendar type matches for Hijri
+					} else if (targetDate.calendar_type === 'hijri') { // اطمینان حاصل می‌کند که نوع تقویم برای قمری مطابقت دارد
 						hijriYearInput.value = targetDate.year;
 						hijriMonthSelect.value = targetDate.month;
 						hijriDayInput.value = targetDate.day;
@@ -1740,7 +1740,7 @@
 					Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 				}
 
-				// Always update URL parameters when calendar changes
+				// همیشه پارامترهای URL را هنگام تغییر تقویم به‌روزرسانی می‌کند
 				if (currentCalendarMode === 'shamsi') {
 					updateUrlParameters(
 						'shamsi',
@@ -1774,7 +1774,7 @@
 			};
 
 			const closeLightbox = () => {
-					// Also reset the page input value to 1 when closing the lightbox
+					// همچنین مقدار ورودی صفحه را هنگام بستن لایت‌باکس به 1 بازنشانی می‌کند
 					if (currentLightboxNewspaperId && newspaperData[currentLightboxNewspaperId]) {
 							newspaperData[currentLightboxNewspaperId].currentPage = 1;
 					}
@@ -1811,7 +1811,7 @@
 									  ? {y:paper.currentIssue.year, m:paper.currentIssue.month, d:paper.currentIssue.day }
 									  : {y:year, m:parseInt(month), d:parseInt(day)};
 					const hijriMonthName = hijriMonthNames[hijriDate.m - 1];
-					formattedDate = `${englishToPersianDigits(pad(hijriDate.d))} ${hijriMonthName} ${englishToPersianDigits(hijriDate.y)} (قمری)`; // Localize numbers
+					formattedDate = `${englishToPersianDigits(pad(hijriDate.d))} ${hijriMonthName} ${englishToPersianDigits(hijriDate.y)} (قمری)`; // محلی‌سازی اعداد
 				} else if (paper.calendar_type === 'shamsi') {
 					const shamsiDate = (paper.type === 'database' && paper.currentIssue)
 									 ? {y:paper.currentIssue.year, m:paper.currentIssue.month, d:paper.currentIssue.day }
@@ -1819,22 +1819,22 @@
 					const persianMonthName = shamsiMonthNames[shamsiDate.m - 1];
 
 					if (paper.type === 'database' && paper.frequency === 'monthly') {
-						formattedDate = `${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`; // Only month and year for monthly
+						formattedDate = `${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`; // فقط ماه و سال برای ماهانه
 					} else {
-						formattedDate = `${englishToPersianDigits(pad(shamsiDate.d))} ${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`; // Localize numbers
+						formattedDate = `${englishToPersianDigits(pad(shamsiDate.d))} ${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`; // محلی‌سازی اعداد
 					}
 				} else {
-					formattedDate = `${englishToPersianDigits(pad(day))}/${englishToPersianDigits(pad(month))}/${englishToPersianDigits(year)}`; // Localize numbers
+					formattedDate = `${englishToPersianDigits(pad(day))}/${englishToPersianDigits(pad(month))}/${englishToPersianDigits(year)}`; // محلی‌سازی اعداد
 				}
 
 				let titleText = `${paper.title}`;
 				if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.issue_number) {
-					titleText += ` (شماره ${englishToPersianDigits(paper.currentIssue.issue_number)})`; // Localize number
+					titleText += ` (شماره ${englishToPersianDigits(paper.currentIssue.issue_number)})`; // محلی‌سازی عدد
 				}
 
-				lightboxNewspaperTitle.textContent = `${titleText} - ${formattedDate} - صفحه: ${englishToPersianDigits(lightboxCurrentPage)}`; // Localize number
+				lightboxNewspaperTitle.textContent = `${titleText} - ${formattedDate} - صفحه: ${englishToPersianDigits(lightboxCurrentPage)}`; // محلی‌سازی عدد
 				lightboxPageNumberInput.value = lightboxCurrentPage;
-				lightboxImage.alt = `تصویر ${paper.title} در لایت‌باکس - صفحه ${englishToPersianDigits(lightboxCurrentPage)}`; // Localize number
+				lightboxImage.alt = `تصویر ${paper.title} در لایت‌باکس - صفحه ${englishToPersianDigits(lightboxCurrentPage)}`; // محلی‌سازی عدد
 
 				lightboxStatusMessage.textContent = 'در حال بارگذاری...';
 				lightboxStatusMessage.style.display = 'block';
@@ -1849,7 +1849,7 @@
 
 				if (paper.type === 'formula') {
 					dateForFilename = {y: year, m: month, d: day};
-					if (id === 'jangal_qamari') { // Specific handling for Jangal
+					if (id === 'jangal_qamari') { // مدیریت خاص برای جنگل
 						fileNameBase = `${paper.prefix} ${dateForFilename.y}${dateForFilename.m}${dateForFilename.d} AH`;
 					} else if (id === 'yaghma' && paper.calendar_type === 'shamsi') {
 						const shamsiInputYear = parseInt(dateForFilename.y, 10);
@@ -1894,7 +1894,7 @@
 						fileNameBase = `${paper.prefix}${dateForFilename.y}${dateForFilename.m}${dateForFilename.d}${paper.calendar_type === 'hijri' ? ' AH' : ''}`;
 					}
 				} else if (paper.type === 'database' && paper.currentIssue) {
-					// Use filename_base directly from the current issue loaded from db.json
+					// استفاده از filename_base مستقیماً از شماره فعلی بارگذاری شده از db.json
 					fileNameBase = paper.currentIssue.filename_base;
 					maxPages = paper.currentIssue.pages || null;
 					dateForFilename = {y: paper.currentIssue.year, m: pad(paper.currentIssue.month), d: pad(paper.currentIssue.day)};
@@ -1915,13 +1915,12 @@
 
 				lightboxImage.src = imageUrl;
 
-				// --- Modification 1: Open Wikimedia Commons link on image click ---
+				// --- اصلاح ۱: باز کردن لینک Wikimedia Commons با کلیک بر روی تصویر ---
 				const wikimediaFileLink = `https://commons.wikimedia.org/w/index.php?title=File%3A${fileNameForUrlPath}&page=${lightboxCurrentPage}`;
 				lightboxImage.onclick = () => {
 					window.open(wikimediaFileLink, '_blank');
 				};
-				lightboxImage.style.cursor = 'pointer'; // Indicate it's clickable
-
+				lightboxImage.style.cursor = 'pointer'; // نشان دادن قابل کلیک بودن
 
 				try {
 					await new Promise((resolve, reject) => {
@@ -1941,7 +1940,7 @@
 				} catch (error) {
 					lightboxStatusMessage.style.display = 'none';
 					lightboxImage.style.display = 'none';
-					lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${englishToPersianDigits(lightboxCurrentPage)} یافت نشد.`; // Localize number
+					lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${englishToPersianDigits(lightboxCurrentPage)} یافت نشد.`; // محلی‌سازی عدد
 					lightboxErrorMessage.style.display = 'block';
 					downloadLink.style.display = 'none';
 					viewLargeLink.style.display = 'none';
@@ -1950,11 +1949,11 @@
 				lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
 				lightboxNextPageButton.disabled = (maxPages !== null && maxPages !== Infinity && lightboxCurrentPage >= maxPages);
 
-				// --- Modification: Display issue navigation and "View All Issues" in lightbox, and separate newspaper navigation ---
+				// --- اصلاح: نمایش ناوبری شماره و "مشاهده تمام شماره‌ها" در لایت‌باکس، و ناوبری جداگانه نشریات ---
 				const isDatabasePaperWithIssues = paper.type === 'database' && paper.issues && paper.issues.length > 0;
 
 				if (isDatabasePaperWithIssues) {
-					issueNavLightbox.style.display = 'flex'; // Show issue navigation
+					issueNavLightbox.style.display = 'flex'; // نمایش ناوبری شماره
 					const navState = paper.navState;
 					if (navState && navState.currentIssue) {
 						lightboxIssueNumberInput.value = navState.currentIssue.issue_number || '';
@@ -1967,26 +1966,26 @@
 						lightboxPrevIssueButton.disabled = true;
 						lightboxNextIssueButton.disabled = true;
 					}
-					lightboxViewAllIssuesButton.style.display = 'inline-block'; // Always show for database papers in lightbox
+					lightboxViewAllIssuesButton.style.display = 'inline-block'; // همیشه برای نشریات دیتابیس در لایت‌باکس نمایش داده می‌شود
 				} else {
-					issueNavLightbox.style.display = 'none'; // Hide issue navigation
-					lightboxViewAllIssuesButton.style.display = 'none'; // Hide "View All Issues"
+					issueNavLightbox.style.display = 'none'; // پنهان کردن ناوبری شماره
+					lightboxViewAllIssuesButton.style.display = 'none'; // پنهان کردن "مشاهده تمام شماره‌ها"
 				}
 
-				// Determine visibility of newspaper navigation (between different papers on same date)
-				// This logic is now independent of `issueNavLightbox`'s visibility
+				// تعیین دیداری ناوبری نشریات (بین نشریات مختلف در یک تاریخ)
+				// این منطق اکنون مستقل از دیداری `issueNavLightbox` است
 				const availableNewspapersForCurrentDate = Object.keys(newspaperData)
 					.filter(key => {
 						const p = newspaperData[key];
 						if (!p || !p.available) return false;
-						// Only consider newspapers matching the current calendar mode
+						// فقط نشریات مطابق با حالت تقویم فعلی را در نظر بگیرید
 						const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
 											(currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
 						return matchesMode;
 					});
                 
-                // Corrected sort: Sort by title in Persian for consistent ordering
-                availableNewspapersForCurrentDate.sort((aId, bId) => { // Corrected this line
+                // مرتب‌سازی اصلاح‌شده: مرتب‌سازی بر اساس عنوان به فارسی برای ترتیب ثابت
+                availableNewspapersForCurrentDate.sort((aId, bId) => { // این خط اصلاح شده است
                     const paperA = newspaperData[aId];
                     const paperB = newspaperData[bId];
                     return paperA.title.localeCompare(paperB.title, 'fa');
@@ -2016,7 +2015,7 @@
 					lightboxCurrentPage++;
 				}
 				if (currentPageBeforeChange !== lightboxCurrentPage) {
-					paper.currentPage = lightboxCurrentPage; // Update paper's current page
+					paper.currentPage = lightboxCurrentPage; // به‌روزرسانی صفحه فعلی نشریه
 					updateLightboxContent();
 				}
 			};
@@ -2026,13 +2025,13 @@
 					.filter(key => {
 						const p = newspaperData[key];
 						if (!p || !p.available) return false;
-						// Only consider newspapers matching the current calendar mode
+						// فقط نشریات مطابق با حالت تقویم فعلی را در نظر بگیرید
 						const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
 										   (currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
 						return matchesMode;
 					});
                 
-                // Corrected sort: Sort by title in Persian for consistent ordering
+                // مرتب‌سازی اصلاح‌شده: مرتب‌سازی بر اساس عنوان به فارسی برای ترتیب ثابت
                 availableNewspapers.sort((aId, bId) => {
                     const paperA = newspaperData[aId];
                     const paperB = newspaperData[bId];
@@ -2051,11 +2050,11 @@
 				currentLightboxNewspaperId = availableNewspapers[newIndex];
 				const newPaper = newspaperData[currentLightboxNewspaperId];
 				if (newPaper) {
-					lightboxCurrentPage = newPaper.currentPage; // Set lightbox page to the new paper's last viewed page
+					lightboxCurrentPage = newPaper.currentPage; // تنظیم صفحه لایت‌باکس به آخرین صفحه مشاهده شده نشریه جدید
 				} else {
 					lightboxCurrentPage = 1;
 				}
-				updateLightboxContent(); // Refresh lightbox content
+				updateLightboxContent(); // تازه‌سازی محتوای لایت‌باکس
 			};
 
 			// --- Issue Navigation (for database-driven papers) ---
@@ -2075,15 +2074,15 @@
 				const { issuesArray, issueNumberInput } = paper.navState;
 				if (index < 0 || index >= issuesArray.length) return;
 				
-				paper.navState.currentIndex = index; // Update current index
-				paper.navState.currentIssue = issuesArray[index]; // Update current issue reference
+				paper.navState.currentIndex = index; // به‌روزرسانی شاخص فعلی
+				paper.navState.currentIssue = issuesArray[index]; // به‌روزرسانی ارجاع شماره فعلی
 
 				const issue = issuesArray[index];
 				if (!issueNumberInput || !issue) return;
 				issueNumberInput.value = issue.issue_number || '';
 				
-				// Set the main date inputs to this issue's date
-				// Note: Currently assumes Hijri for DB papers, might need more complex calendar conversion if Shamsi DB papers are added.
+				// تنظیم ورودی‌های تاریخ اصلی به تاریخ این شماره
+				// نکته: در حال حاضر برای نشریات دیتابیس قمری فرض می‌شود، اگر نشریات دیتابیس شمسی اضافه شوند ممکن است نیاز به تبدیل تقویم پیچیده‌تری باشد.
 				if (paper.calendar_type === 'hijri') {
 					hijriYearInput.value = issue.year;
 					hijriMonthSelect.value = issue.month;
@@ -2094,22 +2093,22 @@
 					shamsiDayInput.value = issue.day;
 				}
 
-				// For lightbox specific issue navigation
-				currentLightboxNewspaperId = newspaperId; // Ensure lightbox is focused on this newspaper
-				lightboxCurrentPage = 1; // Reset to page 1 for the new issue
+				// برای ناوبری شماره خاص لایت‌باکس
+				currentLightboxNewspaperId = newspaperId; // اطمینان حاصل می‌کند که لایت‌باکس روی این نشریه متمرکز است
+				lightboxCurrentPage = 1; // بازنشانی به صفحه ۱ برای شماره جدید
 
-				mainPageNumberInput.value = 1; // Reset main page input
-				Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; }); // Reset all papers' current page
+				mainPageNumberInput.value = 1; // بازنشانی ورودی صفحه اصلی
+				Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; }); // بازنشانی صفحه فعلی همه نشریات
 
-				loadImage('date'); // Reload content for the new date/issue
-				updateIssueNavButtons(newspaperId); // Update main view nav buttons
+				loadImage('date'); // بارگذاری مجدد محتوا برای تاریخ/شماره جدید
+				updateIssueNavButtons(newspaperId); // به‌روزرسانی دکمه‌های ناوبری نمای اصلی
 				
-				// If lightbox is open, update its content as well
+				// اگر لایت‌باکس باز است، محتوای آن را نیز به‌روزرسانی می‌کند
 				if (lightboxOverlay.classList.contains('visible') && currentLightboxNewspaperId === newspaperId) {
 					updateLightboxContent();
 				}
 
-				// Update URL parameters
+				// به‌روزرسانی پارامترهای URL
 				updateUrlParameters(
 					currentCalendarMode,
 					currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value,
@@ -2146,7 +2145,7 @@
 
 			const updateIssueNavigationVisibility = (newspaperId) => {
 				const paper = newspaperData[newspaperId];
-				// Show issue navigation only for database-driven papers that are available
+				// نمایش ناوبری شماره فقط برای نشریات مبتنی بر دیتابیس که موجود هستند
 				if (!paper || paper.type !== 'database' || !paper.available || !paper.navState || !paper.navState.navigationDiv ||
 					!paper.issues || paper.issues.length === 0) {
 					if (paper && paper.navState && paper.navState.navigationDiv) {
@@ -2156,7 +2155,7 @@
 				}
 
 				const { navigationDiv, issueNumberInput, issuesArray } = paper.navState;
-				navigationDiv.style.display = 'block'; // Display for available database papers
+				navigationDiv.style.display = 'block'; // نمایش برای نشریات دیتابیس موجود
 
 				let currentYear, currentMonth, currentDay;
 				if (currentCalendarMode === 'shamsi') {
@@ -2170,23 +2169,23 @@
 				}
 
 				let foundIndex = -1;
-				// Find the issue corresponding to the current date selected in the main controls
+				// پیدا کردن شماره مربوط به تاریخ فعلی انتخاب شده در کنترل‌های اصلی
 				if (paper.calendar_type === 'hijri') {
-					if (paper.frequency === 'monthly') { // For Hijri monthly papers, ignore day
+					if (paper.frequency === 'monthly') { // برای نشریات ماهانه قمری، روز را نادیده می‌گیرد
 						foundIndex = issuesArray.findIndex(issue =>
 							issue.year === currentYear && issue.month === currentMonth
 						);
-					} else { // Daily
+					} else { // روزانه
 						foundIndex = issuesArray.findIndex(issue =>
 							issue.year === currentYear && issue.month === currentMonth && issue.day === currentDay
 						);
 					}
 				} else if (paper.calendar_type === 'shamsi') {
-					if (paper.frequency === 'monthly') { // For Shamsi monthly papers, ignore day
+					if (paper.frequency === 'monthly') { // برای نشریات ماهانه شمسی، روز را نادیده می‌گیرد
 						foundIndex = issuesArray.findIndex(issue =>
 							issue.year === currentYear && issue.month === currentMonth
 						);
-					} else { // Daily
+					} else { // روزانه
 						foundIndex = issuesArray.findIndex(issue =>
 							issue.year === currentYear && issue.month === currentMonth && issue.day === currentDay
 						);
@@ -2217,7 +2216,7 @@
 
 				let targetDate = null;
 				if (paper.type === 'database' && paper.issues && paper.issues.length > 0) {
-					// For database-driven papers, use the first chronological issue from its loaded issues.
+					// برای نشریات مبتنی بر دیتابیس، از اولین شماره زمانی از شماره‌های بارگذاری شده استفاده می‌کند.
 					const issuesToConsider = paper.navState && paper.navState.issuesArray
 										   ? paper.navState.issuesArray
 										   : [...paper.issues].sort((a,b) => {
@@ -2231,22 +2230,22 @@
 							year: firstChronologicalIssue.year,
 							month: firstChronologicalIssue.month,
 							day: firstChronologicalIssue.day,
-                            calendar_type: paper.calendar_type // Pass calendar_type to handleCalendarChange
+                            calendar_type: paper.calendar_type // ارسال calendar_type به handleCalendarChange
 						};
 					}
 				} else if (paper.type === 'formula' && paper.firstIssueDate) {
-					// For formula-driven papers, use the predefined firstIssueDate.
+					// برای نشریات مبتنی بر فرمول، از firstIssueDate از پیش تعریف شده استفاده می‌کند.
 					const dateStr = paper.firstIssueDate;
 					targetDate = {
 						year: parseInt(dateStr.substring(0, 4)),
 						month: parseInt(dateStr.substring(4, 6)),
 						day: parseInt(dateStr.substring(6, 8)),
-                        calendar_type: paper.calendar_type // Pass calendar_type to handleCalendarChange
+                        calendar_type: paper.calendar_type // ارسال calendar_type به handleCalendarChange
 					};
 				}
 
 				if (targetDate) {
-					// Ensure the correct calendar mode is active
+					// اطمینان حاصل می‌کند که حالت تقویم صحیح فعال است
 					if (targetDate.calendar_type === 'shamsi' && currentCalendarMode !== 'shamsi') {
 						shamsiCalendarRadio.checked = true;
 						currentCalendarMode = 'shamsi';
@@ -2254,10 +2253,10 @@
 						hijriCalendarRadio.checked = true;
 						currentCalendarMode = 'hijri';
 					}
-					// Apply date and load images
+					// اعمال تاریخ و بارگذاری تصاویر
 					handleCalendarChange(targetDate);
 
-					// Update URL parameters after date change
+					// به‌روزرسانی پارامترهای URL پس از تغییر تاریخ
 					updateUrlParameters(
 						currentCalendarMode,
 						currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value,
@@ -2369,11 +2368,11 @@
 					let buttonText = `شمارهٔ ${englishToPersianDigits(issue.issue_number)}`;
 
 					if (displayDates) {
-						// Determine month name based on calendar_type and frequency
+						// تعیین نام ماه بر اساس نوع تقویم و فرکانس
 						let monthNamesArray = [];
 						if (paper.calendar_type === 'shamsi') {
 							monthNamesArray = shamsiMonthNames;
-						} else { // Assume hijri
+						} else { // فرض بر قمری
 							monthNamesArray = hijriMonthNames;
 						}
 
@@ -2381,8 +2380,8 @@
 
 						if (paper.frequency === 'monthly') {
 							buttonText += `, ${monthName} ${englishToPersianDigits(issue.year)}`;
-						} else { // Daily or other frequencies
-							buttonText += `, روز ${englishToPersianDigits(issue.day)} ${monthName} ${englishToPersianDigits(issue.year)}`; // Localize numbers
+						} else { // روزانه یا فرکانس‌های دیگر
+							buttonText += `, روز ${englishToPersianDigits(issue.day)} ${monthName} ${englishToPersianDigits(issue.year)}`; // محلی‌سازی اعداد
 						}
 					}
 
@@ -2400,7 +2399,7 @@
 			};
 
 			const goToIssueFromModal = (paperId, issue) => {
-				// Ensure the correct calendar mode is selected based on the paper's calendar type
+				// اطمینان از انتخاب حالت تقویم صحیح بر اساس نوع تقویم نشریه
 				if (newspaperData[paperId].calendar_type === 'shamsi') {
 					if (currentCalendarMode !== 'shamsi') {
 						shamsiCalendarRadio.checked = true;
@@ -2409,7 +2408,7 @@
 					shamsiYearInput.value = issue.year;
 					shamsiMonthSelect.value = issue.month;
 					shamsiDayInput.value = issue.day;
-				} else { // Assuming hijri
+				} else { // فرض بر قمری
 					if (currentCalendarMode !== 'hijri') {
 						hijriCalendarRadio.checked = true;
 						currentCalendarMode = 'hijri';
@@ -2419,7 +2418,7 @@
 					hijriDayInput.value = issue.day;
 				}
 
-				// Update URL parameters
+				// به‌روزرسانی پارامترهای URL
 				updateUrlParameters(
 					currentCalendarMode,
 					currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value,
@@ -2434,7 +2433,7 @@
 			// --- Calendar Modal Functions ---
 			const populateCalendarYearDropdown = () => {
 				for (let year = minCalendarYear; year <= maxCalendarYear; year++) {
-					const option = new Option(englishToPersianDigits(year), year); // Localize number
+					const option = new Option(englishToPersianDigits(year), year); // محلی‌سازی عدد
 					calendarYearSelect.add(option);
 				}
 			};
@@ -2458,16 +2457,16 @@
 				prevYearBtn.disabled = currentCalendarYear <= minCalendarYear;
 				nextYearBtn.disabled = currentCalendarYear >= maxCalendarYear;
 
-				// Localize year in title
+				// محلی‌سازی سال در عنوان
 				calendarModalTitle.textContent = `تقویم قمری سال ${englishToPersianDigits(currentCalendarYear)}`;
 
-				// Get the currently selected day from the main inputs
+				// دریافت روز انتخاب‌شده فعلی از ورودی‌های اصلی
 				const selectedHijriYear = parseInt(hijriYearInput.value, 10);
 				const selectedHijriMonth = parseInt(hijriMonthSelect.value, 10);
 				const selectedHijriDay = parseInt(hijriDayInput.value, 10);
 
 
-				const maxDaysToDisplay = 30; // Max days to show in grid for visual consistency (all Hijri months have at most 30 days)
+				const maxDaysToDisplay = 30; // حداکثر روزهای قابل نمایش در گرید برای یکنواختی بصری (تمام ماه‌های قمری حداکثر ۳۰ روز دارند)
 
 				for (let month = 1; month <= 12; month++) {
 					const monthDiv = document.createElement('div');
@@ -2482,7 +2481,7 @@
 
 					for (let day = 1; day <= maxDaysToDisplay; day++) {
 						const dayBtn = document.createElement('button');
-						dayBtn.textContent = englishToPersianDigits(day); // Localize number
+						dayBtn.textContent = englishToPersianDigits(day); // محلی‌سازی عدد
 						dayBtn.classList.add('calendar-day-btn');
 
 						const dateString = `${year}${pad(month)}${pad(day)}`;
@@ -2490,19 +2489,19 @@
 
 						if (issueCount > 0) {
 							dayBtn.classList.add('has-issue');
-							// Add opacity classes based on issue count
+							// اضافه کردن کلاس‌های کدورت بر اساس تعداد شماره‌ها
 							if (issueCount === 1) {
 								dayBtn.classList.add('issue-count-1');
 							} else if (issueCount === 2) {
 								dayBtn.classList.add('issue-count-2');
-								dayBtn.classList.add('has-multiple-issues'); // Apply multiple issues style
-							} else { // 3 or more
+								dayBtn.classList.add('has-multiple-issues'); // اعمال استایل چند شماره‌ای
+							} else { // ۳ یا بیشتر
 								dayBtn.classList.add('issue-count-3plus');
-								dayBtn.classList.add('has-multiple-issues'); // Apply multiple issues style
+								dayBtn.classList.add('has-multiple-issues'); // اعمال استایل چند شماره‌ای
 							}
 						}
 
-						// Add selected-day class if this is the currently selected date
+						// اضافه کردن کلاس selected-day اگر این روز در حال حاضر انتخاب شده باشد
 						if (year === selectedHijriYear && month === selectedHijriMonth && day === selectedHijriDay) {
 							dayBtn.classList.add('selected-day');
 						}
@@ -2518,16 +2517,17 @@
 			};
 
 			const goToDateFromCalendar = (year, month, day) => {
-				if (currentCalendarMode !== 'hijri') {
-					hijriCalendarRadio.checked = true;
-					currentCalendarMode = 'hijri';
-				}
+				// تغییر حالت تقویم به قمری و انتخاب رادیو دکمه قمری
+				hijriCalendarRadio.checked = true;
+				currentCalendarMode = 'hijri';
+				handleCalendarChange(); // فراخوانی handleCalendarChange برای به‌روزرسانی نمایش کنترل‌ها
 
+				// تنظیم ورودی‌های تاریخ قمری به روز انتخاب‌شده
 				hijriYearInput.value = year;
 				hijriMonthSelect.value = month;
 				hijriDayInput.value = day;
 
-				// Update URL parameters
+				// به‌روزرسانی پارامترهای URL
 				updateUrlParameters(
 					currentCalendarMode,
 					hijriYearInput.value,
@@ -2615,7 +2615,7 @@
 						} else {
 							lightboxCurrentPage = parsedInputPage;
 						}
-						paper.currentPage = lightboxCurrentPage; // Update paper's current page
+						paper.currentPage = lightboxCurrentPage; // به‌روزرسانی صفحه فعلی نشریه
 						updateLightboxContent();
 					}
 				} else {
@@ -2634,7 +2634,7 @@
 			});
 			lightboxViewAllIssuesButton.addEventListener('click', () => {
 				openAllNewspapersIssuesModal(currentLightboxNewspaperId);
-				closeLightbox(); // Close lightbox before opening all issues modal
+				closeLightbox(); // بستن لایت‌باکس قبل از باز کردن حالت تمام شماره‌ها
 			});
 
 
@@ -2662,8 +2662,8 @@
 				}
 			});
 			document.addEventListener('keydown', (e) => {
-				if (e.key === 'Escape' && calendarModalOverlay.classList.contains('visible')) {
-					closeCalendarModal();
+				if (e.key === 'Escape' && allIssuesModalOverlay.classList.contains('visible')) {
+					closeAllIssuesModal();
 				}
 			});
 
@@ -2672,9 +2672,9 @@
 				const currentSelectedPaperButton = newspaperSelectionContainer.querySelector('button.selected');
 				if (currentSelectedPaperButton) {
 					const paperId = currentSelectedPaperButton.dataset.paperId;
-					displayIssuesForSelectedNewspaper(paperId); // Re-render current issues list
+					displayIssuesForSelectedNewspaper(paperId); // رندر مجدد لیست شماره‌های فعلی
 				} else {
-                    // If no paper is selected, re-render for the first available paper
+                    // اگر نشریه‌ای انتخاب نشده است، برای اولین نشریه موجود رندر مجدد انجام دهید
                     const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
                         paper.type === 'database' && paper.issues && paper.issues.length > 0
                     ).sort((a, b) => a.title.localeCompare(b.title, 'fa'));
