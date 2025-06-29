@@ -1138,7 +1138,7 @@
 
 			const loadNewspaperDbData = async () => {
 				try {
-					// Fetch db.json content - this is the corrected line
+					// Fetch db.json content
 					const response = await fetch('db.json');
 					if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 					const dbNewspapersRawData = await response.json();
@@ -1979,14 +1979,14 @@
 					});
                 
                 // Corrected sort: Sort by title in Persian for consistent ordering
-                availableNewspapers.sort((aId, bId) => {
+                availableNewspapersForCurrentDate.sort((aId, bId) => { // Corrected this line
                     const paperA = newspaperData[aId];
                     const paperB = newspaperData[bId];
                     return paperA.title.localeCompare(paperB.title, 'fa');
                 });
 
 
-				if (availableNewspapers.length <= 1) {
+				if (availableNewspapersForCurrentDate.length <= 1) {
 					lightboxPrevNewspaperButton.style.display = 'none';
 					lightboxNextNewspaperButton.style.display = 'none';
 				} else {
