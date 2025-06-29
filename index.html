@@ -1144,9 +1144,9 @@
 					const dbNewspapersRawData = await response.json();
 					console.log("db.json loaded successfully.");
 
-					// IMPORTANT: Removed the hardcoded 'mehrNewspaperData' and its push operation.
-					// The application will now solely rely on db.json for all newspaper data,
-					// including the 'Mehr' newspaper if it is present in the db.json file.
+					// The application now solely relies on db.json for all newspaper data.
+					// Ensure your db.json includes the correct data for "Mehr" (Q25433419)
+					// with its earliest issue on 1 Khordad 1312, and its filename_base.
 
 					dbNewspapersRawData.forEach(dbPaper => {
 						const paperId = dbPaper.id;
@@ -1465,7 +1465,7 @@
 								issueNumber = shamsiInputMonth - 2;
 							} else {
 								const yearsAfter1344 = shamsiInputYear - 1345;
-								const issuesInFullYears = yearsAfter1344 * 12;
+								const issuesInFullYears = yearsAfter1944 * 12;
 								issueNumber = 10 + issuesInFullYears + shamsiInputMonth;
 							}
 							fileNameBase = `Negin, Vol. ${volume}, No. ${issueNumber}, ${shamsiInputYear} SH`;
@@ -2662,8 +2662,8 @@
 				}
 			});
 			document.addEventListener('keydown', (e) => {
-				if (e.key === 'Escape' && allIssuesModalOverlay.classList.contains('visible')) {
-					closeAllIssuesModal();
+				if (e.key === 'Escape' && calendarModalOverlay.classList.contains('visible')) {
+					closeCalendarModal();
 				}
 			});
 
