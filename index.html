@@ -696,14 +696,293 @@
 	<button id="openAllNewspapersIssuesModalBtn" class="global-all-issues-btn">فهرست شماره‌های نشریات</button>
 	</div>
 	<div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
-		<!-- Buttons will be dynamically generated here -->
+	<!-- Hijri Buttons -->
+	<button id="goToFirstDawlatIranGlobal" style="display: none;" class="hijri-nav-btn">دولت علیه ایران</button>
+	<button id="goToFirstDaneshGlobal" style="display: none;" class="hijri-nav-btn">دانش</button>
+	<button id="goToFirstSharafGlobal" style="display: none;" class="hijri-nav-btn">شرف</button>
+	<button id="goToFirstNowruzGlobal" style="display: none;" class="hijri-nav-btn">نوروز</button>
+	<button id="goToFirstMollaNasreddinGlobal" style="display: none;" class="hijri-nav-btn">ملانصرالدین</button>
+	<button id="goToFirstKhorshidGlobal" style="display: none;" class="hijri-nav-btn">خورشید</button>
+	<button id="goToFirstHablAlMatinGlobal" style="display: none;" class="hijri-nav-btn">حبل‌المتین</button>
+	<button id="goToFirstSureEsrafilGlobal" style="display: none;" class="hijri-nav-btn">صور اسرافیل</button>
+	<button id="goToFirstRoohAlQodsGlobal" style="display: none;" class="hijri-nav-btn">روح‌القدس</button>
+	<button id="goToFirstBamdadRoshanGlobal" style="display: none;" class="hijri-nav-btn">بامداد روشن</button>
+	<button id="goToFirstJangalGlobal" style="display: none;" class="hijri-nav-btn">جنگل</button>
+	<button id="goToFirstQ5671136Global" style="display: none;" class="hijri-nav-btn">الاسلام</button>
+
+	<!-- Shamsi Buttons -->
+	<button id="goToFirstEttelaatGlobal" style="display: none;" class="shamsi-nav-btn">اطلاعات</button>
+	<button id="goToFirstBabashamalGlobal" style="display: none;" class="shamsi-nav-btn">باباشمل</button>
+	<button id="goToFirstYaghmaGlobal" style="display: none;" class="shamsi-nav-btn">یغما</button>
+	<button id="goToFirstBakhtarEmroozGlobal" style="display: none;" class="shamsi-nav-btn">باختر امروز</button>
+	<button id="goToFirstKayhanGlobal" style="display: none;" class="shamsi-nav-btn">کیهان</button>
+	<button id="goToFirstNeginGlobal" style="display: none;" class="shamsi-nav-btn">نگین</button>
+	<button id="goToFirstZaneRoozGlobal" style="display: none;" class="shamsi-nav-btn">زن روز</button>
+	<button id="goToFirstTamashaGlobal" style="display: none;" class="shamsi-nav-btn">تماشا</button>
+	<button id="goToFirstJashnShahanshahiIranGlobal" style="display: none;" class="shamsi-nav-btn">جشن شاهنشاهی ایران</button>
+	<button id="goToFirstMardomGlobal" style="display: none;" class="shamsi-nav-btn">مردم</button>
 	</div>
 
 	<p id="mainErrorMessage" class="error-message" style="display: none;"></p>
 	<p id="mainStatusMessage" class="status-message">در حال بارگذاری نشریات...</p>
 
 	<div class="newspaper-container">
-		<!-- Newspaper sections will be dynamically generated here -->
+	<!-- Shamsi Sections -->
+	<div id="ettelaatSection" class="newspaper-section" style="display: none;">
+		<h2>اطلاعات</h2>
+		<img id="ettelaatNewspaperImage" src="" alt="تصویر اطلاعات" class="newspaper-image">
+		<p id="ettelaatStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="ettelaatErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+	<div id="mardomSection" class="newspaper-section" style="display: none;">
+		<h2>مردم</h2>
+		<img id="mardomNewspaperImage" src="" alt="تصویر مردم" class="newspaper-image">
+		<p id="mardomStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="mardomErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+	<div id="kayhanSection" class="newspaper-section" style="display: none;">
+		<h2>کیهان</h2>
+		<img id="kayhanNewspaperImage" src="" alt="تصویر کیهان" class="newspaper-image">
+		<p id="kayhanStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="kayhanErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+	<div id="bakhtarEmroozSection" class="newspaper-section" style="display: none;">
+		<h2>باختر امروز</h2>
+		<img id="bakhtarEmroozNewspaperImage" src="" alt="تصویر باختر امروز" class="newspaper-image">
+		<p id="bakhtarEmroozStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="bakhtarEmroozErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+	<div id="jashnShahanshahiIranSection" class="newspaper-section" style="display: none;">
+		<h2>جشن شاهنشاهی ایران</h2>
+		<img id="jashnShahanshahiIranNewspaperImage" src="" alt="تصویر جشن شاهنشاهی ایران" class="newspaper-image">
+		<p id="jashnShahanshahiIranStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="jashnShahanshahiIranErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+	<div id="zaneRoozSection" class="newspaper-section" style="display: none;">
+		<h2>زن روز</h2>
+		<img id="zaneRoozNewspaperImage" src="" alt="تصویر زن روز" class="newspaper-image">
+		<p id="zaneRoozStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="zaneRoozErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+	<div id="babashamalSection" class="newspaper-section" style="display: none;">
+		<h2>باباشمل</h2>
+		<img id="babashamalNewspaperImage" src="" alt="تصویر باباشمل" class="newspaper-image">
+		<p id="babashamalStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="babashamalErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+	<div id="tamashaSection" class="newspaper-section" style="display: none;">
+		<h2>تماشا</h2>
+		<img id="tamashaNewspaperImage" src="" alt="تصویر تماشا" class="newspaper-image">
+		<p id="tamashaStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="tamashaErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+	 <div id="yaghmaSection" class="newspaper-section" style="display: none;">
+		<h2>یغما</h2>
+		<img id="yaghmaNewspaperImage" src="" alt="تصویر یغما" class="newspaper-image">
+		<p id="yaghmaStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="yaghmaErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+	<div id="neginSection" class="newspaper-section" style="display: none;">
+		<h2>نگین</h2>
+		<img id="neginNewspaperImage" src="" alt="تصویر نگین" class="newspaper-image">
+		<p id="neginStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="neginErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+
+	<!-- Hijri Sections (Database driven) -->
+	<div id="jangal_qamariSection" class="newspaper-section" style="display: none;">
+		<h2>جنگل</h2>
+		<img id="jangal_qamariNewspaperImage" src="" alt="تصویر جنگل" class="newspaper-image">
+		<p id="jangal_qamariStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="jangal_qamariErrorMessage" class="error-message" style="display: none;"></p>
+	</div>
+	<div id="Q5671136Section" class="newspaper-section" style="display: none;">
+		<h2>الاسلام</h2>
+		<img id="Q5671136NewspaperImage" src="" alt="تصویر الاسلام" class="newspaper-image">
+		<p id="Q5671136StatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q5671136ErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q5671136Navigation" class="issue-navigation-controls">
+		 <div>
+			<button class="prev-issue-btn" data-newspaper-id="Q5671136">&lt; شماره قبل</button>
+			<div>
+			<span>شماره:</span>
+			<input type="number" class="issue-number-input" data-newspaper-id="Q5671136">
+			</div>
+			<button class="next-issue-btn" data-newspaper-id="Q5671136">شماره بعد &gt;</button>
+		</div>
+		</div>
+		<button class="view-all-issues-btn" data-newspaper-id="Q5671136" style="display: none;">مشاهده تمام شماره‌ها</button>
+	</div>
+	<div id="Q_Dawlat_e_Alliya_ye_IranSection" class="newspaper-section" style="display: none;">
+		<h2>دولت علیه ایران</h2>
+		<img id="Q_Dawlat_e_Alliya_ye_IranNewspaperImage" src="" alt="تصویر دولت علیه ایران" class="newspaper-image">
+		<p id="Q_Dawlat_e_Alliya_ye_IranStatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q_Dawlat_e_Alliya_ye_IranErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q_Dawlat_e_Alliya_ye_IranNavigation" class="issue-navigation-controls">
+		 <div>
+			<button class="prev-issue-btn" data-newspaper-id="Q_Dawlat_e_Alliya_ye_Iran">&lt; شماره قبل</button>
+			<div>
+			<span>شماره:</span>
+			<input type="number" class="issue-number-input" data-newspaper-id="Q_Dawlat_e_Alliya_ye_Iran">
+			</div>
+			<button class="next-issue-btn" data-newspaper-id="Q_Dawlat_e_Alliya_ye_Iran">شماره بعد &gt;</button>
+		</div>
+		</div>
+		<button class="view-all-issues-btn" data-newspaper-id="Q_Dawlat_e_Alliya_ye_Iran" style="display: none;">مشاهده تمام شماره‌ها</button>
+	</div>
+	<div id="Q60745684Section" class="newspaper-section" style="display: none;">
+		<h2>دانش</h2>
+		<img id="Q60745684NewspaperImage" src="" alt="تصویر دانش" class="newspaper-image">
+		<p id="Q60745684StatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q60745684ErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q60745684Navigation" class="issue-navigation-controls">
+		<div>
+			<button class="prev-issue-btn" data-newspaper-id="Q60745684">&lt; شماره قبل</button>
+			<div>
+			<span>شماره:</span>
+			<input type="number" class="issue-number-input" data-newspaper-id="Q60745684">
+			</div>
+			<button class="next-issue-btn" data-newspaper-id="Q60745684">شماره بعد &gt;</button>
+		</div>
+		</div>
+		<button class="view-all-issues-btn" data-newspaper-id="Q60745684" style="display: none;">مشاهده تمام شماره‌ها</button>
+	</div>
+	<div id="Q5686829Section" class="newspaper-section" style="display: none;">
+		<h2>شرف</h2>
+		<img id="Q5686829NewspaperImage" src="" alt="تصویر شرف" class="newspaper-image">
+		<p id="Q5686829StatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q5686829ErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q5686829Navigation" class="issue-navigation-controls">
+		 <div>
+			<button class="prev-issue-btn" data-newspaper-id="Q5686829">&lt; شماره قبل</button>
+			<div>
+			<span>شماره:</span>
+			<input type="number" class="issue-number-input" data-newspaper-id="Q5686829">
+			</div>
+			<button class="next-issue-btn" data-newspaper-id="Q5686829">شماره بعد &gt;</button>
+		</div>
+		</div>
+		<button class="view-all-issues-btn" data-newspaper-id="Q5686829" style="display: none;">مشاهده تمام شماره‌ها</button>
+	</div>
+	<div id="Q64941184Section" class="newspaper-section" style="display: none;">
+		<h2>نوروز</h2>
+		<img id="Q64941184NewspaperImage" src="" alt="تصویر نوروز" class="newspaper-image">
+		<p id="Q64941184StatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q64941184ErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q64941184Navigation" class="issue-navigation-controls">
+		 <div>
+			<button class="prev-issue-btn" data-newspaper-id="Q64941184">&lt; شماره قبل</button>
+			<div>
+			<span>شماره:</span>
+			<input type="number" class="issue-number-input" data-newspaper-id="Q64941184">
+			</div>
+			<button class="next-issue-btn" data-newspaper-id="Q64941184">شماره بعد &gt;</button>
+		</div>
+		</div>
+		<button class="view-all-issues-btn" data-newspaper-id="Q64941184" style="display: none;">مشاهده تمام شماره‌ها</button>
+	</div>
+	<div id="Q12840502Section" class="newspaper-section" style="display: none;">
+		<h2>حبل‌المتین</h2>
+		<img id="Q12840502NewspaperImage" src="" alt="تصویر حبل‌المتین" class="newspaper-image">
+		<p id="Q12840502StatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q12840502ErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q12840502Navigation" class="issue-navigation-controls">
+		 <div>
+			<button class="prev-issue-btn" data-newspaper-id="Q12840502">&lt; شماره قبل</button>
+			<div>
+			<span>شماره:</span>
+			<input type="number" class="issue-number-input" data-newspaper-id="Q12840502">
+			</div>
+			<button class="next-issue-btn" data-newspaper-id="Q12840502">شماره بعد &gt;</button>
+		</div>
+		</div>
+		<button class="view-all-issues-btn" data-newspaper-id="Q12840502" style="display: none;">مشاهده تمام شماره‌ها</button>
+	</div>
+	<div id="Q2664606Section" class="newspaper-section" style="display: none;">
+		<h2>ملانصرالدین</h2>
+		<img id="Q2664606NewspaperImage" src="" alt="تصویر ملانصرالدین" class="newspaper-image">
+		<p id="Q2664606StatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q2664606ErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q2664606Navigation" class="issue-navigation-controls">
+		 <div>
+			<button class="prev-issue-btn" data-newspaper-id="Q2664606">&lt; شماره قبل</button>
+			<div>
+			<span>شماره:</span>
+			<input type="number" class="issue-number-input" data-newspaper-id="Q2664606">
+			</div>
+			<button class="next-issue-btn" data-newspaper-id="Q2664606">شماره بعد &gt;</button>
+		</div>
+		</div>
+		<button class="view-all-issues-btn" data-newspaper-id="Q2664606" style="display: none;">مشاهده تمام شماره‌ها</button>
+	</div>
+	<div id="Q134006001Section" class="newspaper-section" style="display: none;">
+		<h2>خورشید</h2>
+		<img id="Q134006001NewspaperImage" src="" alt="تصویر خورشید" class="newspaper-image">
+		<p id="Q134006001StatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q134006001ErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q134006001Navigation" class="issue-navigation-controls">
+		<div>
+			<button class="prev-issue-btn" data-newspaper-id="Q134006001">&lt; شماره قبل</button>
+			<div>
+			<span>شماره:</span>
+			<input type="number" class="issue-number-input" data-newspaper-id="Q134006001">
+			</div>
+			<button class="next-issue-btn" data-newspaper-id="Q134006001">شماره بعد &gt;</button>
+		</div>
+		</div>
+		<button class="view-all-issues-btn" data-newspaper-id="Q134006001" style="display: none;">مشاهده تمام شماره‌ها</button>
+	</div>
+	<div id="Q6467762Section" class="newspaper-section" style="display: none;">
+		<h2>صور اسرافیل</h2>
+		<img id="Q6467762NewspaperImage" src="" alt="تصویر صور اسرافیل" class="newspaper-image">
+		<p id="Q6467762StatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q6467762ErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q6467762Navigation" class="issue-navigation-controls">
+		 <div>
+			<button class="prev-issue-btn" data-newspaper-id="Q6467762">&lt; شماره قبل</button>
+			<div>
+			<span>شماره:</span>
+			<input type="number" class="issue-number-input" data-newspaper-id="Q6467762">
+			</div>
+			<button class="next-issue-btn" data-newspaper-id="Q6467762">شماره بعد &gt;</button>
+		</div>
+		</div>
+		<button class="view-all-issues-btn" data-newspaper-id="Q6467762" style="display: none;">مشاهده تمام شماره‌ها</button>
+	</div>
+	<div id="Q54943808Section" class="newspaper-section" style="display: none;">
+		<h2>روح‌القدس</h2>
+		<img id="Q54943808NewspaperImage" src="" alt="تصویر روح‌القدس" class="newspaper-image">
+		<p id="Q54943808StatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q54943808ErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q54943808Navigation" class="issue-navigation-controls">
+		 <div>
+			<button class="prev-issue-btn" data-newspaper-id="Q54943808">&lt; شماره قبل</button>
+			<div>
+			<span>شماره:</span>
+			<input type="number" class="issue-number-input" data-newspaper-id="Q54943808">
+			</div>
+			<button class="next-issue-btn" data-newspaper-id="Q54943808">شماره بعد &gt;</button>
+		</div>
+		</div>
+		<button class="view-all-issues-btn" data-newspaper-id="Q54943808" style="display: none;">مشاهده تمام شماره‌ها</button>
+	</div>
+	<div id="Q134311191Section" class="newspaper-section" style="display: none;">
+		<h2>بامداد روشن</h2>
+		<img id="Q134311191NewspaperImage" src="" alt="تصویر بامداد روشن" class="newspaper-image">
+		<p id="Q134311191StatusMessage" class="status-message" style="display: none;"></p>
+		<p id="Q134311191ErrorMessage" class="error-message" style="display: none;"></p>
+		<div id="Q134311191Navigation" class="issue-navigation-controls">
+		 <div>
+			<button class="prev-issue-btn" data-newspaper-id="Q134311191">&lt; شماره قبل</button>
+			<div>
+			<span>شماره:</span>
+			<input type="number" class="issue-number-input" data-newspaper-id="Q134311191">
+			</div>
+			<button class="next-issue-btn" data-newspaper-id="Q134311191">شماره بعد &gt;</button>
+		</div>
+		</div>
+		<button class="view-all-issues-btn" data-newspaper-id="Q134311191" style="display: none;">مشاهده تمام شماره‌ها</button>
+	</div>
 	</div>
 
 	<div class="pagination-controls" style="margin-top: 20px;">
@@ -856,7 +1135,8 @@
 		return fullMd5.substring(0, 2);
 	};
 
-	// Function to generate newspaper section HTML dynamically
+	// Function to generate newspaper section HTML dynamically (Not used for initial HTML, but good for reference)
+	// Kept for consistency if dynamic creation were to be reintroduced or for other purposes.
 	const createNewspaperSection = (paperId, paperTitle) => {
 		const sectionDiv = document.createElement('div');
 		sectionDiv.id = `${paperId}Section`;
@@ -1045,6 +1325,7 @@
 			paper.imageElement.onerror = () => {
 				paper.statusElement.style.display = 'none';
 				if (paper.type === 'formula' && (paper.id === 'yaghma' || paper.id === 'negin')) {
+					const shamsiMonthSelect = document.getElementById('shamsiMonth'); // Define locally for use here
 					const monthText = currentCalendarMode === 'shamsi' ? shamsiMonthNames[parseInt(month, 10) - 1] : '';
 					paper.errorElement.textContent = `صفحه ${page} برای شماره ${monthText} سال ${year} از نشریه ${paper.title} یافت نشد.`;
 				} else if (paper.type === 'formula' || (paper.type === 'database' && paper.calendar_type === 'shamsi')) {
@@ -1064,7 +1345,7 @@
 	};
 
 	const loadImage = async (source = 'initial') => {
-		// DOM element references need to be local or accessed from closure if they're not global
+		// DOM element references needed within this function
 		const shamsiYearInput = document.getElementById('shamsiYear');
 		const shamsiMonthSelect = document.getElementById('shamsiMonth');
 		const shamsiDayInput = document.getElementById('shamsiDay');
@@ -1142,7 +1423,7 @@
 		const loadPromises = Object.keys(newspaperData).map(paperId => {
 			const paper = newspaperData[paperId];
 			if (paper && paper.sectionElement) {
-				newspaperContainer.appendChild(paper.sectionElement);
+				// Don't append here, it will be done after sorting
 				return checkAndLoadNewspaper(paperId, year, month, day, paper.currentPage);
 			}
 			return Promise.resolve(false); // If paper or sectionElement is missing, resolve false
@@ -1265,6 +1546,7 @@
 			return;
 		}
 		lightboxCurrentPage = paper.currentPage;
+		const lightboxOverlay = document.getElementById('lightboxOverlay');
 		lightboxOverlay.classList.add('visible');
 		await updateLightboxContent();
 	};
@@ -1281,6 +1563,7 @@
 			closeLightbox();
 			return;
 		}
+		// Define elements that are always present in the lightbox
 		const shamsiYearInput = document.getElementById('shamsiYear');
 		const shamsiMonthSelect = document.getElementById('shamsiMonth');
 		const shamsiDayInput = document.getElementById('shamsiDay');
@@ -1444,10 +1727,10 @@
 
 
 	const lightboxGoToPage = (direction) => {
-		const lightboxOverlay = document.getElementById('lightboxOverlay');
-		const lightboxPrevPageButton = document.getElementById('lightboxPrevPageButton');
-		const lightboxNextPageButton = document.getElementById('lightboxNextPageButton');
-		const lightboxPageNumberInput = document.getElementById('lightboxPageNumberInput');
+		const lightboxOverlay = document.getElementById('lightboxOverlay'); // Define locally
+		const lightboxPrevPageButton = document.getElementById('lightboxPrevPageButton'); // Define locally
+		const lightboxNextPageButton = document.getElementById('lightboxNextPageButton'); // Define locally
+		const lightboxPageNumberInput = document.getElementById('lightboxPageNumberInput'); // Define locally
 
 		const paper = newspaperData[currentLightboxNewspaperId];
 		if (!paper) return;
@@ -1519,10 +1802,10 @@
 	};
 
 	const goToNewspaperIssue = (paperId, index) => {
-		const hijriYearInput = document.getElementById('hijriYear');
-		const hijriMonthSelect = document.getElementById('hijriMonth');
-		const hijriDayInput = document.getElementById('hijriDay');
-		const mainPageNumberInput = document.getElementById('mainPageNumberInput');
+		const hijriYearInput = document.getElementById('hijriYear'); // Define locally
+		const hijriMonthSelect = document.getElementById('hijriMonth'); // Define locally
+		const hijriDayInput = document.getElementById('hijriDay'); // Define locally
+		const mainPageNumberInput = document.getElementById('mainPageNumberInput'); // Define locally
 
 		const paper = newspaperData[paperId];
 		if (!paper || !paper.navState) return;
@@ -1570,9 +1853,9 @@
 	};
 
 	const updateIssueNavigationVisibility = (paperId) => {
-		const hijriYearInput = document.getElementById('hijriYear');
-		const hijriMonthSelect = document.getElementById('hijriMonth');
-		const hijriDayInput = document.getElementById('hijriDay');
+		const hijriYearInput = document.getElementById('hijriYear'); // Define locally
+		const hijriMonthSelect = document.getElementById('hijriMonth'); // Define locally
+		const hijriDayInput = document.getElementById('hijriDay'); // Define locally
 
 		const paper = newspaperData[paperId];
 		if (!paper || !paper.navState || !paper.navState.navigationDiv ||
@@ -1620,15 +1903,15 @@
 	};
 
 	const handleGlobalGoToFirstIssue = (paperId) => {
-		const shamsiCalendarRadio = document.getElementById('shamsiCalendar');
-		const hijriCalendarRadio = document.getElementById('hijriCalendar');
-		const shamsiYearInput = document.getElementById('shamsiYear');
-		const shamsiMonthSelect = document.getElementById('shamsiMonth');
-		const shamsiDayInput = document.getElementById('shamsiDay');
-		const hijriYearInput = document.getElementById('hijriYear');
-		const hijriMonthSelect = document.getElementById('hijriMonth');
-		const hijriDayInput = document.getElementById('hijriDay');
-		const mainPageNumberInput = document.getElementById('mainPageNumberInput');
+		const shamsiCalendarRadio = document.getElementById('shamsiCalendar'); // Define locally
+		const hijriCalendarRadio = document.getElementById('hijriCalendar'); // Define locally
+		const shamsiYearInput = document.getElementById('shamsiYear'); // Define locally
+		const shamsiMonthSelect = document.getElementById('shamsiMonth'); // Define locally
+		const shamsiDayInput = document.getElementById('shamsiDay'); // Define locally
+		const hijriYearInput = document.getElementById('hijriYear'); // Define locally
+		const hijriMonthSelect = document.getElementById('hijriMonth'); // Define locally
+		const hijriDayInput = document.getElementById('hijriDay'); // Define locally
+		const mainPageNumberInput = document.getElementById('mainPageNumberInput'); // Define locally
 
 
 		const paper = newspaperData[paperId];
@@ -1704,33 +1987,36 @@
 
 	const updateGlobalGoToFirstIssueButtonsVisibility = () => {
 		const globalGoToFirstIssueControls = document.getElementById('globalGoToFirstIssueControls');
-		globalGoToFirstIssueControls.innerHTML = ''; // Clear existing buttons
-
-		const sortedPaperIds = Object.keys(newspaperData).sort((a,b) => {
-			return newspaperData[a].title.localeCompare(newspaperData[b].title, 'fa');
-		});
-
-		sortedPaperIds.forEach(paperId => {
+		// Clear existing buttons as they are now static but we still control visibility
+		// and add/remove 'available-on-date' class.
+		
+		const allGlobalGoToFirstBtns = document.querySelectorAll('.global-issue-nav-controls button');
+		allGlobalGoToFirstBtns.forEach(button => {
+			const paperId = button.id.replace('goToFirst', '').replace('Global', '');
 			const paper = newspaperData[paperId];
-			// Only show buttons for papers that have a defined firstIssueDate or issues in db
-			const isPermanentlyAvailable = (paper.type === 'formula' && paper.firstIssueDate) ||
-										(paper.type === 'database' && paper.issues && paper.issues.length > 0);
 
-			if (isPermanentlyAvailable) {
-				const button = document.createElement('button');
-				button.textContent = paper.title;
-				button.dataset.paperId = paper.id;
-				button.classList.add(paper.calendar_type === 'hijri' ? 'hijri-nav-btn' : 'shamsi-nav-btn');
+			if (paper) {
+				const isPermanentlyAvailable = (paper.type === 'formula' && paper.firstIssueDate) ||
+											(paper.type === 'database' && paper.issues && paper.issues.length > 0);
 				
-				// Check if it's available on the *current* date and apply/remove the style
-				if (paper.available) {
-					button.classList.add('available-on-date');
+				if (isPermanentlyAvailable) {
+					button.style.display = 'inline-block';
+					button.removeEventListener('click', button._clickHandler); // Remove old handler
+					button._clickHandler = () => handleGlobalGoToFirstIssue(paper.id);
+					button.addEventListener('click', button._clickHandler);
+
+					if (paper.available) {
+						button.classList.add('available-on-date');
+					} else {
+						button.classList.remove('available-on-date');
+					}
 				} else {
+					button.style.display = 'none';
 					button.classList.remove('available-on-date');
 				}
-
-				button.addEventListener('click', () => handleGlobalGoToFirstIssue(paper.id));
-				globalGoToFirstIssueControls.appendChild(button);
+			} else {
+				button.style.display = 'none'; // Hide if no data found
+				button.classList.remove('available-on-date');
 			}
 		});
 	};
@@ -1805,25 +2091,25 @@
 			jangal_qamari: { type: 'formula', prefix: 'Jangal', title: 'جنگل', calendar_type: 'hijri', firstIssueDate: "13350819" }
 		};
 
-		// Populate newspaperData with initial formula-based papers and create their DOM elements
+		// Populate newspaperData with initial formula-based papers and assign their DOM elements
 		for (const paperId in initialNewspapersConfig) {
 			const config = initialNewspapersConfig[paperId];
-			const sectionElement = createNewspaperSection(paperId, config.title);
+			const sectionElement = document.getElementById(`${paperId}Section`);
+
 			newspaperData[paperId] = {
 				...config,
 				currentPage: 1,
 				available: false,
-				sectionElement: sectionElement, // Assign element reference
-				imageElement: sectionElement.querySelector('.newspaper-image'),
-				statusElement: sectionElement.querySelector('.status-message'),
-				errorElement: sectionElement.querySelector('.error-message'),
-				viewAllIssuesBtn: sectionElement.querySelector('.view-all-issues-btn')
+				sectionElement: sectionElement,
+				imageElement: document.getElementById(`${paperId}NewspaperImage`),
+				statusElement: document.getElementById(`${paperId}StatusMessage`),
+				errorElement: document.getElementById(`${paperId}ErrorMessage`),
+				viewAllIssuesBtn: sectionElement ? sectionElement.querySelector('.view-all-issues-btn') : null
 			};
 			// Hide "View All Issues" button for formula-based papers initially
 			if (newspaperData[paperId].viewAllIssuesBtn) {
 				newspaperData[paperId].viewAllIssuesBtn.style.display = 'none';
 			}
-			newspaperContainer.appendChild(sectionElement); // Append immediately
 		}
 
 		// Event delegation for opening lightbox
@@ -1844,41 +2130,47 @@
 			// Integrate database-driven newspapers into newspaperData
 			dbNewspapersRawData.forEach(dbPaper => {
 				const paperId = dbPaper.id;
-				const sectionElement = createNewspaperSection(paperId, dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''));
-				
-				newspaperData[paperId] = {
-					id: paperId,
-					type: 'database',
-					title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
-					currentPage: 1,
-					available: false,
-					sectionElement: sectionElement, // Assign element reference
-					imageElement: sectionElement.querySelector('.newspaper-image'),
-					statusElement: sectionElement.querySelector('.status-message'),
-					errorElement: sectionElement.querySelector('.error-message'),
-					issues: dbPaper.issues,
-					calendar_type: dbPaper.calendar_type,
-					viewAllIssuesBtn: sectionElement.querySelector('.view-all-issues-btn')
-				};
-				newspaperContainer.appendChild(sectionElement); // Append immediately
+				const sectionElement = document.getElementById(`${paperId}Section`);
 
-				// Setup navigation for database-driven Hijri papers
-				if (dbPaper.calendar_type === 'hijri') {
-					const navigationDiv = sectionElement.querySelector('.issue-navigation-controls');
-					newspaperData[paperId].navState = {
-						issuesArray: [],
-						currentIndex: -1,
-						prevIssueBtn: navigationDiv.querySelector('.prev-issue-btn'),
-						nextIssueBtn: navigationDiv.querySelector('.next-issue-btn'),
-						issueNumberInput: navigationDiv.querySelector('.issue-number-input'),
-						navigationDiv: navigationDiv
+				// Ensure all required elements exist before processing
+				if (sectionElement) {
+					newspaperData[paperId] = {
+						id: paperId,
+						type: 'database',
+						title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
+						currentPage: 1,
+						available: false,
+						sectionElement: sectionElement,
+						imageElement: document.getElementById(`${paperId}NewspaperImage`),
+						statusElement: document.getElementById(`${paperId}StatusMessage`),
+						errorElement: document.getElementById(`${paperId}ErrorMessage`),
+						issues: dbPaper.issues,
+						calendar_type: dbPaper.calendar_type,
+						viewAllIssuesBtn: sectionElement.querySelector('.view-all-issues-btn')
 					};
-					loadNewspaperIssues(paperId); // Populate issuesArray for navState
 
-					const navState = newspaperData[paperId].navState;
-					if (navState.prevIssueBtn) navState.prevIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue(paperId));
-					if (navState.nextIssueBtn) navState.nextIssueBtn.addEventListener('click', () => goToNextNewspaperIssue(paperId));
-					if (navState.issueNumberInput) navState.issueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber(paperId));
+					// Setup navigation for database-driven Hijri papers
+					if (dbPaper.calendar_type === 'hijri') {
+						const navigationDiv = sectionElement.querySelector('.issue-navigation-controls');
+						if (navigationDiv) { // Check if navigation div exists for this paper
+							newspaperData[paperId].navState = {
+								issuesArray: [],
+								currentIndex: -1,
+								prevIssueBtn: navigationDiv.querySelector('.prev-issue-btn'),
+								nextIssueBtn: navigationDiv.querySelector('.next-issue-btn'),
+								issueNumberInput: navigationDiv.querySelector('.issue-number-input'),
+								navigationDiv: navigationDiv
+							};
+							loadNewspaperIssues(paperId); // Populate issuesArray for navState
+
+							const navState = newspaperData[paperId].navState;
+							if (navState.prevIssueBtn) navState.prevIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue(paperId));
+							if (navState.nextIssueBtn) navState.nextIssueBtn.addEventListener('click', () => goToNextNewspaperIssue(paperId));
+							if (navState.issueNumberInput) navState.issueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber(paperId));
+						}
+					}
+				} else {
+					console.warn(`HTML section element for newspaper '${dbPaper.title}' (ID: ${paperId}) not found. Skipping full setup for this DB paper.`);
 				}
 			});
 
@@ -2095,10 +2387,10 @@
 		};
 
 		const goToIssueFromModal = (paperId, issue) => {
-			const hijriCalendarRadio = document.getElementById('hijriCalendar');
-			const hijriYearInput = document.getElementById('hijriYear');
-			const hijriMonthSelect = document.getElementById('hijriMonth');
-			const hijriDayInput = document.getElementById('hijriDay');
+			const hijriCalendarRadio = document.getElementById('hijriCalendar'); // Define locally
+			const hijriYearInput = document.getElementById('hijriYear'); // Define locally
+			const hijriMonthSelect = document.getElementById('hijriMonth'); // Define locally
+			const hijriDayInput = document.getElementById('hijriDay'); // Define locally
 
 			if (newspaperData[paperId].calendar_type === 'hijri' && currentCalendarMode !== 'hijri') {
 				hijriCalendarRadio.checked = true;
@@ -2210,10 +2502,10 @@
 		};
 
 		const goToDateFromCalendar = (year, month, day) => {
-			const hijriCalendarRadio = document.getElementById('hijriCalendar');
-			const hijriYearInput = document.getElementById('hijriYear');
-			const hijriMonthSelect = document.getElementById('hijriMonth');
-			const hijriDayInput = document.getElementById('hijriDay');
+			const hijriCalendarRadio = document.getElementById('hijriCalendar'); // Define locally
+			const hijriYearInput = document.getElementById('hijriYear'); // Define locally
+			const hijriMonthSelect = document.getElementById('hijriMonth'); // Define locally
+			const hijriDayInput = document.getElementById('hijriDay'); // Define locally
 
 			if (currentCalendarMode !== 'hijri') {
 				hijriCalendarRadio.checked = true;
