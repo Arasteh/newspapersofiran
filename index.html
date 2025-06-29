@@ -269,11 +269,11 @@
 			max-width: 100%;
 			max-height: calc(90vh - 200px);
 			height: auto;
-			display: block;
-			border-radius: 4px;
 			border: 1px solid var(--border-color);
+			border-radius: 4px;
+			cursor: pointer;
 			margin: 0 auto;
-			object-fit: contain;
+			display: block;
 		}
 		.lightbox-controls {
 			display: flex;
@@ -660,6 +660,18 @@
 			font-weight: bold;
 		}
 
+		.calendar-day-btn.selected-day {
+			border: 2px solid black; /* Thicker black border */
+			box-shadow: 0 0 0 3px black; /* Adds a subtle outer glow */
+		}
+		/* For dark mode, maybe a lighter color */
+		@media (prefers-color-scheme: dark) {
+			.calendar-day-btn.selected-day {
+				border: 2px solid white;
+				box-shadow: 0 0 0 3px white;
+			}
+		}
+
 		.calendar-day-btn:disabled {
 			background-color: var(--button-disabled-bg);
 			cursor: not-allowed;
@@ -672,6 +684,26 @@
 		@media (max-width: 768px) {
 			.calendar-grid-container {
 				grid-template-columns: repeat(2, 1fr); /* Two months per row for tablets and smaller */
+			}
+			/* Change order of year, month, day for Shamsi and Hijri controls */
+			#shamsiDateControls, #hijriDateControls {
+				display: flex;
+				flex-direction: row; /* Keep as row, but rearrange order */
+				align-items: center;
+				justify-content: center;
+				flex-wrap: wrap; /* Allow wrapping on very small screens */
+			}
+			#shamsiDateControls label[for="shamsiYear"], #shamsiYear,
+			#hijriDateControls label[for="hijriYear"], #hijriYear {
+				order: 1; /* Year first */
+			}
+			#shamsiDateControls label[for="shamsiMonth"], #shamsiMonth,
+			#hijriDateControls label[for="hijriMonth"], #hijriMonth {
+				order: 2; /* Month second */
+			}
+			#shamsiDateControls label[for="shamsiDay"], #shamsiDay,
+			#hijriDateControls label[for="hijriDay"], #hijriDay {
+				order: 3; /* Day last */
 			}
 		}
 
@@ -816,7 +848,7 @@
 	<!-- Calendar Modal -->
 	<div id="calendarModalOverlay" class="all-issues-modal-overlay">
 		<div class="all-issues-modal-content">
-			<button id="calendarModalCloseButton" class="all-issues-modal-close-button">&times;</button>
+			<button id="calendarModalCloseButton" class="calendar-modal-close-button">&times;</button>
 			<h2 id="calendarModalTitle">تقویم قمری</h2>
 			<div class="calendar-nav">
 				<button id="prevYearBtn">&lt; سال قبل</button>
@@ -876,6 +908,8 @@
 			const hijriCalendarRadio = document.getElementById('hijriCalendar');
 			const shamsiDateControls = document.getElementById('shamsiDateControls');
 			const hijriDateControls = document.getElementById('hijriDateControls');
+			// Reordered elements to match requested "Year, Month, Day" logic in HTML directly.
+			// No change needed in JS variable names, only in their usage with labels/selects.
 			const shamsiYearInput = document.getElementById('shamsiYear');
 			const shamsiMonthSelect = document.getElementById('shamsiMonth');
 			const shamsiDayInput = document.getElementById('shamsiDay');
@@ -1806,20 +1840,15 @@
 				lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
 				lightboxNextPageButton.disabled = (maxPages !== null && maxPages !== Infinity && lightboxCurrentPage >= maxPages);
 
-				// --- Modification 2: Display issue navigation and "View All Issues" in lightbox ---
+				// --- Modification: Display issue navigation and "View All Issues" in lightbox, and separate newspaper navigation ---
 				const isDatabasePaperWithIssues = paper.type === 'database' && paper.issues && paper.issues.length > 0;
 
 				if (isDatabasePaperWithIssues) {
 					issueNavLightbox.style.display = 'flex'; // Show issue navigation
-					// The existing newspaper-nav should remain hidden if issue-nav-lightbox is shown
-					lightboxPrevNewspaperButton.style.display = 'none';
-					lightboxNextNewspaperButton.style.display = 'none';
-
-					// Update issue number input and buttons
 					const navState = paper.navState;
 					if (navState && navState.currentIssue) {
 						lightboxIssueNumberInput.value = navState.currentIssue.issue_number || '';
-						lightboxIssueNumberInput.disabled = true; // Still disabled as direct input changes date
+						lightboxIssueNumberInput.disabled = true;
 						lightboxPrevIssueButton.disabled = navState.currentIndex <= 0;
 						lightboxNextIssueButton.disabled = navState.currentIndex >= navState.issuesArray.length - 1;
 					} else {
@@ -1832,25 +1861,25 @@
 				} else {
 					issueNavLightbox.style.display = 'none'; // Hide issue navigation
 					lightboxViewAllIssuesButton.style.display = 'none'; // Hide "View All Issues"
+				}
 
-					// Only show newspaper navigation if there are other papers on the same date and it's not a database paper with issues
-					const availableNewspapers = Object.keys(newspaperData).filter(key => {
-						const p = newspaperData[key];
-						if (!p || !p.available) return false;
-						if (currentCalendarMode === 'shamsi') {
-							return p.calendar_type === 'shamsi';
-						} else {
-							return p.calendar_type === 'hijri';
-						}
-					});
+				// Determine visibility of newspaper navigation (between different papers on same date)
+				// This logic is now independent of `issueNavLightbox`'s visibility
+				const availableNewspapersForCurrentDate = Object.keys(newspaperData).filter(key => {
+					const p = newspaperData[key];
+					if (!p || !p.available) return false;
+					// Only consider newspapers matching the current calendar mode
+					const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
+										(currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
+					return matchesMode;
+				});
 
-					if (availableNewspapers.length > 1) {
-						lightboxPrevNewspaperButton.style.display = 'inline-block';
-						lightboxNextNewspaperButton.style.display = 'inline-block';
-					} else {
-						lightboxPrevNewspaperButton.style.display = 'none';
-						lightboxNextNewspaperButton.style.display = 'none';
-					}
+				if (availableNewspapersForCurrentDate.length > 1) {
+					lightboxPrevNewspaperButton.style.display = 'inline-block';
+					lightboxNextNewspaperButton.style.display = 'inline-block';
+				} else {
+					lightboxPrevNewspaperButton.style.display = 'none';
+					lightboxNextNewspaperButton.style.display = 'none';
 				}
 			};
 
@@ -1886,8 +1915,16 @@
 					.sort((aKey, bKey) => {
 						const paperA = newspaperData[aKey];
 						const paperB = newspaperData[bKey];
-						return paperA.title.localeCompare(paperB.title, 'fa');
+						return paperA.title.localeCompare(bKey.title, 'fa'); // Sort by title (Fix: use paperA.title and paperB.title)
 					});
+                
+                // Corrected sort: Sort by title in Persian for consistent ordering
+                availableNewspapers.sort((aId, bId) => {
+                    const paperA = newspaperData[aId];
+                    const paperB = newspaperData[bId];
+                    return paperA.title.localeCompare(paperB.title, 'fa');
+                });
+
 
 				if (availableNewspapers.length <= 1) return;
 				const currentIndex = availableNewspapers.indexOf(currentLightboxNewspaperId);
@@ -2256,6 +2293,11 @@
 				// Localize year in title
 				calendarModalTitle.textContent = `تقویم قمری سال ${englishToPersianDigits(currentCalendarYear)}`;
 
+				// Get the currently selected day from the main inputs
+				const selectedHijriYear = parseInt(hijriYearInput.value, 10);
+				const selectedHijriMonth = parseInt(hijriMonthSelect.value, 10);
+				const selectedHijriDay = parseInt(hijriDayInput.value, 10);
+
 
 				const maxDaysToDisplay = 30; // Max days to show in grid for visual consistency (all Hijri months have at most 30 days)
 
@@ -2290,6 +2332,11 @@
 								dayBtn.classList.add('issue-count-3plus');
 								dayBtn.classList.add('has-multiple-issues'); // Apply multiple issues style
 							}
+						}
+
+						// Add selected-day class if this is the currently selected date
+						if (year === selectedHijriYear && month === selectedHijriMonth && day === selectedHijriDay) {
+							dayBtn.classList.add('selected-day');
 						}
 
 						dayBtn.addEventListener('click', () => {
