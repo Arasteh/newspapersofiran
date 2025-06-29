@@ -470,6 +470,16 @@
 			cursor: pointer;
 			color: var(--lightbox-close-button-color);
 		}
+		.calendar-modal-close-button {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			background: none;
+			border: none;
+			font-size: 24px;
+			cursor: pointer;
+			color: var(--lightbox-close-button-color);
+		}
 		.newspaper-selection-container {
 			display: flex;
 			flex-wrap: wrap;
@@ -537,7 +547,7 @@
 			background-color: var(--lightbox-button-hover-bg);
 		}
 		.view-all-issues-btn {
-			margin-right: 10px;
+			margin-top: 10px;
 			padding: 8px 15px;
 			background-color: var(--lightbox-button-bg);
 			color: white;
@@ -633,6 +643,7 @@
 			cursor: pointer;
 			transition: background-color 0.2s, transform 0.1s; /* Removed opacity transition */
 			box-sizing: border-box; /* Ensure padding/border included in size */
+			background: none;
 		}
 
 		.calendar-day-btn:hover {
@@ -667,8 +678,9 @@
 		/* For dark mode, maybe a lighter color */
 		@media (prefers-color-scheme: dark) {
 			.calendar-day-btn.selected-day {
-				border: 2px solid white;
-				box-shadow: 0 0 0 3px white;
+			        border: 2px solid var(--multiple-issues-color);
+			        background-color: var(--multiple-issues-color);
+			        color: black;
 			}
 		}
 
