@@ -1138,33 +1138,11 @@
 
 			const loadNewspaperDbData = async () => {
 				try {
-					// Simulate db.json content directly in JavaScript
-					const dbNewspapersRawData = [
-						{
-							"id": "Q5671136",
-							"title": "روزنامه فلسطین",
-							"calendar_type": "hijri",
-							"frequency": "daily", // Assume daily for now, can be updated from DB if needed
-							"issues": [
-								{"year":1347, "month":1, "day":1, "issue_number":3559, "filename_base": "Palestine, Vol. 16, No. 3559, 1 Muharram 1347 AH"},
-								{"year":1347, "month":1, "day":2, "issue_number":3560, "filename_base": "Palestine, Vol. 16, No. 3560, 2 Muharram 1347 AH"},
-								{"year":1347, "month":1, "day":3, "issue_number":3561, "filename_base": "Palestine, Vol. 16, No. 3561, 3 Muharram 1347 AH"}
-							]
-						},
-						{
-							"id": "yadegar",
-							"title": "یادگار",
-							"calendar_type": "shamsi",
-							"frequency": "monthly",
-							"issues": [
-								{"year": 1323, "month": 6, "day": 1, "issue_number": 1, "filename_base": "Yadegar 1323-06-01", "pages": 10},
-								{"year": 1323, "month": 7, "day": 1, "issue_number": 2, "filename_base": "Yadegar 1323-07-01", "pages": 12},
-								{"year": 1323, "month": 8, "day": 1, "issue_number": 3, "filename_base": "Yadegar 1323-08-01", "pages": 15}
-							]
-						}
-					];
-
-					console.log("db.json simulated data loaded successfully.");
+					// Fetch db.json content
+					const response = await fetch('db.json');
+					if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+					const dbNewspapersRawData = await response.json();
+					console.log("db.json loaded successfully.");
 
 					dbNewspapersRawData.forEach(dbPaper => {
 						const paperId = dbPaper.id;
@@ -2380,10 +2358,12 @@
 
 					if (displayDates) {
 						if (paper.frequency === 'monthly') {
-							const monthName = shamsiMonthNames[issue.month - 1]; // Assuming Shamsi for Yadegar
+							const monthName = shamsiMonthNames[issue.month - 1]; // Assuming Shamsi for Yadegar (as per original request)
 							buttonText += `, ${monthName} ${englishToPersianDigits(issue.year)}`;
 						} else {
-							const monthName = hijriMonthNames[issue.month - 1]; // Default for daily (currently mostly Hijri)
+							// Determine month name based on calendar_type for daily papers
+							const monthNamesArray = paper.calendar_type === 'shamsi' ? shamsiMonthNames : hijriMonthNames;
+							const monthName = monthNamesArray[issue.month - 1];
 							buttonText += `, روز ${englishToPersianDigits(issue.day)} ${monthName} ${englishToPersianDigits(issue.year)}`; // Localize numbers
 						}
 					}
