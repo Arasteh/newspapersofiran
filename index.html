@@ -908,8 +908,6 @@
 			const hijriCalendarRadio = document.getElementById('hijriCalendar');
 			const shamsiDateControls = document.getElementById('shamsiDateControls');
 			const hijriDateControls = document.getElementById('hijriDateControls');
-			// Reordered elements to match requested "Year, Month, Day" logic in HTML directly.
-			// No change needed in JS variable names, only in their usage with labels/selects.
 			const shamsiYearInput = document.getElementById('shamsiYear');
 			const shamsiMonthSelect = document.getElementById('shamsiMonth');
 			const shamsiDayInput = document.getElementById('shamsiDay');
@@ -1136,10 +1134,10 @@
 											<input type="number" id="${paperId}IssueNumber">
 										</div>
 										<button id="next${paperId}Issue">شماره بعد &gt;</button>
-									</div>
 								</div>
-								<button class="view-all-issues-btn" data-newspaper-id="${paperId}" style="display: none;">مشاهده تمام شماره‌ها</button>
-							`;
+							</div>
+							<button class="view-all-issues-btn" data-newspaper-id="${paperId}" style="display: none;">مشاهده تمام شماره‌ها</button>
+						`;
 							newspaperContainer.appendChild(sectionDiv);
 
 							const firstIssueBtn = document.createElement('button');
@@ -1377,7 +1375,11 @@
 				paper.statusElement.style.display = 'none';
 
 				if (paper.type === 'formula') {
-					if (id === 'yaghma' && paper.calendar_type === 'shamsi') {
+					if (id === 'jangal_qamari') { // Specific handling for Jangal
+						fileNameBase = `${paper.prefix} ${year}${month}${day} AH`; // Add a space as per filename convention
+						issueExistsForDate = true;
+					}
+					else if (id === 'yaghma' && paper.calendar_type === 'shamsi') {
 						const shamsiInputYear = parseInt(year, 10);
 						const shamsiInputMonth = parseInt(month, 10);
 
@@ -1742,7 +1744,9 @@
 
 				if (paper.type === 'formula') {
 					dateForFilename = {y: year, m: month, d: day};
-					if (id === 'yaghma' && paper.calendar_type === 'shamsi') {
+					if (id === 'jangal_qamari') { // Specific handling for Jangal
+						fileNameBase = `${paper.prefix} ${dateForFilename.y}${dateForFilename.m}${dateForFilename.d} AH`;
+					} else if (id === 'yaghma' && paper.calendar_type === 'shamsi') {
 						const shamsiInputYear = parseInt(dateForFilename.y, 10);
 						const shamsiInputMonth = parseInt(dateForFilename.m, 10);
 
@@ -1911,11 +1915,6 @@
 						const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
 										   (currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
 						return matchesMode;
-					})
-					.sort((aKey, bKey) => {
-						const paperA = newspaperData[aKey];
-						const paperB = newspaperData[bKey];
-						return paperA.title.localeCompare(bKey.title, 'fa'); // Sort by title (Fix: use paperA.title and paperB.title)
 					});
                 
                 // Corrected sort: Sort by title in Persian for consistent ordering
@@ -2452,14 +2451,11 @@
 			lightboxNextNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('next'));
 
 			// New Lightbox Issue Navigation Event Listeners
-			// --- Modified: Removed closeLightbox() call ---
 			lightboxPrevIssueButton.addEventListener('click', () => {
 				goToPrevNewspaperIssue(currentLightboxNewspaperId);
-				// Removed closeLightbox()
 			});
 			lightboxNextIssueButton.addEventListener('click', () => {
 				goToNextNewspaperIssue(currentLightboxNewspaperId);
-				// Removed closeLightbox()
 			});
 			lightboxViewAllIssuesButton.addEventListener('click', () => {
 				openAllNewspapersIssuesModal(currentLightboxNewspaperId);
