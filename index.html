@@ -24,10 +24,10 @@
 			--lightbox-button-hover-bg: #000;
 			--lightbox-close-button-color: #333;
 
-            /* Define highlight color components for RGBA */
+			/* Define highlight color components for RGBA */
 			--highlight-color-r: 40; /* R component of #28a745 */
-            --highlight-color-g: 167; /* G component of #28a745 */
-            --highlight-color-b: 69;  /* B component of #28a745 */
+			--highlight-color-g: 167; /* G component of #28a745 */
+			--highlight-color-b: 69;  /* B component of #28a745 */
 
 			--highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b)); /* Original color for full opacity */
 			--highlight-text-color: white;
@@ -53,10 +53,10 @@
 				--lightbox-button-hover-bg: #aaa;
 				--lightbox-close-button-color: #e0e0e0;
 
-                /* Define dark mode highlight color components for RGBA */
+				/* Define dark mode highlight color components for RGBA */
 				--highlight-color-r: 30; /* R component of #1e7e34 */
-                --highlight-color-g: 126; /* G component of #1e7e34 */
-                --highlight-color-b: 52;  /* B component of #1e7e34 */
+				--highlight-color-g: 126; /* G component of #1e7e34 */
+				--highlight-color-b: 52;  /* B component of #1e7e34 */
 
 				--highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b)); /* Original color for full opacity */
 				--highlight-text-color: white;
@@ -591,20 +591,20 @@
 			width: 100%;
 		}
 		.calendar-day-btn {
-            width: 32px; /* Increased for better touch target */
-            height: 32px; /* Increased for better touch target */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            /* background-color will be set by issue-count classes */
-            color: var(--text-color); /* Default text color */
-            font-size: 0.9em; /* Slightly larger font */
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s; /* Removed opacity transition */
-            box-sizing: border-box; /* Ensure padding/border included in size */
+			width: 32px; /* Increased for better touch target */
+			height: 32px; /* Increased for better touch target */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 0;
+			border: 1px solid var(--border-color);
+			border-radius: 50%;
+			/* background-color will be set by issue-count classes */
+			color: var(--section-title-color); /* Default text color */
+			font-size: 0.8em; /* Slightly larger font */
+			cursor: pointer;
+			transition: background-color 0.2s, transform 0.1s; /* Removed opacity transition */
+			box-sizing: border-box; /* Ensure padding/border included in size */
 		}
 
 		.calendar-day-btn:hover {
@@ -612,25 +612,24 @@
 			transform: scale(1.05);
 		}
 		.calendar-day-btn.has-issue {
-            color: var(--highlight-text-color); /* Text color when there's an issue (e.g., white) */
+			color: var(--text-color); /* Text color when there's an issue (e.g., white) */
 			font-weight: normal;
 			border-color: var(--highlight-color);
 		}
 		/* Opacity variations based on issue count applied to background only */
 		.calendar-day-btn.issue-count-1 {
-            background-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.2);
-        }
+			background-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.2);
+		}
 		.calendar-day-btn.issue-count-2 {
-            background-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.5);
-        }
+			background-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.5);
+		}
 		.calendar-day-btn.issue-count-3plus {
-            background-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b)); /* Full opacity */
-        }
+			background-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b)); /* Full opacity */
+		}
 
 		.calendar-day-btn.has-multiple-issues { /* For 2 or more issues, overrides some of has-issue */
 			transform: scale(1.1); /* Slightly smaller scale for clarity */
 			font-weight: bold;
-			font-size: .75em; /* Adjusted font size */
 		}
 
 		.calendar-day-btn:disabled {
