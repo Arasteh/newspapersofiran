@@ -260,7 +260,7 @@
 			align-items: center;
 			background-color: var(--lightbox-bg);
 			padding: 20px;
-			border-radius: 8px;
+			border-radius: 8踐px;
 			box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 			color: var(--lightbox-text-color);
 			overflow-y: auto;
@@ -283,7 +283,9 @@
 			margin-top: 15px;
 			gap: 10px;
 		}
-		.lightbox-controls .page-nav, .lightbox-controls .newspaper-nav {
+		.lightbox-controls .page-nav,
+		.lightbox-controls .newspaper-nav,
+		.lightbox-controls .issue-nav-lightbox { /* Added for the new issue nav in lightbox */
 			display: flex;
 			align-items: center;
 			gap: 5px;
@@ -315,6 +317,14 @@
 			background-color: var(--control-bg);
 			color: var(--text-color);
 		}
+		.lightbox-controls .view-all-issues-btn { /* Style specifically for the "view all issues" button */
+			background-color: #6c757d;
+		}
+		.lightbox-controls .view-all-issues-btn:hover {
+			background-color: #5a6268;
+		}
+
+
 		.lightbox-close-button {
 			position: absolute;
 			top: 10px;
@@ -558,7 +568,7 @@
 			background-color: var(--button-bg);
 			color: white;
 			border: none;
-			border-radius: 4px; /* Fixed typo from 4样的 to 4px */
+			border-radius: 4px;
 			cursor: pointer;
 			font-size: 14px;
 			transition: background-color 0.3s ease;
@@ -661,13 +671,13 @@
 		/* Adjustments for smaller screens */
 		@media (max-width: 768px) {
 			.calendar-grid-container {
-			grid-template-columns: repeat(2, 1fr);
+				grid-template-columns: repeat(2, 1fr); /* Two months per row for tablets and smaller */
 			}
 		}
 
 		@media (max-width: 480px) {
 			.calendar-grid-container {
-			grid-template-columns: 1fr;
+				grid-template-columns: repeat(2, 1fr); /* Two months per row even on smaller phones */
 			}
 			/* Keep day button size consistent for better touch on small screens */
 			.calendar-day-btn {
@@ -756,6 +766,7 @@
 		<div class="lightbox-content">
 			<button id="lightboxCloseButton" class="lightbox-close-button">&times;</button>
 			<h2 id="lightboxNewspaperTitle"></h2>
+			<!-- Modified: Image click will open Wikimedia Commons link -->
 			<img id="lightboxImage" src="" alt="تصویر نشریه در لایت‌باکس" class="lightbox-image">
 			<p id="lightboxStatusMessage" class="status-message" style="display: none;"></p>
 			<p id="lightboxErrorMessage" class="error-message" style="display: none;"></p>
@@ -771,6 +782,14 @@
 					<input type="number" id="lightboxPageNumberInput" value="1" min="1">
 					<button id="lightboxNextPageButton">&gt;</button>
 				</div>
+				<!-- New: Issue navigation controls for database-driven newspapers -->
+				<div class="issue-nav-lightbox" style="display: none;">
+					<button id="lightboxPrevIssueButton" class="lightbox-issue-nav-btn">&lt; شماره قبل</button>
+					<input type="number" id="lightboxIssueNumberInput" value="" min="1" disabled>
+					<button id="lightboxNextIssueButton" class="lightbox-issue-nav-btn">شماره بعد &gt;</button>
+					<button id="lightboxViewAllIssuesButton" class="lightbox-issue-nav-btn view-all-issues-btn">مشاهده تمام شماره‌ها</button>
+				</div>
+				<!-- Original: Newspaper navigation (between different papers on same date) -->
 				<div class="newspaper-nav">
 					<button id="lightboxPrevNewspaperButton" style="display: none;">نشریه قبل</button>
 					<button id="lightboxNextNewspaperButton" style="display: none;">نشریه بعد</button>
@@ -869,6 +888,14 @@
 			const viewLargeLink = document.getElementById('viewLargeLink');
 			const newspaperContainer = document.querySelector('.newspaper-container');
 			const globalGoToFirstIssueControls = document.getElementById('globalGoToFirstIssueControls');
+
+			// New Lightbox Issue Navigation Elements
+			const issueNavLightbox = document.querySelector('.issue-nav-lightbox');
+			const lightboxPrevIssueButton = document.getElementById('lightboxPrevIssueButton');
+			const lightboxIssueNumberInput = document.getElementById('lightboxIssueNumberInput');
+			const lightboxNextIssueButton = document.getElementById('lightboxNextIssueButton');
+			const lightboxViewAllIssuesButton = document.getElementById('lightboxViewAllIssuesButton');
+
 
 			// All Issues Modal Elements
 			const openAllNewspapersIssuesModalBtn = document.getElementById('openAllNewspapersIssuesModalBtn');
@@ -1366,6 +1393,14 @@
 						paper.currentIssue = foundIssue;
 						issueExistsForDate = true;
 
+						// Update the current index in navState for this newspaper
+						if (paper.navState) {
+							paper.navState.currentIndex = paper.navState.issuesArray.findIndex(issue =>
+								issue.filename_base === foundIssue.filename_base
+							);
+						}
+
+
 						if (titleElement && foundIssue.issue_number) {
 							titleElement.textContent = `${paper.title} (شماره ${foundIssue.issue_number})`;
 						}
@@ -1724,6 +1759,14 @@
 
 				lightboxImage.src = imageUrl;
 
+				// --- Modification 1: Open Wikimedia Commons link on image click ---
+				const wikimediaFileLink = `https://commons.wikimedia.org/w/index.php?title=File%3A${fileNameForUrlPath}&page=${lightboxCurrentPage}`;
+				lightboxImage.onclick = () => {
+					window.open(wikimediaFileLink, '_blank');
+				};
+				lightboxImage.style.cursor = 'pointer'; // Indicate it's clickable
+
+
 				try {
 					await new Promise((resolve, reject) => {
 						lightboxImage.onload = resolve;
@@ -1751,22 +1794,50 @@
 				lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
 				lightboxNextPageButton.disabled = (maxPages !== null && maxPages !== Infinity && lightboxCurrentPage >= maxPages);
 
-				const availableNewspapers = Object.keys(newspaperData).filter(key => {
-					const p = newspaperData[key];
-					if (!p || !p.available) return false;
-					if (currentCalendarMode === 'shamsi') {
-						return p.calendar_type === 'shamsi';
-					} else {
-						return p.calendar_type === 'hijri';
-					}
-				});
+				// --- Modification 2: Display issue navigation and "View All Issues" in lightbox ---
+				const isDatabasePaperWithIssues = paper.type === 'database' && paper.issues && paper.issues.length > 0;
 
-				if (availableNewspapers.length > 1) {
-					lightboxPrevNewspaperButton.style.display = 'inline-block';
-					lightboxNextNewspaperButton.style.display = 'inline-block';
+				if (isDatabasePaperWithIssues) {
+					issueNavLightbox.style.display = 'flex'; // Show issue navigation
+					lightboxPrevNewspaperButton.style.display = 'none'; // Hide newspaper nav
+					lightboxNextNewspaperButton.style.display = 'none'; // Hide newspaper nav
+
+					// Update issue number input and buttons
+					const navState = paper.navState;
+					if (navState && navState.currentIssue) {
+						lightboxIssueNumberInput.value = navState.currentIssue.issue_number || '';
+						lightboxIssueNumberInput.disabled = true; // Still disabled as direct input changes date
+						lightboxPrevIssueButton.disabled = navState.currentIndex <= 0;
+						lightboxNextIssueButton.disabled = navState.currentIndex >= navState.issuesArray.length - 1;
+					} else {
+						lightboxIssueNumberInput.value = '';
+						lightboxIssueNumberInput.disabled = true;
+						lightboxPrevIssueButton.disabled = true;
+						lightboxNextIssueButton.disabled = true;
+					}
+					lightboxViewAllIssuesButton.style.display = 'inline-block'; // Always show for database papers in lightbox
 				} else {
-					lightboxPrevNewspaperButton.style.display = 'none';
-					lightboxNextNewspaperButton.style.display = 'none';
+					issueNavLightbox.style.display = 'none'; // Hide issue navigation
+					lightboxViewAllIssuesButton.style.display = 'none'; // Hide "View All Issues"
+
+					// Only show newspaper navigation if there are other papers on the same date and it's not a database paper with issues
+					const availableNewspapers = Object.keys(newspaperData).filter(key => {
+						const p = newspaperData[key];
+						if (!p || !p.available) return false;
+						if (currentCalendarMode === 'shamsi') {
+							return p.calendar_type === 'shamsi';
+						} else {
+							return p.calendar_type === 'hijri';
+						}
+					});
+
+					if (availableNewspapers.length > 1) {
+						lightboxPrevNewspaperButton.style.display = 'inline-block';
+						lightboxNextNewspaperButton.style.display = 'inline-block';
+					} else {
+						lightboxPrevNewspaperButton.style.display = 'none';
+						lightboxNextNewspaperButton.style.display = 'none';
+					}
 				}
 			};
 
@@ -1784,6 +1855,7 @@
 					lightboxCurrentPage++;
 				}
 				if (currentPageBeforeChange !== lightboxCurrentPage) {
+					paper.currentPage = lightboxCurrentPage; // Update paper's current page
 					updateLightboxContent();
 				}
 			};
@@ -1816,7 +1888,7 @@
 				currentLightboxNewspaperId = availableNewspapers[newIndex];
 				const newPaper = newspaperData[currentLightboxNewspaperId];
 				if (newPaper) {
-					lightboxCurrentPage = newPaper.currentPage;
+					lightboxCurrentPage = newPaper.currentPage; // Set lightbox page to the new paper's last viewed page
 				} else {
 					lightboxCurrentPage = 1;
 				}
@@ -1839,19 +1911,33 @@
 				if (!paper || !paper.navState) return;
 				const { issuesArray, issueNumberInput } = paper.navState;
 				if (index < 0 || index >= issuesArray.length) return;
-				paper.navState.currentIndex = index;
+				
+				paper.navState.currentIndex = index; // Update current index
+				paper.navState.currentIssue = issuesArray[index]; // Update current issue reference
+
 				const issue = issuesArray[index];
 				if (!issueNumberInput || !issue) return;
 				issueNumberInput.value = issue.issue_number || '';
+				
 				// Set the main date inputs to this issue's date
 				hijriYearInput.value = issue.year;
 				hijriMonthSelect.value = issue.month;
 				hijriDayInput.value = issue.day;
 
-				mainPageNumberInput.value = 1;
-				Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
-				loadImage('date');
-				updateIssueNavButtons(newspaperId);
+				// For lightbox specific issue navigation
+				currentLightboxNewspaperId = newspaperId; // Ensure lightbox is focused on this newspaper
+				lightboxCurrentPage = 1; // Reset to page 1 for the new issue
+
+				mainPageNumberInput.value = 1; // Reset main page input
+				Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; }); // Reset all papers' current page
+
+				loadImage('date'); // Reload content for the new date/issue
+				updateIssueNavButtons(newspaperId); // Update main view nav buttons
+				
+				// If lightbox is open, update its content as well
+				if (lightboxOverlay.classList.contains('visible') && currentLightboxNewspaperId === newspaperId) {
+					updateLightboxContent();
+				}
 
 				// Update URL parameters
 				updateUrlParameters(
@@ -1924,6 +2010,9 @@
 				}
 
 				paper.navState.currentIndex = foundIndex;
+				// Also store the current issue object for easier access
+				paper.navState.currentIssue = foundIndex >= 0 ? issuesArray[foundIndex] : null;
+
 				if (issueNumberInput) {
 					if (foundIndex >= 0 && issuesArray[foundIndex]) {
 						issueNumberInput.value = issuesArray[foundIndex].issue_number || '';
@@ -2289,6 +2378,7 @@
 						} else {
 							lightboxCurrentPage = parsedInputPage;
 						}
+						paper.currentPage = lightboxCurrentPage; // Update paper's current page
 						updateLightboxContent();
 					}
 				} else {
@@ -2297,6 +2387,21 @@
 			});
 			lightboxPrevNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('prev'));
 			lightboxNextNewspaperButton.addEventListener('click', () => lightboxChangeNewspaper('next'));
+
+			// New Lightbox Issue Navigation Event Listeners
+			lightboxPrevIssueButton.addEventListener('click', () => {
+				goToPrevNewspaperIssue(currentLightboxNewspaperId);
+				closeLightbox(); // Close lightbox after navigating to a new issue
+			});
+			lightboxNextIssueButton.addEventListener('click', () => {
+				goToNextNewspaperIssue(currentLightboxNewspaperId);
+				closeLightbox(); // Close lightbox after navigating to a new issue
+			});
+			lightboxViewAllIssuesButton.addEventListener('click', () => {
+				openAllNewspapersIssuesModal(currentLightboxNewspaperId);
+				closeLightbox(); // Close lightbox before opening all issues modal
+			});
+
 
 			document.addEventListener('keydown', (e) => {
 				if (lightboxOverlay.classList.contains('visible')) {
