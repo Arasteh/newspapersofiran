@@ -383,7 +383,7 @@
 		}
 		.issue-navigation-controls {
 			margin-top: 10px;
-			display: none;
+			display: none; /* Controlled by JS based on whether a database issue is found */
 			text-align: center;
 			width: 100%; /* Ensure it takes full width of parent */
 		}
@@ -459,6 +459,7 @@
 		h2#allIssuesModalNewspaperTitle {
 			text-align: center;
 			margin-top: 0;
+			margin-bottom: 15px; /* Added margin for spacing */
 		}
 		.all-issues-modal-close-button {
 			position: absolute;
@@ -560,6 +561,26 @@
 		.view-all-issues-btn:hover {
 			background-color: var(--lightbox-button-hover-bg);
 		}
+
+		/* Added styles for the new checkbox in All Issues Modal */
+		.modal-controls {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			margin-bottom: 10px;
+		}
+		.modal-controls input[type="checkbox"] {
+			width: 18px;
+			height: 18px;
+			cursor: pointer;
+			accent-color: var(--button-bg); /* Highlight color for checkbox */
+		}
+		.modal-controls label {
+			font-size: 16px;
+			color: var(--text-color);
+		}
+
 
 		/* Calendar specific styles */
 		h2#calendarModalTitle{
@@ -847,6 +868,11 @@
 		<div class="all-issues-modal-content">
 			<button id="allIssuesModalCloseButton" class="all-issues-modal-close-button">&times;</button>
 			<h2 id="allIssuesModalNewspaperTitle">فهرست شماره‌های نشریات</h2>
+			<!-- New checkbox for displaying dates -->
+			<div class="modal-controls">
+				<input type="checkbox" id="showDatesCheckbox">
+				<label for="showDatesCheckbox">نمایش تاریخ‌ها</label>
+			</div>
 			<div id="newspaperSelectionContainer" class="newspaper-selection-container">
 				<!-- Newspaper selection buttons will be loaded here -->
 			</div>
@@ -961,6 +987,7 @@
 			const newspaperSelectionContainer = document.getElementById('newspaperSelectionContainer');
 			const issuesListContainer = document.getElementById('issuesListContainer');
 			const allIssuesModalErrorMessage = document.getElementById('allIssuesModalErrorMessage');
+			const showDatesCheckbox = document.getElementById('showDatesCheckbox'); // New: Checkbox for showing dates
 
 			// Calendar Modal Elements
 			const openCalendarModalBtn = document.getElementById('openCalendarModalBtn');
@@ -1051,19 +1078,17 @@
 						<img id="${id}NewspaperImage" src="" alt="تصویر ${config.title}" class="newspaper-image">
 						<p id="${id}StatusMessage" class="status-message" style="display: none;"></p>
 						<p id="${id}ErrorMessage" class="error-message" style="display: none;"></p>
-						${config.type === 'database' ? `
-							<div id="${id}Navigation" class="issue-navigation-controls">
+						<div id="${id}Navigation" class="issue-navigation-controls" style="display: none;">
+							<div>
+								<button id="prev${id}Issue">&lt; شماره قبل</button>
 								<div>
-									<button id="prev${id}Issue">&lt; شماره قبل</button>
-									<div>
-										<span>شماره:</span>
-										<input type="number" id="${id}IssueNumber">
-									</div>
-									<button id="next${id}Issue">شماره بعد &gt;</button>
+									<span>شماره:</span>
+									<input type="number" id="${id}IssueNumber">
 								</div>
+								<button id="next${id}Issue">شماره بعد &gt;</button>
 							</div>
-							<button class="view-all-issues-btn" data-newspaper-id="${id}" style="display: none;">مشاهده تمام شماره‌ها</button>
-						` : ''}
+						</div>
+						<button class="view-all-issues-btn" data-newspaper-id="${id}" style="display: none;">مشاهده تمام شماره‌ها</button>
 					`;
 					newspaperContainer.appendChild(sectionDiv);
 
@@ -1096,17 +1121,17 @@
 						maxPages: null,	 // For current loaded issue
 					};
 
-					if (config.type === 'database') {
-						newspaperData[id].navState = {
-							issuesArray: [],
-							currentIndex: -1,
-							prevIssueBtn: document.getElementById(`prev${id}Issue`),
-							nextIssueBtn: document.getElementById(`next${id}Issue`),
-							issueNumberInput: document.getElementById(`${id}IssueNumber`),
-							navigationDiv: document.getElementById(`${id}Navigation`)
-						};
-						newspaperData[id].viewAllIssuesBtn = sectionDiv.querySelector('.view-all-issues-btn');
-					}
+					// Issue navigation elements are always created, but their visibility is controlled by JS
+					newspaperData[id].navState = {
+						issuesArray: [],
+						currentIndex: -1,
+						prevIssueBtn: document.getElementById(`prev${id}Issue`),
+						nextIssueBtn: document.getElementById(`next${id}Issue`),
+						issueNumberInput: document.getElementById(`${id}IssueNumber`),
+						navigationDiv: document.getElementById(`${id}Navigation`)
+					};
+					newspaperData[id].viewAllIssuesBtn = sectionDiv.querySelector('.view-all-issues-btn');
+
 				});
 			};
 
@@ -1138,7 +1163,7 @@
 								<img id="${paperId}NewspaperImage" src="" alt="تصویر ${newspaperConfigurations[paperId].title}" class="newspaper-image">
 								<p id="${paperId}StatusMessage" class="status-message" style="display: none;"></p>
 								<p id="${paperId}ErrorMessage" class="error-message" style="display: none;"></p>
-								<div id="${paperId}Navigation" class="issue-navigation-controls">
+								<div id="${paperId}Navigation" class="issue-navigation-controls" style="display: none;">
 									<div>
 										<button id="prev${paperId}Issue">&lt; شماره قبل</button>
 										<div>
@@ -1191,6 +1216,7 @@
 						newspaperData[paperId].firstIssueDate = calculatedFirstIssueDate;
 						newspaperData[paperId].issues = dbPaper.issues; // Store issues directly here
 
+						// Re-initialize navState for database papers, ensuring elements are linked
 						newspaperData[paperId].navState = {
 							issuesArray: [...dbPaper.issues].sort((a, b) => {
 								if (a.year !== b.year) return a.year - b.year;
@@ -1203,6 +1229,7 @@
 							issueNumberInput: document.getElementById(`${paperId}IssueNumber`),
 							navigationDiv: document.getElementById(`${paperId}Navigation`)
 						};
+
 						// Add event listeners for issue navigation
 						const navState = newspaperData[paperId].navState;
 						if (navState.prevIssueBtn) navState.prevIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue(paperId));
@@ -1292,6 +1319,8 @@
 				// Now that all newspaperData is complete, sort and render global first issue buttons
 				sortAndRenderGlobalFirstIssueButtons();
 
+				// Set default state for showDatesCheckbox based on screen size
+				setShowDatesCheckboxDefault();
 
 				// Set initial calendar mode and load images based on URL parameters or defaults
 				const urlCalendar = getUrlParameter('calendar');
@@ -1373,12 +1402,16 @@
 
 				const titleElement = paper.sectionElement.querySelector('h2');
 				if (titleElement) {
-					titleElement.textContent = paper.title; // Reset title
+					titleElement.textContent = paper.title; // Reset title initially
 				}
 
 				paper.sectionElement.style.display = shouldDisplaySectionBasedOnModeAndType ? 'flex' : 'none';
 				if (!shouldDisplaySectionBasedOnModeAndType) {
 					paper.available = false;
+					// Ensure issue navigation is hidden if paper section is not displayed
+					if (paper.navState && paper.navState.navigationDiv) {
+						paper.navState.navigationDiv.style.display = 'none';
+					}
 					return Promise.resolve(false);
 				}
 
@@ -1460,14 +1493,28 @@
 							);
 						}
 
-
-						if (titleElement && foundIssue.issue_number) {
-							titleElement.textContent = `${paper.title} (شماره ${englishToPersianDigits(foundIssue.issue_number)})`; // Localize number
+						// Update the title to include the issue number for database papers
+						if (titleElement) {
+							let baseTitle = paper.title;
+							if (foundIssue.issue_number) {
+								titleElement.textContent = `${baseTitle} (شماره ${englishToPersianDigits(foundIssue.issue_number)})`;
+							} else {
+								titleElement.textContent = baseTitle; // Fallback if issue_number is missing
+							}
 						}
+
 					} else {
 						paper.errorElement.textContent = 'نشریه در این تاریخ موجود نیست';
 						paper.errorElement.style.display = 'block';
 						paper.available = false;
+						// Reset title if no issue found for the date
+						if (titleElement) {
+							titleElement.textContent = paper.title;
+						}
+						// Ensure issue navigation is hidden if no issue is found for the date
+						if (paper.navState && paper.navState.navigationDiv) {
+							paper.navState.navigationDiv.style.display = 'none';
+						}
 						return Promise.resolve(false);
 					}
 				} else {
@@ -1477,6 +1524,10 @@
 
 				if (!issueExistsForDate) {
 					paper.available = false;
+					// Ensure issue navigation is hidden if no issue exists for the date
+					if (paper.navState && paper.navState.navigationDiv) {
+						paper.navState.navigationDiv.style.display = 'none';
+					}
 					return Promise.resolve(false);
 				}
 
@@ -1497,7 +1548,7 @@
 						paper.errorElement.style.display = 'none';
 						paper.available = true;
 						if (paper.navState) {
-							updateIssueNavigationVisibility(id);
+							updateIssueNavigationVisibility(id); // Call to ensure issue navigation visibility is correctly updated
 						}
 						paper.fileNameBase = fileNameBase;
 						paper.maxPages = maxPages;
@@ -1514,11 +1565,19 @@
 						}
 						paper.errorElement.style.display = 'block';
 						paper.available = false;
+						// Ensure issue navigation is hidden if image fails to load
+						if (paper.navState && paper.navState.navigationDiv) {
+							paper.navState.navigationDiv.style.display = 'none';
+						}
 						resolve(false);
 					};
 					paper.imageElement.src = imageUrl;
 				}).catch(() => {
 					paper.available = false;
+					// Ensure issue navigation is hidden if promise rejection occurs
+					if (paper.navState && paper.navState.navigationDiv) {
+						paper.navState.navigationDiv.style.display = 'none';
+					}
 					resolve(false);
 				});
 			};
@@ -1562,6 +1621,10 @@
 					mainStatusMessage.style.display = 'none';
 					Object.values(newspaperData).forEach(paper => {
 						if(paper && paper.sectionElement) paper.sectionElement.style.display = 'none';
+						// Also hide issue navigation for all papers if date is incomplete
+						if(paper && paper.navState && paper.navState.navigationDiv) {
+							paper.navState.navigationDiv.style.display = 'none';
+						}
 					});
 					return;
 				}
@@ -1577,6 +1640,10 @@
 				Object.values(newspaperData).forEach(paper => {
 					if (paper) {
 						paper.available = false; // Reset availability for all papers
+						// Also hide issue navigation for all papers initially
+						if (paper.navState && paper.navState.navigationDiv) {
+							paper.navState.navigationDiv.style.display = 'none';
+						}
 					}
 				});
 
@@ -1624,6 +1691,7 @@
 					}
 				});
 
+				// Re-evaluate issue navigation visibility for all displayed papers after sorting/re-rendering
 				Object.keys(newspaperData).forEach(paperId => {
 					if (newspaperData[paperId] && newspaperData[paperId].navState) {
 						updateIssueNavigationVisibility(paperId);
@@ -1980,9 +2048,16 @@
 				issueNumberInput.value = issue.issue_number || '';
 				
 				// Set the main date inputs to this issue's date
-				hijriYearInput.value = issue.year;
-				hijriMonthSelect.value = issue.month;
-				hijriDayInput.value = issue.day;
+				// Note: Currently assumes Hijri for DB papers, might need more complex calendar conversion if Shamsi DB papers are added.
+				if (paper.calendar_type === 'hijri') {
+					hijriYearInput.value = issue.year;
+					hijriMonthSelect.value = issue.month;
+					hijriDayInput.value = issue.day;
+				} else if (paper.calendar_type === 'shamsi') {
+					shamsiYearInput.value = issue.year;
+					shamsiMonthSelect.value = issue.month;
+					shamsiDayInput.value = issue.day;
+				}
 
 				// For lightbox specific issue navigation
 				currentLightboxNewspaperId = newspaperId; // Ensure lightbox is focused on this newspaper
@@ -2002,9 +2077,9 @@
 				// Update URL parameters
 				updateUrlParameters(
 					currentCalendarMode,
-					hijriYearInput.value,
-					hijriMonthSelect.value,
-					hijriDayInput.value
+					currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value,
+					currentCalendarMode === 'shamsi' ? shamsiMonthSelect.value : hijriMonthSelect.value,
+					currentCalendarMode === 'shamsi' ? shamsiDayInput.value : hijriDayInput.value
 				);
 			};
 
@@ -2036,46 +2111,56 @@
 
 			const updateIssueNavigationVisibility = (newspaperId) => {
 				const paper = newspaperData[newspaperId];
-				if (!paper || !paper.navState || !paper.navState.navigationDiv ||
-					paper.type !== 'database' || paper.calendar_type !== 'hijri' ||
+				// Show issue navigation only for database-driven papers that are available
+				if (!paper || paper.type !== 'database' || !paper.available || !paper.navState || !paper.navState.navigationDiv ||
 					!paper.issues || paper.issues.length === 0) {
 					if (paper && paper.navState && paper.navState.navigationDiv) {
 						paper.navState.navigationDiv.style.display = 'none';
 					}
 					return;
 				}
+
 				const { navigationDiv, issueNumberInput, issuesArray } = paper.navState;
-				if (currentCalendarMode === 'hijri') {
-					navigationDiv.style.display = 'block';
-				} else {
-					navigationDiv.style.display = 'none';
-					return;
+				navigationDiv.style.display = 'block'; // Display for available database papers
+
+				let currentYear, currentMonth, currentDay;
+				if (currentCalendarMode === 'shamsi') {
+					currentYear = shamsiYearInput.value;
+					currentMonth = parseInt(shamsiMonthSelect.value);
+					currentDay = parseInt(shamsiDayInput.value);
+				} else { // hijri
+					currentYear = hijriYearInput.value;
+					currentMonth = parseInt(hijriMonthSelect.value);
+					currentDay = parseInt(hijriDayInput.value);
 				}
-				const currentYear = hijriYearInput.value;
-				const currentMonth = pad(hijriMonthSelect.value);
-				const currentDay = pad(hijriDayInput.value);
 
 				let foundIndex = -1;
-				if (newspaperId === 'Q5671136') { // Al-Islam is monthly
+				// Find the issue corresponding to the current date selected in the main controls
+				if (paper.calendar_type === 'hijri') {
+					// For Hijri database papers, we match with the Hijri date selected in main controls
+					if (newspaperId === 'Q5671136') { // Al-Islam is monthly, ignore day
+						foundIndex = issuesArray.findIndex(issue =>
+							issue.year == currentYear && issue.month == currentMonth
+						);
+					} else { // Daily
+						foundIndex = issuesArray.findIndex(issue =>
+							issue.year == currentYear && issue.month == currentMonth && issue.day == currentDay
+						);
+					}
+				} else if (paper.calendar_type === 'shamsi') {
+					// If we add Shamsi database papers, this logic would apply
 					foundIndex = issuesArray.findIndex(issue =>
-						issue.year == currentYear &&
-						issue.month == parseInt(currentMonth)
-					);
-				} else { // Daily
-					foundIndex = issuesArray.findIndex(issue =>
-						issue.year == currentYear &&
-						issue.month == parseInt(currentMonth) &&
-						issue.day == parseInt(currentDay)
+						issue.year == currentYear && issue.month == currentMonth && issue.day == currentDay
 					);
 				}
 
+
 				paper.navState.currentIndex = foundIndex;
-				// Also store the current issue object for easier access
 				paper.navState.currentIssue = foundIndex >= 0 ? issuesArray[foundIndex] : null;
 
 				if (issueNumberInput) {
 					if (foundIndex >= 0 && issuesArray[foundIndex]) {
-						issueNumberInput.value = englishToPersianDigits(issuesArray[foundIndex].issue_number) || ''; // Localize number
+						issueNumberInput.value = englishToPersianDigits(issuesArray[foundIndex].issue_number) || '';
 					} else {
 						issueNumberInput.value = '';
 					}
@@ -2134,9 +2219,9 @@
 					// Update URL parameters after date change
 					updateUrlParameters(
 						currentCalendarMode,
-						targetDate.year,
-						targetDate.month,
-						targetDate.day
+						currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value,
+						currentCalendarMode === 'shamsi' ? shamsiMonthSelect.value : hijriMonthSelect.value,
+						currentCalendarMode === 'shamsi' ? shamsiDayInput.value : hijriDayInput.value
 					);
 				} else {
 					console.warn(`No first issue date defined or available for ${paperId}.`);
@@ -2236,10 +2321,18 @@
 										   return a.day - b.day;
 									   });
 
+				const displayDates = showDatesCheckbox.checked;
+
 				issuesToDisplay.forEach(issue => {
 					const issueButton = document.createElement('button');
-					const monthName = hijriMonthNames[issue.month - 1];
-					issueButton.textContent = `شمارهٔ ${englishToPersianDigits(issue.issue_number)}, روز ${englishToPersianDigits(issue.day)} ${monthName} ${englishToPersianDigits(issue.year)}`; // Localize numbers
+					let buttonText = `شمارهٔ ${englishToPersianDigits(issue.issue_number)}`;
+
+					if (displayDates) {
+						const monthName = hijriMonthNames[issue.month - 1];
+						buttonText += `, روز ${englishToPersianDigits(issue.day)} ${monthName} ${englishToPersianDigits(issue.year)}`; // Localize numbers
+					}
+
+					issueButton.textContent = buttonText;
 					issueButton.classList.add('issue-item-button');
 					issueButton.addEventListener('click', () => {
 						goToIssueFromModal(paper.id, issue);
@@ -2253,21 +2346,31 @@
 			};
 
 			const goToIssueFromModal = (paperId, issue) => {
-				if (newspaperData[paperId].calendar_type === 'hijri' && currentCalendarMode !== 'hijri') {
-					hijriCalendarRadio.checked = true;
-					currentCalendarMode = 'hijri';
+				// Ensure the correct calendar mode is selected based on the paper's calendar type
+				if (newspaperData[paperId].calendar_type === 'shamsi') {
+					if (currentCalendarMode !== 'shamsi') {
+						shamsiCalendarRadio.checked = true;
+						currentCalendarMode = 'shamsi';
+					}
+					shamsiYearInput.value = issue.year;
+					shamsiMonthSelect.value = issue.month;
+					shamsiDayInput.value = issue.day;
+				} else { // Assuming hijri
+					if (currentCalendarMode !== 'hijri') {
+						hijriCalendarRadio.checked = true;
+						currentCalendarMode = 'hijri';
+					}
+					hijriYearInput.value = issue.year;
+					hijriMonthSelect.value = issue.month;
+					hijriDayInput.value = issue.day;
 				}
-
-				hijriYearInput.value = issue.year;
-				hijriMonthSelect.value = issue.month;
-				hijriDayInput.value = issue.day;
 
 				// Update URL parameters
 				updateUrlParameters(
 					currentCalendarMode,
-					hijriYearInput.value,
-					hijriMonthSelect.value,
-					hijriDayInput.value
+					currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value,
+					currentCalendarMode === 'shamsi' ? shamsiMonthSelect.value : hijriMonthSelect.value,
+					currentCalendarMode === 'shamsi' ? shamsiDayInput.value : hijriDayInput.value
 				);
 
 				closeAllIssuesModal();
@@ -2380,6 +2483,12 @@
 
 				closeCalendarModal();
 				loadImage('date');
+			};
+
+			// New function to set default state of showDatesCheckbox
+			const setShowDatesCheckboxDefault = () => {
+				// Default checked if desktop (width > 768px), unchecked if mobile
+				showDatesCheckbox.checked = window.innerWidth > 768;
 			};
 
 			// --- Event Listeners ---
@@ -2503,6 +2612,25 @@
 					closeAllIssuesModal();
 				}
 			});
+
+			// Event listener for the new showDatesCheckbox
+			showDatesCheckbox.addEventListener('change', () => {
+				const currentSelectedPaperButton = newspaperSelectionContainer.querySelector('button.selected');
+				if (currentSelectedPaperButton) {
+					const paperId = currentSelectedPaperButton.dataset.paperId;
+					displayIssuesForSelectedNewspaper(paperId); // Re-render current issues list
+				} else {
+                    // If no paper is selected, re-render for the first available paper
+                    const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
+                        paper.type === 'database' && paper.issues && paper.issues.length > 0
+                    ).sort((a, b) => a.title.localeCompare(b.title, 'fa'));
+
+                    if (dbPapersWithIssues.length > 0) {
+                        displayIssuesForSelectedNewspaper(dbPapersWithIssues[0].id);
+                    }
+                }
+			});
+
 
 			openCalendarModalBtn.addEventListener('click', () => {
 				currentCalendarYear = parseInt(hijriYearInput.value, 10);
