@@ -1592,7 +1592,7 @@
 				const width = 330;
 				const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${page}-${width}px-${fileNameForUrlPath}.jpg`;
 
-				return new Promise((resolve) => {
+				return new Promise((resolve, reject) => {
 					paper.imageElement.onload = () => {
 						paper.statusElement.style.display = 'none';
 						paper.imageElement.style.display = 'block';
@@ -1605,7 +1605,7 @@
 						paper.maxPages = maxPages;
 						resolve(true);
 					};
-					paper.imageImage.onerror = () => {
+					paper.imageElement.onerror = () => {
 						paper.statusElement.style.display = 'none';
 						if (paper.type === 'formula' && paper.calendar_type === 'shamsi' && (id === 'yaghma' || id === 'negin')) {
 							paper.errorElement.textContent = `صفحه ${englishToPersianDigits(page)} برای شماره ${shamsiMonthSelect.options[parseInt(month,10)-1].text} سال ${englishToPersianDigits(year)} از نشریه ${paper.title} یافت نشد.`;
@@ -1619,15 +1619,9 @@
 						if (paper.navState && paper.navState.navigationDiv) {
 							paper.navState.navigationDiv.style.display = 'none';
 						}
-						resolve(false);
+						reject(false);
 					};
 					paper.imageElement.src = imageUrl;
-				}).catch(() => {
-					paper.available = false;
-					if (paper.navState && paper.navState.navigationDiv) {
-						paper.navState.navigationDiv.style.display = 'none';
-					}
-					resolve(false);
 				});
 			};
 
@@ -1697,7 +1691,7 @@
 				const loadPromises = Object.keys(newspaperData).map(id =>
 					checkAndLoadNewspaper(id, year, month, day, newspaperData[id] ? newspaperData[id].currentPage : 1)
 				);
-				const results = await Promise.all(loadPromises);
+				const results = await Promise.all(loadPromises.map(p => p.catch(e => e)));
 				mainStatusMessage.style.display = 'none';
 
 				const newspaperKeys = Object.keys(newspaperData);
@@ -1872,7 +1866,6 @@
 
 				lightboxStatusMessage.textContent = 'در حال بارگذاری...';
 				lightboxStatusMessage.style.display = 'block';
-				lightboxErrorMessage.style.display = 'none';
 				lightboxImage.style.display = 'none';
 				downloadLink.style.display = 'none';
 				viewLargeLink.style.display = 'none';
@@ -1956,13 +1949,20 @@
 
 				try {
 					await new Promise((resolve, reject) => {
-						lightboxImage.onload = resolve;
-						lightboxImage.onerror = reject;
+						lightboxImage.onload = () => {
+							lightboxStatusMessage.style.display = 'none';
+							lightboxImage.style.display = 'block';
+							lightboxErrorMessage.style.display = 'none';
+							resolve(true);
+						};
+						lightboxImage.onerror = () => {
+							lightboxStatusMessage.style.display = 'none';
+							lightboxImage.style.display = 'none';
+							lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${englishToPersianDigits(lightboxCurrentPage)} یافت نشد.`;
+							lightboxErrorMessage.style.display = 'block';
+							reject(false);
+						};
 					});
-					lightboxStatusMessage.style.display = 'none';
-					lightboxImage.style.display = 'block';
-					lightboxErrorMessage.style.display = 'none';
-
 					downloadLink.href = `https://upload.wikimedia.org/wikipedia/commons/${hash[0]}/${hash}/${fileNameForUrlPath}?download`;
 					downloadLink.style.display = 'inline-block';
 
@@ -1970,10 +1970,6 @@
 					viewLargeLink.style.display = 'inline-block';
 
 				} catch (error) {
-					lightboxStatusMessage.style.display = 'none';
-					lightboxImage.style.display = 'none';
-					lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${englishToPersianDigits(lightboxCurrentPage)} یافت نشد.`;
-					lightboxErrorMessage.style.display = 'block';
 					downloadLink.style.display = 'none';
 					viewLargeLink.style.display = 'none';
 				}
