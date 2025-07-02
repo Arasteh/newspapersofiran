@@ -620,6 +620,7 @@
 	"id": "Q5686829",
 	"title": "شرف",
 	"calendar_type": "hijri",
+	"frequency": "monthly",
 	"issues": [
 	{
 		"issue_number": 1,
@@ -1130,6 +1131,7 @@
 	"id": "Q64941184",
 	"title": "نشریه نوروز",
 	"calendar_type": "hijri",
+	"frequency": "weekly",
 	"issues": [
 	{
 		"issue_number": 1,
@@ -2248,6 +2250,7 @@
 	"id": "Q5671136",
 	"title": "الاسلام",
 	"calendar_type": "hijri",
+	"frequency": "monthly",
 	"issues": [
 	{
 		"issue_number": 101,
@@ -3207,6 +3210,7 @@
 	"id": "Q60711898",
 	"title": "یادگار",
 	"calendar_type": "shamsi",
+	"frequency": "monthly",
 	"issues": [
 	{
 		"issue_number": 101,
@@ -4429,6 +4433,7 @@
   "id": "Q25433419",
   "title": "مهر",
   "calendar_type": "shamsi",
+  "frequency": "monthly",
   "issues": [
     {
       "issue_number": 101,
@@ -5436,6 +5441,7 @@
   "id": "Q5963956",
   "title": "اندیشه و هنر",
   "calendar_type": "shamsi",
+  "frequency": "monthly",
   "issues": [
     {
       "issue_number": 206,
