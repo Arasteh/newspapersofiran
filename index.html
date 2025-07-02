@@ -1307,8 +1307,26 @@
 
 				globalGoToFirstIssueControls.innerHTML = '';
 
+				let currentCalendarType = null;
+
 				sortablePapers.forEach(paper => {
 					if (paper.globalFirstIssueBtn) {
+						if (paper.calendar_type !== currentCalendarType) {
+							const heading = document.createElement('h3');
+							heading.style.width = '100%';
+							heading.style.textAlign = 'center';
+							heading.style.marginTop = '15px';
+							heading.style.marginBottom = '5px';
+							heading.style.color = 'var(--section-title-color)';
+							heading.style.fontSize = '1.1em';
+							if (paper.calendar_type === 'hijri') {
+								heading.textContent = 'نشریات قمری';
+							} else if (paper.calendar_type === 'shamsi') {
+								heading.textContent = 'نشریات شمسی';
+							}
+							globalGoToFirstIssueControls.appendChild(heading);
+							currentCalendarType = paper.calendar_type;
+						}
 						globalGoToFirstIssueControls.appendChild(paper.globalFirstIssueBtn);
 						paper.globalFirstIssueBtn.style.display = 'inline-block';
 					}
@@ -1587,7 +1605,7 @@
 						paper.maxPages = maxPages;
 						resolve(true);
 					};
-					paper.imageElement.onerror = () => {
+					paper.imageImage.onerror = () => {
 						paper.statusElement.style.display = 'none';
 						if (paper.type === 'formula' && paper.calendar_type === 'shamsi' && (id === 'yaghma' || id === 'negin')) {
 							paper.errorElement.textContent = `صفحه ${englishToPersianDigits(page)} برای شماره ${shamsiMonthSelect.options[parseInt(month,10)-1].text} سال ${englishToPersianDigits(year)} از نشریه ${paper.title} یافت نشد.`;
@@ -2287,9 +2305,15 @@
 				newspaperSelectionContainer.innerHTML = '';
 				issuesListContainer.innerHTML = '';
 
+				const frequencyOrder = { 'daily': 1, 'weekly': 2, 'monthly': 3, 'quarterly': 4, 'yearly': 5 };
 				const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
 					paper.type === 'database' && paper.issues && paper.issues.length > 0
-				).sort((a, b) => a.title.localeCompare(b.title, 'fa'));
+				).sort((a, b) => {
+					const freqA = frequencyOrder[a.frequency] || 99;
+					const freqB = frequencyOrder[b.frequency] || 99;
+					if (freqA !== freqB) return freqA - freqB;
+					return a.title.localeCompare(b.title, 'fa');
+				});
 
 				if (dbPapersWithIssues.length === 0) {
 					allIssuesModalErrorMessage.textContent = 'هیچ نشریه‌ای با فهرست شماره در دیتابیس یافت نشد.';
