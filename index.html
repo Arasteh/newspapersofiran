@@ -1295,9 +1295,12 @@
 					});
 
 				sortablePapers.sort((a, b) => {
-					const freqA = frequencyOrder[a.frequency] || 99;
-					const freqB = frequencyOrder[b.frequency] || 99;
-					if (freqA !== freqB) return freqA - freqB;
+					if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
+					if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+
+					const dateA = parseInt(a.firstIssueDate, 10);
+					const dateB = parseInt(b.firstIssueDate, 10);
+					if (dateA !== dateB) return dateA - dateB;
 
 					return a.title.localeCompare(b.title, 'fa');
 				});
