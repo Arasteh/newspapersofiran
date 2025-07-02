@@ -938,6 +938,14 @@
 				window.history.pushState({}, '', newUrl);
 			};
 
+			const parseDateString = (dateStr) => {
+				if (!dateStr || dateStr.length !== 8) return null;
+				const year = parseInt(dateStr.substring(0, 4), 10);
+				const month = parseInt(dateStr.substring(4, 6), 10);
+				const day = parseInt(dateStr.substring(6, 8), 10);
+				return { year, month, day };
+			};
+
 			const shamsiCalendarRadio = document.getElementById('shamsiCalendar');
 			const hijriCalendarRadio = document.getElementById('hijriCalendar');
 			const shamsiDateControls = document.getElementById('shamsiDateControls');
@@ -1210,28 +1218,28 @@
 								currentIssue: null,
 								fileNameBase: null,
 								maxPages: null,
-								frequency: newspaperConfigurations[paperId].frequency,
+								frequency: dbPaper.frequency || 'daily',
 							};
 						}
 
 						let calculatedFirstIssueDate = null;
 						if (dbPaper.issues && dbPaper.issues.length > 0) {
 							const sortedIssues = [...dbPaper.issues].sort((a, b) => {
-								const dateA = a.year * 10000 + a.month * 100 + a.day;
-								const dateB = b.year * 10000 + b.month * 100 + b.day;
+								const dateA = parseInt(a.date, 10);
+								const dateB = parseInt(b.date, 10);
 								return dateA - dateB;
 							});
 							const firstIssue = sortedIssues[0];
-							calculatedFirstIssueDate = `${firstIssue.year}${pad(firstIssue.month)}${pad(firstIssue.day)}`;
+							calculatedFirstIssueDate = firstIssue.date;
 						}
 						newspaperData[paperId].firstIssueDate = calculatedFirstIssueDate;
 						newspaperData[paperId].issues = dbPaper.issues;
 
 						newspaperData[paperId].navState = {
 							issuesArray: [...dbPaper.issues].sort((a, b) => {
-								if (a.year !== b.year) return a.year - b.year;
-								if (a.month !== b.month) return a.month - b.month;
-								return a.day - b.day;
+								const dateA = parseInt(a.date, 10);
+								const dateB = parseInt(b.date, 10);
+								return dateA - dateB;
 							}),
 							currentIndex: -1,
 							prevIssueBtn: document.getElementById(`prev${paperId}Issue`),
@@ -1247,13 +1255,11 @@
 
 						if (dbPaper.calendar_type === 'hijri') {
 							dbPaper.issues.forEach(issue => {
-								const dateString = `${issue.year}${pad(issue.month)}${pad(issue.day)}`;
-								availableHijriDates.set(dateString, (availableHijriDates.get(dateString) || 0) + 1);
+								availableHijriDates.set(issue.date, (availableHijriDates.get(issue.date) || 0) + 1);
 							});
 						} else if (dbPaper.calendar_type === 'shamsi') {
 							dbPaper.issues.forEach(issue => {
-								const dateString = `${issue.year}${pad(issue.month)}${pad(issue.day)}`;
-								availableShamsiDates.set(dateString, (availableShamsiDates.get(dateString) || 0) + 1);
+								availableShamsiDates.set(issue.date, (availableShamsiDates.get(issue.date) || 0) + 1);
 							});
 						}
 					});
@@ -1495,9 +1501,12 @@
 
 					for (const issue of paper.issues) {
 						let isMatch = false;
+						const issueDateParsed = parseDateString(issue.date);
+
+						if (!issueDateParsed) continue;
 
 						if (paper.calendar_type === 'shamsi') {
-							const issueDateShamsi = { year: issue.year, month: issue.month, day: issue.day };
+							const issueDateShamsi = { year: issueDateParsed.year, month: issueDateParsed.month, day: issueDateParsed.day };
 							const issueDateDays = shamsiDateToDays(issueDateShamsi.year, issueDateShamsi.month, issueDateShamsi.day);
 
 							if (paper.frequency === 'daily') {
@@ -1520,12 +1529,12 @@
 							}
 						} else if (paper.calendar_type === 'hijri') {
 							if (paper.frequency === 'daily') {
-								isMatch = (selectedDateShamsi.year === issue.year &&
-										   selectedDateShamsi.month === issue.month &&
-										   selectedDateShamsi.day === issue.day);
+								isMatch = (selectedDateShamsi.year === issueDateParsed.year &&
+										   selectedDateShamsi.month === issueDateParsed.month &&
+										   selectedDateShamsi.day === issueDateParsed.day);
 							} else if (paper.frequency === 'monthly') {
-								isMatch = (selectedDateShamsi.year === issue.year &&
-										   selectedDateShamsi.month === issue.month);
+								isMatch = (selectedDateShamsi.year === issueDateParsed.year &&
+										   selectedDateShamsi.month === issueDateParsed.month);
 							}
 						}
 
@@ -1834,22 +1843,25 @@
 				let formattedDate;
 				let displayDayForDate = (id === 'yaghma' || id === 'negin') && paper.calendar_type === 'shamsi' ? '01' : day;
 
+				if (paper.type === 'database' && paper.currentIssue) {
+					const issueDateParsed = parseDateString(paper.currentIssue.date);
+					if (issueDateParsed) {
+						year = issueDateParsed.year;
+						month = issueDateParsed.month;
+						day = issueDateParsed.day;
+					}
+				}
+
 				if (paper.calendar_type === 'hijri') {
-					const hijriDate = (paper.type === 'database' && paper.currentIssue)
-									  ? {y:paper.currentIssue.year, m:paper.currentIssue.month, d:paper.currentIssue.day }
-									  : {y:year, m:parseInt(month), d:parseInt(day)};
-					const hijriMonthName = hijriMonthNames[hijriDate.m - 1];
-					formattedDate = `${englishToPersianDigits(pad(hijriDate.d))} ${hijriMonthName} ${englishToPersianDigits(hijriDate.y)} (قمری)`;
+					const hijriMonthName = hijriMonthNames[month - 1];
+					formattedDate = `${englishToPersianDigits(pad(day))} ${hijriMonthName} ${englishToPersianDigits(year)} (قمری)`;
 				} else if (paper.calendar_type === 'shamsi') {
-					const shamsiDate = (paper.type === 'database' && paper.currentIssue)
-									 ? {y:paper.currentIssue.year, m:paper.currentIssue.month, d:paper.currentIssue.day }
-									 : {y:year, m:parseInt(month), d:parseInt(displayDayForDate)};
-					const persianMonthName = shamsiMonthNames[shamsiDate.m - 1];
+					const persianMonthName = shamsiMonthNames[month - 1];
 
 					if (paper.type === 'database' && paper.frequency === 'monthly') {
-						formattedDate = `${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`;
+						formattedDate = `${persianMonthName} ${englishToPersianDigits(year)}`;
 					} else {
-						formattedDate = `${englishToPersianDigits(pad(shamsiDate.d))} ${persianMonthName} ${englishToPersianDigits(shamsiDate.y)}`;
+						formattedDate = `${englishToPersianDigits(pad(day))} ${persianMonthName} ${englishToPersianDigits(year)}`;
 					}
 				} else {
 					formattedDate = `${englishToPersianDigits(pad(day))}/${englishToPersianDigits(pad(month))}/${englishToPersianDigits(year)}`;
@@ -1923,7 +1935,16 @@
 				} else if (paper.type === 'database' && paper.currentIssue) {
 					fileNameBase = paper.currentIssue.filename_base;
 					maxPages = paper.currentIssue.pages || null;
-					dateForFilename = {y: paper.currentIssue.year, m: pad(paper.currentIssue.month), d: pad(paper.currentIssue.day)};
+					const issueDateParsed = parseDateString(paper.currentIssue.date);
+					if(issueDateParsed) {
+						dateForFilename = {y: issueDateParsed.year, m: pad(issueDateParsed.month), d: pad(issueDateParsed.day)};
+					} else {
+						console.error("Lightbox: Invalid date string in currentIssue for", id);
+						lightboxStatusMessage.style.display = 'none';
+						lightboxErrorMessage.textContent = `اطلاعات تاریخ نشریه برای نمایش در لایت‌باکس یافت نشد.`;
+						lightboxErrorMessage.style.display = 'block';
+						return;
+					}
 				} else {
 					console.error("Lightbox: Issue data missing for DB paper or unknown state for:", id, "on date", year, month, day);
 					lightboxStatusMessage.style.display = 'none';
@@ -2100,14 +2121,17 @@
 				if (!issueNumberInput || !issue) return;
 				issueNumberInput.value = issue.issue_number || '';
 				
-				if (paper.calendar_type === 'hijri') {
-					hijriYearInput.value = issue.year;
-					hijriMonthSelect.value = issue.month;
-					hijriDayInput.value = issue.day;
-				} else if (paper.calendar_type === 'shamsi') {
-					shamsiYearInput.value = issue.year;
-					shamsiMonthSelect.value = issue.month;
-					shamsiDayInput.value = issue.day;
+				const issueDateParsed = parseDateString(issue.date);
+				if (issueDateParsed) {
+					if (paper.calendar_type === 'hijri') {
+						hijriYearInput.value = issueDateParsed.year;
+						hijriMonthSelect.value = issueDateParsed.month;
+						hijriDayInput.value = issueDateParsed.day;
+					} else if (paper.calendar_type === 'shamsi') {
+						shamsiYearInput.value = issueDateParsed.year;
+						shamsiMonthSelect.value = issueDateParsed.month;
+						shamsiDayInput.value = issueDateParsed.day;
+					}
 				}
 
 				currentLightboxNewspaperId = newspaperId;
@@ -2182,25 +2206,19 @@
 				}
 
 				let foundIndex = -1;
+				const selectedDateString = `${currentYear}${pad(currentMonth)}${pad(currentDay)}`;
+
 				if (paper.calendar_type === 'hijri') {
 					if (paper.frequency === 'daily') {
-						foundIndex = issuesArray.findIndex(issue =>
-							issue.year === currentYear && issue.month === currentMonth && issue.day === currentDay
-						);
+						foundIndex = issuesArray.findIndex(issue => issue.date === selectedDateString);
 					} else if (paper.frequency === 'monthly') {
-						foundIndex = issuesArray.findIndex(issue =>
-							issue.year === currentYear && issue.month === currentMonth
-						);
+						foundIndex = issuesArray.findIndex(issue => issue.date.substring(0, 6) === selectedDateString.substring(0, 6));
 					}
 				} else if (paper.calendar_type === 'shamsi') {
 					if (paper.frequency === 'daily') {
-						foundIndex = issuesArray.findIndex(issue =>
-							issue.year === currentYear && issue.month === currentMonth && issue.day === currentDay
-						);
+						foundIndex = issuesArray.findIndex(issue => issue.date === selectedDateString);
 					} else if (paper.frequency === 'monthly') {
-						foundIndex = issuesArray.findIndex(issue =>
-							issue.year === currentYear && issue.month === currentMonth
-						);
+						foundIndex = issuesArray.findIndex(issue => issue.date.substring(0, 6) === selectedDateString.substring(0, 6));
 					}
 				}
 
@@ -2230,18 +2248,21 @@
 					const issuesToConsider = paper.navState && paper.navState.issuesArray
 										   ? paper.navState.issuesArray
 										   : [...paper.issues].sort((a,b) => {
-											   if(a.year !== b.year) return a.year - b.year;
-											   if(a.month !== b.month) return a.month - b.month;
-											   return a.day - b.day;
+											   const dateA = parseInt(a.date, 10);
+											   const dateB = parseInt(b.date, 10);
+											   return dateA - dateB;
 										   });
 					const firstChronologicalIssue = issuesToConsider[0];
 					if (firstChronologicalIssue) {
-						targetDate = {
-							year: firstChronologicalIssue.year,
-							month: firstChronologicalIssue.month,
-							day: firstChronologicalIssue.day,
-                            calendar_type: paper.calendar_type
-						};
+						const parsed = parseDateString(firstChronologicalIssue.date);
+						if (parsed) {
+							targetDate = {
+								year: parsed.year,
+								month: parsed.month,
+								day: parsed.day,
+								calendar_type: paper.calendar_type
+							};
+						}
 					}
 				} else if (paper.type === 'formula' && paper.firstIssueDate) {
 					const dateStr = paper.firstIssueDate;
@@ -2367,9 +2388,9 @@
 				const issuesToDisplay = paper.navState && paper.navState.issuesArray
 									   ? paper.navState.issuesArray
 									   : [...paper.issues].sort((a,b) => {
-										   if(a.year !== b.year) return a.year - b.year;
-										   if(a.month !== b.month) return a.month - b.month;
-										   return a.day - b.day;
+										   const dateA = parseInt(a.date, 10);
+										   const dateB = parseInt(b.date, 10);
+										   return dateA - dateB;
 									   });
 
 				const displayDates = showDatesCheckbox.checked;
@@ -2379,19 +2400,22 @@
 					let buttonText = `شمارهٔ ${englishToPersianDigits(issue.issue_number)}`;
 
 					if (displayDates) {
-						let monthNamesArray = [];
-						if (paper.calendar_type === 'shamsi') {
-							monthNamesArray = shamsiMonthNames;
-						} else {
-							monthNamesArray = hijriMonthNames;
-						}
+						const issueDateParsed = parseDateString(issue.date);
+						if (issueDateParsed) {
+							let monthNamesArray = [];
+							if (paper.calendar_type === 'shamsi') {
+								monthNamesArray = shamsiMonthNames;
+							} else {
+								monthNamesArray = hijriMonthNames;
+							}
 
-						const monthName = monthNamesArray[issue.month - 1];
+							const monthName = monthNamesArray[issueDateParsed.month - 1];
 
-						if (paper.frequency === 'monthly') {
-							buttonText += `, ${monthName} ${englishToPersianDigits(issue.year)}`;
-						} else {
-							buttonText += `, روز ${englishToPersianDigits(issue.day)} ${monthName} ${englishToPersianDigits(issue.year)}`;
+							if (paper.frequency === 'monthly') {
+								buttonText += `, ${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
+							} else {
+								buttonText += `, روز ${englishToPersianDigits(issueDateParsed.day)} ${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
+							}
 						}
 					}
 
@@ -2409,22 +2433,25 @@
 			};
 
 			const goToIssueFromModal = (paperId, issue) => {
+				const issueDateParsed = parseDateString(issue.date);
+				if (!issueDateParsed) return;
+
 				if (newspaperData[paperId].calendar_type === 'shamsi') {
 					if (currentCalendarMode !== 'shamsi') {
 						shamsiCalendarRadio.checked = true;
 						currentCalendarMode = 'shamsi';
 					}
-					shamsiYearInput.value = issue.year;
-					shamsiMonthSelect.value = issue.month;
-					shamsiDayInput.value = issue.day;
+					shamsiYearInput.value = issueDateParsed.year;
+					shamsiMonthSelect.value = issueDateParsed.month;
+					shamsiDayInput.value = issueDateParsed.day;
 				} else {
 					if (currentCalendarMode !== 'hijri') {
 						hijriCalendarRadio.checked = true;
 						currentCalendarMode = 'hijri';
 					}
-					hijriYearInput.value = issue.year;
-					hijriMonthSelect.value = issue.month;
-					hijriDayInput.value = issue.day;
+					hijriYearInput.value = issueDateParsed.year;
+					hijriMonthSelect.value = issueDateParsed.month;
+					hijriDayInput.value = issueDateParsed.day;
 				}
 
 				updateUrlParameters(
