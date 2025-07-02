@@ -5431,5 +5431,196 @@
       "wikimedia_hash": "80"
     }
   ]
+},
+	{
+  "id": "Q5963956",
+  "title": "اندیشه و هنر",
+  "calendar_type": "shamsi",
+  "issues": [
+    {
+      "issue_number": 206,
+      "year": 1334,
+      "month": 3,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._2,_No._6,_1334_SH.pdf",
+      "wikimedia_hash": "18"
+    },
+    {
+      "issue_number": 207,
+      "year": 1334,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._2,_No._7,_1334_SH.pdf",
+      "wikimedia_hash": "67"
+    },
+    {
+      "issue_number": 208,
+      "year": 1334,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._2,_No._8,_1334_SH.pdf",
+      "wikimedia_hash": "4c"
+    },
+    {
+      "issue_number": 209,
+      "year": 1334,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._2,_No._9,_1334_SH.pdf",
+      "wikimedia_hash": "ea"
+    },
+    {
+      "issue_number": 210,
+      "year": 1339,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._3,_No._10,_1339_SH.pdf",
+      "wikimedia_hash": "b3"
+    },
+    {
+      "issue_number": 304,
+      "year": 1337,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._3,_No._4,_1337_SH.pdf",
+      "wikimedia_hash": "1d"
+    },
+    {
+      "issue_number": 306,
+      "year": 1338,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._3,_No._6,_1338_SH.pdf",
+      "wikimedia_hash": "94"
+    },
+    {
+      "issue_number": 307,
+      "year": 1338,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._3,_No._7,_1338_SH.pdf",
+      "wikimedia_hash": "3d"
+    },
+    {
+      "issue_number": 308,
+      "year": 1338,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._3,_No._8,_1338_SH.pdf",
+      "wikimedia_hash": "94"
+    },
+    {
+      "issue_number": 309,
+      "year": 1339,
+      "month": 1,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._3,_No._9,_1339_SH.pdf",
+      "wikimedia_hash": "90"
+    },
+    {
+      "issue_number": 401,
+      "year": 1339,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._4,_No._1,_1339_SH.pdf",
+      "wikimedia_hash": "8a"
+    },
+    {
+      "issue_number": 402,
+      "year": 1339,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._4,_No._2,_1339_SH.pdf",
+      "wikimedia_hash": "4d"
+    },
+    {
+      "issue_number": 403,
+      "year": 1340,
+      "month": 8,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._4,_No._3,_1340_SH.pdf",
+      "wikimedia_hash": "f0"
+    },
+    {
+      "issue_number": 404,
+      "year": 1341,
+      "month": 2,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._4,_No._4,_1341_SH.pdf",
+      "wikimedia_hash": "d3"
+    },
+    {
+      "issue_number": 405,
+      "year": 1341,
+      "month": 6,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._4,_No._5,_1341_SH.pdf",
+      "wikimedia_hash": "2c"
+    },
+    {
+      "issue_number": 406,
+      "year": 1341,
+      "month": 10,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._4,_No._6,_1341_SH.pdf",
+      "wikimedia_hash": "7d"
+    },
+    {
+      "issue_number": 407,
+      "year": 1342,
+      "month": 4,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._4,_No._7,_1342_SH.pdf",
+      "wikimedia_hash": "83"
+    },
+    {
+      "issue_number": 408,
+      "year": 1342,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._4,_No._8,_1342_SH.pdf",
+      "wikimedia_hash": "ee"
+    },
+    {
+      "issue_number": 504,
+      "year": 1343,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._5,_No._4,_1343_SH.pdf",
+      "wikimedia_hash": "6b"
+    },
+    {
+      "issue_number": 510,
+      "year": 1346,
+      "month": 5,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._5,_No._10,_1346_SH.pdf",
+      "wikimedia_hash": "7e"
+    },
+    {
+      "issue_number": 603,
+      "year": 1347,
+      "month": 9,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._6,_No._3,_1347_SH.pdf",
+      "wikimedia_hash": "73"
+    },
+    {
+      "issue_number": 604,
+      "year": 1348,
+      "month": 7,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._6,_No._4,_1348_SH.pdf",
+      "wikimedia_hash": "57"
+    },
+    {
+      "issue_number": 707,
+      "year": 1351,
+      "month": 11,
+      "day": 1,
+      "filename_base": "Andishe_va_Honar,_Vol._NA,_No._7,_1351_SH.pdf",
+      "wikimedia_hash": "b5"
+    }
+  ]
 }
 ]
