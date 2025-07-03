@@ -147,6 +147,7 @@
 			font-size: 16px;
 			background-color: var(--control-bg);
 			color: var(--text-color);
+			font-family: system-ui;
 		}
 		.newspaper-container {
 			display: flex;
@@ -586,6 +587,10 @@
 			text-align: center;
 			margin-top: 0;
 		}
+		h2#shamsiCalendarModalTitle{
+			text-align: center;
+			margin-top: 0;
+		}
 		.calendar-nav {
 			display: flex;
 			justify-content: space-between;
@@ -618,6 +623,17 @@
 			border: 1px solid var(--border-color);
 			border-radius: 4px;
 			padding: 5px 10px;
+			font-family: system-ui;
+		}
+		#shamsiCalendarYearSelect {
+			font-size: 1.2em;
+			font-weight: bold;
+			color: var(--text-color);
+			background-color: var(--control-bg);
+			border: 1px solid var(--border-color);
+			border-radius: 4px;
+			padding: 5px 10px;
+			font-family: system-ui;
 		}
 		.calendar-grid-container {
 			display: grid;
@@ -655,8 +671,7 @@
 			justify-content: center;
 			align-items: center;
 			padding: 0;
-			border: 1px solid var(--border-color);
-			border-radius: 50%;
+			border: none;
 			color: var(--section-title-color);
 			font-size: 0.8em;
 			cursor: pointer;
@@ -679,11 +694,9 @@
 		}
 		.calendar-day-btn.issue-count-2 {
 			background-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.5);
-			box-shadow: 0 0 0 1px var(--multiple-issues-color);
 		}
 		.calendar-day-btn.issue-count-3plus {
 			background-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
-			box-shadow: 0 0 0 2px var(--multiple-issues-color);
 		}
 
 		.calendar-day-btn.has-multiple-issues {
@@ -692,8 +705,7 @@
 		}
 
 		.calendar-day-btn.selected-day {
-			border: 2px solid black;
-			box-shadow: 0 0 0 3px black;
+			background-color: var(--multiple-issues-color);
 		}
 		@media (prefers-color-scheme: dark) {
 			.calendar-day-btn.selected-day {
