@@ -2481,8 +2481,8 @@
 				} else {
 					calendarModalErrorMessage.style.display = 'none';
 					calendarModalOverlay.classList.add('visible');
-					calendarYearSelect.value = currentCalendarYear;
-					renderCalendar(currentCalendarYear);
+					calendarYearSelect.value = hijriYearInput.value; // Use hijriYearInput.value
+					renderCalendar(parseInt(hijriYearInput.value, 10)); // Use hijriYearInput.value
 				}
 			};
 
