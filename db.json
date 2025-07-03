@@ -1,7 +1,7 @@
 [
 	{
 		"id": "Q134006001",
-		"title": "روزنامه خورشید",
+		"title": "خورشید",
 		"calendar_type": "hijri",
 		"issues": [
 			{
@@ -722,7 +722,7 @@
 	},
 	{
 		"id": "Q134311191",
-		"title": "روزنامه بامداد روشن",
+		"title": "بامداد روشن",
 		"calendar_type": "hijri",
 		"issues": [
 			{
@@ -1347,7 +1347,7 @@
 	},
 	{
 		"id": "Q_Dawlat_e_Alliya_ye_Iran",
-		"title": "روزنامه دولت علیه ایران",
+		"title": "دولت علیه ایران",
 		"calendar_type": "hijri",
 		"issues": [
 			{
@@ -2522,7 +2522,7 @@
 	},
 	{
 		"id": "Q64941184",
-		"title": "نشریه نوروز",
+		"title": "نوروز",
 		"calendar_type": "hijri",
 		"frequency": "weekly",
 		"issues": [
@@ -2909,7 +2909,7 @@
 	},
 	{
 		"id": "Q2664606",
-		"title": "مجله ملانصرالدین",
+		"title": "ملانصرالدین",
 		"calendar_type": "hijri",
 		"issues": [
 			{
