@@ -262,9 +262,10 @@
 			color: var(--lightbox-text-color);
 			max-width: 90%;
 			max-height: 95vh;
+			height: 100%; /* Ensure it takes available height within max-height */
 			display: flex;
 			flex-direction: column;
-			overflow: hidden;
+			overflow-y: auto; /* Allow overall modal to scroll if content exceeds max-height */
 		}
 		h2#allIssuesModalNewspaperTitle {
 			text-align: center;
