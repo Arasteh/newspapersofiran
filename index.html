@@ -1779,6 +1779,7 @@
 				newspaperKeys.sort((aKey, bKey) => {
 					const paperA = newspaperData[aKey];
 					const paperB = newspaperData[bKey];
+
 					if (!paperA || !paperB) return 0;
 
 					if (paperA.available && !paperB.available) return -1;
@@ -1796,7 +1797,7 @@
 					const freqB = frequencyOrder[paperB.frequency] || 99;
 					if (freqA !== freqB) return freqA - freqB;
 
-					return paperA.title.localeCompare(b.title, 'fa');
+					return paperA.title.localeCompare(paperB.title, 'fa'); // Corrected from b.title to paperB.title
 				});
 
 				while (newspaperContainer.firstChild) {
