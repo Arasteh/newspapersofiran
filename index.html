@@ -2585,7 +2585,7 @@
 				allIssuesModalOverlay.classList.remove('visible');
 			};
 
-			const goToIssueFromModal = (paperId, issue) => {
+			const goToIssueFromModal = async (paperId, issue) => {
 				const issueDateParsed = parseDateString(issue.date);
 				if (!issueDateParsed) return;
 
@@ -2597,6 +2597,7 @@
 					}
 				}
 
+				// Update calendar selectors based on the selected issue's date and calendar type
 				if (newspaperData[paperId].calendar_type === 'shamsi') {
 					if (currentCalendarMode !== 'shamsi') {
 						shamsiCalendarRadio.checked = true;
@@ -2605,7 +2606,7 @@
 					shamsiYearInput.value = issueDateParsed.year;
 					shamsiMonthSelect.value = issueDateParsed.month;
 					shamsiDayInput.value = issueDateParsed.day;
-				} else {
+				} else { // Assuming hijri
 					if (currentCalendarMode !== 'hijri') {
 						hijriCalendarRadio.checked = true;
 						currentCalendarMode = 'hijri';
@@ -2615,6 +2616,7 @@
 					hijriDayInput.value = issueDateParsed.day;
 				}
 
+				// Update URL parameters
 				updateUrlParameters(
 					currentCalendarMode,
 					currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value,
@@ -2622,8 +2624,12 @@
 					currentCalendarMode === 'shamsi' ? shamsiDayInput.value : hijriDayInput.value
 				);
 
+				// Close the "All Issues" modal
 				closeAllIssuesModal();
-				loadImage('date');
+
+				// Load the image for the selected date and then open the lightbox
+				await loadImage('date');
+				openLightbox(paperId);
 			};
 
 			const populateCalendarYearDropdown = () => {
