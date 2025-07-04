@@ -284,11 +284,11 @@
 		}
 		.calendar-modal-close-button {
 			position: absolute;
-			top: 10px;
-			right: 10px;
+			top: 20px;
+			right: 20px;
 			background: none;
 			border: none;
-			font-size: 24px;
+			font-size: 28px;
 			cursor: pointer;
 			color: var(--lightbox-close-button-color);
 		}
@@ -761,9 +761,9 @@
 		}
 		@media (prefers-color-scheme: dark) {
 			.calendar-day-btn.selected-day {
-			        border: 2px solid var(--multiple-issues-color);
-			        background-color: var(--multiple-issues-color);
-			        color: black;
+					border: 2px solid var(--multiple-issues-color);
+					background-color: var(--multiple-issues-color);
+					color: black;
 			}
 		}
 
@@ -813,11 +813,12 @@
 		@media (max-width: 480px) {
 			.calendar-grid-container {
 				grid-template-columns: repeat(2, 1fr);
+				gap: 5px;
 			}
 			.calendar-day-btn {
-				width: 32px;
-				height: 32px;
-				font-size: 0.9em;
+				width: 21px;
+				height: 21px;
+				font-size: 0.85em;
 			}
 		}
 
@@ -1592,15 +1593,15 @@
 
 							if (paper.frequency === 'daily') {
 								isMatch = (selectedDateShamsi.year === issueDateShamsi.year &&
-										   selectedDateShamsi.month === issueDateShamsi.month &&
-										   selectedDateShamsi.day === issueDateShamsi.day);
+											selectedDateShamsi.month === issueDateShamsi.month &&
+											selectedDateShamsi.day === issueDateShamsi.day);
 							} else if (paper.frequency === 'weekly') {
 								if (selectedDateDays !== null && issueDateDays !== null) {
 									isMatch = (selectedDateDays >= issueDateDays && selectedDateDays < (issueDateDays + 7));
 								}
 							} else if (paper.frequency === 'monthly') {
 								isMatch = (selectedDateShamsi.year === issueDateShamsi.year &&
-										   selectedDateShamsi.month === issueDateShamsi.month);
+											selectedDateShamsi.month === issueDateShamsi.month);
 							} else if (paper.frequency === 'quarterly') {
 								if (selectedDateDays !== null && issueDateDays !== null) {
 									isMatch = (selectedDateDays >= issueDateDays && selectedDateDays < (issueDateDays + 90));
@@ -1611,11 +1612,11 @@
 						} else if (paper.calendar_type === 'hijri') {
 							if (paper.frequency === 'daily') {
 								isMatch = (selectedDateShamsi.year === issueDateParsed.year &&
-										   selectedDateShamsi.month === issueDateParsed.month &&
-										   selectedDateShamsi.day === issueDateParsed.day);
+											selectedDateShamsi.month === issueDateParsed.month &&
+											selectedDateShamsi.day === issueDateParsed.day);
 							} else if (paper.frequency === 'monthly') {
 								isMatch = (selectedDateShamsi.year === issueDateParsed.year &&
-										   selectedDateShamsi.month === issueDateParsed.month);
+											selectedDateShamsi.month === issueDateParsed.month);
 							}
 						}
 
@@ -2110,12 +2111,12 @@
 											(currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
 						return matchesMode;
 					});
-                
-                availableNewspapersForCurrentDate.sort((aId, bId) => {
-                    const paperA = newspaperData[aId];
-                    const paperB = newspaperData[bId];
-                    return paperA.title.localeCompare(paperB.title, 'fa');
-                });
+				
+				availableNewspapersForCurrentDate.sort((aId, bId) => {
+					const paperA = newspaperData[aId];
+					const paperB = newspaperData[bId];
+					return paperA.title.localeCompare(paperB.title, 'fa');
+				});
 
 
 				if (availableNewspapersForCurrentDate.length <= 1) {
@@ -2152,15 +2153,15 @@
 						const p = newspaperData[key];
 						if (!p || !p.available) return false;
 						const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
-										   (currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
+											(currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
 						return matchesMode;
 					});
-                
-                availableNewspapers.sort((aId, bId) => {
-                    const paperA = newspaperData[aId];
-                    const paperB = newspaperData[bId];
-                    return paperA.title.localeCompare(paperB.title, 'fa');
-                });
+				
+				availableNewspapers.sort((aId, bId) => {
+					const paperA = newspaperData[aId];
+					const paperB = newspaperData[bId];
+					return paperA.title.localeCompare(paperB.title, 'fa');
+				});
 
 
 				if (availableNewspapers.length <= 1) return;
@@ -2328,12 +2329,12 @@
 				let targetDate = null;
 				if (paper.type === 'database' && paper.issues && paper.issues.length > 0) {
 					const issuesToConsider = paper.navState && paper.navState.issuesArray
-										   ? paper.navState.issuesArray
-										   : [...paper.issues].sort((a,b) => {
-											   const dateA = parseInt(a.date, 10);
-											   const dateB = parseInt(b.date, 10);
-											   return dateA - dateB;
-										   });
+											? paper.navState.issuesArray
+											: [...paper.issues].sort((a,b) => {
+												const dateA = parseInt(a.date, 10);
+												const dateB = parseInt(b.date, 10);
+												return dateA - dateB;
+											});
 					const firstChronologicalIssue = issuesToConsider[0];
 					if (firstChronologicalIssue) {
 						const parsed = parseDateString(firstChronologicalIssue.date);
@@ -2352,7 +2353,7 @@
 						year: parseInt(dateStr.substring(0, 4)),
 						month: parseInt(dateStr.substring(4, 6)),
 						day: parseInt(dateStr.substring(6, 8)),
-                        calendar_type: paper.calendar_type
+						calendar_type: paper.calendar_type
 					};
 				}
 
@@ -2381,7 +2382,7 @@
 				Object.values(newspaperData).forEach(paper => {
 					if (paper.globalFirstIssueBtn) {
 						const isPermanentlyAvailable = (paper.type === 'database' && paper.issues && paper.issues.length > 0) ||
-													   (paper.type === 'formula' && paper.firstIssueDate);
+														(paper.type === 'formula' && paper.firstIssueDate);
 
 						if (isPermanentlyAvailable) {
 							paper.globalFirstIssueBtn.style.display = 'inline-block';
@@ -2480,12 +2481,12 @@
 				issuesImageGridContainer.innerHTML = '';
 
 				const issuesToDisplay = paper.navState && paper.navState.issuesArray
-									   ? paper.navState.issuesArray
-									   : [...paper.issues].sort((a,b) => {
-										   const dateA = parseInt(a.date, 10);
-										   const dateB = parseInt(b.date, 10);
-										   return dateA - dateB;
-									   });
+										? paper.navState.issuesArray
+										: [...paper.issues].sort((a,b) => {
+											const dateA = parseInt(a.date, 10);
+											const dateB = parseInt(b.date, 10);
+											return dateA - dateB;
+										});
 
 				const displayDates = showDatesCheckbox.checked;
 				const displayImages = showImagesCheckbox.checked;
@@ -2946,9 +2947,9 @@
 					const paperId = currentSelectedPaperButton.dataset.paperId;
 					displayIssuesForSelectedNewspaper(paperId);
 				} else {
-                    const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
-                        paper.type === 'database' && paper.issues && paper.issues.length > 0
-                    ).sort((a, b) => {
+					const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
+						paper.type === 'database' && paper.issues && paper.issues.length > 0
+					).sort((a, b) => {
 						// Primary sort: calendar_type (hijri before shamsi)
 						if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
 						if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
@@ -2962,10 +2963,10 @@
 						return a.title.localeCompare(b.title, 'fa');
 					});
 
-                    if (dbPapersWithIssues.length > 0) {
-                        displayIssuesForSelectedNewspaper(dbPapersWithIssues[0].id);
-                    }
-                }
+					if (dbPapersWithIssues.length > 0) {
+						displayIssuesForSelectedNewspaper(dbPapersWithIssues[0].id);
+					}
+				}
 			});
 
 			showImagesCheckbox.addEventListener('change', () => {
@@ -2974,9 +2975,9 @@
 					const paperId = currentSelectedPaperButton.dataset.paperId;
 					displayIssuesForSelectedNewspaper(paperId);
 				} else {
-                    const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
-                        paper.type === 'database' && paper.issues && paper.issues.length > 0
-                    ).sort((a, b) => {
+					const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
+						paper.type === 'database' && paper.issues && paper.issues.length > 0
+					).sort((a, b) => {
 						// Primary sort: calendar_type (hijri before shamsi)
 						if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
 						if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
@@ -2990,10 +2991,10 @@
 						return a.title.localeCompare(b.title, 'fa');
 					});
 
-                    if (dbPapersWithIssues.length > 0) {
-                        displayIssuesForSelectedNewspaper(dbPapersWithIssues[0].id);
-                    }
-                }
+					if (dbPapersWithIssues.length > 0) {
+						displayIssuesForSelectedNewspaper(dbPapersWithIssues[0].id);
+					}
+				}
 			});
 
 
