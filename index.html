@@ -778,6 +778,15 @@
 			.calendar-grid-container {
 				grid-template-columns: repeat(2, 1fr);
 			}
+			/* Hide labels for year, month, day on mobile */
+			#shamsiDateControls label[for="shamsiYear"],
+			#shamsiDateControls label[for="shamsiMonth"],
+			#shamsiDateControls label[for="shamsiDay"],
+			#hijriDateControls label[for="hijriYear"],
+			#hijriDateControls label[for="hijriMonth"],
+			#hijriDateControls label[for="hijriDay"] {
+				display: none;
+			}
 			#shamsiDateControls, #hijriDateControls {
 				display: flex;
 				flex-direction: row;
@@ -785,17 +794,18 @@
 				justify-content: center;
 				flex-wrap: wrap;
 			}
-			#shamsiDateControls label[for="shamsiYear"], #shamsiYear,
-			#hijriDateControls label[for="hijriYear"], #hijriYear {
-				order: 1;
+			/* Swap order of Day and Year */
+			#shamsiDateControls #shamsiDay,
+			#hijriDateControls #hijriDay {
+				order: 1; /* Day comes first */
 			}
-			#shamsiDateControls label[for="shamsiMonth"], #shamsiMonth,
-			#hijriDateControls label[for="hijriMonth"], #hijriMonth {
-				order: 2;
+			#shamsiDateControls #shamsiMonth,
+			#hijriDateControls #hijriMonth {
+				order: 2; /* Month in the middle */
 			}
-			#shamsiDateControls label[for="shamsiDay"], #shamsiDay,
-			#hijriDateControls label[for="hijriDay"], #hijriDay {
-				order: 3;
+			#shamsiDateControls #shamsiYear,
+			#hijriDateControls #hijriYear {
+				order: 3; /* Year comes last */
 			}
 		}
 
@@ -824,8 +834,8 @@
 		</div>
 
 		<div id="shamsiDateControls" style="display: block;">
-			<label for="shamsiYear">سال:</label>
-			<select id="shamsiYear"></select>
+			<label for="shamsiDay">روز:</label>
+			<select id="shamsiDay"></select>
 			<label for="shamsiMonth">ماه:</label>
 			<select id="shamsiMonth">
 				<option value="1">فروردین</option>
@@ -841,13 +851,13 @@
 				<option value="11">بهمن</option>
 				<option value="12">اسفند</option>
 			</select>
-			<label for="shamsiDay">روز:</label>
-			<select id="shamsiDay"></select>
+			<label for="shamsiYear">سال:</label>
+			<select id="shamsiYear"></select>
 		</div>
 
 		<div id="hijriDateControls" style="display: none;">
-			<label for="hijriYear">سال:</label>
-			<select id="hijriYear"></select>
+			<label for="hijriDay">روز:</label>
+			<select id="hijriDay"></select>
 			<label for="hijriMonth">ماه:</label>
 			<select id="hijriMonth">
 				<option value="1">محرم</option>
@@ -863,8 +873,8 @@
 				<option value="11">ذی‌القعده</option>
 				<option value="12">ذی‌الحجه</option>
 			</select>
-			<label for="hijriDay">روز:</label>
-			<select id="hijriDay"></select>
+			<label for="hijriYear">سال:</label>
+			<select id="hijriYear"></select>
 		</div>
 		<button id="openCalendarModalBtn" class="global-all-issues-btn">تقویم</button>
 		<button id="openAllNewspapersIssuesModalBtn" class="global-all-issues-btn">فهرست شماره‌های نشریات</button>
@@ -923,8 +933,8 @@
 			<div class="modal-controls">
 				<input type="checkbox" id="showDatesCheckbox">
 				<label for="showDatesCheckbox">نمایش تاریخ‌ها</label>
-				<input type="checkbox" id="showImagesCheckbox"> <!-- New checkbox -->
-				<label for="showImagesCheckbox">نمایش تصاویر</label> <!-- New label -->
+				<input type="checkbox" id="showImagesCheckbox">
+				<label for="showImagesCheckbox">نمایش تصاویر</label>
 			</div>
 			<div id="newspaperSelectionContainer" class="newspaper-selection-container">
 			</div>
@@ -1055,10 +1065,10 @@
 			const allIssuesModalNewspaperTitle = document.getElementById('allIssuesModalNewspaperTitle');
 			const newspaperSelectionContainer = document.getElementById('newspaperSelectionContainer');
 			const issuesListContainer = document.getElementById('issuesListContainer');
-			const issuesImageGridContainer = document.getElementById('issuesImageGridContainer'); // New element
+			const issuesImageGridContainer = document.getElementById('issuesImageGridContainer');
 			const allIssuesModalErrorMessage = document.getElementById('allIssuesModalErrorMessage');
 			const showDatesCheckbox = document.getElementById('showDatesCheckbox');
-			const showImagesCheckbox = document.getElementById('showImagesCheckbox'); // New checkbox
+			const showImagesCheckbox = document.getElementById('showImagesCheckbox');
 
 			const openCalendarModalBtn = document.getElementById('openCalendarModalBtn');
 			const calendarModalOverlay = document.getElementById('calendarModalOverlay');
@@ -1419,7 +1429,7 @@
 				sortAndRenderGlobalFirstIssueButtons();
 
 				setShowDatesCheckboxDefault();
-				setShowImagesCheckboxDefault(); // Set default for new checkbox
+				setShowImagesCheckboxDefault();
 
 				const urlCalendar = getUrlParameter('calendar');
 				const urlYear = getUrlParameter('year');
@@ -1797,7 +1807,7 @@
 					const freqB = frequencyOrder[paperB.frequency] || 99;
 					if (freqA !== freqB) return freqA - freqB;
 
-					return paperA.title.localeCompare(paperB.title, 'fa'); // Corrected from b.title to paperB.title
+					return paperA.title.localeCompare(paperB.title, 'fa');
 				});
 
 				while (newspaperContainer.firstChild) {
@@ -2392,15 +2402,22 @@
 				allIssuesModalNewspaperTitle.textContent = 'فهرست شماره‌های نشریات';
 				newspaperSelectionContainer.innerHTML = '';
 				issuesListContainer.innerHTML = '';
-				issuesImageGridContainer.innerHTML = ''; // Clear image grid
+				issuesImageGridContainer.innerHTML = '';
 
 				const frequencyOrder = { 'daily': 1, 'weekly': 2, 'monthly': 3, 'quarterly': 4, 'yearly': 5 };
 				const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
 					paper.type === 'database' && paper.issues && paper.issues.length > 0
 				).sort((a, b) => {
-					const freqA = frequencyOrder[a.frequency] || 99;
-					const freqB = frequencyOrder[b.frequency] || 99;
-					if (freqA !== freqB) return freqA - freqB;
+					// Primary sort: calendar_type (hijri before shamsi)
+					if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
+					if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+
+					// Secondary sort: firstIssueDate (earliest first)
+					const dateA = parseInt(a.firstIssueDate, 10);
+					const dateB = parseInt(b.firstIssueDate, 10);
+					if (dateA !== dateB) return dateA - dateB;
+
+					// Tertiary sort: alphabetical by title
 					return a.title.localeCompare(b.title, 'fa');
 				});
 
@@ -2449,7 +2466,7 @@
 				const paper = newspaperData[paperId];
 				if (!paper || !paper.issues || paper.issues.length === 0) {
 					issuesListContainer.innerHTML = '';
-					issuesImageGridContainer.innerHTML = ''; // Clear image grid
+					issuesImageGridContainer.innerHTML = '';
 					issuesListContainer.style.display = 'none';
 					issuesImageGridContainer.style.display = 'none';
 					allIssuesModalErrorMessage.textContent = 'اطلاعات شماره‌ها برای این نشریه موجود نیست.';
@@ -2459,7 +2476,7 @@
 
 				allIssuesModalErrorMessage.style.display = 'none';
 				issuesListContainer.innerHTML = '';
-				issuesImageGridContainer.innerHTML = ''; // Clear image grid
+				issuesImageGridContainer.innerHTML = '';
 
 				const issuesToDisplay = paper.navState && paper.navState.issuesArray
 									   ? paper.navState.issuesArray
@@ -2570,7 +2587,6 @@
 				const issueDateParsed = parseDateString(issue.date);
 				if (!issueDateParsed) return;
 
-				// Set the current issue for the newspaper data object
 				const paper = newspaperData[paperId];
 				if (paper) {
 					paper.currentIssue = issue;
@@ -2624,8 +2640,8 @@
 				} else {
 					calendarModalErrorMessage.style.display = 'none';
 					calendarModalOverlay.classList.add('visible');
-					calendarYearSelect.value = hijriYearInput.value; // Use hijriYearInput.value
-					renderCalendar(parseInt(hijriYearInput.value, 10)); // Use hijriYearInput.value
+					calendarYearSelect.value = hijriYearInput.value;
+					renderCalendar(parseInt(hijriYearInput.value, 10));
 				}
 			};
 
@@ -2803,7 +2819,7 @@
 			};
 
 			const setShowImagesCheckboxDefault = () => {
-				showImagesCheckbox.checked = false; // Default to off as requested
+				showImagesCheckbox.checked = false;
 			};
 
 			shamsiCalendarRadio.addEventListener('change', () => {
@@ -2931,7 +2947,19 @@
 				} else {
                     const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
                         paper.type === 'database' && paper.issues && paper.issues.length > 0
-                    ).sort((a, b) => a.title.localeCompare(b.title, 'fa'));
+                    ).sort((a, b) => {
+						// Primary sort: calendar_type (hijri before shamsi)
+						if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
+						if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+
+						// Secondary sort: firstIssueDate (earliest first)
+						const dateA = parseInt(a.firstIssueDate, 10);
+						const dateB = parseInt(b.firstIssueDate, 10);
+						if (dateA !== dateB) return dateA - dateB;
+
+						// Tertiary sort: alphabetical by title
+						return a.title.localeCompare(b.title, 'fa');
+					});
 
                     if (dbPapersWithIssues.length > 0) {
                         displayIssuesForSelectedNewspaper(dbPapersWithIssues[0].id);
@@ -2939,7 +2967,6 @@
                 }
 			});
 
-			// New event listener for showImagesCheckbox
 			showImagesCheckbox.addEventListener('change', () => {
 				const currentSelectedPaperButton = newspaperSelectionContainer.querySelector('button.selected');
 				if (currentSelectedPaperButton) {
@@ -2948,7 +2975,19 @@
 				} else {
                     const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
                         paper.type === 'database' && paper.issues && paper.issues.length > 0
-                    ).sort((a, b) => a.title.localeCompare(b.title, 'fa'));
+                    ).sort((a, b) => {
+						// Primary sort: calendar_type (hijri before shamsi)
+						if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
+						if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+
+						// Secondary sort: firstIssueDate (earliest first)
+						const dateA = parseInt(a.firstIssueDate, 10);
+						const dateB = parseInt(b.firstIssueDate, 10);
+						if (dateA !== dateB) return dateA - dateB;
+
+						// Tertiary sort: alphabetical by title
+						return a.title.localeCompare(b.title, 'fa');
+					});
 
                     if (dbPapersWithIssues.length > 0) {
                         displayIssuesForSelectedNewspaper(dbPapersWithIssues[0].id);
