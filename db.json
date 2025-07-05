@@ -8072,71 +8072,319 @@
 	]
 },
 	{
-  "id": "Q16046672",
-  "title": "تهران مصور",
-  "calendar_type": "shamsi",
-  "frequency": "weekly",
-  "issues": [
-    {
-      "issue_number": 437,
-      "date": "13301006",
-      "filename_base": "Tehran_Mosavvar_13301006-437",
-      "wikimedia_hash": "51"
-    },
-    {
-      "issue_number": 438,
-      "date": "13301013",
-      "filename_base": "Tehran_Mosavvar_13301013-438",
-      "wikimedia_hash": "b1"
-    },
-    {
-      "issue_number": 439,
-      "date": "13301020",
-      "filename_base": "Tehran_Mosavvar_13301020-439",
-      "wikimedia_hash": "d6"
-    },
-    {
-      "issue_number": 440,
-      "date": "13301027",
-      "filename_base": "Tehran_Mosavvar_13301027-440",
-      "wikimedia_hash": "12"
-    },
-    {
-      "issue_number": 489,
-      "date": "13311005",
-      "filename_base": "Tehran_Mosavvar_13311005-489",
-      "wikimedia_hash": "74"
-    },
-    {
-      "issue_number": 490,
-      "date": "13311012",
-      "filename_base": "Tehran_Mosavvar_13311012-490",
-      "wikimedia_hash": "44"
-    },
-    {
-      "issue_number": 491,
-      "date": "13311019",
-      "filename_base": "Tehran_Mosavvar_13311019-491",
-      "wikimedia_hash": "36"
-    },
-    {
-      "issue_number": 492,
-      "date": "13311026",
-      "filename_base": "Tehran_Mosavvar_13311026-492",
-      "wikimedia_hash": "27"
-    },
-    {
-      "issue_number": 535,
-      "date": "13320522",
-      "filename_base": "Tehran_Mosavvar_13320522-535",
-      "wikimedia_hash": "ca"
-    },
-    {
-      "issue_number": 536,
-      "date": "13320529",
-      "filename_base": "Tehran_Mosavvar_13320529-536",
-      "wikimedia_hash": "96"
-    }
-  ]
+	"id": "Q16046672",
+	"title": "تهران مصور",
+	"calendar_type": "shamsi",
+	"frequency": "weekly",
+	"issues": [
+	{
+		"issue_number": 437,
+		"date": "13301006",
+		"filename_base": "Tehran_Mosavvar_13301006-437",
+		"wikimedia_hash": "51"
+	},
+	{
+		"issue_number": 438,
+		"date": "13301013",
+		"filename_base": "Tehran_Mosavvar_13301013-438",
+		"wikimedia_hash": "b1"
+	},
+	{
+		"issue_number": 439,
+		"date": "13301020",
+		"filename_base": "Tehran_Mosavvar_13301020-439",
+		"wikimedia_hash": "d6"
+	},
+	{
+		"issue_number": 440,
+		"date": "13301027",
+		"filename_base": "Tehran_Mosavvar_13301027-440",
+		"wikimedia_hash": "12"
+	},
+	{
+		"issue_number": 489,
+		"date": "13311005",
+		"filename_base": "Tehran_Mosavvar_13311005-489",
+		"wikimedia_hash": "74"
+	},
+	{
+		"issue_number": 490,
+		"date": "13311012",
+		"filename_base": "Tehran_Mosavvar_13311012-490",
+		"wikimedia_hash": "44"
+	},
+	{
+		"issue_number": 491,
+		"date": "13311019",
+		"filename_base": "Tehran_Mosavvar_13311019-491",
+		"wikimedia_hash": "36"
+	},
+	{
+		"issue_number": 492,
+		"date": "13311026",
+		"filename_base": "Tehran_Mosavvar_13311026-492",
+		"wikimedia_hash": "27"
+	},
+	{
+		"issue_number": 535,
+		"date": "13320522",
+		"filename_base": "Tehran_Mosavvar_13320522-535",
+		"wikimedia_hash": "ca"
+	},
+	{
+		"issue_number": 536,
+		"date": "13320529",
+		"filename_base": "Tehran_Mosavvar_13320529-536",
+		"wikimedia_hash": "96"
+	}
+	]
+},
+	{
+	"id": "Q5608833",
+	"title": "دنیای سخن",
+	"calendar_type": "shamsi",
+	"frequency": "monthly",
+	"issues": [
+	{
+		"issue_number": 10,
+		"date": "13660401",
+		"filename_base": "Donya-ye_Sokhan,_number_10",
+		"wikimedia_hash": "1c"
+	},
+	{
+		"issue_number": 11,
+		"date": "13660501",
+		"filename_base": "Donya-ye_Sokhan,_number_11",
+		"wikimedia_hash": "5f"
+	},
+	{
+		"issue_number": 12,
+		"date": "13660601",
+		"filename_base": "Donya-ye_Sokhan,_number_12",
+		"wikimedia_hash": "4c"
+	},
+	{
+		"issue_number": 13,
+		"date": "13660801",
+		"filename_base": "Donya-ye_Sokhan,_number_13",
+		"wikimedia_hash": "7c"
+	},
+	{
+		"issue_number": 14,
+		"date": "13660901",
+		"filename_base": "Donya-ye_Sokhan,_number_14",
+		"wikimedia_hash": "96"
+	},
+	{
+		"issue_number": 15,
+		"date": "13661001",
+		"filename_base": "Donya-ye_Sokhan,_number_15",
+		"wikimedia_hash": "a7"
+	},
+	{
+		"issue_number": 16,
+		"date": "13661101",
+		"filename_base": "Donya-ye_Sokhan,_number_16",
+		"wikimedia_hash": "c5"
+	},
+	{
+		"issue_number": 17,
+		"date": "13670101",
+		"filename_base": "Donya-ye_Sokhan,_number_17",
+		"wikimedia_hash": "7e"
+	},
+	{
+		"issue_number": 18,
+		"date": "13670301",
+		"filename_base": "Donya-ye_Sokhan,_number_18",
+		"wikimedia_hash": "90"
+	},
+	{
+		"issue_number": 19,
+		"date": "13670401",
+		"filename_base": "Donya-ye_Sokhan,_number_19",
+		"wikimedia_hash": "c6"
+	},
+	{
+		"issue_number": 20,
+		"date": "13670601",
+		"filename_base": "Donya-ye_Sokhan,_number_20",
+		"wikimedia_hash": "69"
+	},
+	{
+		"issue_number": 21,
+		"date": "13670701",
+		"filename_base": "Donya-ye_Sokhan,_number_21",
+		"wikimedia_hash": "6d"
+	},
+	{
+		"issue_number": 22,
+		"date": "13670801",
+		"filename_base": "Donya-ye_Sokhan,_number_22",
+		"wikimedia_hash": "aa"
+	},
+	{
+		"issue_number": 23,
+		"date": "13670901",
+		"filename_base": "Donya-ye_Sokhan,_number_23",
+		"wikimedia_hash": "92"
+	},
+	{
+		"issue_number": 24,
+		"date": "13671101",
+		"filename_base": "Donya-ye_Sokhan,_number_24",
+		"wikimedia_hash": "be"
+	},
+	{
+		"issue_number": 25,
+		"date": "13671201",
+		"filename_base": "Donya-ye_Sokhan,_number_25",
+		"wikimedia_hash": "af"
+	},
+	{
+		"issue_number": 26,
+		"date": "13680201",
+		"filename_base": "Donya-ye_Sokhan,_number_26",
+		"wikimedia_hash": "1f"
+	},
+	{
+		"issue_number": 27,
+		"date": "13680301",
+		"filename_base": "Donya-ye_Sokhan,_number_27",
+		"wikimedia_hash": "98"
+	},
+	{
+		"issue_number": 28,
+		"date": "13680501",
+		"filename_base": "Donya-ye_Sokhan,_number_28",
+		"wikimedia_hash": "05"
+	},
+	{
+		"issue_number": 29,
+		"date": "13680701",
+		"filename_base": "Donya-ye_Sokhan,_number_29",
+		"wikimedia_hash": "61"
+	},
+	{
+		"issue_number": 30,
+		"date": "13681101",
+		"filename_base": "Donya-ye_Sokhan,_number_30",
+		"wikimedia_hash": "c7"
+	},
+	{
+		"issue_number": 31,
+		"date": "13690101",
+		"filename_base": "Donya-ye_Sokhan,_number_31",
+		"wikimedia_hash": "ad"
+	},
+	{
+		"issue_number": 32,
+		"date": "13690301",
+		"filename_base": "Donya-ye_Sokhan,_number_32",
+		"wikimedia_hash": "1a"
+	},
+	{
+		"issue_number": 33,
+		"date": "13690501",
+		"filename_base": "Donya-ye_Sokhan,_number_33",
+		"wikimedia_hash": "a6"
+	},
+	{
+		"issue_number": 34,
+		"date": "13690701",
+		"filename_base": "Donya-ye_Sokhan,_number_34",
+		"wikimedia_hash": "db"
+	},
+	{
+		"issue_number": 35,
+		"date": "13690801",
+		"filename_base": "Donya-ye_Sokhan,_number_35",
+		"wikimedia_hash": "24"
+	},
+	{
+		"issue_number": 36,
+		"date": "13690901",
+		"filename_base": "Donya-ye_Sokhan,_number_36",
+		"wikimedia_hash": "dd"
+	},
+	{
+		"issue_number": 37,
+		"date": "13691001",
+		"filename_base": "Donya-ye_Sokhan,_number_37",
+		"wikimedia_hash": "58"
+	},
+	{
+		"issue_number": 38,
+		"date": "13691101",
+		"filename_base": "Donya-ye_Sokhan,_number_38",
+		"wikimedia_hash": "7c"
+	},
+	{
+		"issue_number": 39,
+		"date": "13691201",
+		"filename_base": "Donya-ye_Sokhan,_number_39",
+		"wikimedia_hash": "84"
+	},
+	{
+		"issue_number": 40,
+		"date": "13700101",
+		"filename_base": "Donya-ye_Sokhan,_number_40",
+		"wikimedia_hash": "8c"
+	},
+	{
+		"issue_number": 41,
+		"date": "13700301",
+		"filename_base": "Donya-ye_Sokhan,_number_41",
+		"wikimedia_hash": "0a"
+	},
+	{
+		"issue_number": 42,
+		"date": "13700401",
+		"filename_base": "Donya-ye_Sokhan,_number_42",
+		"wikimedia_hash": "5e"
+	},
+	{
+		"issue_number": 43,
+		"date": "13700501",
+		"filename_base": "Donya-ye_Sokhan,_number_43",
+		"wikimedia_hash": "ae"
+	},
+	{
+		"issue_number": 44,
+		"date": "13700701",
+		"filename_base": "Donya-ye_Sokhan,_number_44",
+		"wikimedia_hash": "b9"
+	},
+	{
+		"issue_number": 45,
+		"date": "13700801",
+		"filename_base": "Donya-ye_Sokhan,_number_45",
+		"wikimedia_hash": "33"
+	},
+	{
+		"issue_number": 46,
+		"date": "13701001",
+		"filename_base": "Donya-ye_Sokhan,_number_46",
+		"wikimedia_hash": "d2"
+	},
+	{
+		"issue_number": 47,
+		"date": "13701101",
+		"filename_base": "Donya-ye_Sokhan,_number_47",
+		"wikimedia_hash": "63"
+	},
+	{
+		"issue_number": 48,
+		"date": "13701201",
+		"filename_base": "Donya-ye_Sokhan,_number_48",
+		"wikimedia_hash": "24"
+	},
+	{
+		"issue_number": 49,
+		"date": "13710201",
+		"filename_base": "Donya-ye_Sokhan,_number_49",
+		"wikimedia_hash": "40"
+	}
+	]
 }
 ]
