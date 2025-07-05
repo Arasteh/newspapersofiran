@@ -7550,525 +7550,593 @@
 	{
 		"issue_number": 101,
 		"date": "13120901",
-		"filename_base": "PEYMAN_1_1.pdf",
+		"filename_base": "PEYMAN_1_1",
 		"wikimedia_hash": "26"
 	},
 	{
 		"issue_number": 102,
 		"date": "13120916",
-		"filename_base": "PEYMAN_1_2.pdf",
+		"filename_base": "PEYMAN_1_2",
 		"wikimedia_hash": "d3"
 	},
 	{
 		"issue_number": 103,
 		"date": "13121001",
-		"filename_base": "PEYMAN_1_3.pdf",
+		"filename_base": "PEYMAN_1_3",
 		"wikimedia_hash": "3f"
 	},
 	{
 		"issue_number": 104,
 		"date": "13121016",
-		"filename_base": "PEYMAN_1_4.pdf",
+		"filename_base": "PEYMAN_1_4",
 		"wikimedia_hash": "d9"
 	},
 	{
 		"issue_number": 105,
 		"date": "13121101",
-		"filename_base": "PEYMAN_1_5.pdf",
+		"filename_base": "PEYMAN_1_5",
 		"wikimedia_hash": "cb"
 	},
 	{
 		"issue_number": 106,
 		"date": "13121116",
-		"filename_base": "PEYMAN_1_6.pdf",
+		"filename_base": "PEYMAN_1_6",
 		"wikimedia_hash": "cc"
 	},
 	{
 		"issue_number": 107,
 		"date": "13121201",
-		"filename_base": "PEYMAN_1_7.pdf",
+		"filename_base": "PEYMAN_1_7",
 		"wikimedia_hash": "c9"
 	},
 	{
 		"issue_number": 108,
 		"date": "13121216",
-		"filename_base": "PEYMAN_1_8.pdf",
+		"filename_base": "PEYMAN_1_8",
 		"wikimedia_hash": "58"
 	},
 	{
 		"issue_number": 109,
 		"date": "13130101",
-		"filename_base": "PEYMAN_1_9.pdf",
+		"filename_base": "PEYMAN_1_9",
 		"wikimedia_hash": "93"
 	},
 	{
 		"issue_number": 110,
 		"date": "13130115",
-		"filename_base": "PEYMAN_1_10.pdf",
+		"filename_base": "PEYMAN_1_10",
 		"wikimedia_hash": "35"
 	},
 	{
 		"issue_number": 111,
 		"date": "13130201",
-		"filename_base": "PEYMAN_1_11.pdf",
+		"filename_base": "PEYMAN_1_11",
 		"wikimedia_hash": "98"
 	},
 	{
 		"issue_number": 112,
 		"date": "13130215",
-		"filename_base": "PEYMAN_1_12.pdf",
+		"filename_base": "PEYMAN_1_12",
 		"wikimedia_hash": "b2"
 	},
 	{
 		"issue_number": 113,
 		"date": "13130301",
-		"filename_base": "PEYMAN_1_13.pdf",
+		"filename_base": "PEYMAN_1_13",
 		"wikimedia_hash": "32"
 	},
 	{
 		"issue_number": 114,
 		"date": "13130401",
-		"filename_base": "PEYMAN_1_14.pdf",
+		"filename_base": "PEYMAN_1_14",
 		"wikimedia_hash": "2d"
 	},
 	{
 		"issue_number": 115,
 		"date": "13130501",
-		"filename_base": "PEYMAN_1_15.pdf",
+		"filename_base": "PEYMAN_1_15",
 		"wikimedia_hash": "6a"
 	},
 	{
 		"issue_number": 116,
 		"date": "13130601",
-		"filename_base": "PEYMAN_1_16.pdf",
+		"filename_base": "PEYMAN_1_16",
 		"wikimedia_hash": "57"
 	},
 	{
 		"issue_number": 117,
 		"date": "13130701",
-		"filename_base": "PEYMAN_1_17.pdf",
+		"filename_base": "PEYMAN_1_17",
 		"wikimedia_hash": "27"
 	},
 	{
 		"issue_number": 118,
 		"date": "13130801",
-		"filename_base": "PEYMAN_1_18.pdf",
+		"filename_base": "PEYMAN_1_18",
 		"wikimedia_hash": "08"
 	},
 	{
 		"issue_number": 201,
 		"date": "13131001",
-		"filename_base": "PEYMAN_2_1.pdf",
+		"filename_base": "PEYMAN_2_1",
 		"wikimedia_hash": "bf"
 	},
 	{
 		"issue_number": 202,
 		"date": "13131101",
-		"filename_base": "PEYMAN_2_2.pdf",
+		"filename_base": "PEYMAN_2_2",
 		"wikimedia_hash": "0c"
 	},
 	{
 		"issue_number": 203,
 		"date": "13131201",
-		"filename_base": "PEYMAN_2_3.pdf",
+		"filename_base": "PEYMAN_2_3",
 		"wikimedia_hash": "6b"
 	},
 	{
 		"issue_number": 204,
 		"date": "13131215",
-		"filename_base": "PEYMAN_2_4.pdf",
+		"filename_base": "PEYMAN_2_4",
 		"wikimedia_hash": "6d"
 	},
 	{
 		"issue_number": 205,
 		"date": "13140201",
-		"filename_base": "PEYMAN_2_5.pdf",
+		"filename_base": "PEYMAN_2_5",
 		"wikimedia_hash": "1c"
 	},
 	{
 		"issue_number": 206,
 		"date": "13140301",
-		"filename_base": "PEYMAN_2_6.pdf",
+		"filename_base": "PEYMAN_2_6",
 		"wikimedia_hash": "b3"
 	},
 	{
 		"issue_number": 207,
 		"date": "13140401",
-		"filename_base": "PEYMAN_2_7.pdf",
+		"filename_base": "PEYMAN_2_7",
 		"wikimedia_hash": "ab"
 	},
 	{
 		"issue_number": 208,
 		"date": "13140501",
-		"filename_base": "PEYMAN_2_8.pdf",
+		"filename_base": "PEYMAN_2_8",
 		"wikimedia_hash": "76"
 	},
 	{
 		"issue_number": 209,
 		"date": "13140601",
-		"filename_base": "PEYMAN_2_9.pdf",
+		"filename_base": "PEYMAN_2_9",
 		"wikimedia_hash": "0f"
 	},
 	{
 		"issue_number": 210,
 		"date": "13130701",
-		"filename_base": "PEYMAN_2_10.pdf",
+		"filename_base": "PEYMAN_2_10",
 		"wikimedia_hash": "17"
 	},
 	{
 		"issue_number": 211,
 		"date": "13130801",
-		"filename_base": "PEYMAN_2_11_12.pdf",
+		"filename_base": "PEYMAN_2_11_12",
 		"wikimedia_hash": "36"
 	},
 	{
 		"issue_number": 212,
 		"date": "13130901",
-		"filename_base": "PEYMAN_2_11_12.pdf",
+		"filename_base": "PEYMAN_2_11_12",
 		"wikimedia_hash": "36"
 	},
 	{
 		"issue_number": 301,
 		"date": "13141001",
-		"filename_base": "PEYMAN_3_1.pdf",
+		"filename_base": "PEYMAN_3_1",
 		"wikimedia_hash": "0f"
 	},
 	{
 		"issue_number": 302,
 		"date": "13141201",
-		"filename_base": "PEYMAN_3_2.pdf",
+		"filename_base": "PEYMAN_3_2",
 		"wikimedia_hash": "b7"
 	},
 	{
 		"issue_number": 303,
 		"date": "13150101",
-		"filename_base": "PEYMAN_3_3.pdf",
+		"filename_base": "PEYMAN_3_3",
 		"wikimedia_hash": "44"
 	},
 	{
 		"issue_number": 304,
 		"date": "13150201",
-		"filename_base": "PEYMAN_3_4.pdf",
+		"filename_base": "PEYMAN_3_4",
 		"wikimedia_hash": "4b"
 	},
 	{
 		"issue_number": 305,
 		"date": "13150301",
-		"filename_base": "PEYMAN_3_5.pdf",
+		"filename_base": "PEYMAN_3_5",
 		"wikimedia_hash": "ca"
 	},
 	{
 		"issue_number": 306,
 		"date": "13150401",
-		"filename_base": "PEYMAN_3_6.pdf",
+		"filename_base": "PEYMAN_3_6",
 		"wikimedia_hash": "22"
 	},
 	{
 		"issue_number": 307,
 		"date": "13150501",
-		"filename_base": "PEYMAN_3_7.pdf",
+		"filename_base": "PEYMAN_3_7",
 		"wikimedia_hash": "6c"
 	},
 	{
 		"issue_number": 308,
 		"date": "13150601",
-		"filename_base": "PEYMAN_3_8.pdf",
+		"filename_base": "PEYMAN_3_8",
 		"wikimedia_hash": "f1"
 	},
 	{
 		"issue_number": 309,
 		"date": "13150901",
-		"filename_base": "PEYMAN_3_9.pdf",
+		"filename_base": "PEYMAN_3_9",
 		"wikimedia_hash": "06"
 	},
 	{
 		"issue_number": 310,
 		"date": "13151001",
-		"filename_base": "PEYMAN_3_10.pdf",
+		"filename_base": "PEYMAN_3_10",
 		"wikimedia_hash": "16"
 	},
 	{
 		"issue_number": 311,
 		"date": "13151101",
-		"filename_base": "PEYMAN_3_11_12.pdf",
+		"filename_base": "PEYMAN_3_11_12",
 		"wikimedia_hash": "9d"
 	},
 	{
 		"issue_number": 312,
 		"date": "13151201",
-		"filename_base": "PEYMAN_3_11_12.pdf",
+		"filename_base": "PEYMAN_3_11_12",
 		"wikimedia_hash": "9d"
 	},
 	{
 		"issue_number": 401,
 		"date": "13160301",
-		"filename_base": "PEYMAN_4_1.pdf",
+		"filename_base": "PEYMAN_4_1",
 		"wikimedia_hash": "e8"
 	},
 	{
 		"issue_number": 402,
 		"date": "13160401",
-		"filename_base": "PEYMAN_4_2.pdf",
+		"filename_base": "PEYMAN_4_2",
 		"wikimedia_hash": "37"
 	},
 	{
 		"issue_number": 403,
 		"date": "13160501",
-		"filename_base": "PEYMAN_4_3.pdf",
+		"filename_base": "PEYMAN_4_3",
 		"wikimedia_hash": "cf"
 	},
 	{
 		"issue_number": 404,
 		"date": "13160601",
-		"filename_base": "PEYMAN_4_4.pdf",
+		"filename_base": "PEYMAN_4_4",
 		"wikimedia_hash": "cd"
 	},
 	{
 		"issue_number": 405,
 		"date": "13160701",
-		"filename_base": "PEYMAN_4_5.pdf",
+		"filename_base": "PEYMAN_4_5",
 		"wikimedia_hash": "00"
 	},
 	{
 		"issue_number": 406,
 		"date": "13160801",
-		"filename_base": "PEYMAN_4_6.pdf",
+		"filename_base": "PEYMAN_4_6",
 		"wikimedia_hash": "fa"
 	},
 	{
 		"issue_number": 407,
 		"date": "13160901",
-		"filename_base": "PEYMAN_4_7.pdf",
+		"filename_base": "PEYMAN_4_7",
 		"wikimedia_hash": "c3"
 	},
 	{
 		"issue_number": 408,
 		"date": "13161001",
-		"filename_base": "PEYMAN_4_8.pdf",
+		"filename_base": "PEYMAN_4_8",
 		"wikimedia_hash": "6f"
 	},
 	{
 		"issue_number": 409,
 		"date": "13161101",
-		"filename_base": "PEYMAN_4_9.pdf",
+		"filename_base": "PEYMAN_4_9",
 		"wikimedia_hash": "44"
 	},
 	{
 		"issue_number": 410,
 		"date": "13170101",
-		"filename_base": "PEYMAN_4_10.pdf",
+		"filename_base": "PEYMAN_4_10",
 		"wikimedia_hash": "cb"
 	},
 	{
 		"issue_number": 411,
 		"date": "13170201",
-		"filename_base": "PEYMAN_4_11_12.pdf",
+		"filename_base": "PEYMAN_4_11_12",
 		"wikimedia_hash": "8b"
 	},
 	{
 		"issue_number": 412,
 		"date": "13170301",
-		"filename_base": "PEYMAN_4_11_12.pdf",
+		"filename_base": "PEYMAN_4_11_12",
 		"wikimedia_hash": "8b"
 	},
 	{
 		"issue_number": 501,
 		"date": "13170901",
-		"filename_base": "PEYMAN_5_1.pdf",
+		"filename_base": "PEYMAN_5_1",
 		"wikimedia_hash": "3d"
 	},
 	{
 		"issue_number": 502,
 		"date": "13171001",
-		"filename_base": "PEYMAN_5_2.pdf",
+		"filename_base": "PEYMAN_5_2",
 		"wikimedia_hash": "fc"
 	},
 	{
 		"issue_number": 503,
 		"date": "13171101",
-		"filename_base": "PEYMAN_5_3.pdf",
+		"filename_base": "PEYMAN_5_3",
 		"wikimedia_hash": "c5"
 	},
 	{
 		"issue_number": 504,
 		"date": "13171201",
-		"filename_base": "PEYMAN_5_4.pdf",
+		"filename_base": "PEYMAN_5_4",
 		"wikimedia_hash": "c6"
 	},
 	{
 		"issue_number": 505,
 		"date": "13180101",
-		"filename_base": "PEYMAN_5_5.pdf",
+		"filename_base": "PEYMAN_5_5",
 		"wikimedia_hash": "6f"
 	},
 	{
 		"issue_number": 506,
 		"date": "13180201",
-		"filename_base": "PEYMAN_5_6.pdf",
+		"filename_base": "PEYMAN_5_6",
 		"wikimedia_hash": "c8"
 	},
 	{
 		"issue_number": 507,
 		"date": "13180301",
-		"filename_base": "PEYMAN_5_7.pdf",
+		"filename_base": "PEYMAN_5_7",
 		"wikimedia_hash": "b9"
 	},
 	{
 		"issue_number": 508,
 		"date": "13180401",
-		"filename_base": "PEYMAN_5_8.pdf",
+		"filename_base": "PEYMAN_5_8",
 		"wikimedia_hash": "42"
 	},
 	{
 		"issue_number": 509,
 		"date": "13180501",
-		"filename_base": "PEYMAN_5_9.pdf",
+		"filename_base": "PEYMAN_5_9",
 		"wikimedia_hash": "56"
 	},
 	{
 		"issue_number": 510,
 		"date": "13180601",
-		"filename_base": "PEYMAN_5_10.pdf",
+		"filename_base": "PEYMAN_5_10",
 		"wikimedia_hash": "13"
 	},
 	{
 		"issue_number": 511,
 		"date": "13180701",
-		"filename_base": "PEYMAN_5_11_12.pdf",
+		"filename_base": "PEYMAN_5_11_12",
 		"wikimedia_hash": "5f"
 	},
 	{
 		"issue_number": 512,
 		"date": "13180801",
-		"filename_base": "PEYMAN_5_11_12.pdf",
+		"filename_base": "PEYMAN_5_11_12",
 		"wikimedia_hash": "5f"
 	},
 	{
 		"issue_number": 601,
 		"date": "13190101",
-		"filename_base": "PEYMAN_6_1.pdf",
+		"filename_base": "PEYMAN_6_1",
 		"wikimedia_hash": "e8"
 	},
 	{
 		"issue_number": 602,
 		"date": "13190201",
-		"filename_base": "PEYMAN_6_2.pdf",
+		"filename_base": "PEYMAN_6_2",
 		"wikimedia_hash": "66"
 	},
 	{
 		"issue_number": 603,
 		"date": "13190301",
-		"filename_base": "PEYMAN_6_3.pdf",
+		"filename_base": "PEYMAN_6_3",
 		"wikimedia_hash": "21"
 	},
 	{
 		"issue_number": 604,
 		"date": "13190401",
-		"filename_base": "PEYMAN_6_4.pdf",
+		"filename_base": "PEYMAN_6_4",
 		"wikimedia_hash": "49"
 	},
 	{
 		"issue_number": 605,
 		"date": "13190501",
-		"filename_base": "PEYMAN_6_5.pdf",
+		"filename_base": "PEYMAN_6_5",
 		"wikimedia_hash": "b9"
 	},
 	{
 		"issue_number": 606,
 		"date": "13190601",
-		"filename_base": "PEYMAN_6_6.pdf",
+		"filename_base": "PEYMAN_6_6",
 		"wikimedia_hash": "b0"
 	},
 	{
 		"issue_number": 607,
 		"date": "13190701",
-		"filename_base": "PEYMAN_6_7.pdf",
+		"filename_base": "PEYMAN_6_7",
 		"wikimedia_hash": "c4"
 	},
 	{
 		"issue_number": 608,
 		"date": "13190801",
-		"filename_base": "PEYMAN_6_8.pdf",
+		"filename_base": "PEYMAN_6_8",
 		"wikimedia_hash": "14"
 	},
 	{
 		"issue_number": 609,
 		"date": "13190901",
-		"filename_base": "PEYMAN_6_9.pdf",
+		"filename_base": "PEYMAN_6_9",
 		"wikimedia_hash": "07"
 	},
 	{
 		"issue_number": 610,
 		"date": "13191001",
-		"filename_base": "PEYMAN_6_10.pdf",
+		"filename_base": "PEYMAN_6_10",
 		"wikimedia_hash": "5e"
 	},
 	{
 		"issue_number": 611,
 		"date": "13191101",
-		"filename_base": "PEYMAN_6_11.pdf",
+		"filename_base": "PEYMAN_6_11",
 		"wikimedia_hash": "bc"
 	},
 	{
 		"issue_number": 612,
 		"date": "13191201",
-		"filename_base": "PEYMAN_6_12.pdf",
+		"filename_base": "PEYMAN_6_12",
 		"wikimedia_hash": "8a"
 	},
 	{
 		"issue_number": 701,
 		"date": "13200401",
-		"filename_base": "PEYMAN_7_1.pdf",
+		"filename_base": "PEYMAN_7_1",
 		"wikimedia_hash": "3c"
 	},
 	{
 		"issue_number": 702,
 		"date": "13200501",
-		"filename_base": "PEYMAN_7_2.pdf",
+		"filename_base": "PEYMAN_7_2",
 		"wikimedia_hash": "db"
 	},
 	{
 		"issue_number": 703,
 		"date": "13200601",
-		"filename_base": "PEYMAN_7_3.pdf",
+		"filename_base": "PEYMAN_7_3",
 		"wikimedia_hash": "92"
 	},
 	{
 		"issue_number": 704,
 		"date": "13200701",
-		"filename_base": "PEYMAN_7_4.pdf",
+		"filename_base": "PEYMAN_7_4",
 		"wikimedia_hash": "3d"
 	},
 	{
 		"issue_number": 705,
 		"date": "13200801",
-		"filename_base": "PEYMAN_7_5.pdf",
+		"filename_base": "PEYMAN_7_5",
 		"wikimedia_hash": "66"
 	},
 	{
 		"issue_number": 706,
 		"date": "13200901",
-		"filename_base": "PEYMAN_7_6.pdf",
+		"filename_base": "PEYMAN_7_6",
 		"wikimedia_hash": "86"
 	},
 	{
 		"issue_number": 707,
 		"date": "13210101",
-		"filename_base": "PEYMAN_7_7.pdf",
+		"filename_base": "PEYMAN_7_7",
 		"wikimedia_hash": "44"
 	},
 	{
 		"issue_number": 708,
 		"date": "13210201",
-		"filename_base": "PEYMAN_7_8.pdf",
+		"filename_base": "PEYMAN_7_8",
 		"wikimedia_hash": "18"
 	},
 	{
 		"issue_number": 709,
 		"date": "13210301",
-		"filename_base": "PEYMAN_7_9.pdf",
+		"filename_base": "PEYMAN_7_9",
 		"wikimedia_hash": "bb"
 	}
 	]
+},
+	{
+  "id": "Q16046672",
+  "title": "تهران مصور",
+  "calendar_type": "shamsi",
+  "frequency": "weekly",
+  "issues": [
+    {
+      "issue_number": 437,
+      "date": "13301006",
+      "filename_base": "Tehran_Mosavvar_13301006-437",
+      "wikimedia_hash": "51"
+    },
+    {
+      "issue_number": 438,
+      "date": "13301013",
+      "filename_base": "Tehran_Mosavvar_13301013-438",
+      "wikimedia_hash": "b1"
+    },
+    {
+      "issue_number": 439,
+      "date": "13301020",
+      "filename_base": "Tehran_Mosavvar_13301020-439",
+      "wikimedia_hash": "d6"
+    },
+    {
+      "issue_number": 440,
+      "date": "13301027",
+      "filename_base": "Tehran_Mosavvar_13301027-440",
+      "wikimedia_hash": "12"
+    },
+    {
+      "issue_number": 489,
+      "date": "13311005",
+      "filename_base": "Tehran_Mosavvar_13311005-489",
+      "wikimedia_hash": "74"
+    },
+    {
+      "issue_number": 490,
+      "date": "13311012",
+      "filename_base": "Tehran_Mosavvar_13311012-490",
+      "wikimedia_hash": "44"
+    },
+    {
+      "issue_number": 491,
+      "date": "13311019",
+      "filename_base": "Tehran_Mosavvar_13311019-491",
+      "wikimedia_hash": "36"
+    },
+    {
+      "issue_number": 492,
+      "date": "13311026",
+      "filename_base": "Tehran_Mosavvar_13311026-492",
+      "wikimedia_hash": "27"
+    },
+    {
+      "issue_number": 535,
+      "date": "13320522",
+      "filename_base": "Tehran_Mosavvar_13320522-535",
+      "wikimedia_hash": "ca"
+    },
+    {
+      "issue_number": 536,
+      "date": "13320529",
+      "filename_base": "Tehran_Mosavvar_13320529-536",
+      "wikimedia_hash": "96"
+    }
+  ]
 }
 ]
