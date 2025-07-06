@@ -8386,5 +8386,90 @@
 		"wikimedia_hash": "40"
 	}
 	]
+},
+	{
+	"id": "Q115697940",
+	"title": "گل‌آقا",
+	"calendar_type": "shamsi",
+	"issues": [
+	{
+		"issue_number": 109,
+		"date": "13690907",
+		"filename_base": "Golagha_weekly,_vol.1_no.9",
+		"wikimedia_hash": "80"
+	},
+	{
+		"issue_number": 110,
+		"date": "13691004",
+		"filename_base": "Golagha_weekly,_vol.1_no.10",
+		"wikimedia_hash": "0a"
+	},
+	{
+		"issue_number": 118,
+		"date": "13691130",
+		"filename_base": "Golagha_weekly,_vol.1_no.18",
+		"wikimedia_hash": "6d"
+	},
+	{
+		"issue_number": 1001,
+		"date": "13700515",
+		"filename_base": "Golagha_monthly,_vol.1_no.1",
+		"wikimedia_hash": "eb"
+	},
+	{
+		"issue_number": 1002,
+		"date": "13700615",
+		"filename_base": "Golagha_monthly,_vol.1_no.2",
+		"wikimedia_hash": "07"
+	},
+	{
+		"issue_number": 1003,
+		"date": "13700715",
+		"filename_base": "Golagha_monthly,_vol.1_no.3",
+		"wikimedia_hash": "0a"
+	},
+	{
+		"issue_number": 1004,
+		"date": "13700815",
+		"filename_base": "Golagha_monthly,_vol.1_no.4",
+		"wikimedia_hash": "7b"
+	},
+	{
+		"issue_number": 1005,
+		"date": "13700915",
+		"filename_base": "Golagha_monthly,_vol.1_no.5",
+		"wikimedia_hash": "ba"
+	},
+	{
+		"issue_number": 1006,
+		"date": "13701015",
+		"filename_base": "Golagha_monthly,_vol.1_no.6",
+		"wikimedia_hash": "7a"
+	},
+	{
+		"issue_number": 1007,
+		"date": "13701115",
+		"filename_base": "Golagha_monthly,_vol.1_no.7",
+		"wikimedia_hash": "22"
+	},
+	{
+		"issue_number": 2001,
+		"date": "13710101",
+		"filename_base": "Golagha_monthly,_vol.2_no.1",
+		"wikimedia_hash": "51"
+	},
+	{
+		"issue_number": 2002,
+		"date": "13710201",
+		"filename_base": "Golagha_monthly,_vol.2_no.2",
+		"wikimedia_hash": "b8"
+	},
+	{
+		"issue_number": 2003,
+		"date": "13710301",
+		"filename_base": "Golagha_monthly,_vol.2_no.3",
+		"wikimedia_hash": "13"
+	}
+	]
 }
 ]
