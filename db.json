@@ -8471,5 +8471,61 @@
 		"wikimedia_hash": "13"
 	}
 	]
-}
+},
+	{
+	"id": "Q5931832",
+	"title": "دانش (1328)",
+	"calendar_type": "hijri",
+	"frequency": "weekly",
+	"issues": [
+	{
+		"issue_number": 1,
+		"date": "13280902",
+		"filename_base": "Danesh_Tehran_13280902_AH",
+		"wikimedia_hash": "a1"
+	},
+	{
+		"issue_number": 2,
+		"date": "13280924",
+		"filename_base": "Danesh_Tehran_13280924_AH",
+		"wikimedia_hash": "f2"
+	},
+	{
+		"issue_number": 3,
+		"date": "13281009",
+		"filename_base": "Danesh_Tehran_13281009_AH",
+		"wikimedia_hash": "c0"
+	},
+	{
+		"issue_number": 4,
+		"date": "13281022",
+		"filename_base": "Danesh_Tehran_13281022_AH",
+		"wikimedia_hash": "4f"
+	},
+	{
+		"issue_number": 5,
+		"date": "13281029",
+		"filename_base": "Danesh_Tehran_13281029_AH",
+		"wikimedia_hash": "9f"
+	},
+	{
+		"issue_number": 6,
+		"date": "13281107",
+		"filename_base": "Danesh_Tehran_13281107_AH",
+		"wikimedia_hash": "7c"
+	},
+	{
+		"issue_number": 14,
+		"date": "13290117",
+		"filename_base": "Danesh_Tehran_13290117_AH",
+		"wikimedia_hash": "30"
+	},
+	{
+		"issue_number": 25,
+		"date": "13290405",
+		"filename_base": "Danesh_Tehran_13290405_AH",
+		"wikimedia_hash": "89"
+	}
+	]
+}	
 ]
