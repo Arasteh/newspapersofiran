@@ -2656,7 +2656,8 @@
 						volumeHeader.textContent = `دوره: ${volumeKey}`;
 						targetContainer.appendChild(volumeHeader);
 
-						volumeIssues.forEach(issue => {
+						const currentVolumeIssues = groupedByVolume.get(volumeKey); // Corrected line
+						currentVolumeIssues.forEach(issue => {
 							const issueNumberText = issue.number === null ? 'نامشخص' : englishToPersianDigits(issue.number);
 							const issueText = `شمارهٔ ${issueNumberText}, سال ${englishToPersianDigits(issue.year_shamsi)}`;
 
