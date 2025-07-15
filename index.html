@@ -2510,7 +2510,7 @@
 
 			const openAllNewspapersIssuesModal = (initialPaperId = null) => {
 				allIssuesModalErrorMessage.style.display = 'none';
-				allIssuesModalNewspaperTitle.textContent = 'فهرست شماره‌های نشریات';
+				allIssuesModalNewspaperTitle.textContent = 'فهرست شماره‌های نشریات'; // Reset title
 				newspaperSelectionContainer.innerHTML = '';
 				issuesListContainer.innerHTML = '';
 				issuesImageGridContainer.innerHTML = '';
@@ -2589,6 +2589,7 @@
 					issuesImageGridContainer.style.display = 'none';
 					allIssuesModalErrorMessage.textContent = 'اطلاعات شماره‌ها برای این نشریه موجود نیست.';
 					allIssuesModalErrorMessage.style.display = 'block';
+					allIssuesModalNewspaperTitle.textContent = 'فهرست شماره‌های نشریات'; // Reset title if no issues
 					return;
 				}
 
@@ -2609,6 +2610,9 @@
 						return dateA - dateB;
 					}
 				});
+
+				// Update modal title with newspaper name and issue count
+				allIssuesModalNewspaperTitle.textContent = `${paper.title} (${englishToPersianDigits(issuesToDisplaySorted.length)} شماره)`;
 
 				const displayDates = showDatesCheckbox.checked;
 				const displayImages = showImagesCheckbox.checked;
