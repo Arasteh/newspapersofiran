@@ -1403,7 +1403,7 @@
 				const allPapers = Object.values(newspaperData);
 				const frequencyOrder = { 'daily': 1, 'weekly': 2, 'monthly': 3, 'quarterly': 4, 'yearly': 5 };
 
-				const sortablePapers = allPapers.filter(paper => paper.firstIssueDate)
+				const sortablePapers = allPapers.filter(paper => paper.firstIssueDate && paper.source !== 'utlib') // Filter out utlib papers
 					.map(paper => {
 						return {
 							id: paper.id,
@@ -1412,24 +1412,29 @@
 							globalFirstIssueBtn: paper.globalFirstIssueBtn,
 							title: paper.title,
 							frequency: paper.frequency,
-							source: paper.source // Include source in sorting
+							source: paper.source
 						};
 					});
 
 				sortablePapers.sort((a, b) => {
-					// utlib papers should not appear here, but if they somehow do, ensure they are at the end
-					if (a.source === 'utlib' && b.source !== 'utlib') return 1;
-					if (a.source !== 'utlib' && b.source === 'utlib') return -1;
-					if (a.source === 'utlib' && b.source === 'utlib') return a.title.localeCompare(b.title, 'fa');
-
-
+					// Primary sort: calendar_type (hijri before shamsi)
 					if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
 					if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
 
+					// Secondary sort: if both are shamsi, sort by year, then title
+					if (a.calendar_type === 'shamsi' && b.calendar_type === 'shamsi') {
+						const yearA = parseInt(a.firstIssueDate.substring(0, 4), 10);
+						const yearB = parseInt(b.firstIssueDate.substring(0, 4), 10);
+						if (yearA !== yearB) return yearA - yearB;
+						return a.title.localeCompare(b.title, 'fa');
+					}
+
+					// Tertiary sort: for other cases (e.g., both hijri), sort by full date, then title
 					const dateA = parseInt(a.firstIssueDate, 10);
 					const dateB = parseInt(b.firstIssueDate, 10);
 					if (dateA !== dateB) return dateA - dateB;
 
+					// Final fallback: alphabetical by title
 					return a.title.localeCompare(b.title, 'fa');
 				});
 
@@ -1438,8 +1443,7 @@
 				let currentCalendarType = null;
 
 				sortablePapers.forEach(paper => {
-					// Do not add utlib papers to global navigation buttons
-					if (paper.globalFirstIssueBtn && paper.source !== 'utlib') {
+					if (paper.globalFirstIssueBtn) {
 						if (paper.calendar_type !== currentCalendarType) {
 							const heading = document.createElement('h3');
 							heading.style.width = '100%';
@@ -2519,23 +2523,25 @@
 				const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
 					paper.type === 'database' && paper.issues && paper.issues.length > 0
 				).sort((a, b) => {
-					// Primary sort: utlib papers first
-					if (a.source === 'utlib' && b.source !== 'utlib') return -1;
-					if (a.source !== 'utlib' && b.source === 'utlib') return 1;
+					// Primary sort: calendar_type (hijri before shamsi)
+					if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
+					if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
 
-					// Secondary sort: calendar_type (hijri before shamsi) for non-utlib
-					if (a.source !== 'utlib' && b.source !== 'utlib') {
-						if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
-						if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+					// Secondary sort: if both are shamsi, sort by year, then title
+					if (a.calendar_type === 'shamsi' && b.calendar_type === 'shamsi') {
+						// For utlib, use year_shamsi from the first issue if available, otherwise fallback to firstIssueDate year
+						const yearA = a.source === 'utlib' && a.navState.issuesArray.length > 0 ? a.navState.issuesArray[0].year_shamsi : parseInt(a.firstIssueDate.substring(0, 4), 10);
+						const yearB = b.source === 'utlib' && b.navState.issuesArray.length > 0 ? b.navState.issuesArray[0].year_shamsi : parseInt(b.firstIssueDate.substring(0, 4), 10);
+						if (yearA !== yearB) return yearA - yearB;
+						return a.title.localeCompare(b.title, 'fa');
 					}
 
-					// Tertiary sort: firstIssueDate (earliest first) for non-utlib
-					if (a.source !== 'utlib' && b.source !== 'utlib' && a.firstIssueDate && b.firstIssueDate) {
-						const dateA = parseInt(a.firstIssueDate, 10);
-						const dateB = parseInt(b.firstIssueDate, 10);
-						if (dateA !== dateB) return dateA - dateB;
-					}
-					// For utlib, sort by title
+					// Tertiary sort: for other cases (e.g., both hijri), sort by full date, then title
+					const dateA = parseInt(a.firstIssueDate, 10);
+					const dateB = parseInt(b.firstIssueDate, 10);
+					if (dateA !== dateB) return dateA - dateB;
+
+					// Final fallback: alphabetical by title
 					return a.title.localeCompare(b.title, 'fa');
 				});
 
@@ -2645,15 +2651,11 @@
 					});
 
 					sortedVolumeKeys.forEach(volumeKey => {
-						const volumeIssues = groupedByVolume.get(volumeKey);
-
-						// Create volume header (non-clickable)
 						const volumeHeader = document.createElement('div');
 						volumeHeader.classList.add('volume-header');
 						volumeHeader.textContent = `دوره: ${volumeKey}`;
 						targetContainer.appendChild(volumeHeader);
 
-						// Render issues for this volume
 						volumeIssues.forEach(issue => {
 							const issueNumberText = issue.number === null ? 'نامشخص' : englishToPersianDigits(issue.number);
 							const issueText = `شمارهٔ ${issueNumberText}, سال ${englishToPersianDigits(issue.year_shamsi)}`;
@@ -3173,23 +3175,24 @@
 					const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
 						paper.type === 'database' && paper.issues && paper.issues.length > 0
 					).sort((a, b) => {
-						// Primary sort: utlib papers first
-						if (a.source === 'utlib' && b.source !== 'utlib') return -1;
-						if (a.source !== 'utlib' && b.source === 'utlib') return 1;
+						// Primary sort: calendar_type (hijri before shamsi)
+						if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
+						if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
 
-						// Secondary sort: calendar_type (hijri before shamsi) for non-utlib
-						if (a.source !== 'utlib' && b.source !== 'utlib') {
-							if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
-							if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+						// Secondary sort: if both are shamsi, sort by year, then title
+						if (a.calendar_type === 'shamsi' && b.calendar_type === 'shamsi') {
+							const yearA = a.source === 'utlib' && a.navState.issuesArray.length > 0 ? a.navState.issuesArray[0].year_shamsi : parseInt(a.firstIssueDate.substring(0, 4), 10);
+							const yearB = b.source === 'utlib' && b.navState.issuesArray.length > 0 ? b.navState.issuesArray[0].year_shamsi : parseInt(b.firstIssueDate.substring(0, 4), 10);
+							if (yearA !== yearB) return yearA - yearB;
+							return a.title.localeCompare(b.title, 'fa');
 						}
 
-						// Tertiary sort: firstIssueDate (earliest first) for non-utlib
-						if (a.source !== 'utlib' && b.source !== 'utlib' && a.firstIssueDate && b.firstIssueDate) {
-							const dateA = parseInt(a.firstIssueDate, 10);
-							const dateB = parseInt(b.firstIssueDate, 10);
-							if (dateA !== dateB) return dateA - dateB;
-						}
-						// For utlib, sort by title
+						// Tertiary sort: for other cases (e.g., both hijri), sort by full date, then title
+						const dateA = parseInt(a.firstIssueDate, 10);
+						const dateB = parseInt(b.firstIssueDate, 10);
+						if (dateA !== dateB) return dateA - dateB;
+
+						// Final fallback: alphabetical by title
 						return a.title.localeCompare(b.title, 'fa');
 					});
 
@@ -3208,23 +3211,24 @@
 					const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
 						paper.type === 'database' && paper.issues && paper.issues.length > 0
 					).sort((a, b) => {
-						// Primary sort: utlib papers first
-						if (a.source === 'utlib' && b.source !== 'utlib') return -1;
-						if (a.source !== 'utlib' && b.source === 'utlib') return 1;
+						// Primary sort: calendar_type (hijri before shamsi)
+						if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
+						if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
 
-						// Secondary sort: calendar_type (hijri before shamsi) for non-utlib
-						if (a.source !== 'utlib' && b.source !== 'utlib') {
-							if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
-							if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+						// Secondary sort: if both are shamsi, sort by year, then title
+						if (a.calendar_type === 'shamsi' && b.calendar_type === 'shamsi') {
+							const yearA = a.source === 'utlib' && a.navState.issuesArray.length > 0 ? a.navState.issuesArray[0].year_shamsi : parseInt(a.firstIssueDate.substring(0, 4), 10);
+							const yearB = b.source === 'utlib' && b.navState.issuesArray.length > 0 ? b.navState.issuesArray[0].year_shamsi : parseInt(b.firstIssueDate.substring(0, 4), 10);
+							if (yearA !== yearB) return yearA - yearB;
+							return a.title.localeCompare(b.title, 'fa');
 						}
 
-						// Tertiary sort: firstIssueDate (earliest first) for non-utlib
-						if (a.source !== 'utlib' && b.source !== 'utlib' && a.firstIssueDate && b.firstIssueDate) {
-							const dateA = parseInt(a.firstIssueDate, 10);
-							const dateB = parseInt(b.firstIssueDate, 10);
-							if (dateA !== dateB) return dateA - dateB;
-						}
-						// For utlib, sort by title
+						// Tertiary sort: for other cases (e.g., both hijri), sort by full date, then title
+						const dateA = parseInt(a.firstIssueDate, 10);
+						const dateB = parseInt(b.firstIssueDate, 10);
+						if (dateA !== dateB) return dateA - dateB;
+
+						// Final fallback: alphabetical by title
 						return a.title.localeCompare(b.title, 'fa');
 					});
 
