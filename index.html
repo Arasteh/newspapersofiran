@@ -1328,14 +1328,28 @@
 						if (dbPaper.issues && dbPaper.issues.length > 0) {
 							if (dbPaper.source === 'utlib') {
 								sortedIssues = [...dbPaper.issues].sort((a, b) => {
-									if (a.year_shamsi !== b.year_shamsi) return a.year_shamsi - b.year_shamsi;
+                                    // Prioritize year_hijri if available and calendar_type is hijri
+                                    if (dbPaper.calendar_type === 'hijri' && a.year_hijri !== undefined && b.year_hijri !== undefined) {
+                                        if (a.year_hijri !== b.year_hijri) return a.year_hijri - b.year_hijri;
+                                    } else if (a.year_shamsi !== undefined && b.year_shamsi !== undefined) {
+                                        // Fallback to year_shamsi for other cases or if year_hijri not present
+                                        if (a.year_shamsi !== b.year_shamsi) return a.year_shamsi - b.year_shamsi;
+                                    }
+
+                                    // Then sort by volume
 									if (a.volume !== b.volume) return a.volume - b.volume;
+
+                                    // Finally, sort by number
 									const numA = a.number === null ? -Infinity : a.number;
 									const numB = b.number === null ? -Infinity : b.number;
 									return numA - numB;
 								});
 								if (sortedIssues.length > 0) {
-									calculatedFirstIssueDate = `${sortedIssues[0].year_shamsi}0101`; // Approximate first date for sorting
+                                    if (dbPaper.calendar_type === 'hijri' && sortedIssues[0].year_hijri !== undefined) {
+                                        calculatedFirstIssueDate = `${sortedIssues[0].year_hijri}0101`; // Use hijri year for first date
+                                    } else {
+                                        calculatedFirstIssueDate = `${sortedIssues[0].year_shamsi}0101`; // Fallback to shamsi year
+                                    }
 								}
 							} else {
 								sortedIssues = [...dbPaper.issues].sort((a, b) => {
@@ -2006,7 +2020,13 @@
 						lightboxErrorMessage.style.display = 'block';
 						return;
 					}
-					lightboxNewspaperTitle.textContent = `${paper.title} - سال: ${englishToPersianDigits(paper.currentIssue.year_shamsi)}${paper.currentIssue.volume ? `, دوره: ${englishToPersianDigits(paper.currentIssue.volume)}` : ''}${paper.currentIssue.number ? `, شماره: ${englishToPersianDigits(paper.currentIssue.number)}` : ''}`;
+                    let displayYearLightbox = '';
+                    if (paper.calendar_type === 'hijri' && paper.currentIssue.year_hijri !== undefined) {
+                        displayYearLightbox = englishToPersianDigits(paper.currentIssue.year_hijri);
+                    } else {
+                        displayYearLightbox = englishToPersianDigits(paper.currentIssue.year_shamsi);
+                    }
+					lightboxNewspaperTitle.textContent = `${paper.title} - سال: ${displayYearLightbox}${paper.currentIssue.volume ? `, دوره: ${englishToPersianDigits(paper.currentIssue.volume)}` : ''}${paper.currentIssue.number ? `, شماره: ${englishToPersianDigits(paper.currentIssue.number)}` : ''}`;
 					lightboxPageNumberInput.value = '1';
 					lightboxImage.alt = `پیش‌نمایش برای ${paper.title} موجود نیست.`;
 					lightboxImage.src = `https://placehold.co/800x1200/cccccc/333333?text=No+Preview`; // Placeholder
@@ -2659,7 +2679,13 @@
 						const currentVolumeIssues = groupedByVolume.get(volumeKey); // Corrected line
 						currentVolumeIssues.forEach(issue => {
 							const issueNumberText = issue.number === null ? 'نامشخص' : englishToPersianDigits(issue.number);
-							const issueText = `شمارهٔ ${issueNumberText}, سال ${englishToPersianDigits(issue.year_shamsi)}`;
+                            let displayYear = '';
+                            if (paper.calendar_type === 'hijri' && issue.year_hijri !== undefined) {
+                                displayYear = englishToPersianDigits(issue.year_hijri);
+                            } else {
+                                displayYear = englishToPersianDigits(issue.year_shamsi);
+                            }
+							const issueText = `شمارهٔ ${issueNumberText}, سال ${displayYear}`;
 
 							if (displayImages) {
 								const thumbnailItem = document.createElement('div');
@@ -3163,7 +3189,7 @@
 			});
 			document.addEventListener('keydown', (e) => {
 				if (e.key === 'Escape' && allIssuesModalOverlay.classList.contains('visible')) {
-					closeAllIssuesModal();
+					closeCalendarModal();
 				}
 			});
 
