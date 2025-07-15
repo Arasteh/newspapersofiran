@@ -1539,7 +1539,14 @@
 					}
 					return '#'; // Fallback
 				} else {
-					const fullFileNameWithPdf = `${issue.filename_base}.pdf`;
+                    // For non-utlib papers, use paper.fileNameBase (which is set for formula papers)
+                    // or issue.filename_base (for database papers)
+                    const baseFileName = paper.fileNameBase || (issue ? issue.filename_base : null);
+                    if (!baseFileName) {
+                        console.error("Missing base filename for non-utlib paper:", paper.id, issue);
+                        return `https://placehold.co/${width}x${Math.floor(width * 1.5)}/cccccc/333333?text=Error`; // Fallback placeholder
+                    }
+					const fullFileNameWithPdf = `${baseFileName}.pdf`;
 					const hash = getWikimediaHash(paper, fullFileNameWithPdf);
 					const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_');
 					return `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${page}-${width}px-${fileNameForUrlPath}.jpg`;
@@ -1658,6 +1665,8 @@
 						issueExistsForDate = true;
 					}
 					paper.currentIssue = null;
+                    // Store fileNameBase on the paper object for formula-based papers
+                    paper.fileNameBase = fileNameBase;
 				} else if (paper.type === 'database') {
 					let foundIssueForDate = null;
 					const selectedDateShamsi = { year: parseInt(year), month: parseInt(month), day: parseInt(day) };
