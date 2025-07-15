@@ -1251,6 +1251,7 @@
 								title: dbPaper.title.replace(/^روزنامه\s*/, '').replace(/^نشريه\s*/, ''),
 								calendar_type: dbPaper.calendar_type,
 								frequency: dbPaper.frequency || 'daily',
+								source: dbPaper.source || 'wikimedia' // Add source property
 							};
 
 							const sectionDiv = document.createElement('div');
@@ -1300,28 +1301,44 @@
 								fileNameBase: null,
 								maxPages: null,
 								frequency: dbPaper.frequency || 'daily',
+								source: dbPaper.source || 'wikimedia' // Add source property
 							};
+						} else {
+							// Update existing newspaperData entry with source if it's a formula type and has issues
+							newspaperData[paperId].source = dbPaper.source || 'wikimedia';
 						}
+
 
 						let calculatedFirstIssueDate = null;
+						let sortedIssues = [];
+
 						if (dbPaper.issues && dbPaper.issues.length > 0) {
-							const sortedIssues = [...dbPaper.issues].sort((a, b) => {
-								const dateA = parseInt(a.date, 10);
-								const dateB = parseInt(b.date, 10);
-								return dateA - dateB;
-							});
-							const firstIssue = sortedIssues[0];
-							calculatedFirstIssueDate = firstIssue.date;
+							if (dbPaper.source === 'utlib') {
+								sortedIssues = [...dbPaper.issues].sort((a, b) => {
+									if (a.year_shamsi !== b.year_shamsi) return a.year_shamsi - b.year_shamsi;
+									if (a.volume !== b.volume) return a.volume - b.volume;
+									const numA = a.number === null ? -Infinity : a.number;
+									const numB = b.number === null ? -Infinity : b.number;
+									return numA - numB;
+								});
+								if (sortedIssues.length > 0) {
+									calculatedFirstIssueDate = `${sortedIssues[0].year_shamsi}0101`; // Approximate first date for sorting
+								}
+							} else {
+								sortedIssues = [...dbPaper.issues].sort((a, b) => {
+									const dateA = parseInt(a.date, 10);
+									const dateB = parseInt(b.date, 10);
+									return dateA - dateB;
+								});
+								const firstIssue = sortedIssues[0];
+								calculatedFirstIssueDate = firstIssue.date;
+							}
 						}
 						newspaperData[paperId].firstIssueDate = calculatedFirstIssueDate;
-						newspaperData[paperId].issues = dbPaper.issues;
+						newspaperData[paperId].issues = dbPaper.issues; // Keep original for reference if needed
 
 						newspaperData[paperId].navState = {
-							issuesArray: [...dbPaper.issues].sort((a, b) => {
-								const dateA = parseInt(a.date, 10);
-								const dateB = parseInt(b.date, 10);
-								return dateA - dateB;
-							}),
+							issuesArray: sortedIssues, // Use the sorted array here
 							currentIndex: -1,
 							prevIssueBtn: document.getElementById(`prev${paperId}Issue`),
 							nextIssueBtn: document.getElementById(`next${paperId}Issue`),
@@ -1336,11 +1353,15 @@
 
 						if (dbPaper.calendar_type === 'hijri') {
 							dbPaper.issues.forEach(issue => {
-								availableHijriDates.set(issue.date, (availableHijriDates.get(issue.date) || 0) + 1);
+								if (issue.date) { // Check if date exists for non-utlib
+									availableHijriDates.set(issue.date, (availableHijriDates.get(issue.date) || 0) + 1);
+								}
 							});
 						} else if (dbPaper.calendar_type === 'shamsi') {
 							dbPaper.issues.forEach(issue => {
-								availableShamsiDates.set(issue.date, (availableShamsiDates.get(issue.date) || 0) + 1);
+								if (issue.date) { // Check if date exists for non-utlib
+									availableShamsiDates.set(issue.date, (availableShamsiDates.get(issue.date) || 0) + 1);
+								}
 							});
 						}
 					});
@@ -1377,11 +1398,18 @@
 							firstIssueDate: paper.firstIssueDate,
 							globalFirstIssueBtn: paper.globalFirstIssueBtn,
 							title: paper.title,
-							frequency: paper.frequency
+							frequency: paper.frequency,
+							source: paper.source // Include source in sorting
 						};
 					});
 
 				sortablePapers.sort((a, b) => {
+					// utlib papers should not appear here, but if they somehow do, ensure they are at the end
+					if (a.source === 'utlib' && b.source !== 'utlib') return 1;
+					if (a.source !== 'utlib' && b.source === 'utlib') return -1;
+					if (a.source === 'utlib' && b.source === 'utlib') return a.title.localeCompare(b.title, 'fa');
+
+
 					if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
 					if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
 
@@ -1397,7 +1425,8 @@
 				let currentCalendarType = null;
 
 				sortablePapers.forEach(paper => {
-					if (paper.globalFirstIssueBtn) {
+					// Do not add utlib papers to global navigation buttons
+					if (paper.globalFirstIssueBtn && paper.source !== 'utlib') {
 						if (paper.calendar_type !== currentCalendarType) {
 							const heading = document.createElement('h3');
 							heading.style.width = '100%';
@@ -1471,10 +1500,36 @@
 				return fullMd5.substring(0, 2);
 			};
 
+			// New helper function to get the correct file URL based on source
+			const getIssueFileUrl = (paper, issue, page = 1, width = 800) => {
+				if (paper.source === 'utlib') {
+					if (issue && issue.file_id) {
+						return `https://lib.ut.ac.ir/multiMediaFile/${issue.file_id}.pdf`;
+					}
+					return '#'; // Fallback
+				} else {
+					const fullFileNameWithPdf = `${issue.filename_base}.pdf`;
+					const hash = getWikimediaHash(paper, fullFileNameWithPdf);
+					const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_');
+					return `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${page}-${width}px-${fileNameForUrlPath}.jpg`;
+				}
+			};
+
+
 			const checkAndLoadNewspaper = async (id, year, month, day, page) => {
 				const paper = newspaperData[id];
 				if (!paper || !paper.sectionElement) {
 					console.warn(`Newspaper data or sectionElement missing for ID: ${id}`);
+					return Promise.resolve(false);
+				}
+
+				// Do not display utlib papers in the main newspaper container
+				if (paper.source === 'utlib') {
+					paper.sectionElement.style.display = 'none';
+					paper.available = false;
+					if (paper.navState && paper.navState.navigationDiv) {
+						paper.navState.navigationDiv.style.display = 'none';
+					}
 					return Promise.resolve(false);
 				}
 
@@ -1676,12 +1731,7 @@
 				paper.statusElement.textContent = 'در حال بارگذاری...';
 				paper.statusElement.style.display = 'block';
 
-				const fullFileNameWithPdf = `${fileNameBase}.pdf`;
-				const hash = getWikimediaHash(paper, fullFileNameWithPdf);
-				const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_');
-
-				const width = 330;
-				const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${page}-${width}px-${fileNameForUrlPath}.jpg`;
+				const imageUrl = getIssueFileUrl(paper, paper.currentIssue, page, 330); // Use 330px width for main view
 
 				return new Promise((resolve, reject) => {
 					paper.imageElement.onload = () => {
@@ -1794,6 +1844,11 @@
 
 					if (!paperA || !paperB) return 0;
 
+					// utlib papers should always be at the end in the main view
+					if (paperA.source === 'utlib' && paperB.source !== 'utlib') return 1;
+					if (paperA.source !== 'utlib' && paperB.source === 'utlib') return -1;
+					if (paperA.source === 'utlib' && paperB.source === 'utlib') return 0; // Maintain original order among utlib if they somehow appear
+
 					if (paperA.available && !paperB.available) return -1;
 					if (!paperA.available && paperB.available) return 1;
 
@@ -1821,7 +1876,8 @@
 					if (paper && paper.sectionElement) {
 						let displayThisInContainer = paper.available &&
 							((currentCalendarMode === 'hijri' && paper.calendar_type === 'hijri') ||
-							 (currentCalendarMode === 'shamsi' && paper.calendar_type === 'shamsi'));
+							 (currentCalendarMode === 'shamsi' && paper.calendar_type === 'shamsi')) &&
+							paper.source !== 'utlib'; // Explicitly hide utlib papers from main view
 
 						paper.sectionElement.style.display = displayThisInContainer ? 'flex' : 'none';
 						if (displayThisInContainer) {
@@ -1924,166 +1980,201 @@
 				}
 
 				let formattedDate;
-				let displayDayForDate = (id === 'yaghma' || id === 'negin') && paper.calendar_type === 'shamsi' ? '01' : day;
 
-				if (paper.type === 'database' && paper.currentIssue) {
-					const issueDateParsed = parseDateString(paper.currentIssue.date);
-					if (issueDateParsed) {
-						year = issueDateParsed.year;
-						month = issueDateParsed.month;
-						day = issueDateParsed.day;
-					}
-				}
-
-				if (paper.calendar_type === 'hijri') {
-					const hijriMonthName = hijriMonthNames[month - 1];
-					formattedDate = `${englishToPersianDigits(pad(day))} ${hijriMonthName} ${englishToPersianDigits(year)} (قمری)`;
-				} else if (paper.calendar_type === 'shamsi') {
-					const persianMonthName = shamsiMonthNames[month - 1];
-
-					if (paper.type === 'database' && paper.frequency === 'monthly') {
-						formattedDate = `${persianMonthName} ${englishToPersianDigits(year)}`;
-					} else {
-						formattedDate = `${englishToPersianDigits(pad(day))} ${persianMonthName} ${englishToPersianDigits(year)}`;
-					}
-				} else {
-					formattedDate = `${englishToPersianDigits(pad(day))}/${englishToPersianDigits(pad(month))}/${englishToPersianDigits(year)}`;
-				}
-
-				let titleText = `${paper.title}`;
-				if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.issue_number) {
-					titleText += ` (شماره ${englishToPersianDigits(paper.currentIssue.issue_number)})`;
-				}
-
-				lightboxNewspaperTitle.textContent = `${titleText} - ${formattedDate} - صفحه: ${englishToPersianDigits(lightboxCurrentPage)}`;
-				lightboxPageNumberInput.value = lightboxCurrentPage;
-				lightboxImage.alt = `تصویر ${paper.title} در لایت‌باکس - صفحه ${englishToPersianDigits(lightboxCurrentPage)}`;
-
-				lightboxStatusMessage.textContent = 'در حال بارگذاری...';
-				lightboxStatusMessage.style.display = 'block';
-				lightboxImage.style.display = 'none';
-				downloadLink.style.display = 'none';
-				viewLargeLink.style.display = 'none';
-
-				let fileNameBase;
-				let maxPages = paper.maxPages;
-				let dateForFilename;
-
-				if (paper.type === 'formula') {
-					dateForFilename = {y: year, m: month, d: day};
-					if (id === 'jangal_qamari') {
-						fileNameBase = `${paper.prefix} ${dateForFilename.y}${dateForFilename.m}${dateForFilename.d} AH`;
-					} else if (id === 'yaghma' && paper.calendar_type === 'shamsi') {
-						const shamsiInputYear = parseInt(dateForFilename.y, 10);
-						const shamsiInputMonth = parseInt(dateForFilename.m, 10);
-
-						if (shamsiInputYear >= 1327 && shamsiInputYear <= 1357 && shamsiInputMonth >= 1 && shamsiInputMonth <= 12) {
-							const volume = shamsiInputYear - 1327 + 1;
-							const issueNumber = shamsiInputMonth;
-							fileNameBase = `Yaghma, Vol. ${volume}, No. ${issueNumber}, ${shamsiInputYear} SH`;
-						} else {
-							console.error("Yaghma lightbox: Date out of range for filename", shamsiInputYear, shamsiInputMonth);
-							lightboxStatusMessage.style.display = 'none';
-							lightboxErrorMessage.textContent = `اطلاعات نشریه یغما برای این تاریخ در لایت‌باکس یافت نشد.`;
-							lightboxErrorMessage.style.display = 'block';
-							return;
-						}
-					} else if (id === 'negin' && paper.calendar_type === 'shamsi') {
-						const shamsiInputYear = parseInt(dateForFilename.y, 10);
-						const shamsiInputMonth = parseInt(dateForFilename.m, 10);
-						const startDateCheck = shamsiInputYear > 1344 || (shamsiInputYear === 1344 && shamsiInputMonth >= 3);
-						const endDateCheck = shamsiInputYear < 1359 || (shamsiInputYear === 1359 && shamsiInputMonth <= 1);
-
-						if (startDateCheck && endDateCheck) {
-							const volume = shamsiInputYear - 1344 + 1;
-							let issueNumber;
-							if (shamsiInputYear === 1344) {
-								issueNumber = shamsiInputMonth - 2;
-							} else {
-								const yearsAfter1344 = shamsiInputYear - 1345;
-								const issuesInFullYears = yearsAfter1344 * 12;
-								issueNumber = 10 + issuesInFullYears + shamsiInputMonth;
-							}
-							fileNameBase = `Negin, Vol. ${volume}, No. ${issueNumber}, ${shamsiInputYear} SH`;
-						} else {
-							console.error("Negin lightbox: Date out of range for filename", shamsiInputYear, shamsiInputMonth);
-							lightboxStatusMessage.style.display = 'none';
-							lightboxErrorMessage.textContent = `اطلاعات نشریه نگین برای این تاریخ در لایت‌باکس یافت نشد.`;
-							lightboxErrorMessage.style.display = 'block';
-							return;
-						}
-					} else {
-						fileNameBase = `${paper.prefix}${dateForFilename.y}${dateForFilename.m}${dateForFilename.d}${paper.calendar_type === 'hijri' ? ' AH' : ''}`;
-					}
-				} else if (paper.type === 'database' && paper.currentIssue) {
-					fileNameBase = paper.currentIssue.filename_base;
-					maxPages = paper.currentIssue.pages || null;
-					const issueDateParsed = parseDateString(paper.currentIssue.date);
-					if(issueDateParsed) {
-						dateForFilename = {y: issueDateParsed.year, m: pad(issueDateParsed.month), d: pad(issueDateParsed.day)};
-					} else {
-						console.error("Lightbox: Invalid date string in currentIssue for", id);
+				// Handle utlib specific display in lightbox
+				if (paper.source === 'utlib') {
+					if (!paper.currentIssue) {
 						lightboxStatusMessage.style.display = 'none';
-						lightboxErrorMessage.textContent = `اطلاعات تاریخ نشریه برای نمایش در لایت‌باکس یافت نشد.`;
+						lightboxErrorMessage.textContent = `اطلاعات شماره برای ${paper.title} در لایت‌باکس یافت نشد.`;
 						lightboxErrorMessage.style.display = 'block';
 						return;
 					}
-				} else {
-					console.error("Lightbox: Issue data missing for DB paper or unknown state for:", id, "on date", year, month, day);
-					lightboxStatusMessage.style.display = 'none';
-					lightboxErrorMessage.textContent = `اطلاعات نشریه برای نمایش در لایت‌باکس یافت نشد.`;
-					lightboxErrorMessage.style.display = 'block';
-					return;
-				}
+					lightboxNewspaperTitle.textContent = `${paper.title} - سال: ${englishToPersianDigits(paper.currentIssue.year_shamsi)}${paper.currentIssue.volume ? `, دوره: ${englishToPersianDigits(paper.currentIssue.volume)}` : ''}${paper.currentIssue.number ? `, شماره: ${englishToPersianDigits(paper.currentIssue.number)}` : ''}`;
+					lightboxPageNumberInput.value = '1';
+					lightboxImage.alt = `پیش‌نمایش برای ${paper.title} موجود نیست.`;
+					lightboxImage.src = `https://placehold.co/800x1200/cccccc/333333?text=No+Preview`; // Placeholder
+					lightboxImage.style.cursor = 'default';
+					lightboxImage.onclick = null; // Remove existing click handler
 
-				const fullFileNameWithPdf = `${fileNameBase}.pdf`;
-				const hash = getWikimediaHash(paper, fullFileNameWithPdf);
-				const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_');
-
-				const width = 800;
-				const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${lightboxCurrentPage}-${width}px-${fileNameForUrlPath}.jpg`;
-
-				lightboxImage.src = imageUrl;
-
-				const wikimediaFileLink = `https://commons.wikimedia.org/w/index.php?title=File%3A${fileNameForUrlPath}&page=${lightboxCurrentPage}`;
-				lightboxImage.onclick = () => {
-					window.open(wikimediaFileLink, '_blank');
-				};
-				lightboxImage.style.cursor = 'pointer';
-
-				try {
-					await new Promise((resolve, reject) => {
-						lightboxImage.onload = () => {
-							lightboxStatusMessage.style.display = 'none';
-							lightboxImage.style.display = 'block';
-							lightboxErrorMessage.style.display = 'none';
-							resolve(true);
-						};
-						lightboxImage.onerror = () => {
-							lightboxStatusMessage.style.display = 'none';
-							lightboxImage.style.display = 'none';
-							lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${englishToPersianDigits(lightboxCurrentPage)} یافت نشد.`;
-							lightboxErrorMessage.style.display = 'block';
-							reject(false);
-						};
-					});
-					downloadLink.href = `https://upload.wikimedia.org/wikipedia/commons/${hash[0]}/${hash}/${fileNameForUrlPath}?download`;
+					downloadLink.href = getIssueFileUrl(paper, paper.currentIssue);
+					downloadLink.textContent = 'دانلود PDF';
 					downloadLink.style.display = 'inline-block';
 
-					viewLargeLink.href = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${lightboxCurrentPage}-2048px-${fileNameForUrlPath}.jpg`;
-					viewLargeLink.style.display = 'inline-block';
+					viewLargeLink.style.display = 'none'; // No large image for utlib
 
-				} catch (error) {
+					// Disable page navigation for utlib as it's a single PDF file
+					lightboxPrevPageButton.disabled = true;
+					lightboxNextPageButton.disabled = true;
+					lightboxPageNumberInput.disabled = true;
+
+					lightboxStatusMessage.style.display = 'none';
+					lightboxImage.style.display = 'block';
+					lightboxErrorMessage.style.display = 'none';
+
+				} else { // Existing Wikimedia logic
+					let displayDayForDate = (id === 'yaghma' || id === 'negin') && paper.calendar_type === 'shamsi' ? '01' : day;
+
+					if (paper.type === 'database' && paper.currentIssue) {
+						const issueDateParsed = parseDateString(paper.currentIssue.date);
+						if (issueDateParsed) {
+							year = issueDateParsed.year;
+							month = issueDateParsed.month;
+							day = issueDateParsed.day;
+						}
+					}
+
+					if (paper.calendar_type === 'hijri') {
+						const hijriMonthName = hijriMonthNames[month - 1];
+						formattedDate = `${englishToPersianDigits(pad(day))} ${hijriMonthName} ${englishToPersianDigits(year)} (قمری)`;
+					} else if (paper.calendar_type === 'shamsi') {
+						const persianMonthName = shamsiMonthNames[month - 1];
+
+						if (paper.type === 'database' && paper.frequency === 'monthly') {
+							formattedDate = `${persianMonthName} ${englishToPersianDigits(year)}`;
+						} else {
+							formattedDate = `${englishToPersianDigits(pad(day))} ${persianMonthName} ${englishToPersianDigits(year)}`;
+						}
+					} else {
+						formattedDate = `${englishToPersianDigits(pad(day))}/${englishToPersianDigits(pad(month))}/${englishToPersianDigits(year)}`;
+					}
+
+					let titleText = `${paper.title}`;
+					if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.issue_number) {
+						titleText += ` (شماره ${englishToPersianDigits(paper.currentIssue.issue_number)})`;
+					}
+
+					lightboxNewspaperTitle.textContent = `${titleText} - ${formattedDate} - صفحه: ${englishToPersianDigits(lightboxCurrentPage)}`;
+					lightboxPageNumberInput.value = lightboxCurrentPage;
+					lightboxImage.alt = `تصویر ${paper.title} در لایت‌باکس - صفحه ${englishToPersianDigits(lightboxCurrentPage)}`;
+
+					lightboxStatusMessage.textContent = 'در حال بارگذاری...';
+					lightboxStatusMessage.style.display = 'block';
+					lightboxImage.style.display = 'none';
 					downloadLink.style.display = 'none';
 					viewLargeLink.style.display = 'none';
+
+					let fileNameBase;
+					let maxPages = paper.maxPages;
+					let dateForFilename;
+
+					if (paper.type === 'formula') {
+						dateForFilename = {y: year, m: month, d: day};
+						if (id === 'jangal_qamari') {
+							fileNameBase = `${paper.prefix} ${dateForFilename.y}${dateForFilename.m}${dateForFilename.d} AH`;
+						} else if (id === 'yaghma' && paper.calendar_type === 'shamsi') {
+							const shamsiInputYear = parseInt(dateForFilename.y, 10);
+							const shamsiInputMonth = parseInt(dateForFilename.m, 10);
+
+							if (shamsiInputYear >= 1327 && shamsiInputYear <= 1357 && shamsiInputMonth >= 1 && shamsiInputMonth <= 12) {
+								const volume = shamsiInputYear - 1327 + 1;
+								const issueNumber = shamsiInputMonth;
+								fileNameBase = `Yaghma, Vol. ${volume}, No. ${issueNumber}, ${shamsiInputYear} SH`;
+							} else {
+								console.error("Yaghma lightbox: Date out of range for filename", shamsiInputYear, shamsiInputMonth);
+								lightboxStatusMessage.style.display = 'none';
+								lightboxErrorMessage.textContent = `اطلاعات نشریه یغما برای این تاریخ در لایت‌باکس یافت نشد.`;
+								lightboxErrorMessage.style.display = 'block';
+								return;
+							}
+						} else if (id === 'negin' && paper.calendar_type === 'shamsi') {
+							const shamsiInputYear = parseInt(dateForFilename.y, 10);
+							const shamsiInputMonth = parseInt(dateForFilename.m, 10);
+							const startDateCheck = shamsiInputYear > 1344 || (shamsiInputYear === 1344 && shamsiInputMonth >= 3);
+							const endDateCheck = shamsiInputYear < 1359 || (shamsiInputYear === 1359 && shamsiInputMonth <= 1);
+
+							if (startDateCheck && endDateCheck) {
+								const volume = shamsiInputYear - 1344 + 1;
+								let issueNumber;
+								if (shamsiInputYear === 1344) {
+									issueNumber = shamsiInputMonth - 2;
+								} else {
+									const yearsAfter1344 = shamsiInputYear - 1345;
+									const issuesInFullYears = yearsAfter1344 * 12;
+									issueNumber = 10 + issuesInFullYears + shamsiInputMonth;
+								}
+								fileNameBase = `Negin, Vol. ${volume}, No. ${issueNumber}, ${shamsiInputYear} SH`;
+							} else {
+								console.error("Negin lightbox: Date out of range for filename", shamsiInputYear, shamsiInputMonth);
+								lightboxStatusMessage.style.display = 'none';
+								lightboxErrorMessage.textContent = `اطلاعات نشریه نگین برای این تاریخ در لایت‌باکس یافت نشد.`;
+								lightboxErrorMessage.style.display = 'block';
+								return;
+							}
+						} else {
+							fileNameBase = `${paper.prefix}${dateForFilename.y}${dateForFilename.m}${dateForFilename.d}${paper.calendar_type === 'hijri' ? ' AH' : ''}`;
+						}
+					} else if (paper.type === 'database' && paper.currentIssue) {
+						fileNameBase = paper.currentIssue.filename_base;
+						maxPages = paper.currentIssue.pages || null;
+						const issueDateParsed = parseDateString(paper.currentIssue.date);
+						if(issueDateParsed) {
+							dateForFilename = {y: issueDateParsed.year, m: pad(issueDateParsed.month), d: pad(issueDateParsed.day)};
+						} else {
+							console.error("Lightbox: Invalid date string in currentIssue for", id);
+							lightboxStatusMessage.style.display = 'none';
+							lightboxErrorMessage.textContent = `اطلاعات تاریخ نشریه برای نمایش در لایت‌باکس یافت نشد.`;
+							lightboxErrorMessage.style.display = 'block';
+							return;
+						}
+					} else {
+						console.error("Lightbox: Issue data missing for DB paper or unknown state for:", id, "on date", year, month, day);
+						lightboxStatusMessage.style.display = 'none';
+						lightboxErrorMessage.textContent = `اطلاعات نشریه برای نمایش در لایت‌باکس یافت نشد.`;
+						lightboxErrorMessage.style.display = 'block';
+						return;
+					}
+
+					const fullFileNameWithPdf = `${fileNameBase}.pdf`;
+					const hash = getWikimediaHash(paper, fullFileNameWithPdf);
+					const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_');
+
+					const imageUrl = getIssueFileUrl(paper, { filename_base: fileNameBase }, lightboxCurrentPage, 800);
+
+					lightboxImage.src = imageUrl;
+
+					const wikimediaFileLink = `https://commons.wikimedia.org/w/index.php?title=File%3A${fileNameForUrlPath}&page=${lightboxCurrentPage}`;
+					lightboxImage.onclick = () => {
+						window.open(wikimediaFileLink, '_blank');
+					};
+					lightboxImage.style.cursor = 'pointer';
+
+					try {
+						await new Promise((resolve, reject) => {
+							lightboxImage.onload = () => {
+								lightboxStatusMessage.style.display = 'none';
+								lightboxImage.style.display = 'block';
+								lightboxErrorMessage.style.display = 'none';
+								resolve(true);
+							};
+							lightboxImage.onerror = () => {
+								lightboxStatusMessage.style.display = 'none';
+								lightboxImage.style.display = 'none';
+								lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${englishToPersianDigits(lightboxCurrentPage)} یافت نشد.`;
+								lightboxErrorMessage.style.display = 'block';
+								reject(false);
+							};
+						});
+						downloadLink.href = `https://upload.wikimedia.org/wikipedia/commons/${hash[0]}/${hash}/${fileNameForUrlPath}?download`;
+						downloadLink.textContent = 'دانلود نشریه';
+						downloadLink.style.display = 'inline-block';
+
+						viewLargeLink.href = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${lightboxCurrentPage}-2048px-${fileNameForUrlPath}.jpg`;
+						viewLargeLink.style.display = 'inline-block';
+
+					} catch (error) {
+						downloadLink.style.display = 'none';
+						viewLargeLink.style.display = 'none';
+					}
+
+					lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
+					lightboxNextPageButton.disabled = (maxPages !== null && maxPages !== Infinity && lightboxCurrentPage >= maxPages);
+					lightboxPageNumberInput.disabled = false;
 				}
 
-				lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
-				lightboxNextPageButton.disabled = (maxPages !== null && maxPages !== Infinity && lightboxCurrentPage >= maxPages);
 
 				const isDatabasePaperWithIssues = paper.type === 'database' && paper.issues && paper.issues.length > 0;
 
-				if (isDatabasePaperWithIssues) {
+				if (isDatabasePaperWithIssues && paper.source !== 'utlib') { // Issue navigation only for non-utlib database papers
 					issueNavLightbox.style.display = 'flex';
 					const navState = paper.navState;
 					if (navState && navState.currentIssue) {
@@ -2106,7 +2197,8 @@
 				const availableNewspapersForCurrentDate = Object.keys(newspaperData)
 					.filter(key => {
 						const p = newspaperData[key];
-						if (!p || !p.available) return false;
+						// Only consider non-utlib papers for newspaper navigation
+						if (!p || !p.available || p.source === 'utlib') return false;
 						const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
 											(currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
 						return matchesMode;
@@ -2130,7 +2222,7 @@
 
 			const lightboxGoToPage = (direction) => {
 				const paper = newspaperData[currentLightboxNewspaperId];
-				if (!paper) return;
+				if (!paper || paper.source === 'utlib') return; // Page navigation not applicable for utlib
 				let currentPageBeforeChange = lightboxCurrentPage;
 				if (direction === 'prev' && lightboxCurrentPage > 1) {
 					lightboxCurrentPage--;
@@ -2151,7 +2243,8 @@
 				const availableNewspapers = Object.keys(newspaperData)
 					.filter(key => {
 						const p = newspaperData[key];
-						if (!p || !p.available) return false;
+						// Only consider non-utlib papers for newspaper navigation
+						if (!p || !p.available || p.source === 'utlib') return false;
 						const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
 											(currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
 						return matchesMode;
@@ -2184,7 +2277,7 @@
 
 			const updateIssueNavButtons = (newspaperId) => {
 				const paper = newspaperData[newspaperId];
-				if (!paper || !paper.navState) return;
+				if (!paper || !paper.navState || paper.source === 'utlib') return; // Not applicable for utlib
 				const { currentIndex, issuesArray, prevIssueBtn, nextIssueBtn } = paper.navState;
 				if (!prevIssueBtn || !nextIssueBtn || !issuesArray) return;
 				prevIssueBtn.disabled = currentIndex <= 0;
@@ -2193,7 +2286,7 @@
 
 			const goToNewspaperIssue = (newspaperId, index) => {
 				const paper = newspaperData[newspaperId];
-				if (!paper || !paper.navState) return;
+				if (!paper || !paper.navState || paper.source === 'utlib') return; // Not applicable for utlib
 				const { issuesArray, issueNumberInput } = paper.navState;
 				if (index < 0 || index >= issuesArray.length) return;
 				
@@ -2240,21 +2333,21 @@
 
 			const goToPrevNewspaperIssue = (newspaperId) => {
 				const paper = newspaperData[newspaperId];
-				if (!paper || !paper.navState) return;
+				if (!paper || !paper.navState || paper.source === 'utlib') return;
 				const { currentIndex } = paper.navState;
 				if (currentIndex > 0) goToNewspaperIssue(newspaperId, currentIndex - 1);
 			};
 
 			const goToNextNewspaperIssue = (newspaperId) => {
 				const paper = newspaperData[newspaperId];
-				if (!paper || !paper.navState) return;
+				if (!paper || !paper.navState || paper.source === 'utlib') return;
 				const { currentIndex, issuesArray } = paper.navState;
 				if (currentIndex < issuesArray.length - 1) goToNewspaperIssue(newspaperId, currentIndex + 1);
 			};
 
 			const goToNewspaperIssueByNumber = (newspaperId) => {
 				const paper = newspaperData[newspaperId];
-				if (!paper || !paper.navState) return;
+				if (!paper || !paper.navState || paper.source === 'utlib') return;
 				const { issueNumberInput, issuesArray } = paper.navState;
 				if (!issueNumberInput) return;
 				const issueNumberText = persianToEnglishDigits(issueNumberInput.value);
@@ -2267,7 +2360,7 @@
 			const updateIssueNavigationVisibility = (newspaperId) => {
 				const paper = newspaperData[newspaperId];
 				if (!paper || paper.type !== 'database' || !paper.available || !paper.navState || !paper.navState.navigationDiv ||
-					!paper.issues || paper.issues.length === 0) {
+					!paper.issues || paper.issues.length === 0 || paper.source === 'utlib') { // Hide nav for utlib
 					if (paper && paper.navState && paper.navState.navigationDiv) {
 						paper.navState.navigationDiv.style.display = 'none';
 					}
@@ -2321,8 +2414,8 @@
 
 			const handleGlobalGoToFirstIssue = (paperId) => {
 				const paper = newspaperData[paperId];
-				if (!paper) {
-					console.warn(`Cannot go to first issue for ${paperId}: Newspaper data not found.`);
+				if (!paper || paper.source === 'utlib') { // Do not handle for utlib
+					console.warn(`Cannot go to first issue for ${paperId}: Newspaper data not found or is utlib source.`);
 					return;
 				}
 
@@ -2380,7 +2473,8 @@
 
 			const updateGlobalGoToFirstIssueButtonsVisibility = () => {
 				Object.values(newspaperData).forEach(paper => {
-					if (paper.globalFirstIssueBtn) {
+					// Do not show global first issue buttons for utlib papers
+					if (paper.globalFirstIssueBtn && paper.source !== 'utlib') {
 						const isPermanentlyAvailable = (paper.type === 'database' && paper.issues && paper.issues.length > 0) ||
 														(paper.type === 'formula' && paper.firstIssueDate);
 
@@ -2395,6 +2489,8 @@
 							paper.globalFirstIssueBtn.style.display = 'none';
 							paper.globalFirstIssueBtn.classList.remove('available-on-date');
 						}
+					} else if (paper.globalFirstIssueBtn) {
+						paper.globalFirstIssueBtn.style.display = 'none'; // Hide utlib buttons
 					}
 				});
 			};
@@ -2410,16 +2506,23 @@
 				const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
 					paper.type === 'database' && paper.issues && paper.issues.length > 0
 				).sort((a, b) => {
-					// Primary sort: calendar_type (hijri before shamsi)
-					if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
-					if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+					// Primary sort: utlib papers first
+					if (a.source === 'utlib' && b.source !== 'utlib') return -1;
+					if (a.source !== 'utlib' && b.source === 'utlib') return 1;
 
-					// Secondary sort: firstIssueDate (earliest first)
-					const dateA = parseInt(a.firstIssueDate, 10);
-					const dateB = parseInt(b.firstIssueDate, 10);
-					if (dateA !== dateB) return dateA - dateB;
+					// Secondary sort: calendar_type (hijri before shamsi) for non-utlib
+					if (a.source !== 'utlib' && b.source !== 'utlib') {
+						if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
+						if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+					}
 
-					// Tertiary sort: alphabetical by title
+					// Tertiary sort: firstIssueDate (earliest first) for non-utlib
+					if (a.source !== 'utlib' && b.source !== 'utlib' && a.firstIssueDate && b.firstIssueDate) {
+						const dateA = parseInt(a.firstIssueDate, 10);
+						const dateB = parseInt(b.firstIssueDate, 10);
+						if (dateA !== dateB) return dateA - dateB;
+					}
+					// For utlib, sort by title
 					return a.title.localeCompare(b.title, 'fa');
 				});
 
@@ -2480,13 +2583,19 @@
 				issuesListContainer.innerHTML = '';
 				issuesImageGridContainer.innerHTML = '';
 
-				const issuesToDisplay = paper.navState && paper.navState.issuesArray
-										? paper.navState.issuesArray
-										: [...paper.issues].sort((a,b) => {
-											const dateA = parseInt(a.date, 10);
-											const dateB = parseInt(b.date, 10);
-											return dateA - dateB;
-										});
+				const issuesToDisplaySorted = [...paper.issues].sort((a,b) => {
+					if (paper.source === 'utlib') {
+						if (a.year_shamsi !== b.year_shamsi) return a.year_shamsi - b.year_shamsi;
+						if (a.volume !== b.volume) return a.volume - b.volume;
+						const numA = a.number === null ? -Infinity : a.number;
+						const numB = b.number === null ? -Infinity : b.number;
+						return numA - numB;
+					} else {
+						const dateA = parseInt(a.date, 10);
+						const dateB = parseInt(b.date, 10);
+						return dateA - dateB;
+					}
+				});
 
 				const displayDates = showDatesCheckbox.checked;
 				const displayImages = showImagesCheckbox.checked;
@@ -2495,50 +2604,65 @@
 					issuesListContainer.style.display = 'none';
 					issuesImageGridContainer.style.display = 'grid';
 
-					issuesToDisplay.forEach(issue => {
-						const issueDateParsed = parseDateString(issue.date);
-						if (!issueDateParsed) return;
-
-						const fullFileNameWithPdf = `${issue.filename_base}.pdf`;
-						const hash = getWikimediaHash(paper, fullFileNameWithPdf);
-						const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_');
-						const thumbnailUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page1-120px-${fileNameForUrlPath}.jpg`;
-
+					issuesToDisplaySorted.forEach(issue => {
 						const thumbnailItem = document.createElement('div');
 						thumbnailItem.classList.add('issue-thumbnail-item');
 
 						const thumbnailImage = document.createElement('img');
 						thumbnailImage.classList.add('issue-thumbnail-image');
+						
+						let thumbnailUrl;
+						if (paper.source === 'utlib') {
+							thumbnailUrl = `https://placehold.co/120x180/cccccc/333333?text=No+Image`; // Placeholder for utlib
+						} else {
+							thumbnailUrl = getIssueFileUrl(paper, issue, 1, 120); // Use page 1 for thumbnail, 120px width
+						}
 						thumbnailImage.src = thumbnailUrl;
-						thumbnailImage.alt = `تصویر شماره ${englishToPersianDigits(issue.issue_number)} ${paper.title}`;
+						thumbnailImage.alt = `تصویر شماره ${englishToPersianDigits(issue.issue_number || issue.volume)} ${paper.title}`; // Adapt alt text for utlib
 						thumbnailImage.onerror = () => {
 							thumbnailImage.src = `https://placehold.co/120x180/cccccc/333333?text=No+Image`;
 						};
 
 						const thumbnailText = document.createElement('span');
 						thumbnailText.classList.add('issue-thumbnail-text');
-						thumbnailText.textContent = `شمارهٔ ${englishToPersianDigits(issue.issue_number)}`;
-
-						if (displayDates) {
-							let monthNamesArray = [];
-							if (paper.calendar_type === 'shamsi') {
-								monthNamesArray = shamsiMonthNames;
-							} else {
-								monthNamesArray = hijriMonthNames;
-							}
-							const monthName = monthNamesArray[issueDateParsed.month - 1];
-							if (paper.frequency === 'monthly') {
-								thumbnailText.textContent += `\n${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
-							} else {
-								thumbnailText.textContent += `\n${englishToPersianDigits(issueDateParsed.day)} ${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
+						
+						let thumbnailTextContent = '';
+						if (paper.source === 'utlib') {
+							thumbnailTextContent = `سال: ${englishToPersianDigits(issue.year_shamsi)}`;
+							if (issue.volume) thumbnailTextContent += `\nدوره: ${englishToPersianDigits(issue.volume)}`;
+							if (issue.number) thumbnailTextContent += `\nشماره: ${englishToPersianDigits(issue.number)}`;
+						} else {
+							thumbnailTextContent = `شمارهٔ ${englishToPersianDigits(issue.issue_number)}`;
+							if (displayDates) {
+								const issueDateParsed = parseDateString(issue.date);
+								if (issueDateParsed) {
+									let monthNamesArray = [];
+									if (paper.calendar_type === 'shamsi') {
+										monthNamesArray = shamsiMonthNames;
+									} else {
+										monthNamesArray = hijriMonthNames;
+									}
+									const monthName = monthNamesArray[issueDateParsed.month - 1];
+									if (paper.frequency === 'monthly') {
+										thumbnailTextContent += `\n${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
+									} else {
+										thumbnailTextContent += `\n${englishToPersianDigits(issueDateParsed.day)} ${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
+									}
+								}
 							}
 						}
+						thumbnailText.textContent = thumbnailTextContent;
 
 						thumbnailItem.appendChild(thumbnailImage);
 						thumbnailItem.appendChild(thumbnailText);
 
 						thumbnailItem.addEventListener('click', () => {
-							goToIssueFromModal(paper.id, issue);
+							// For utlib, directly open PDF. For others, go to date and open lightbox.
+							if (paper.source === 'utlib') {
+								window.open(getIssueFileUrl(paper, issue), '_blank');
+							} else {
+								goToIssueFromModal(paper.id, issue);
+							}
 						});
 						issuesImageGridContainer.appendChild(thumbnailItem);
 					});
@@ -2547,26 +2671,31 @@
 					issuesListContainer.style.display = 'flex';
 					issuesImageGridContainer.style.display = 'none';
 
-					issuesToDisplay.forEach(issue => {
+					issuesToDisplaySorted.forEach(issue => {
 						const issueButton = document.createElement('button');
-						let buttonText = `شمارهٔ ${englishToPersianDigits(issue.issue_number)}`;
+						let buttonText = '';
 
-						if (displayDates) {
-							const issueDateParsed = parseDateString(issue.date);
-							if (issueDateParsed) {
-								let monthNamesArray = [];
-								if (paper.calendar_type === 'shamsi') {
-									monthNamesArray = shamsiMonthNames;
-								} else {
-									monthNamesArray = hijriMonthNames;
-								}
-
-								const monthName = monthNamesArray[issueDateParsed.month - 1];
-
-								if (paper.frequency === 'monthly') {
-									buttonText += `, ${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
-								} else {
-									buttonText += `, روز ${englishToPersianDigits(issueDateParsed.day)} ${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
+						if (paper.source === 'utlib') {
+							buttonText = `سال: ${englishToPersianDigits(issue.year_shamsi)}`;
+							if (issue.volume) buttonText += `, دوره: ${englishToPersianDigits(issue.volume)}`;
+							if (issue.number) buttonText += `, شماره: ${englishToPersianDigits(issue.number)}`;
+						} else {
+							buttonText = `شمارهٔ ${englishToPersianDigits(issue.issue_number)}`;
+							if (displayDates) {
+								const issueDateParsed = parseDateString(issue.date);
+								if (issueDateParsed) {
+									let monthNamesArray = [];
+									if (paper.calendar_type === 'shamsi') {
+										monthNamesArray = shamsiMonthNames;
+									} else {
+										monthNamesArray = hijriMonthNames;
+									}
+									const monthName = monthNamesArray[issueDateParsed.month - 1];
+									if (paper.frequency === 'monthly') {
+										buttonText += `, ${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
+									} else {
+										buttonText += `, روز ${englishToPersianDigits(issueDateParsed.day)} ${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
+									}
 								}
 							}
 						}
@@ -2574,7 +2703,11 @@
 						issueButton.textContent = buttonText;
 						issueButton.classList.add('issue-item-button');
 						issueButton.addEventListener('click', () => {
-							goToIssueFromModal(paper.id, issue);
+							if (paper.source === 'utlib') {
+								window.open(getIssueFileUrl(paper, issue), '_blank');
+							} else {
+								goToIssueFromModal(paper.id, issue);
+							}
 						});
 						issuesListContainer.appendChild(issueButton);
 					});
@@ -2586,10 +2719,19 @@
 			};
 
 			const goToIssueFromModal = async (paperId, issue) => {
+				const paper = newspaperData[paperId];
+				if (!paper) return;
+
+				// For utlib, directly open PDF and close modal
+				if (paper.source === 'utlib') {
+					window.open(getIssueFileUrl(paper, issue), '_blank');
+					closeAllIssuesModal();
+					return;
+				}
+
 				const issueDateParsed = parseDateString(issue.date);
 				if (!issueDateParsed) return;
 
-				const paper = newspaperData[paperId];
 				if (paper) {
 					paper.currentIssue = issue;
 					if (paper.navState) {
@@ -2920,13 +3062,17 @@
 
 			document.addEventListener('keydown', (e) => {
 				if (lightboxOverlay.classList.contains('visible')) {
-					if (e.key === 'ArrowLeft') {
-						e.preventDefault();
-						lightboxGoToPage('prev');
-					} else if (e.key === 'ArrowRight') {
-						e.preventDefault();
-						lightboxGoToPage('next');
-					} else if (e.key === 'Escape') {
+					const paper = newspaperData[currentLightboxNewspaperId];
+					if (paper && paper.source !== 'utlib') { // Only allow keyboard navigation for non-utlib
+						if (e.key === 'ArrowLeft') {
+							e.preventDefault();
+							lightboxGoToPage('prev');
+						} else if (e.key === 'ArrowRight') {
+							e.preventDefault();
+							lightboxGoToPage('next');
+						}
+					}
+					if (e.key === 'Escape') {
 						closeLightbox();
 					}
 				}
@@ -2956,16 +3102,23 @@
 					const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
 						paper.type === 'database' && paper.issues && paper.issues.length > 0
 					).sort((a, b) => {
-						// Primary sort: calendar_type (hijri before shamsi)
-						if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
-						if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+						// Primary sort: utlib papers first
+						if (a.source === 'utlib' && b.source !== 'utlib') return -1;
+						if (a.source !== 'utlib' && b.source === 'utlib') return 1;
 
-						// Secondary sort: firstIssueDate (earliest first)
-						const dateA = parseInt(a.firstIssueDate, 10);
-						const dateB = parseInt(b.firstIssueDate, 10);
-						if (dateA !== dateB) return dateA - dateB;
+						// Secondary sort: calendar_type (hijri before shamsi) for non-utlib
+						if (a.source !== 'utlib' && b.source !== 'utlib') {
+							if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
+							if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+						}
 
-						// Tertiary sort: alphabetical by title
+						// Tertiary sort: firstIssueDate (earliest first) for non-utlib
+						if (a.source !== 'utlib' && b.source !== 'utlib' && a.firstIssueDate && b.firstIssueDate) {
+							const dateA = parseInt(a.firstIssueDate, 10);
+							const dateB = parseInt(b.firstIssueDate, 10);
+							if (dateA !== dateB) return dateA - dateB;
+						}
+						// For utlib, sort by title
 						return a.title.localeCompare(b.title, 'fa');
 					});
 
@@ -2984,16 +3137,23 @@
 					const dbPapersWithIssues = Object.values(newspaperData).filter(paper =>
 						paper.type === 'database' && paper.issues && paper.issues.length > 0
 					).sort((a, b) => {
-						// Primary sort: calendar_type (hijri before shamsi)
-						if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
-						if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+						// Primary sort: utlib papers first
+						if (a.source === 'utlib' && b.source !== 'utlib') return -1;
+						if (a.source !== 'utlib' && b.source === 'utlib') return 1;
 
-						// Secondary sort: firstIssueDate (earliest first)
-						const dateA = parseInt(a.firstIssueDate, 10);
-						const dateB = parseInt(b.firstIssueDate, 10);
-						if (dateA !== dateB) return dateA - dateB;
+						// Secondary sort: calendar_type (hijri before shamsi) for non-utlib
+						if (a.source !== 'utlib' && b.source !== 'utlib') {
+							if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
+							if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+						}
 
-						// Tertiary sort: alphabetical by title
+						// Tertiary sort: firstIssueDate (earliest first) for non-utlib
+						if (a.source !== 'utlib' && b.source !== 'utlib' && a.firstIssueDate && b.firstIssueDate) {
+							const dateA = parseInt(a.firstIssueDate, 10);
+							const dateB = parseInt(b.firstIssueDate, 10);
+							if (dateA !== dateB) return dateA - dateB;
+						}
+						// For utlib, sort by title
 						return a.title.localeCompare(b.title, 'fa');
 					});
 
