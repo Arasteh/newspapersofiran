@@ -23613,5 +23613,84 @@
 		"wikimedia_hash": "3b"
 	}
 	]
+},
+{
+  "id": "Q135417881",
+  "title": "سروش",
+  "calendar_type": "hijri",
+  "issues": [
+    {
+      "issue_number": 1,
+      "date": "13270612",
+      "filename_base": "Soroush_No_01",
+      "wikimedia_hash": "aa"
+    },
+    {
+      "issue_number": 2,
+      "date": "13270619",
+      "filename_base": "Soroush_No_02",
+      "wikimedia_hash": "b7"
+    },
+    {
+      "issue_number": 3,
+      "date": "13270625",
+      "filename_base": "Soroush_No_03",
+      "wikimedia_hash": "9e"
+    },
+    {
+      "issue_number": 4,
+      "date": "13270703",
+      "filename_base": "Soroush_No_04",
+      "wikimedia_hash": "5c"
+    },
+    {
+      "issue_number": 5,
+      "date": "13270710",
+      "filename_base": "Soroush_No_05",
+      "wikimedia_hash": "be"
+    },
+    {
+      "issue_number": 6,
+      "date": "13270816",
+      "filename_base": "Soroush_No_06",
+      "wikimedia_hash": "42"
+    },
+    {
+      "issue_number": 7,
+      "date": "13270830",
+      "filename_base": "Soroush_No_07",
+      "wikimedia_hash": "e2"
+    },
+    {
+      "issue_number": 8,
+      "date": "13270912",
+      "filename_base": "Soroush_No_08",
+      "wikimedia_hash": "03"
+    },
+    {
+      "issue_number": 9,
+      "date": "13270920",
+      "filename_base": "Soroush_No_09",
+      "wikimedia_hash": "ca"
+    },
+    {
+      "issue_number": 10,
+      "date": "13270928",
+      "filename_base": "Soroush_No_10",
+      "wikimedia_hash": "8b"
+    },
+    {
+      "issue_number": 11,
+      "date": "13271005",
+      "filename_base": "Soroush_No_11",
+      "wikimedia_hash": "70"
+    },
+    {
+      "issue_number": 13,
+      "date": "13271026",
+      "filename_base": "Soroush_No_13",
+      "wikimedia_hash": "b8"
+    }
+  ]
 }
 ]
