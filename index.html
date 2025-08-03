@@ -1415,69 +1415,69 @@
 
 			const sortAndRenderGlobalFirstIssueButtons = () => {
 				const allPapers = Object.values(newspaperData);
-				const frequencyOrder = { 'daily': 1, 'weekly': 2, 'monthly': 3, 'quarterly': 4, 'yearly': 5 };
+				const sortablePapers = allPapers.filter(paper => paper.firstIssueDate && paper.source !== 'utlib');
 
-				const sortablePapers = allPapers.filter(paper => paper.firstIssueDate && paper.source !== 'utlib') // Filter out utlib papers
-					.map(paper => {
-						return {
-							id: paper.id,
-							calendar_type: paper.calendar_type,
-							firstIssueDate: paper.firstIssueDate,
-							globalFirstIssueBtn: paper.globalFirstIssueBtn,
-							title: paper.title,
-							frequency: paper.frequency,
-							source: paper.source
-						};
-					});
+				const shamsiPapers = sortablePapers.filter(p => p.calendar_type === 'shamsi');
+				const hijriPapers = sortablePapers.filter(p => p.calendar_type === 'hijri');
 
-				sortablePapers.sort((a, b) => {
-					// Primary sort: calendar_type (hijri before shamsi)
-					if (a.calendar_type === 'hijri' && b.calendar_type === 'shamsi') return -1;
-					if (a.calendar_type === 'shamsi' && b.calendar_type === 'hijri') return 1;
+				const shamsiNewspaperCount = shamsiPapers.length;
+				const shamsiIssueCount = shamsiPapers.reduce((sum, paper) => sum + (paper.navState.issuesArray?.length || 0), 0);
 
-					// Secondary sort: if both are shamsi, sort by year, then title
-					if (a.calendar_type === 'shamsi' && b.calendar_type === 'shamsi') {
-						const yearA = parseInt(a.firstIssueDate.substring(0, 4), 10);
-						const yearB = parseInt(b.firstIssueDate.substring(0, 4), 10);
-						if (yearA !== yearB) return yearA - yearB;
-						return a.title.localeCompare(b.title, 'fa');
-					}
+				const hijriNewspaperCount = hijriPapers.length;
+				const hijriIssueCount = hijriPapers.reduce((sum, paper) => sum + (paper.navState.issuesArray?.length || 0), 0);
 
-					// Tertiary sort: for other cases (e.g., both hijri), sort by full date, then title
+				// Sort the papers within their groups
+				shamsiPapers.sort((a, b) => {
+					const yearA = parseInt(a.firstIssueDate.substring(0, 4), 10);
+					const yearB = parseInt(b.firstIssueDate.substring(0, 4), 10);
+					if (yearA !== yearB) return yearA - yearB;
+					return a.title.localeCompare(b.title, 'fa');
+				});
+
+				hijriPapers.sort((a, b) => {
 					const dateA = parseInt(a.firstIssueDate, 10);
 					const dateB = parseInt(b.firstIssueDate, 10);
 					if (dateA !== dateB) return dateA - dateB;
-
-					// Final fallback: alphabetical by title
 					return a.title.localeCompare(b.title, 'fa');
 				});
 
 				globalGoToFirstIssueControls.innerHTML = '';
 
-				let currentCalendarType = null;
-
-				sortablePapers.forEach(paper => {
-					if (paper.globalFirstIssueBtn) {
-						if (paper.calendar_type !== currentCalendarType) {
-							const heading = document.createElement('h3');
-							heading.style.width = '100%';
-							heading.style.textAlign = 'center';
-							heading.style.marginTop = '15px';
-							heading.style.marginBottom = '5px';
-							heading.style.color = 'var(--section-title-color)';
-							heading.style.fontSize = '1.1em';
-							if (paper.calendar_type === 'hijri') {
-								heading.textContent = 'نشریات قمری';
-							} else if (paper.calendar_type === 'shamsi') {
-								heading.textContent = 'نشریات شمسی';
-							}
-							globalGoToFirstIssueControls.appendChild(heading);
-							currentCalendarType = paper.calendar_type;
+				if (hijriPapers.length > 0) {
+					const heading = document.createElement('h3');
+					heading.style.width = '100%';
+					heading.style.textAlign = 'center';
+					heading.style.marginTop = '15px';
+					heading.style.marginBottom = '5px';
+					heading.style.color = 'var(--section-title-color)';
+					heading.style.fontSize = '1.1em';
+					heading.textContent = `نشریات قمری (${englishToPersianDigits(hijriNewspaperCount)} نشریه، ${englishToPersianDigits(hijriIssueCount)} شمارهٔ نمایه‌شده)`;
+					globalGoToFirstIssueControls.appendChild(heading);
+					hijriPapers.forEach(paper => {
+						if (paper.globalFirstIssueBtn) {
+							globalGoToFirstIssueControls.appendChild(paper.globalFirstIssueBtn);
+							paper.globalFirstIssueBtn.style.display = 'inline-block';
 						}
-						globalGoToFirstIssueControls.appendChild(paper.globalFirstIssueBtn);
-						paper.globalFirstIssueBtn.style.display = 'inline-block';
-					}
-				});
+					});
+				}
+
+				if (shamsiPapers.length > 0) {
+					const heading = document.createElement('h3');
+					heading.style.width = '100%';
+					heading.style.textAlign = 'center';
+					heading.style.marginTop = '15px';
+					heading.style.marginBottom = '5px';
+					heading.style.color = 'var(--section-title-color)';
+					heading.style.fontSize = '1.1em';
+					heading.textContent = `نشریات شمسی (${englishToPersianDigits(shamsiNewspaperCount)} نشریه، ${englishToPersianDigits(shamsiIssueCount)} شمارهٔ نمایه‌شده)`;
+					globalGoToFirstIssueControls.appendChild(heading);
+					shamsiPapers.forEach(paper => {
+						if (paper.globalFirstIssueBtn) {
+							globalGoToFirstIssueControls.appendChild(paper.globalFirstIssueBtn);
+							paper.globalFirstIssueBtn.style.display = 'inline-block';
+						}
+					});
+				}
 			};
 
 
