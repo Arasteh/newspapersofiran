@@ -23988,5 +23988,414 @@
       "wikimedia_hash": "65"
     }
   ]
+},
+{
+  "id": "Q5883331",
+  "title": "شکوفه",
+  "calendar_type": "hijri",
+  "issues": [
+    {
+      "issue_number": 101,
+      "date": "13301201",
+      "filename_base": "1_Ausgabe_im_Original_ohne_Datumsangabe",
+      "wikimedia_hash": "7d"
+    },
+    {
+      "issue_number": 102,
+      "date": "13310123",
+      "filename_base": "2_Ausgabe_23_Muḥarram_1331",
+      "wikimedia_hash": "3b"
+    },
+    {
+      "issue_number": 103,
+      "date": "13310201",
+      "filename_base": "3_Ausgabe_im_Original_ohne_Datumsangabe",
+      "wikimedia_hash": "26"
+    },
+    {
+      "issue_number": 104,
+      "date": "13310311",
+      "filename_base": "4_Ausgabe_Rabīʿ_al-awwal_1331",
+      "wikimedia_hash": "43"
+    },
+    {
+      "issue_number": 105,
+      "date": "13310327",
+      "filename_base": "5_Ausgabe_Rabīʿ_al-awwal_1331",
+      "wikimedia_hash": "c1"
+    },
+    {
+      "issue_number": 106,
+      "date": "13310409",
+      "filename_base": "6_Ausgabe_Rabīʿ_aṯ-ṯānī_1331",
+      "wikimedia_hash": "22"
+    },
+    {
+      "issue_number": 107,
+      "date": "13310429",
+      "filename_base": "7_Ausgabe_Rabīʿ_aṯ-ṯānī_1331",
+      "wikimedia_hash": "58"
+    },
+    {
+      "issue_number": 108,
+      "date": "13310517",
+      "filename_base": "8_Ausgabe_Ǧumādā_l-ūlā_1331",
+      "wikimedia_hash": "ff"
+    },
+    {
+      "issue_number": 109,
+      "date": "13310603",
+      "filename_base": "9_Ausgabe_3_Ǧumādā_ṯ-ṯānī_1331",
+      "wikimedia_hash": "7e"
+    },
+    {
+      "issue_number": 110,
+      "date": "13310624",
+      "filename_base": "10_Ausgabe_Ǧumādā_ṯ-ṯānī_1331",
+      "wikimedia_hash": "a1"
+    },
+    {
+      "issue_number": 111,
+      "date": "13310712",
+      "filename_base": "11_Ausgabe_Raǧab_1331",
+      "wikimedia_hash": "db"
+    },
+    {
+      "issue_number": 112,
+      "date": "13310805",
+      "filename_base": "12_Ausgabe_5_Šaʿbān_1331",
+      "wikimedia_hash": "48"
+    },
+    {
+      "issue_number": 113,
+      "date": "13310828",
+      "filename_base": "13_Ausgabe_28_Šaʿbān_1331",
+      "wikimedia_hash": "d6"
+    },
+    {
+      "issue_number": 114,
+      "date": "13310928",
+      "filename_base": "14_Ausgabe_28_Ramaḍān_1331",
+      "wikimedia_hash": "68"
+    },
+    {
+      "issue_number": 115,
+      "date": "13311020",
+      "filename_base": "15_Ausgabe_Šawwāl_1331",
+      "wikimedia_hash": "58"
+    },
+    {
+      "issue_number": 116,
+      "date": "13311110",
+      "filename_base": "16_Ausgabe_Ḏū_l-qaʿda_1331",
+      "wikimedia_hash": "30"
+    },
+    {
+      "issue_number": 117,
+      "date": "13310909",
+      "filename_base": "17_Ausgabe_9_ohne_Angabe_1331",
+      "wikimedia_hash": "df"
+    },
+    {
+      "issue_number": 118,
+      "date": "13311226",
+      "filename_base": "18_Ausgabe_1_Ausgabe_26_Ḏī_l-ḥiǧǧa_1331",
+      "wikimedia_hash": "82"
+    },
+    {
+      "issue_number": 119,
+      "date": "13320121",
+      "filename_base": "19_Ausgabe_2_Ausgabe_21_Muḥarram_1332",
+      "wikimedia_hash": "d2"
+    },
+    {
+      "issue_number": 120,
+      "date": "13320201",
+      "filename_base": "20_Ausgabe_3_Ausgabe_1_Ṣafar_1332",
+      "wikimedia_hash": "92"
+    },
+    {
+      "issue_number": 121,
+      "date": "13320215",
+      "filename_base": "21_Ausgabe_4_Ausgabe_15_Ṣafar_1332",
+      "wikimedia_hash": "4b"
+    },
+    {
+      "issue_number": 122,
+      "date": "13320305",
+      "filename_base": "22_Ausgabe_5_Ausgabe_5_Rabīʿ_al-awwal_1332",
+      "wikimedia_hash": "47"
+    },
+    {
+      "issue_number": 123,
+      "date": "13320320",
+      "filename_base": "23_Ausgabe_6_Ausgabe_20_Rabīʿ_al-awwal_1332",
+      "wikimedia_hash": "02"
+    },
+    {
+      "issue_number": 124,
+      "date": "13320405",
+      "filename_base": "24_Ausgabe_7_Ausgabe_5_Rabīʿ_aṯ-ṯānī_1332",
+      "wikimedia_hash": "63"
+    },
+    {
+      "issue_number": 208,
+      "date": "13320420",
+      "filename_base": "8_Ausgabe_20_Rabīʿ_aṯ-ṯānī_1332",
+      "wikimedia_hash": "83"
+    },
+    {
+      "issue_number": 209,
+      "date": "13320505",
+      "filename_base": "9_Ausgabe_5_Ǧumādā_l-ūlā_1332",
+      "wikimedia_hash": "33"
+    },
+    {
+      "issue_number": 210,
+      "date": "13320520",
+      "filename_base": "10_Ausgabe_20_Ǧumādā_l-ūlā_1332",
+      "wikimedia_hash": "77"
+    },
+    {
+      "issue_number": 211,
+      "date": "13320610",
+      "filename_base": "11_Ausgabe_10_Ǧumādā_ṯ-ṯānī_1332",
+      "wikimedia_hash": "34"
+    },
+    {
+      "issue_number": 212,
+      "date": "13320701",
+      "filename_base": "12_Ausgabe_1_Raǧab_1332",
+      "wikimedia_hash": "97"
+    },
+    {
+      "issue_number": 213,
+      "date": "13320720",
+      "filename_base": "13_Ausgabe_20_Raǧab_1332",
+      "wikimedia_hash": "71"
+    },
+    {
+      "issue_number": 214,
+      "date": "13320805",
+      "filename_base": "14_Ausgabe_5_Šaʿbān_1332",
+      "wikimedia_hash": "05"
+    },
+    {
+      "issue_number": 216,
+      "date": "13320910",
+      "filename_base": "16_Ausgabe_10_Ramaḍān_1332",
+      "wikimedia_hash": "1e"
+    },
+    {
+      "issue_number": 217,
+      "date": "13321005",
+      "filename_base": "17_Ausgabe_5_Šawwāl_1332",
+      "wikimedia_hash": "4b"
+    },
+    {
+      "issue_number": 218,
+      "date": "13321021",
+      "filename_base": "18_Ausgabe_21_Šawwāl_1332",
+      "wikimedia_hash": "8d"
+    },
+    {
+      "issue_number": 219,
+      "date": "13321107",
+      "filename_base": "19_Ausgabe_7_Ḏī_l-qaʿda_1332",
+      "wikimedia_hash": "10"
+    },
+    {
+      "issue_number": 220,
+      "date": "13321201",
+      "filename_base": "20_Ausgabe_1_Ḏī_l-ḥiǧǧa_1332",
+      "wikimedia_hash": "dd"
+    },
+    {
+      "issue_number": 221,
+      "date": "13321220",
+      "filename_base": "21_Ausgabe_20_Ḏī_l-ḥiǧǧa_1332",
+      "wikimedia_hash": "18"
+    },
+    {
+      "issue_number": 301,
+      "date": "13330106",
+      "filename_base": "1_Ausgabe_6_Muḥarram_1333",
+      "wikimedia_hash": "db"
+    },
+    {
+      "issue_number": 302,
+      "date": "13330128",
+      "filename_base": "2_Ausgabe_28_Muḥarram_1333",
+      "wikimedia_hash": "02"
+    },
+    {
+      "issue_number": 303,
+      "date": "13330215",
+      "filename_base": "3_Ausgabe_15_Ṣafar_1333",
+      "wikimedia_hash": "b8"
+    },
+    {
+      "issue_number": 304,
+      "date": "13330305",
+      "filename_base": "4_Ausgabe_5_Rabīʿ_al-awwal_1333",
+      "wikimedia_hash": "80"
+    },
+    {
+      "issue_number": 305,
+      "date": "13330323",
+      "filename_base": "5_Ausgabe_23_Rabīʿ_al-awwal_1333",
+      "wikimedia_hash": "ec"
+    },
+    {
+      "issue_number": 306,
+      "date": "13330408",
+      "filename_base": "6_Ausgabe_8_Rabīʿ_aṯ-ṯānī_1333",
+      "wikimedia_hash": "96"
+    },
+    {
+      "issue_number": 307,
+      "date": "13330427",
+      "filename_base": "7_Ausgabe_27_Rabīʿ_aṯ-ṯānī_1333",
+      "wikimedia_hash": "7d"
+    },
+    {
+      "issue_number": 308,
+      "date": "13330513",
+      "filename_base": "8_Ausgabe_13_Ǧumādā_l-ūlā_1333",
+      "wikimedia_hash": "e2"
+    },
+    {
+      "issue_number": 309,
+      "date": "13330602",
+      "filename_base": "9_Ausgabe_2_Ǧumādā_ṯ-ṯānī_1333",
+      "wikimedia_hash": "a0"
+    },
+    {
+      "issue_number": 310,
+      "date": "13330614",
+      "filename_base": "10_Ausgabe_14_Ǧumādā_ṯ-ṯānī_1333",
+      "wikimedia_hash": "37"
+    },
+    {
+      "issue_number": 311,
+      "date": "13330701",
+      "filename_base": "11_Ausgabe_1_Raǧab_1333",
+      "wikimedia_hash": "cc"
+    },
+    {
+      "issue_number": 312,
+      "date": "13330723",
+      "filename_base": "12_Ausgabe_23_Raǧab_1333",
+      "wikimedia_hash": "0d"
+    },
+    {
+      "issue_number": 313,
+      "date": "13330821",
+      "filename_base": "13_Ausgabe_21_Šaʿbān_1333",
+      "wikimedia_hash": "35"
+    },
+    {
+      "issue_number": 315,
+      "date": "13331002",
+      "filename_base": "15_Ausgabe_2_Šawwāl_1333",
+      "wikimedia_hash": "c6"
+    },
+    {
+      "issue_number": 316,
+      "date": "13331015",
+      "filename_base": "16_Ausgabe_15_Šawwāl_1333",
+      "wikimedia_hash": "99"
+    },
+    {
+      "issue_number": 317,
+      "date": "13331101",
+      "filename_base": "17_Ausgabe_1_Ḏī_l-qaʿda_1333",
+      "wikimedia_hash": "5d"
+    },
+    {
+      "issue_number": 318,
+      "date": "13331115",
+      "filename_base": "18_Ausgabe_15_Ḏī_l-qaʿda_1333",
+      "wikimedia_hash": "89"
+    },
+    {
+      "issue_number": 319,
+      "date": "13331204",
+      "filename_base": "19_Ausgabe_4_Ḏī_l-ḥiǧǧa_1333",
+      "wikimedia_hash": "6a"
+    },
+    {
+      "issue_number": 320,
+      "date": "13331221",
+      "filename_base": "20_Ausgabe_21_Ḏī_l-ḥiǧǧa_1333",
+      "wikimedia_hash": "23"
+    },
+    {
+      "issue_number": 321,
+      "date": "13340106",
+      "filename_base": "21_Ausgabe_6_Muḥarram_1334",
+      "wikimedia_hash": "b1"
+    },
+    {
+      "issue_number": 401,
+      "date": "13340201",
+      "filename_base": "1_Ausgabe_1_Ṣafar_1334",
+      "wikimedia_hash": "f3"
+    },
+    {
+      "issue_number": 403,
+      "date": "13340304",
+      "filename_base": "3_Ausgabe_4_Rabīʿ_al-awwal_1334",
+      "wikimedia_hash": "11"
+    },
+    {
+      "issue_number": 404,
+      "date": "13340318",
+      "filename_base": "4_Ausgabe_18_Rabīʿ_al-awwal_1334",
+      "wikimedia_hash": "27"
+    },
+    {
+      "issue_number": 405,
+      "date": "13340503",
+      "filename_base": "5_Ausgabe_3_Ǧumādā_l-ūlā_sic!1334",
+      "wikimedia_hash": "27"
+    },
+    {
+      "issue_number": 406,
+      "date": "13340419",
+      "filename_base": "6_Ausgabe_19_Rabīʿ_aṯ-ṯānī_1334",
+      "wikimedia_hash": "0d"
+    },
+    {
+      "issue_number": 407,
+      "date": "13340506",
+      "filename_base": "7_Ausgabe_6_Ǧumādā_l-ūlā_1334",
+      "wikimedia_hash": "df"
+    },
+    {
+      "issue_number": 408,
+      "date": "13340602",
+      "filename_base": "8_Ausgabe_2_Ǧumādā_ṯ-ṯānī_1334",
+      "wikimedia_hash": "b0"
+    },
+    {
+      "issue_number": 409,
+      "date": "13340619",
+      "filename_base": "9_Ausgabe_19_Ǧumādā_ṯ-ṯānī_1334",
+      "wikimedia_hash": "d2"
+    },
+    {
+      "issue_number": 410,
+      "date": "13340702",
+      "filename_base": "10_Ausgabe_2_Raǧab_1334",
+      "wikimedia_hash": "fd"
+    },
+    {
+      "issue_number": 411,
+      "date": "13341105",
+      "filename_base": "11_Ausgabe_5_Ḏī_l-qaʿda_1334",
+      "wikimedia_hash": "bb"
+    }
+  ]
 }
 ]
