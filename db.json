@@ -23837,5 +23837,156 @@
       "wikimedia_hash": "33"
     }
   ]
+},
+{
+  "id": "Q56366398",
+  "title": "آموزگار",
+  "calendar_type": "hijri",
+  "issues": [
+    {
+      "issue_number": 1,
+      "date": "13290607",
+      "filename_base": "Amouzgar_(01)",
+      "wikimedia_hash": "f4"
+    },
+    {
+      "issue_number": 2,
+      "date": "13290614",
+      "filename_base": "Amouzgar_(02)",
+      "wikimedia_hash": "a2"
+    },
+    {
+      "issue_number": 3,
+      "date": "13290621",
+      "filename_base": "Amouzgar_(03)",
+      "wikimedia_hash": "f8"
+    },
+    {
+      "issue_number": 4,
+      "date": "13290628",
+      "filename_base": "Amouzgar_(04)",
+      "wikimedia_hash": "7f"
+    },
+    {
+      "issue_number": 5,
+      "date": "13290706",
+      "filename_base": "Amouzgar_(05)",
+      "wikimedia_hash": "67"
+    },
+    {
+      "issue_number": 6,
+      "date": "13290713",
+      "filename_base": "Amouzgar_(06)",
+      "wikimedia_hash": "a7"
+    },
+    {
+      "issue_number": 7,
+      "date": "13290721",
+      "filename_base": "Amouzgar_(07)",
+      "wikimedia_hash": "bf"
+    },
+    {
+      "issue_number": 8,
+      "date": "13290727",
+      "filename_base": "Amouzgar_(08)",
+      "wikimedia_hash": "c6"
+    },
+    {
+      "issue_number": 9,
+      "date": "13290805",
+      "filename_base": "Amouzgar_(09)",
+      "wikimedia_hash": "47"
+    },
+    {
+      "issue_number": 10,
+      "date": "13290812",
+      "filename_base": "Amouzgar_(10)",
+      "wikimedia_hash": "21"
+    },
+    {
+      "issue_number": 11,
+      "date": "13290819",
+      "filename_base": "Amouzgar_(11)",
+      "wikimedia_hash": "b7"
+    },
+    {
+      "issue_number": 12,
+      "date": "13290826",
+      "filename_base": "Amouzgar_(12)",
+      "wikimedia_hash": "b2"
+    },
+    {
+      "issue_number": 13,
+      "date": "13290903",
+      "filename_base": "Amouzgar_(13)",
+      "wikimedia_hash": "a5"
+    },
+    {
+      "issue_number": 14,
+      "date": "13290910",
+      "filename_base": "Amouzgar_(14)",
+      "wikimedia_hash": "59"
+    },
+    {
+      "issue_number": 15,
+      "date": "13290917",
+      "filename_base": "Amouzgar_(15)",
+      "wikimedia_hash": "30"
+    },
+    {
+      "issue_number": 16,
+      "date": "13290924",
+      "filename_base": "Amouzgar_(16)",
+      "wikimedia_hash": "3f"
+    },
+    {
+      "issue_number": 17,
+      "date": "13291001",
+      "filename_base": "Amouzgar_(17)",
+      "wikimedia_hash": "46"
+    },
+    {
+      "issue_number": 18,
+      "date": "13291008",
+      "filename_base": "Amouzgar_(18)",
+      "wikimedia_hash": "81"
+    },
+    {
+      "issue_number": 19,
+      "date": "13291029",
+      "filename_base": "Amouzgar_(19)",
+      "wikimedia_hash": "d4"
+    },
+    {
+      "issue_number": 20,
+      "date": "13291107",
+      "filename_base": "Amouzgar_(20)",
+      "wikimedia_hash": "7d"
+    },
+    {
+      "issue_number": 21,
+      "date": "13291114",
+      "filename_base": "Amouzgar_(21)",
+      "wikimedia_hash": "98"
+    },
+    {
+      "issue_number": 22,
+      "date": "13291122",
+      "filename_base": "Amouzgar_(22)",
+      "wikimedia_hash": "2c"
+    },
+    {
+      "issue_number": 23,
+      "date": "13291129",
+      "filename_base": "Amouzgar_(23)",
+      "wikimedia_hash": "1c"
+    },
+    {
+      "issue_number": 24,
+      "date": "13291206",
+      "filename_base": "Amouzgar_(24)",
+      "wikimedia_hash": "65"
+    }
+  ]
 }
 ]
