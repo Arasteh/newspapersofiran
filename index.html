@@ -1452,6 +1452,7 @@
 								statusElement: document.getElementById(`${paperId}StatusMessage`),
 								errorElement: document.getElementById(`${paperId}ErrorMessage`),
 								calendar_type: newspaperConfigurations[paperId].calendar_type,
+								firstIssueDate: calculatedFirstIssueDate,
 								globalFirstIssueBtn: firstIssueBtn,
 								viewAllIssuesBtn: sectionDiv.querySelector('.view-all-issues-btn'),
 								currentIssue: null,
@@ -1666,7 +1667,6 @@
 				let issueExistsForDate = false;
 				let foundIssueForDate = null;
 				
-				// Only display papers that match the selected calendar mode
 				if (currentCalendarMode === paper.calendar_type) {
 					shouldDisplaySectionBasedOnModeAndType = true;
 				}
@@ -1753,6 +1753,7 @@
 				} else if (paper.type === 'database') {
 					const selectedDateShamsi = { year: parseInt(year), month: parseInt(month), day: parseInt(day) };
 					
+					// Find issue for database papers
 					foundIssueForDate = paper.issues.find(issue => {
 						if (issue.date) {
 							const issueDateParsed = parseDateString(issue.date);
@@ -1784,7 +1785,7 @@
 							if (paper.source === 'utlib') {
 								baseTitle += ' *';
 							}
-							if (foundIssueForDate.number) { // Changed to 'number' from 'issue_number'
+							if (foundIssueForDate.number) {
 								titleText = `${baseTitle} (شماره ${englishToPersianDigits(foundIssueForDate.number)})`;
 								titleElement.textContent = titleText;
 							} else {
@@ -2114,9 +2115,9 @@
 						return;
 					}
                     let displayYearLightbox = '';
-                    if (paper.calendar_type === 'hijri' && paper.currentIssue.year_hijri !== undefined) {
+                    if (paper.currentIssue.year_hijri !== undefined) {
                         displayYearLightbox = englishToPersianDigits(paper.currentIssue.year_hijri);
-                    } else {
+                    } else if (paper.currentIssue.year_shamsi !== undefined) {
                         displayYearLightbox = englishToPersianDigits(paper.currentIssue.year_shamsi);
                     }
 					lightboxNewspaperTitle.textContent = `${paper.title} - سال: ${displayYearLightbox}${paper.currentIssue.volume ? `, دوره: ${englishToPersianDigits(paper.currentIssue.volume)}` : ''}${paper.currentIssue.number ? `, شماره: ${englishToPersianDigits(paper.currentIssue.number)}` : ''}`;
@@ -2424,7 +2425,11 @@
 				if (!issueNumberInput || !issue) return;
 				issueNumberInput.value = issue.number || '';
 				
-				const issueDateParsed = parseDateString(issue.date);
+				let issueDateParsed = null;
+				if (issue.date) {
+					issueDateParsed = parseDateString(issue.date);
+				}
+
 				if (issueDateParsed) {
 					if (paper.calendar_type === 'hijri') {
 						hijriYearInput.value = issueDateParsed.year;
@@ -2450,12 +2455,14 @@
 					updateLightboxContent();
 				}
 
-				updateUrlParameters(
-					currentCalendarMode,
-					currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value,
-					currentCalendarMode === 'shamsi' ? shamsiMonthSelect.value : hijriMonthSelect.value,
-					currentCalendarMode === 'shamsi' ? shamsiDayInput.value : hijriDayInput.value
-				);
+				if (issueDateParsed) {
+					updateUrlParameters(
+						currentCalendarMode,
+						currentCalendarMode === 'shamsi' ? shamsiYearInput.value : hijriYearInput.value,
+						currentCalendarMode === 'shamsi' ? shamsiMonthSelect.value : hijriMonthSelect.value,
+						currentCalendarMode === 'shamsi' ? shamsiDayInput.value : hijriDayInput.value
+					);
+				}
 			};
 
 			const goToPrevNewspaperIssue = (newspaperId) => {
@@ -2830,8 +2837,16 @@
 							const issueButton = document.createElement('a');
 							issueButton.textContent = buttonText;
 							issueButton.classList.add('issue-item-button');
-							issueButton.href = issueUrl;
-							issueButton.target = '_blank';
+							if (paper.source === 'utlib') {
+								issueButton.href = issueUrl;
+								issueButton.target = '_blank';
+							} else {
+								issueButton.href = 'javascript:void(0)';
+								issueButton.onclick = (e) => {
+									e.preventDefault();
+									goToIssueFromModal(paper.id, issue);
+								};
+							}
 							issueButton.style.textDecoration = 'none';
 							targetContainer.appendChild(issueButton);
 						}
