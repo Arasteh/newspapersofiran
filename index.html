@@ -230,6 +230,18 @@
 			padding: 10px;
 			box-sizing: border-box;
 		}
+		.utlib-download-text {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 100%;
+			color: var(--text-color);
+			padding: 10px;
+			box-sizing: border-box;
+			font-size: 1.2em;
+			font-weight: bold;
+		}
 		.error-message {
 			color: var(--error-color);
 			margin-top: 10px;
@@ -512,6 +524,15 @@
 			font-size: 0.85em;
 			color: var(--text-color);
 			word-break: break-word;
+		}
+		.issue-thumbnail-link-only {
+			padding: 5px;
+			text-decoration: none;
+			color: var(--text-color);
+			font-weight: bold;
+		}
+		.issue-thumbnail-link-only:hover {
+			text-decoration: underline;
 		}
 
 		.volume-header {
@@ -1382,8 +1403,13 @@
 							sectionDiv.classList.add('newspaper-section');
 							sectionDiv.style.display = 'none';
 
+							let newspaperTitle = newspaperConfigurations[paperId].title;
+							if (newspaperConfigurations[paperId].source === 'utlib') {
+								newspaperTitle += ' *';
+							}
+
 							sectionDiv.innerHTML = `
-								<h2>${newspaperConfigurations[paperId].title}</h2>
+								<h2>${newspaperTitle}</h2>
 								<div class="image-container" id="${paperId}ImageContainer">
 									<img id="${paperId}NewspaperImage" src="" alt="تصویر ${newspaperConfigurations[paperId].title}" class="newspaper-image" style="display:none;">
 									<div id="${paperId}ImagePlaceholder" class="image-placeholder" style="display:none;">تصویر در دسترس نیست</div>
@@ -1657,7 +1683,11 @@
 
 				const titleElement = paper.sectionElement.querySelector('h2');
 				if (titleElement) {
-					titleElement.textContent = paper.title;
+					let newTitle = paper.title;
+					if (paper.source === 'utlib') {
+						newTitle += ' *';
+					}
+					titleElement.textContent = newTitle;
 				}
 
 				paper.sectionElement.style.display = shouldDisplaySectionBasedOnModeAndType ? 'flex' : 'none';
@@ -1724,13 +1754,8 @@
                     paper.fileNameBase = fileNameBase;
 				} else if (paper.type === 'database') {
 					const selectedDateShamsi = { year: parseInt(year), month: parseInt(month), day: parseInt(day) };
-					let selectedDateDays = null;
-					if (paper.calendar_type === 'shamsi') {
-						selectedDateDays = shamsiDateToDays(selectedDateShamsi.year, selectedDateShamsi.month, selectedDateShamsi.day);
-					}
 					
-					// Special logic for UTLib papers without exact date
-					if (paper.source === 'utlib' && paper.calendar_type === 'shamsi') {
+					if (paper.source === 'utlib') {
 						foundIssueForDate = paper.issues.find(issue => issue.year_shamsi == selectedDateShamsi.year);
 					} else {
 						foundIssueForDate = paper.issues.find(issue => {
@@ -1738,7 +1763,6 @@
 							if (!issueDateParsed) return false;
 							if (paper.calendar_type === 'shamsi') {
 								const issueDateShamsi = { year: issueDateParsed.year, month: issueDateParsed.month, day: issueDateParsed.day };
-								const issueDateDays = shamsiDateToDays(issueDateShamsi.year, issueDateShamsi.month, issueDateShamsi.day);
 								if (paper.frequency === 'daily') {
 									return (selectedDateShamsi.year === issueDateShamsi.year && selectedDateShamsi.month === issueDateShamsi.month && selectedDateShamsi.day === issueDateShamsi.day);
 								} else if (paper.frequency === 'monthly') {
@@ -1766,6 +1790,9 @@
 
 						if (titleElement) {
 							let baseTitle = paper.title;
+							if (paper.source === 'utlib') {
+								baseTitle += ' *';
+							}
 							if (foundIssueForDate.issue_number) {
 								titleText = `${baseTitle} (شماره ${englishToPersianDigits(foundIssueForDate.issue_number)})`;
 								titleElement.textContent = titleText;
@@ -1805,15 +1832,19 @@
 				paper.statusElement.style.display = 'block';
 
 				const imageUrl = getIssueFileUrl(paper, paper.currentIssue, page, 330);
+				const imageContainer = paper.sectionElement.querySelector('.image-container');
+				imageContainer.style.cursor = 'pointer';
+				imageContainer.innerHTML = '';
 
 				return new Promise((resolve, reject) => {
-					const imageContainer = paper.sectionElement.querySelector('.image-container');
-					imageContainer.style.cursor = 'pointer';
-
 					if (paper.source === 'utlib' && paper.currentIssue) {
 						const downloadUrl = getIssueFileUrl(paper, paper.currentIssue);
-
-						imageContainer.innerHTML = `<a href="${downloadUrl}" target="_blank" class="utlib-download-link">دانلود PDF</a>`;
+						const downloadLinkElement = document.createElement('a');
+						downloadLinkElement.href = downloadUrl;
+						downloadLinkElement.target = '_blank';
+						downloadLinkElement.classList.add('utlib-download-link');
+						downloadLinkElement.textContent = 'دانلود PDF';
+						imageContainer.appendChild(downloadLinkElement);
 						paper.sectionElement.classList.add('no-image');
 
 						paper.statusElement.style.display = 'none';
@@ -1827,15 +1858,19 @@
 						return;
 					}
 					
-					imageContainer.innerHTML = `<img id="${id}NewspaperImage" src="" alt="تصویر ${paper.title}" class="newspaper-image" style="display:none;">`;
-					paper.imageElement = document.getElementById(`${id}NewspaperImage`);
-					paper.imageElement.src = imageUrl;
+					const imgElement = document.createElement('img');
+					imgElement.id = `${id}NewspaperImage`;
+					imgElement.alt = `تصویر ${paper.title}`;
+					imgElement.classList.add('newspaper-image');
+					imgElement.style.display = 'none';
+					imageContainer.appendChild(imgElement);
+
+					paper.imageElement = imgElement;
 					paper.sectionElement.classList.remove('no-image');
 
-
-					paper.imageElement.onload = () => {
+					imgElement.onload = () => {
 						paper.statusElement.style.display = 'none';
-						paper.imageElement.style.display = 'block';
+						imgElement.style.display = 'block';
 						paper.errorElement.style.display = 'none';
 						paper.available = true;
 						paper.hasImage = true;
@@ -1846,13 +1881,13 @@
 						paper.maxPages = maxPages;
 						resolve(true);
 					};
-					paper.imageElement.onerror = () => {
+					imgElement.onerror = () => {
 						paper.statusElement.style.display = 'none';
-						paper.imageElement.style.display = 'none';
+						imgElement.style.display = 'none';
 						const placeholder = document.createElement('div');
 						placeholder.classList.add('image-placeholder');
 						placeholder.textContent = 'تصویر در دسترس نیست';
-						document.getElementById(`${id}ImageContainer`).appendChild(placeholder);
+						imageContainer.appendChild(placeholder);
 						paper.errorElement.textContent = 'تصویر اصلی یافت نشد.';
 						paper.errorElement.style.display = 'block';
 						paper.available = true;
@@ -1863,6 +1898,7 @@
 						}
 						resolve(true);
 					};
+					imgElement.src = imageUrl;
 				});
 			};
 
@@ -2748,11 +2784,18 @@
 							const issueUrl = getIssueFileUrl(paper, issue);
 
 							if (displayImages) {
-								const thumbnailItem = document.createElement('a');
+								const thumbnailItem = document.createElement('div');
 								thumbnailItem.classList.add('issue-thumbnail-item');
-								thumbnailItem.href = issueUrl;
-								thumbnailItem.target = '_blank';
-								thumbnailItem.style.textDecoration = 'none';
+								
+								const link = document.createElement('a');
+								link.href = issueUrl;
+								link.target = '_blank';
+								link.style.textDecoration = 'none';
+								link.style.width = '100%';
+								link.style.height = '100%';
+								link.style.display = 'flex';
+								link.style.flexDirection = 'column';
+								link.style.alignItems = 'center';
 
 								const thumbnailImage = document.createElement('div');
 								thumbnailImage.classList.add('newspaper-image-placeholder');
@@ -2763,8 +2806,9 @@
 								thumbnailText.classList.add('issue-thumbnail-text');
 								thumbnailText.textContent = issueText;
 
-								thumbnailItem.appendChild(thumbnailImage);
-								thumbnailItem.appendChild(thumbnailText);
+								link.appendChild(thumbnailImage);
+								link.appendChild(thumbnailText);
+								thumbnailItem.appendChild(link);
 								targetContainer.appendChild(thumbnailItem);
 							} else {
 								const issueButton = document.createElement('a');
