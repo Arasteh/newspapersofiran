@@ -1851,22 +1851,36 @@
 						return;
 					}
 					
+					const downloadLinkUrl = `https://upload.wikimedia.org/wikipedia/commons/${getWikimediaHash(paper, `${fileNameBase}.pdf`)}/${fileNameBase.replace(/ /g, '_')}.pdf?download`;
+					
+					// Create and append the download link as a fallback
+					const downloadLinkPlaceholder = document.createElement('a');
+					downloadLinkPlaceholder.href = downloadLinkUrl;
+					downloadLinkPlaceholder.target = '_blank';
+					downloadLinkPlaceholder.classList.add('utlib-download-link');
+					downloadLinkPlaceholder.textContent = 'دانلود نشریه (در حال بارگذاری تصویر...)';
+					imageContainer.appendChild(downloadLinkPlaceholder);
+					paper.sectionElement.classList.add('no-image');
+					paper.hasImage = false;
+					paper.available = true; // Still available because we have the download link
+
+					// Now try to load the image
 					const imgElement = document.createElement('img');
 					imgElement.id = `${id}NewspaperImage`;
 					imgElement.alt = `تصویر ${paper.title}`;
 					imgElement.classList.add('newspaper-image');
 					imgElement.style.display = 'none';
-					imageContainer.appendChild(imgElement);
-
-					paper.imageElement = imgElement;
-					paper.sectionElement.classList.remove('no-image');
 
 					imgElement.onload = () => {
+						// Image loaded successfully, replace the link with the image
+						downloadLinkPlaceholder.remove(); // Remove the download link
+						imageContainer.appendChild(imgElement);
 						paper.statusElement.style.display = 'none';
 						imgElement.style.display = 'block';
 						paper.errorElement.style.display = 'none';
 						paper.available = true;
 						paper.hasImage = true;
+						paper.sectionElement.classList.remove('no-image');
 						if (paper.navState) {
 							updateIssueNavigationVisibility(id);
 						}
@@ -1875,13 +1889,17 @@
 						resolve(true);
 					};
 					imgElement.onerror = () => {
+						// Image failed to load, keep the download link and show error message
 						paper.statusElement.style.display = 'none';
 						imgElement.style.display = 'none';
-						paper.errorElement.textContent = 'تصویر اصلی یافت نشد.';
+						paper.errorElement.textContent = 'تصویر اصلی یافت نشد. لینک دانلود در دسترس است.';
 						paper.errorElement.style.display = 'block';
-						paper.available = false;
+						paper.available = true;
 						paper.hasImage = false;
-						// Return false to prevent displaying the card
+						downloadLinkPlaceholder.textContent = 'دانلود نشریه';
+						if (paper.navState) {
+							updateIssueNavigationVisibility(id);
+						}
 						resolve(false);
 					};
 					imgElement.src = imageUrl;
@@ -2257,6 +2275,9 @@
 					const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_');
 
 					const imageUrl = getIssueFileUrl(paper, { filename_base: fileNameBase }, lightboxCurrentPage, 800);
+					const downloadUrl = `https://upload.wikimedia.org/wikipedia/commons/${hash[0]}/${hash}/${fileNameForUrlPath}?download`;
+					const viewLargeUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${lightboxCurrentPage}-2048px-${fileNameForUrlPath}.jpg`;
+
 
 					lightboxImage.src = imageUrl;
 
@@ -2284,11 +2305,11 @@
 								resolve(true);
 							};
 						});
-						downloadLink.href = `https://upload.wikimedia.org/wikipedia/commons/${hash[0]}/${hash}/${fileNameForUrlPath}?download`;
+						downloadLink.href = downloadUrl;
 						downloadLink.textContent = 'دانلود نشریه';
 						downloadLink.style.display = 'inline-block';
 
-						viewLargeLink.href = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${lightboxCurrentPage}-2048px-${fileNameForUrlPath}.jpg`;
+						viewLargeLink.href = viewLargeUrl;
 						viewLargeLink.style.display = 'inline-block';
 
 					} catch (error) {
