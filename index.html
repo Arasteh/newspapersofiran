@@ -368,9 +368,6 @@
 			transition: background-color 0.3s ease;
 			white-space: nowrap;
 		}
-		.newspaper-selection-container button:hover {
-			background-color: #5a6268;
-		}
 		.newspaper-selection-container button.selected {
 			background-color: #007bff;
 		}
@@ -1748,8 +1745,12 @@
 						fileNameBase = `${paper.prefix}${year}${month}${day}${paper.calendar_type === 'hijri' ? ' AH' : ''}`;
 						issueExistsForDate = true;
 					}
-					paper.currentIssue = null;
-                    paper.fileNameBase = fileNameBase;
+					paper.currentIssue = {
+						filename_base: fileNameBase,
+						pages: null,
+						wikimedia_hash: getWikimediaHash(paper, `${fileNameBase}.pdf`),
+						date: `${year}${pad(month)}${pad(day)}`
+					};
 				} else if (paper.type === 'database') {
 					const selectedDateShamsi = { year: parseInt(year), month: parseInt(month), day: parseInt(day) };
 					
@@ -1768,8 +1769,6 @@
 					});
 
 					if (foundIssueForDate) {
-						fileNameBase = foundIssueForDate.filename_base;
-						maxPages = foundIssueForDate.pages || null;
 						paper.currentIssue = foundIssueForDate;
 						issueExistsForDate = true;
 
@@ -1810,6 +1809,26 @@
 					console.warn("Unknown paper type for:", id);
 					return Promise.resolve(false);
 				}
+				
+				if (!paper.currentIssue) {
+					paper.available = false;
+					paper.hasImage = false;
+					return Promise.resolve(false);
+				}
+				
+				// Ensure filename and hash are present for non-utlib papers
+				if (paper.source !== 'utlib') {
+					if (!paper.currentIssue.filename_base) {
+						paper.errorElement.textContent = 'اطلاعات نام فایل نشریه موجود نیست.';
+						paper.errorElement.style.display = 'block';
+						paper.available = false;
+						return Promise.resolve(false);
+					}
+					paper.currentIssue.full_filename = `${paper.currentIssue.filename_base}.pdf`;
+					paper.currentIssue.hash = getWikimediaHash(paper, paper.currentIssue.full_filename);
+					paper.currentIssue.filename_for_url = paper.currentIssue.full_filename.replace(/ /g, '_');
+				}
+
 
 				if (!issueExistsForDate) {
 					paper.available = false;
@@ -1853,7 +1872,7 @@
 					
 					// Create and append the download link as a fallback ONLY for database papers
 					if (paper.type === 'database') {
-						const downloadLinkUrl = `https://upload.wikimedia.org/wikipedia/commons/${getWikimediaHash(paper, `${fileNameBase}.pdf`)}/${fileNameBase.replace(/ /g, '_')}.pdf?download`;
+						const downloadLinkUrl = `https://upload.wikimedia.org/wikipedia/commons/${paper.currentIssue.hash[0]}/${paper.currentIssue.hash}/${paper.currentIssue.filename_for_url}?download`;
 						const downloadLinkPlaceholder = document.createElement('a');
 						downloadLinkPlaceholder.href = downloadLinkUrl;
 						downloadLinkPlaceholder.target = '_blank';
@@ -1886,8 +1905,7 @@
 						if (paper.navState) {
 							updateIssueNavigationVisibility(id);
 						}
-						paper.fileNameBase = fileNameBase;
-						paper.maxPages = maxPages;
+						paper.maxPages = paper.currentIssue.pages;
 						resolve(true);
 					};
 					imgElement.onerror = () => {
@@ -2032,7 +2050,7 @@
 							 (currentCalendarMode === 'shamsi' && paper.calendar_type === 'shamsi'));
 							
 						// A card should not be displayed if it has no image and is not a utlib paper
-						if (!paper.hasImage && paper.source !== 'utlib') {
+						if (!paper.hasImage && paper.source !== 'utlib' && paper.type !== 'database') {
 							displayThisInContainer = false;
 						}
 
@@ -2127,14 +2145,13 @@
 				let year, month, day;
 				lightboxImagePlaceholder.style.display = 'none';
 
-				if (currentCalendarMode === 'shamsi') {
-					year = shamsiYearInput.value;
-					month = pad(shamsiMonthSelect.value);
-					day = pad(shamsiDayInput.value);
-				} else {
-					year = hijriYearInput.value;
-					month = pad(hijriMonthSelect.value);
-					day = pad(hijriDayInput.value);
+				if (paper.currentIssue) {
+					const issueDateParsed = parseDateString(paper.currentIssue.date);
+					if (issueDateParsed) {
+						year = issueDateParsed.year;
+						month = issueDateParsed.month;
+						day = issueDateParsed.day;
+					}
 				}
 
 				let formattedDate;
@@ -2174,15 +2191,6 @@
 				} else {
 					let displayDayForDate = (id === 'yaghma' || id === 'negin') && paper.calendar_type === 'shamsi' ? '01' : day;
 
-					if (paper.type === 'database' && paper.currentIssue) {
-						const issueDateParsed = parseDateString(paper.currentIssue.date);
-						if (issueDateParsed) {
-							year = issueDateParsed.year;
-							month = issueDateParsed.month;
-							day = issueDateParsed.day;
-						}
-					}
-
 					if (paper.calendar_type === 'hijri') {
 						const hijriMonthName = hijriMonthNames[month - 1];
 						formattedDate = `${englishToPersianDigits(pad(day))} ${hijriMonthName} ${englishToPersianDigits(year)} (قمری)`;
@@ -2213,89 +2221,23 @@
 					downloadLink.style.display = 'none';
 					viewLargeLink.style.display = 'none';
 
-					let fileNameBase;
-					let maxPages = paper.maxPages;
-					let dateForFilename;
+					const issue = paper.currentIssue;
+					const maxPages = issue.pages || null;
 
-					if (paper.type === 'formula') {
-						dateForFilename = {y: year, m: month, d: day};
-						if (id === 'jangal_qamari') {
-							fileNameBase = `${paper.prefix} ${dateForFilename.y}${dateForFilename.m}${dateForFilename.d} AH`;
-						} else if (id === 'yaghma' && paper.calendar_type === 'shamsi') {
-							const shamsiInputYear = parseInt(dateForFilename.y, 10);
-							const shamsiInputMonth = parseInt(dateForFilename.m, 10);
-
-							if (shamsiInputYear >= 1327 && shamsiInputYear <= 1357 && shamsiInputMonth >= 1 && shamsiInputMonth <= 12) {
-								const volume = shamsiInputYear - 1327 + 1;
-								const number = shamsiInputMonth;
-								fileNameBase = `Yaghma, Vol. ${volume}, No. ${number}, ${shamsiInputYear} SH`;
-							} else {
-								console.error("Yaghma lightbox: Date out of range for filename", shamsiInputYear, shamsiInputMonth);
-								lightboxStatusMessage.style.display = 'none';
-								lightboxErrorMessage.textContent = `اطلاعات نشریه یغما برای این تاریخ در لایت‌باکس یافت نشد.`;
-								lightboxErrorMessage.style.display = 'block';
-								return;
-							}
-						} else if (id === 'negin' && paper.calendar_type === 'shamsi') {
-							const shamsiInputYear = parseInt(dateForFilename.y, 10);
-							const shamsiInputMonth = parseInt(dateForFilename.m, 10);
-							const startDateCheck = shamsiInputYear > 1344 || (shamsiInputYear === 1344 && shamsiInputMonth >= 3);
-							const endDateCheck = shamsiInputYear < 1359 || (shamsiInputYear === 1359 && shamsiInputMonth <= 1);
-
-							if (startDateCheck && endDateCheck) {
-								const volume = shamsiInputYear - 1344 + 1;
-								let number;
-								if (shamsiInputYear === 1344) {
-									number = shamsiInputMonth - 2;
-								} else {
-									const yearsAfter1344 = shamsiInputYear - 1345;
-									const issuesInFullYears = yearsAfter1344 * 12;
-									number = 10 + issuesInFullYears + shamsiInputMonth;
-								}
-								fileNameBase = `Negin, Vol. ${volume}, No. ${number}, ${shamsiInputYear} SH`;
-							} else {
-								console.error("Negin lightbox: Date out of range for filename", shamsiInputYear, shamsiInputMonth);
-								lightboxStatusMessage.style.display = 'none';
-								lightboxErrorMessage.textContent = `اطلاعات نشریه نگین برای این تاریخ در لایت‌باکس یافت نشد.`;
-								lightboxErrorMessage.style.display = 'block';
-								return;
-							}
-						} else {
-							fileNameBase = `${paper.prefix}${dateForFilename.y}${dateForFilename.m}${dateForFilename.d}${paper.calendar_type === 'hijri' ? ' AH' : ''}`;
-						}
-					} else if (paper.type === 'database' && paper.currentIssue) {
-						fileNameBase = paper.currentIssue.filename_base;
-						maxPages = paper.currentIssue.pages || null;
-						const issueDateParsed = parseDateString(paper.currentIssue.date);
-						if(issueDateParsed) {
-							dateForFilename = {y: issueDateParsed.year, m: pad(issueDateParsed.month), d: pad(issueDateParsed.day)};
-						} else {
-							console.error("Lightbox: Invalid date string in currentIssue for", id);
-							lightboxStatusMessage.style.display = 'none';
-							lightboxErrorMessage.textContent = `اطلاعات تاریخ نشریه برای نمایش در لایت‌باکس یافت نشد.`;
-							lightboxErrorMessage.style.display = 'block';
-							return;
-						}
-					} else {
-						console.error("Lightbox: Issue data missing for DB paper or unknown state for:", id, "on date", year, month, day);
+					if (!issue || !issue.filename_base || !issue.hash || !issue.filename_for_url) {
 						lightboxStatusMessage.style.display = 'none';
-						lightboxErrorMessage.textContent = `اطلاعات نشریه برای نمایش در لایت‌باکس یافت نشد.`;
+						lightboxErrorMessage.textContent = `اطلاعات فایل نشریه برای نمایش در لایت‌باکس یافت نشد.`;
 						lightboxErrorMessage.style.display = 'block';
 						return;
 					}
 
-					const fullFileNameWithPdf = `${fileNameBase}.pdf`;
-					const hash = getWikimediaHash(paper, fullFileNameWithPdf);
-					const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_');
-
-					const imageUrl = getIssueFileUrl(paper, { filename_base: fileNameBase }, lightboxCurrentPage, 800);
-					const downloadUrl = `https://upload.wikimedia.org/wikipedia/commons/${hash[0]}/${hash}/${fileNameForUrlPath}?download`;
-					const viewLargeUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${lightboxCurrentPage}-2048px-${fileNameForUrlPath}.jpg`;
-
-
+					const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${issue.hash[0]}/${issue.hash}/${issue.filename_for_url}/page${lightboxCurrentPage}-800px-${issue.filename_for_url}.jpg`;
+					const downloadUrl = `https://upload.wikimedia.org/wikipedia/commons/${issue.hash[0]}/${issue.hash}/${issue.filename_for_url}?download`;
+					const viewLargeUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${issue.hash[0]}/${issue.hash}/${issue.filename_for_url}/page${lightboxCurrentPage}-2048px-${issue.filename_for_url}.jpg`;
+					
 					lightboxImage.src = imageUrl;
 
-					const wikimediaFileLink = `https://commons.wikimedia.org/w/index.php?title=File%3A${fileNameForUrlPath}&page=${lightboxCurrentPage}`;
+					const wikimediaFileLink = `https://commons.wikimedia.org/w/index.php?title=File%3A${issue.filename_for_url}&page=${lightboxCurrentPage}`;
 					lightboxImage.onclick = () => {
 						window.open(wikimediaFileLink, '_blank');
 					};
@@ -2343,7 +2285,7 @@
 					issueNavLightbox.style.display = 'flex';
 					const navState = paper.navState;
 					if (navState && navState.currentIssue) {
-						lightboxIssueNumberInput.value = navState.currentIssue.number || '';
+						lightboxIssueNumberInput.value = englishToPersianDigits(navState.currentIssue.number) || '';
 						lightboxIssueNumberInput.disabled = true;
 						lightboxPrevIssueButton.disabled = navState.currentIndex <= 0;
 						lightboxNextIssueButton.disabled = navState.currentIndex >= navState.issuesArray.length - 1;
@@ -2391,7 +2333,7 @@
 				if (direction === 'prev' && lightboxCurrentPage > 1) {
 					lightboxCurrentPage--;
 				} else if (direction === 'next') {
-					let maxPages = paper.maxPages;
+					let maxPages = paper.currentIssue.pages;
 					if (maxPages !== null && maxPages !== Infinity && lightboxCurrentPage >= maxPages) {
 						return;
 					}
@@ -2458,7 +2400,7 @@
 
 				const issue = issuesArray[index];
 				if (!issueNumberInput || !issue) return;
-				issueNumberInput.value = issue.number || '';
+				issueNumberInput.value = englishToPersianDigits(issue.number) || '';
 				
 				let issueDateParsed = null;
 				if (issue.date) {
@@ -3231,7 +3173,7 @@
 				if (!isNaN(parsedInputPage) && parsedInputPage >= 1) {
 					const paper = newspaperData[currentLightboxNewspaperId];
 					if (paper) {
-						let maxPages = paper.maxPages;
+						let maxPages = paper.currentIssue.pages;
 						if (maxPages !== null && maxPages !== Infinity && parsedInputPage > maxPages) {
 							lightboxCurrentPage = maxPages;
 						} else {
