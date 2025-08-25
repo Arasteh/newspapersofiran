@@ -2386,7 +2386,7 @@
 
 
 				if (availableNewspapers.length <= 1) return;
-				const currentIndex = availableNewpapers.indexOf(currentLightboxNewspaperId);
+				const currentIndex = availableNewspapers.indexOf(currentLightboxNewspaperId);
 				let newIndex;
 				if (direction === 'prev') {
 					newIndex = (currentIndex - 1 + availableNewspapers.length) % availableNewspapers.length;
@@ -2779,29 +2779,31 @@
 
 					const currentVolumeIssues = groupedByVolume.get(volumeKey);
 					currentVolumeIssues.forEach(issue => {
-						const issueNumberText = issue.number === null ? 'نامشخص' : englishToPersianDigits(issue.number);
-						const issueUrl = getIssueFileUrl(paper, issue);
+						let buttonText = '';
+						const hasVolume = issue.volume !== null && issue.volume !== undefined;
+						const hasNumber = issue.number !== null && issue.number !== undefined;
 
-						let buttonText = `شمارهٔ ${issueNumberText}`;
-						if (issue.volume && issue.number) {
-                            buttonText = `دورهٔ ${englishToPersianDigits(issue.volume)}، شمارهٔ ${englishToPersianDigits(issue.number)}`;
-                        } else if (issue.volume) {
-                            buttonText = `دورهٔ ${englishToPersianDigits(issue.volume)}`;
-                        } else if (issue.number) {
-                            buttonText = `شمارهٔ ${englishToPersianDigits(issue.number)}`;
-                        } else {
-                            buttonText = `شمارهٔ نامشخص`;
-                        }
+						if (hasVolume && hasNumber) {
+							buttonText = `دورهٔ ${englishToPersianDigits(issue.volume)}، شمارهٔ ${englishToPersianDigits(issue.number)}`;
+						} else if (hasVolume) {
+							buttonText = `دورهٔ ${englishToPersianDigits(issue.volume)}`;
+						} else if (hasNumber) {
+							buttonText = `شمارهٔ ${englishToPersianDigits(issue.number)}`;
+						} else {
+							buttonText = `شمارهٔ نامشخص`;
+						}
+
+						const issueUrl = getIssueFileUrl(paper, issue);
 
 						if (paper.source === 'utlib') {
 							let displayYear = '';
 							if (issue.year_hijri !== undefined) {
-                                displayYear = englishToPersianDigits(issue.year_hijri);
+								displayYear = englishToPersianDigits(issue.year_hijri);
 								buttonText = `${buttonText}, سال ${displayYear}`;
-                            } else if (issue.year_shamsi !== undefined) {
-                                displayYear = englishToPersianDigits(issue.year_shamsi);
+							} else if (issue.year_shamsi !== undefined) {
+								displayYear = englishToPersianDigits(issue.year_shamsi);
 								buttonText = `${buttonText}, سال ${displayYear}`;
-                            }
+							}
 						} else {
 							if (displayDates) {
 								const issueDateParsed = parseDateString(issue.date);
@@ -2870,7 +2872,7 @@
 									goToIssueFromModal(paper.id, issue);
 								};
 							}
-							issueButton.style.textDecoration = 'none';
+							issueButton.style.text-decoration = 'none';
 							targetContainer.appendChild(issueButton);
 						}
 					});
