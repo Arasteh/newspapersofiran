@@ -1359,7 +1359,7 @@
 						if (dbPaper.issues && dbPaper.issues.length > 0) {
 							if (dbPaper.source === 'utlib') {
 								sortedIssues = [...dbPaper.issues].sort((a, b) => {
-                                    if (dbPaper.calendar_type === 'hijri' && a.year_hijri !== undefined && b.year_hijri !== undefined) {
+                                    if (a.year_hijri !== undefined && b.year_hijri !== undefined) {
                                         if (a.year_hijri !== b.year_hijri) return a.year_hijri - b.year_hijri;
                                     } else if (a.year_shamsi !== undefined && b.year_shamsi !== undefined) {
                                         if (a.year_shamsi !== b.year_shamsi) return a.year_shamsi - b.year_shamsi;
@@ -1372,7 +1372,7 @@
 									return numA - numB;
 								});
 								if (sortedIssues.length > 0) {
-                                    if (dbPaper.calendar_type === 'hijri' && sortedIssues[0].year_hijri !== undefined) {
+                                    if (sortedIssues[0].year_hijri !== undefined) {
                                         calculatedFirstIssueDate = `${sortedIssues[0].year_hijri}0101`;
                                     } else {
                                         calculatedFirstIssueDate = `${sortedIssues[0].year_shamsi}0101`;
@@ -1830,7 +1830,7 @@
 
 				return new Promise((resolve, reject) => {
 					// UTLib papers don't have images, so we directly display a download link
-					if (paper.source === 'utlib' && paper.currentIssue) {
+					if (paper.source === 'utlib') {
 						const downloadUrl = getIssueFileUrl(paper, paper.currentIssue);
 						const downloadLinkElement = document.createElement('a');
 						downloadLinkElement.href = downloadUrl;
@@ -1839,7 +1839,7 @@
 						downloadLinkElement.textContent = 'دانلود PDF';
 						imageContainer.appendChild(downloadLinkElement);
 						paper.sectionElement.classList.add('no-image');
-
+						
 						paper.statusElement.style.display = 'none';
 						paper.errorElement.style.display = 'none';
 						paper.available = true;
@@ -2386,7 +2386,7 @@
 
 
 				if (availableNewspapers.length <= 1) return;
-				const currentIndex = availableNewspapers.indexOf(currentLightboxNewspaperId);
+				const currentIndex = availableNewpapers.indexOf(currentLightboxNewspaperId);
 				let newIndex;
 				if (direction === 'prev') {
 					newIndex = (currentIndex - 1 + availableNewspapers.length) % availableNewspapers.length;
@@ -2717,7 +2717,9 @@
 
 				const issuesToDisplaySorted = [...paper.issues].sort((a,b) => {
 					if (paper.source === 'utlib') {
-						if (a.year_shamsi !== b.year_shamsi) return a.year_shamsi - b.year_shamsi;
+						const yearA = a.year_hijri || a.year_shamsi;
+						const yearB = b.year_hijri || b.year_shamsi;
+						if (yearA !== yearB) return yearA - yearB;
 						if (a.volume !== b.volume) return a.volume - b.volume;
 						const numA = a.number === null ? -Infinity : a.number;
 						const numB = b.number === null ? -Infinity : b.number;
@@ -2746,7 +2748,17 @@
 
 				const groupedByVolume = new Map();
 				issuesToDisplaySorted.forEach(issue => {
-					const volumeKey = issue.volume !== null ? `دورهٔ ${englishToPersianDigits(issue.volume)}` : 'بدون دوره';
+					let volumeKey;
+					if (paper.source === 'utlib' && issue.year_shamsi) {
+						volumeKey = `سال ${englishToPersianDigits(issue.year_shamsi)}`;
+					} else if (paper.source === 'utlib' && issue.year_hijri) {
+						volumeKey = `سال ${englishToPersianDigits(issue.year_hijri)}`;
+					} else if (issue.volume !== null) {
+						volumeKey = `دورهٔ ${englishToPersianDigits(issue.volume)}`;
+					} else {
+						volumeKey = 'بدون دوره';
+					}
+
 					if (!groupedByVolume.has(volumeKey)) {
 						groupedByVolume.set(volumeKey, []);
 					}
@@ -2771,14 +2783,25 @@
 						const issueUrl = getIssueFileUrl(paper, issue);
 
 						let buttonText = `شمارهٔ ${issueNumberText}`;
+						if (issue.volume && issue.number) {
+                            buttonText = `دورهٔ ${englishToPersianDigits(issue.volume)}، شمارهٔ ${englishToPersianDigits(issue.number)}`;
+                        } else if (issue.volume) {
+                            buttonText = `دورهٔ ${englishToPersianDigits(issue.volume)}`;
+                        } else if (issue.number) {
+                            buttonText = `شمارهٔ ${englishToPersianDigits(issue.number)}`;
+                        } else {
+                            buttonText = `شمارهٔ نامشخص`;
+                        }
+
 						if (paper.source === 'utlib') {
 							let displayYear = '';
-							if (issue.year_hijri) {
+							if (issue.year_hijri !== undefined) {
                                 displayYear = englishToPersianDigits(issue.year_hijri);
-                            } else if (issue.year_shamsi) {
+								buttonText = `${buttonText}, سال ${displayYear}`;
+                            } else if (issue.year_shamsi !== undefined) {
                                 displayYear = englishToPersianDigits(issue.year_shamsi);
+								buttonText = `${buttonText}, سال ${displayYear}`;
                             }
-							buttonText = `شمارهٔ ${issueNumberText}, سال ${displayYear}`;
 						} else {
 							if (displayDates) {
 								const issueDateParsed = parseDateString(issue.date);
