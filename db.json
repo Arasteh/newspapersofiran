@@ -2524,7 +2524,7 @@
 		"id": "Q64941184",
 		"title": "نوروز",
 		"calendar_type": "hijri",
-		/*"frequency": "weekly",*/
+		"_frequency": "weekly",
 		"issues": [
 			{
 				"number": 1,
@@ -7362,7 +7362,7 @@
 		"id": "Q20109432",
 		"title": "آشفته",
 		"calendar_type": "shamsi",
-		/*"frequency": "weekly",*/
+		"_frequency": "weekly",
 		"issues": [
 			{
 				"number": 1,
@@ -8081,7 +8081,7 @@
 	"id": "Q16046672",
 	"title": "تهران مصور",
 	"calendar_type": "shamsi",
-	/*"frequency": "weekly",*/
+	"_frequency": "weekly",
 	"issues": [
 	{
 		"number": 437,
@@ -24407,7 +24407,7 @@
 	"id": "Q5962473",
 	"title": "تربیت",
 	"calendar_type": "hijri",
-	/*"frequency": "weekly",*/
+	"_frequency": "weekly",
 	"issues": [
 		{
 			"number": 1,
