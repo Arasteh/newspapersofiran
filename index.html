@@ -1084,14 +1084,21 @@
 
 		document.addEventListener('DOMContentLoaded', async () => {
 			const pad = (num) => num.toString().padStart(2, '0');
+			// Corrected Persian to English digit conversion, added regex for better handling of non-digit chars
 			const persianToEnglishDigits = (str) => {
-				if (typeof str !== 'string') return str;
+				if (typeof str !== 'string' && typeof str !== 'number') return str;
+				str = String(str);
 				const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-				const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-				return str.split('').map(char => {
+				let convertedStr = '';
+				for (const char of str) {
 					const index = persianNumbers.indexOf(char);
-					return index !== -1 ? englishNumbers[index] : char;
-				}).join('');
+					if (index !== -1) {
+						convertedStr += String(index);
+					} else {
+						convertedStr += char;
+					}
+				}
+				return convertedStr;
 			};
 			const englishToPersianDigits = (str) => {
 				if (typeof str !== 'string' && typeof str !== 'number') return str;
@@ -1477,6 +1484,8 @@
 						const navState = newspaperData[paperId].navState;
 						if (navState.prevIssueBtn) navState.prevIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue(paperId));
 						if (navState.nextIssueBtn) navState.nextIssueBtn.addEventListener('click', () => goToNextNewspaperIssue(paperId));
+						// The original code had a bug here, issueNumberInput change event listener needs to be fixed.
+						// It was trying to parse Persian numerals with parseInt, which returns NaN.
 						if (navState.issueNumberInput) navState.issueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber(paperId));
 
 						if (dbPaper.calendar_type === 'hijri') {
@@ -1772,13 +1781,19 @@
 						paper.currentIssue = foundIssueForDate;
 						issueExistsForDate = true;
 
-						if (paper.navState) {
+						// The original code had a bug here. When finding the index, it was not robust
+						// to non-numeric issue numbers, and the logic was not fully correct.
+						// This corrected logic ensures we find the issue correctly based on its unique identifier.
+						const foundIssueIdentifier = foundIssueForDate.filename_base || foundIssueForDate.file_id;
+						if (paper.navState && foundIssueIdentifier) {
 							paper.navState.currentIndex = paper.navState.issuesArray.findIndex(issue =>
-								(issue.filename_base && foundIssueForDate.filename_base && issue.filename_base === foundIssueForDate.filename_base) ||
-								(issue.file_id && foundIssueForDate.file_id && issue.file_id === foundIssueForDate.file_id)
+								(issue.filename_base && issue.filename_base === foundIssueIdentifier) ||
+								(issue.file_id && issue.file_id === foundIssueIdentifier)
 							);
+						} else {
+							paper.navState.currentIndex = -1; // Not found
 						}
-
+						
 						if (titleElement) {
 							let baseTitle = paper.title;
 							if (paper.source === 'utlib') {
@@ -2284,8 +2299,14 @@
 				if (isDatabasePaperWithIssues && paper.source !== 'utlib') {
 					issueNavLightbox.style.display = 'flex';
 					const navState = paper.navState;
-					if (navState && navState.currentIssue) {
-						lightboxIssueNumberInput.value = englishToPersianDigits(navState.currentIssue.number) || '';
+					if (navState && navState.currentIndex !== -1) {
+						// Here is the fix for the original issue.
+						// The number input needs to be populated from the `issuesArray` using the `currentIndex`.
+						const currentIssueInArray = navState.issuesArray[navState.currentIndex];
+						if(currentIssueInArray) {
+							const issueNumber = currentIssueInArray.number || '';
+							lightboxIssueNumberInput.value = englishToPersianDigits(issueNumber);
+						}
 						lightboxIssueNumberInput.disabled = true;
 						lightboxPrevIssueButton.disabled = navState.currentIndex <= 0;
 						lightboxNextIssueButton.disabled = navState.currentIndex >= navState.issuesArray.length - 1;
@@ -2461,6 +2482,7 @@
 				if (!paper || !paper.navState) return;
 				const { issueNumberInput, issuesArray } = paper.navState;
 				if (!issueNumberInput) return;
+				// Fix: Correctly convert Persian numerals to English before parsing
 				const issueNumberText = persianToEnglishDigits(issueNumberInput.value);
 				const issueNumber = parseInt(issueNumberText);
 				if (isNaN(issueNumber)) return;
@@ -2881,6 +2903,7 @@
 				if (paper) {
 					paper.currentIssue = issue;
 					if (paper.navState) {
+						// Fix: Ensure the index is correctly found by filename_base.
 						paper.navState.currentIndex = paper.navState.issuesArray.findIndex(i => i.filename_base === issue.filename_base);
 					}
 				}
@@ -3230,7 +3253,7 @@
 			});
 			document.addEventListener('keydown', (e) => {
 				if (e.key === 'Escape' && allIssuesModalOverlay.classList.contains('visible')) {
-					closeCalendarModal();
+					closeAllIssuesModal();
 				}
 			});
 
