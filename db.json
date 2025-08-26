@@ -2524,7 +2524,7 @@
 		"id": "Q64941184",
 		"title": "نوروز",
 		"calendar_type": "hijri",
-		"frequency": "weekly",
+		/*"frequency": "weekly",*/
 		"issues": [
 			{
 				"number": 1,
@@ -7362,7 +7362,7 @@
 		"id": "Q20109432",
 		"title": "آشفته",
 		"calendar_type": "shamsi",
-		"frequency": "weekly",
+		/*"frequency": "weekly",*/
 		"issues": [
 			{
 				"number": 1,
@@ -8077,11 +8077,11 @@
 	}
 	]
 },
-	{
+{
 	"id": "Q16046672",
 	"title": "تهران مصور",
 	"calendar_type": "shamsi",
-	"frequency": "weekly",
+	/*"frequency": "weekly",*/
 	"issues": [
 	{
 		"number": 437,
@@ -8145,7 +8145,7 @@
 	}
 	]
 },
-	{
+{
 	"id": "Q5608833",
 	"title": "دنیای سخن",
 	"calendar_type": "shamsi",
@@ -8393,7 +8393,7 @@
 	}
 	]
 },
-	{
+{
 	"id": "Q115697940",
 	"title": "گل‌آقا",
 	"calendar_type": "shamsi",
@@ -8478,7 +8478,7 @@
 	}
 	]
 },
-	{
+{
 	"id": "Q5931832",
 	"title": "دانش (1328)",
 	"calendar_type": "hijri",
@@ -24407,7 +24407,7 @@
 	"id": "Q5962473",
 	"title": "تربیت",
 	"calendar_type": "hijri",
-	"frequency": "weekly",
+	/*"frequency": "weekly",*/
 	"issues": [
 		{
 			"number": 1,
