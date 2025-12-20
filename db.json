@@ -27014,5 +27014,192 @@
 			"wikimedia_hash": "05"
 		}
 	]
+},
+{
+	"id": "Q135424574",
+	"title": "پرورش",
+	"calendar_type": "hijri",
+	"issues": [
+		{
+			"number": 1,
+			"date": "13180210",
+			"filename_base": "Parvaresh_Year_01._No._01",
+			"wikimedia_hash": "31"
+		},
+		{
+			"number": 2,
+			"date": "13180217",
+			"filename_base": "Parvaresh_Year_01._No._02",
+			"wikimedia_hash": "ba"
+		},
+		{
+			"number": 3,
+			"date": "13180225",
+			"filename_base": "Parvaresh_Year_01._No._03",
+			"wikimedia_hash": "7e"
+		},
+		{
+			"number": 4,
+			"date": "13180305",
+			"filename_base": "Parvaresh_Year_01._No._04",
+			"wikimedia_hash": "19"
+		},
+		{
+			"number": 5,
+			"date": "13180312",
+			"filename_base": "Parvaresh_Year_01._No._05",
+			"wikimedia_hash": "75"
+		},
+		{
+			"number": 6,
+			"date": "13180319",
+			"filename_base": "Parvaresh_Year_01._No._06",
+			"wikimedia_hash": "ac"
+		},
+		{
+			"number": 7,
+			"date": "13180326",
+			"filename_base": "Parvaresh_Year_01._No._07",
+			"wikimedia_hash": "16"
+		},
+		{
+			"number": 8,
+			"date": "13180403",
+			"filename_base": "Parvaresh_Year_01._No._08",
+			"wikimedia_hash": "fc"
+		},
+		{
+			"number": 9,
+			"date": "13180410",
+			"filename_base": "Parvaresh_Year_01._No._09",
+			"wikimedia_hash": "e2"
+		},
+		{
+			"number": 10,
+			"date": "13180417",
+			"filename_base": "Parvaresh_Year_01._No._10",
+			"wikimedia_hash": "bc"
+		},
+		{
+			"number": 11,
+			"date": "13180424",
+			"filename_base": "Parvaresh_Year_01._No._11",
+			"wikimedia_hash": "73"
+		},
+		{
+			"number": 12,
+			"date": "13180501",
+			"filename_base": "Parvaresh_Year_01._No._12",
+			"wikimedia_hash": "c9"
+		},
+		{
+			"number": 13,
+			"date": "13180508",
+			"filename_base": "Parvaresh_Year_01._No._13",
+			"wikimedia_hash": "fd"
+		},
+		{
+			"number": 14,
+			"date": "13180515",
+			"filename_base": "Parvaresh_Year_01._No._14",
+			"wikimedia_hash": "c3"
+		},
+		{
+			"number": 15,
+			"date": "13180529",
+			"filename_base": "Parvaresh_Year_01._No._15",
+			"wikimedia_hash": "8a"
+		},
+		{
+			"number": 16,
+			"date": "13180614",
+			"filename_base": "Parvaresh_Year_01._No._16",
+			"wikimedia_hash": "ea"
+		},
+		{
+			"number": 17,
+			"date": "13180621",
+			"filename_base": "Parvaresh_Year_01._No._17",
+			"wikimedia_hash": "72"
+		},
+		{
+			"number": 18,
+			"date": "13180628",
+			"filename_base": "Parvaresh_Year_01._No._18",
+			"wikimedia_hash": "57"
+		},
+		{
+			"number": 19,
+			"date": "13180705",
+			"filename_base": "Parvaresh_Year_01._No._19",
+			"wikimedia_hash": "80"
+		},
+		{
+			"number": 20,
+			"date": "13180712",
+			"filename_base": "Parvaresh_Year_01._No._20",
+			"wikimedia_hash": "8f"
+		},
+		{
+			"number": 21,
+			"date": "13180719",
+			"filename_base": "Parvaresh_Year_01._No._21",
+			"wikimedia_hash": "d8"
+		},
+		{
+			"number": 22,
+			"date": "13180726",
+			"filename_base": "Parvaresh_Year_01._No._22",
+			"wikimedia_hash": "41"
+		},
+		{
+			"number": 23,
+			"date": "13180804",
+			"filename_base": "Parvaresh_Year_01._No._23",
+			"wikimedia_hash": "a3"
+		},
+		{
+			"number": 24,
+			"date": "13180811",
+			"filename_base": "Parvaresh_Year_01._No._24",
+			"wikimedia_hash": "bd"
+		},
+		{
+			"number": 25,
+			"date": "13180818",
+			"filename_base": "Parvaresh_Year_01._No._25",
+			"wikimedia_hash": "68"
+		},
+		{
+			"number": 26,
+			"date": "13180825",
+			"filename_base": "Parvaresh_Year_01._No._26",
+			"wikimedia_hash": "d9"
+		},
+		{
+			"number": 27,
+			"date": "13180902",
+			"filename_base": "Parvaresh_Year_01._No._27",
+			"wikimedia_hash": "6e"
+		},
+		{
+			"number": 28,
+			"date": "13180909",
+			"filename_base": "Parvaresh_Year_01._No._28",
+			"wikimedia_hash": "b8"
+		},
+		{
+			"number": 30,
+			"date": "13181021",
+			"filename_base": "Parvaresh_Year_01._No._30",
+			"wikimedia_hash": "9f"
+		},
+		{
+			"number": 33,
+			"date": "13181204",
+			"filename_base": "Parvaresh_Year_01._No._33",
+			"wikimedia_hash": "fd"
+		}
+	]
 }
 ]
