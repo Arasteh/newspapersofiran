@@ -28546,5 +28546,216 @@
 			"wikimedia_hash": "54"
 		}
 	]
+},
+{
+	"id": "Q1737242",
+	"title": "کاوه",
+	"calendar_type": "hijri",
+	"issues": [
+		{
+			"number": "1",
+			"date": "13340318",
+			"volume": "1",
+			"filename_base": "Kaveh_No._01_(24._Januar_1916_∕∕_18._Rabīʿ_al-awwal_1334_∕∕_15._Šahrivar_1285)",
+			"wikimedia_hash": "73"
+		},
+		{
+			"number": "2",
+			"date": "13340403",
+			"volume": "1",
+			"filename_base": "Kaveh_No._02_(8._Februar_1916_∕∕_3._Rabīʿ_aṯ-ṯānī_1334_∕∕_30._Šahrivar_1285)",
+			"wikimedia_hash": "fb"
+		},
+		{
+			"number": "3",
+			"date": "13340424",
+			"volume": "1",
+			"filename_base": "Kaveh_No._03_(29._Februar_1916_∕∕_24._Rabīʿ_aṯ-ṯānī_1334_∕∕_21._Mehr_1285)",
+			"wikimedia_hash": "27"
+		},
+		{
+			"number": "4",
+			"date": "13340508",
+			"volume": "1",
+			"filename_base": "Kaveh_No._04_(14._März_1916_∕∕_8._Ǧumādā_l-ūlā_1334_∕∕_5._Ābān_1285)",
+			"wikimedia_hash": "f8"
+		},
+		{
+			"number": 
+			[
+				5,
+				6
+			],
+			"date": "13340621",
+			"volume": "1",
+			"filename_base": "Kaveh_No._05-06_(18._April_1916_∕∕_21._Ǧumādā_l-āḫira_1334_∕∕_10._Āẕar_1285)",
+			"wikimedia_hash": "cf"
+		},
+		{
+			"number": 
+			[
+				7,
+				8
+			],
+			"date": "13340713",
+			"volume": "1",
+			"filename_base": "Kaveh_No._07-08_(16._Mai_1916_∕∕_13._Raǧab_1334_∕∕_8._Bahman_1285)",
+			"wikimedia_hash": "e2"
+		},
+		{
+			"number": "9",
+			"date": "13340814",
+			"volume": "1",
+			"filename_base": "Kaveh_No._09_(15._Juni_1916_∕∕_14._Šaʿbān_1334_∕∕_8._Esfand_1285)",
+			"wikimedia_hash": "73"
+		},
+		{
+			"number": "10",
+			"date": "13340914",
+			"volume": "1",
+			"filename_base": "Kaveh_No._10_(15._Juli_1916_∕∕_14._Ramaḍān_1334_∕∕_3._Farvardin_1286)",
+			"wikimedia_hash": "e8"
+		},
+		{
+			"number": "11",
+			"date": "13341015",
+			"volume": "1",
+			"filename_base": "Kaveh_No._11_(15._Oktober_1916_∕∕_15._Šawwāl_1334_∕∕_4._Ordibehešt_1286)",
+			"wikimedia_hash": "de"
+		},
+		{
+			"number": "12",
+			"date": "13341117",
+			"volume": "1",
+			"filename_base": "Kaveh_No._12_(15._September_1916_∕∕_17._Ḏū_l-qaʿda_1334_∕∕_5._Ḫordād_1286)",
+			"wikimedia_hash": "ac"
+		},
+		{
+			"number": "13",
+			"date": "13341217",
+			"volume": "1",
+			"filename_base": "Kaveh_No._13_(15._Oktober_1916_∕∕_17._Ḏū_l-ḥiǧǧa_1334_∕∕_5._Tir_1286)",
+			"wikimedia_hash": "48"
+		},
+		{
+			"number": "14",
+			"date": "13350118",
+			"volume": "1",
+			"filename_base": "Kaveh_No._14_(15._November_1916_∕∕_18._Muḥarram_1335_∕∕_4._Mordād_1286)",
+			"wikimedia_hash": "1d"
+		},
+		{
+			"number": "15",
+			"date": "13350205",
+			"volume": "1",
+			"filename_base": "Kaveh_No._15_(1._Dezember_1916_∕∕_5._Ṣafar_1355_∕∕_20._Mordād_1286)",
+			"wikimedia_hash": "2e"
+		},
+		{
+			"number": "16",
+			"date": "13350219",
+			"volume": "1",
+			"filename_base": "Kaveh_No._16_(15._Dezember_1916_∕∕_19._Ṣafar_1335_∕∕_6._Mordād_(sic!)_1286)",
+			"wikimedia_hash": "25"
+		},
+		{
+			"number": "17",
+			"date": "13350305",
+			"volume": "1",
+			"filename_base": "Kaveh_No._17_(1._Januar_1917_∕∕_5._Rabīʿ_al-awwal_1335_∕∕_22._Mordād_(sic!)_1286)",
+			"wikimedia_hash": "0e"
+		},
+		{
+			"number": "1",
+			"date": "13390501",
+			"volume": "2",
+			"filename_base": "کاوه،_دورهٔ_جدید،_سال_دوّم،_شمارهٔ_۱،_۵_شهریور_۱۲۹۰_یزدگردی،_۱_جمادی‌الاول_۱۳۳۹_قمری،_۱۱_ژانویهٔ_۱۹۲۱_میلادی",
+			"wikimedia_hash": "44"
+		},
+		{
+			"number": "10",
+			"date": "13390601",
+			"volume": "2",
+			"filename_base": "کاوه،_دورهٔ_جدید،_سال_دوّم،_شمارهٔ_۱۰،_۲۴_اردیبهشت_۱۲۹۰_یزدگردی،_۱_صفر_۱۳۳۹_قمری،_۳_اکتبر_۱۹۲۱_میلادی",
+			"wikimedia_hash": "1f"
+		},
+		{
+			"number": "11",
+			"date": "13390701",
+			"volume": "2",
+			"filename_base": "کاوه،_دورهٔ_جدید،_سال_دوّم،_شمارهٔ_۱۱،_۲۴_خرداد_۱۲۹۰_یزدگردی،_۱_ربیع‌الاول_۱۳۳۹_قمری،_۲_نوامبر_۱۹۲۱_میلادی",
+			"wikimedia_hash": "00"
+		},
+		{
+			"number": "12",
+			"date": "13390801",
+			"volume": "2",
+			"filename_base": "کاوه،_دورهٔ_جدید،_سال_دوّم،_شمارهٔ_۱۲،_۲۳_تیر_۱۲۹۰_یزدگردی،_۱_ربیع‌الثانی_۱۳۳۹_قمری،_۱_دسامبر_۱۹۲۱_میلادی",
+			"wikimedia_hash": "53"
+		},
+		{
+			"number": "2",
+			"date": "13390901",
+			"volume": "2",
+			"filename_base": "کاوه،_دورهٔ_جدید،_سال_دوّم،_شمارهٔ_۲،_۵_مهر_۱۲۹۰_یزدگردی،_۱_جمادی‌الثانی_۱۳۳۹_قمری،_۱۰_فوریهٔ_۱۹۲۱_میلادی",
+			"wikimedia_hash": "b1"
+		},
+		{
+			"number": "3",
+			"date": "13391001",
+			"volume": "2",
+			"filename_base": "کاوه،_دورهٔ_جدید،_سال_دوّم،_شمارهٔ_۳،_۴_آبان_۱۲۹۰_یزدگردی،_۱_رجب_۱۳۳۹_قمری،_۱۱_مارس_۱۹۲۱_میلادی",
+			"wikimedia_hash": "5f"
+		},
+		{
+			"number": "4",
+			"date": "13391101",
+			"volume": "2",
+			"filename_base": "کاوه،_دورهٔ_جدید،_سال_دوّم،_شمارهٔ_۴،_۴_خمسهٔ_مسترقه_۱۲۹۰_یزدگردی،_۱_شعبان_۱۳۳۹_قمری،_۱۰_آوریل_۱۹۲۱_میلادی",
+			"wikimedia_hash": "f7"
+		},
+		{
+			"number": "5",
+			"date": "13391201",
+			"volume": "2",
+			"filename_base": "کاوه،_دورهٔ_جدید،_سال_دوّم،_شمارهٔ_۵،_۲۸_آذر_۱۲۹۰_یزدگردی،_۱_رمضان_۱۳۳۹_قمری،_۹_مهٔ_۱۹۲۱_میلادی",
+			"wikimedia_hash": "f7"
+		},
+		{
+			"number": "9",
+			"date": "13400101",
+			"volume": "2",
+			"filename_base": "کاوه،_دورهٔ_جدید،_سال_دوّم،_شمارهٔ_۹،_۲۶_فروردین_۱۲۹۱_یزدگردی،_۱_محرم_۱۳۴۰_قمری،_۴_سپتامبر_۱۹۲۱_میلادی",
+			"wikimedia_hash": "17"
+		},
+		{
+			"number": "6",
+			"date": "13400201",
+			"volume": "2",
+			"filename_base": "کاوه،_دورهٔ_جدید،_سال_دوّم،_شمارهٔ_۶،_۲۸_دی_۱۲۹۰_یزدگردی،_۱_شوال_۱۳۳۹_قمری،_۸_ژوئن_۱۹۲۱_میلادی",
+			"wikimedia_hash": "c9"
+		},
+		{
+			"number": "7",
+			"date": "13400301",
+			"volume": "2",
+			"filename_base": "کاوه،_دورهٔ_جدید،_سال_دوّم،_شمارهٔ_۷،_۲۷_بهمن_۱۲۹۰_یزدگردی،_۱_ذیقعدهٔ_۱۳۳۹_قمری،_۷_ژوئیهٔ_۱۹۲۱_میلادی",
+			"wikimedia_hash": "c4"
+		},
+		{
+			"number": "8",
+			"date": "13400401",
+			"volume": "2",
+			"filename_base": "کاوه،_دورهٔ_جدید،_سال_دوّم،_شمارهٔ_۸،_۲۷_اسفندارمذ_۱۲۹۰_یزدگردی،_۱_ذیحجهٔ_۱۳۳۹_قمری،_۶_اوت_۱۹۲۱_میلادی",
+			"wikimedia_hash": "bd"
+		},
+		{
+			"number": "special",
+			"date": "13400801",
+			"volume": "2",
+			"filename_base": "کاوه،_ورقهٔ_فوق‌العاده،_۲۲_آبان_۱۲۹۰_یزدگردی،_۱_شعبان_۱۳۴۰_قمری،_۳۰_مارس_۱۹۲۲_میلادی",
+			"wikimedia_hash": "64"
+		}
+	]
 }
 ]
