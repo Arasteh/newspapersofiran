@@ -28757,5 +28757,83 @@
 			"wikimedia_hash": "64"
 		}
 	]
+},
+{
+	"id": "Q5951014",
+	"title": "نامه فرهنگستان",
+	"calendar_type": "shamsi",
+	"frequency": "monthly",
+	"issues": [
+		{
+			"number": 1,
+			"date": "13220101",
+			"volume": 1,
+			"filename_base": "Nameye_Farhangestan_Volume_1_Issue_1",
+			"wikimedia_hash": "ed"
+		},
+		{
+			"number": 2,
+			"date": "13220301",
+			"volume": 1,
+			"filename_base": "Nameye_Farhangestan_Volume_1_Issue_2",
+			"wikimedia_hash": "16"
+		},
+		{
+			"number": 3,
+			"date": "13220501",
+			"volume": 1,
+			"filename_base": "Nameye_Farhangestan_Volume_1_Issue_3",
+			"wikimedia_hash": "cb"
+		},
+		{
+			"number": 4,
+			"date": "13220801",
+			"volume": 1,
+			"filename_base": "Nameye_Farhangestan_Volume_1_Issue_4",
+			"wikimedia_hash": "39"
+		},
+		{
+			"number": 1,
+			"date": "13230301",
+			"volume": 2,
+			"filename_base": "Nameye_Farhangestan_Volume_2_Issue_1",
+			"wikimedia_hash": "d6"
+		},
+		{
+			"number": 2,
+			"date": "13231101",
+			"volume": 2,
+			"filename_base": "Nameye_Farhangestan_Volume_2_Issue_2",
+			"wikimedia_hash": "f0"
+		},
+		{
+			"number": 1,
+			"date": "13240301",
+			"volume": 3,
+			"filename_base": "Nameye_Farhangestan_Volume_3_Issue_1",
+			"wikimedia_hash": "07"
+		},
+		{
+			"number": 2,
+			"date": "13240601",
+			"volume": 3,
+			"filename_base": "Nameye_Farhangestan_Volume_3_Issue_2",
+			"wikimedia_hash": "3c"
+		},
+		{
+			"number": 1,
+			"date": "13250201",
+			"volume": 4,
+			"filename_base": "Nameye_Farhangestan_Volume_4_Issue_1",
+			"wikimedia_hash": "04"
+		},
+		{
+			"number": 1,
+			"date": "13260101",
+			"volume": 5,
+			"filename_base": "Nameye_Farhangestan_Volume_5_Issue_1",
+			"wikimedia_hash": "fd"
+		}
+	]
 }
 ]
