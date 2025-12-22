@@ -28835,5 +28835,873 @@
 			"wikimedia_hash": "fd"
 		}
 	]
+},
+{
+	"id": "Q133572585",
+	"title": "عصر جدید",
+	"calendar_type": "hijri",
+	"issues": [
+		{
+			"number": 1,
+			"date": "13321112",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_01,_Year_01,_No_01-12",
+			"wikimedia_hash": "6b"
+		},
+		{
+			"number": 2,
+			"date": "13321119",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_02,_Year_01,_No_01-12",
+			"wikimedia_hash": "48"
+		},
+		{
+			"number": 3,
+			"date": "13321126",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_03,_Year_01,_No_01-12",
+			"wikimedia_hash": "a0"
+		},
+		{
+			"number": 4,
+			"date": "13321204",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_04,_Year_01,_No_01-12",
+			"wikimedia_hash": "3f"
+		},
+		{
+			"number": 5,
+			"date": "13321211",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_05,_Year_01,_No_01-12",
+			"wikimedia_hash": "ab"
+		},
+		{
+			"number": 6,
+			"date": "13321218",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_06,_Year_01,_No_01-12",
+			"wikimedia_hash": "58"
+		},
+		{
+			"number": 7,
+			"date": "13321225",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_07,_Year_01,_No_01-12",
+			"wikimedia_hash": "88"
+		},
+		{
+			"number": 8,
+			"date": "13330102",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_08,_Year_01,_No_01-12",
+			"wikimedia_hash": "5b"
+		},
+		{
+			"number": 9,
+			"date": "13330109",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_09,_Year_01,_No_01-12",
+			"wikimedia_hash": "79"
+		},
+		{
+			"number": 10,
+			"date": "13330116",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_10,_Year_01,_No_01-12",
+			"wikimedia_hash": "42"
+		},
+		{
+			"number": 11,
+			"date": "13330123",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_11,_Year_01,_No_01-12",
+			"wikimedia_hash": "f8"
+		},
+		{
+			"number": 12,
+			"date": "13330201",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_12,_Year_01,_No_01-12",
+			"wikimedia_hash": "30"
+		},
+		{
+			"number": 13,
+			"date": "13330208",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_13,_Year_01,_No_01-12",
+			"wikimedia_hash": "9f"
+		},
+		{
+			"number": 14,
+			"date": "13330215",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_14,_Year_01,_No_01-12",
+			"wikimedia_hash": "10"
+		},
+		{
+			"number": 15,
+			"date": "13330222",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_15,_Year_01,_No_01-12",
+			"wikimedia_hash": "b6"
+		},
+		{
+			"number": 16,
+			"date": "13330229",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_16,_Year_01,_No_01-12",
+			"wikimedia_hash": "c0"
+		},
+		{
+			"number": 17,
+			"date": "13330307",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_17,_Year_01,_No_01-12",
+			"wikimedia_hash": "56"
+		},
+		{
+			"number": 18,
+			"date": "13330314",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_18,_Year_01,_No_01-12",
+			"wikimedia_hash": "fc"
+		},
+		{
+			"number": 19,
+			"date": "13330321",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_19,_Year_01,_No_01-12",
+			"wikimedia_hash": "85"
+		},
+		{
+			"number": 20,
+			"date": "13330328",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_20,_Year_01,_No_01-12",
+			"wikimedia_hash": "6d"
+		},
+		{
+			"number": 21,
+			"date": "13330405",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_21,_Year_01,_No_01-12",
+			"wikimedia_hash": "3d"
+		},
+		{
+			"number": 22,
+			"date": "13330412",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_22,_Year_01,_No_01-12",
+			"wikimedia_hash": "a9"
+		},
+		{
+			"number": 23,
+			"date": "13330419",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_23,_Year_01,_No_01-12",
+			"wikimedia_hash": "f4"
+		},
+		{
+			"number": 24,
+			"date": "13330426",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_24,_Year_01,_No_01-12",
+			"wikimedia_hash": "0a"
+		},
+		{
+			"number": 25,
+			"date": "13330504",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_25,_Year_01,_No_01-14",
+			"wikimedia_hash": "60"
+		},
+		{
+			"number": 26,
+			"date": "13330510",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_26,_Year_01,_No_01-16",
+			"wikimedia_hash": "41"
+		},
+		{
+			"number": 27,
+			"date": "13330517",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_27,_Year_01,_No_01-14",
+			"wikimedia_hash": "74"
+		},
+		{
+			"number": 28,
+			"date": "13330524",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_28,_Year_01,_No_01-14",
+			"wikimedia_hash": "a0"
+		},
+		{
+			"number": 29,
+			"date": "13330602",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_29,_Year_01,_No_01-14",
+			"wikimedia_hash": "d3"
+		},
+		{
+			"number": 30,
+			"date": "13330609",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_30,_Year_01,_No_01-14",
+			"wikimedia_hash": "a9"
+		},
+		{
+			"number": 31,
+			"date": "13330616",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_31,_Year_01,_No_01-12",
+			"wikimedia_hash": "4c"
+		},
+		{
+			"number": 32,
+			"date": "13330623",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_32,_Year_01,_No_01-12",
+			"wikimedia_hash": "c3"
+		},
+		{
+			"number": 33,
+			"date": "13330629",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_33,_Year_01,_No_01-12",
+			"wikimedia_hash": "f2"
+		},
+		{
+			"number": 34,
+			"date": "13330706",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_34,_Year_01,_No_01-12",
+			"wikimedia_hash": "d3"
+		},
+		{
+			"number": 35,
+			"date": "13330713",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_35,_Year_01,_No_01-12",
+			"wikimedia_hash": "15"
+		},
+		{
+			"number": 36,
+			"date": "13330720",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_36,_Year_01,_No_01-12",
+			"wikimedia_hash": "ba"
+		},
+		{
+			"number": 37,
+			"date": "13330727",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_37,_Year_01,_No_01-12",
+			"wikimedia_hash": "79"
+		},
+		{
+			"number": 38,
+			"date": "13330805",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_38,_Year_01,_No_01-12",
+			"wikimedia_hash": "c5"
+		},
+		{
+			"number": 39,
+			"date": "13330812",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_39,_Year_01,_No_01-12",
+			"wikimedia_hash": "64"
+		},
+		{
+			"number": 40,
+			"date": "13330819",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_40,_Year_01,_No_01-12",
+			"wikimedia_hash": "cb"
+		},
+		{
+			"number": 41,
+			"date": "13330826",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_41,_Year_01,_No_01-12",
+			"wikimedia_hash": "6c"
+		},
+		{
+			"number": 42,
+			"date": "13330902",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_42,_Year_01,_No_01-16",
+			"wikimedia_hash": "bc"
+		},
+		{
+			"number": 43,
+			"date": "13330904",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_43,_Year_01,_No_01-12",
+			"wikimedia_hash": "a8"
+		},
+		{
+			"number": 44,
+			"date": "13330907",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_44,_Year_01,_No_01-8",
+			"wikimedia_hash": "db"
+		},
+		{
+			"number": 45,
+			"date": "13330909",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_45,_Year_01,_No_01-12",
+			"wikimedia_hash": "06"
+		},
+		{
+			"number": 46,
+			"date": "13330911",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_46,_Year_01,_No_01-8",
+			"wikimedia_hash": "53"
+		},
+		{
+			"number": 47,
+			"date": "13330914",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_47,_Year_01,_No_01-8",
+			"wikimedia_hash": "ba"
+		},
+		{
+			"number": 48,
+			"date": "13330916",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_48,_Year_01,_No_01-8",
+			"wikimedia_hash": "32"
+		},
+		{
+			"number": 49,
+			"date": "13330918",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_49,_Year_01,_No_01-8",
+			"wikimedia_hash": "a9"
+		},
+		{
+			"number": 50,
+			"date": "13330923",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_50,_Year_01,_No_01-8",
+			"wikimedia_hash": "13"
+		},
+		{
+			"number": 51,
+			"date": "13330925",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_51,_Year_01,_No_01-8",
+			"wikimedia_hash": "a1"
+		},
+		{
+			"number": 52,
+			"date": "13330928",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_52,_Year_01,_No_01-8",
+			"wikimedia_hash": "f3"
+		},
+		{
+			"number": 53,
+			"date": "13330930",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_53,_Year_01,_No_01-8",
+			"wikimedia_hash": "bc"
+		},
+		{
+			"number": 54,
+			"date": "13331005",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_54_Year_01,_No_01-8",
+			"wikimedia_hash": "75"
+		},
+		{
+			"number": 55,
+			"date": "13331007",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_55,_Year_01,_No_01-8",
+			"wikimedia_hash": "d3"
+		},
+		{
+			"number": 56,
+			"date": "13331009",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_56,_Year_01,_No_01-8",
+			"wikimedia_hash": "a1"
+		},
+		{
+			"number": 57,
+			"date": "13331012",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_57,_Year_01,_No_01-8",
+			"wikimedia_hash": "18"
+		},
+		{
+			"number": 58,
+			"date": "13331014",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_58,_Year_01,_No_01-8",
+			"wikimedia_hash": "83"
+		},
+		{
+			"number": 59,
+			"date": "13331016",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_59,_Year_01,_No_01-8",
+			"wikimedia_hash": "9d"
+		},
+		{
+			"number": 60,
+			"date": "13331018",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_60,_Year_01,_No_01-8",
+			"wikimedia_hash": "68"
+		},
+		{
+			"number": 61,
+			"date": "13331021",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_61,_Year_01,_No_01-8",
+			"wikimedia_hash": "74"
+		},
+		{
+			"number": 62,
+			"date": "13331023",
+			"volume": 1,
+			"filename_base": "Asre_jadid,_Vol_62,_Year_01,_No_01-8",
+			"wikimedia_hash": "e9"
+		},
+		{
+			"number": 1,
+			"date": "13331103",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_01,_Year_02,_No_01-08",
+			"wikimedia_hash": "35"
+		},
+		{
+			"number": 2,
+			"date": "13331105",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_02,_Year_02,_No_01-08",
+			"wikimedia_hash": "20"
+		},
+		{
+			"number": 3,
+			"date": "13331107",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_03,_Year_02,_No_01-08",
+			"wikimedia_hash": "c7"
+		},
+		{
+			"number": 4,
+			"date": "13331110",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_04,_Year_02,_No_01-08",
+			"wikimedia_hash": "3e"
+		},
+		{
+			"number": 5,
+			"date": "13331114",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_05,_Year_02,_No_01-12",
+			"wikimedia_hash": "86"
+		},
+		{
+			"number": 6,
+			"date": "13331117",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_06,_Year_02,_No_01-08",
+			"wikimedia_hash": "a2"
+		},
+		{
+			"number": 7,
+			"date": "13331119",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_07,_Year_02,_No_01-08",
+			"wikimedia_hash": "8d"
+		},
+		{
+			"number": 9,
+			"date": "13331124",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_09,_Year_02,_No_01-08",
+			"wikimedia_hash": "ed"
+		},
+		{
+			"number": 10,
+			"date": "13331126",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_10,_Year_02,_No_01-08",
+			"wikimedia_hash": "41"
+		},
+		{
+			"number": 11,
+			"date": "13331128",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_11,_Year_02,_No_01-08",
+			"wikimedia_hash": "aa"
+		},
+		{
+			"number": 12,
+			"date": "13331202",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_12,_Year_02,_No_01-08",
+			"wikimedia_hash": "da"
+		},
+		{
+			"number": 13,
+			"date": "13331204",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_13,_Year_02,_No_01-08",
+			"wikimedia_hash": "77"
+		},
+		{
+			"number": 14,
+			"date": "13331206",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_14,_Year_02,_No_01-08",
+			"wikimedia_hash": "87"
+		},
+		{
+			"number": 15,
+			"date": "13331209",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_15,_Year_02,_No_01-08",
+			"wikimedia_hash": "af"
+		},
+		{
+			"number": 16,
+			"date": "13331213",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_16,_Year_02,_No_01-08",
+			"wikimedia_hash": "ea"
+		},
+		{
+			"number": 17,
+			"date": "13331216",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_17,_Year_02,_No_01-08",
+			"wikimedia_hash": "60"
+		},
+		{
+			"number": 18,
+			"date": "13331218",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_18,_Year_02,_No_01-08",
+			"wikimedia_hash": "4a"
+		},
+		{
+			"number": 19,
+			"date": "13331220",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_19,_Year_02,_No_01-08",
+			"wikimedia_hash": "c2"
+		},
+		{
+			"number": 20,
+			"date": "13331223",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_20,_Year_02,_No_01-08",
+			"wikimedia_hash": "69"
+		},
+		{
+			"number": 21,
+			"date": "13331225",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_21,_Year_02,_No_01-08",
+			"wikimedia_hash": "af"
+		},
+		{
+			"number": 22,
+			"date": "13340101",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_22,_Year_02,_No_01-08",
+			"wikimedia_hash": "da"
+		},
+		{
+			"number": 23,
+			"date": "13340103",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_23,_Year_02,_No_01-06",
+			"wikimedia_hash": "e0"
+		},
+		{
+			"number": 24,
+			"date": "13340108",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_24,_Year_02,_No_01-08",
+			"wikimedia_hash": "aa"
+		},
+		{
+			"number": 25,
+			"date": "13340115",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_25,_Year_02,_No_01-08",
+			"wikimedia_hash": "0c"
+		},
+		{
+			"number": 26,
+			"date": "13340117",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_26,_Year_02,_No_01-08",
+			"wikimedia_hash": "ec"
+		},
+		{
+			"number": 27,
+			"date": "13340119",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_27,_Year_02,_No_01-08",
+			"wikimedia_hash": "94"
+		},
+		{
+			"number": 28,
+			"date": "13340122",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_28,_Year_02,_No_01-08",
+			"wikimedia_hash": "ec"
+		},
+		{
+			"number": 29,
+			"date": "13340124",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_29,_Year_02,_No_01-08",
+			"wikimedia_hash": "2f"
+		},
+		{
+			"number": 30,
+			"date": "13340126",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_30,_Year_02,_No_01-08",
+			"wikimedia_hash": "ad"
+		},
+		{
+			"number": 31,
+			"date": "13340129",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_31,_Year_02,_No_01-08",
+			"wikimedia_hash": "ea"
+		},
+		{
+			"number": 32,
+			"date": "13340201",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_32,_Year_02,_No_01-08",
+			"wikimedia_hash": "8b"
+		},
+		{
+			"number": 33,
+			"date": "13340203",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_33,_Year_02,_No_01-08",
+			"wikimedia_hash": "72"
+		},
+		{
+			"number": 34,
+			"date": "13340206",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_34,_Year_02,_No_01-08",
+			"wikimedia_hash": "4c"
+		},
+		{
+			"number": 35,
+			"date": "13340208",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_35,_Year_02,_No_01-08",
+			"wikimedia_hash": "97"
+		},
+		{
+			"number": 36,
+			"date": "13340210",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_36,_Year_02,_No_01-08",
+			"wikimedia_hash": "d5"
+		},
+		{
+			"number": 37,
+			"date": "13340213",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_37,_Year_02,_No_01-08",
+			"wikimedia_hash": "90"
+		},
+		{
+			"number": 38,
+			"date": "13340215",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_38,_Year_02,_No_01-08",
+			"wikimedia_hash": "bc"
+		},
+		{
+			"number": 39,
+			"date": "13340217",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_39,_Year_02,_No_01-08",
+			"wikimedia_hash": "00"
+		},
+		{
+			"number": 40,
+			"date": "13340222",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_40,_Year_02,_No_01-16",
+			"wikimedia_hash": "91"
+		},
+		{
+			"number": 41,
+			"date": "13340224",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_41,_Year_02,_No_01-08",
+			"wikimedia_hash": "e0"
+		},
+		{
+			"number": 42,
+			"date": "13340227",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_42,_Year_02,_No_01-08",
+			"wikimedia_hash": "86"
+		},
+		{
+			"number": 43,
+			"date": "13340302",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_43,_Year_02,_No_01-08",
+			"wikimedia_hash": "7f"
+		},
+		{
+			"number": 44,
+			"date": "13340305",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_44,_Year_02,_No_01-08",
+			"wikimedia_hash": "80"
+		},
+		{
+			"number": 45,
+			"date": "13340307",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_45,_Year_02,_No_01-08",
+			"wikimedia_hash": "b9"
+		},
+		{
+			"number": 46,
+			"date": "13340309",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_46,_Year_02,_No_01-08",
+			"wikimedia_hash": "e7"
+		},
+		{
+			"number": 47,
+			"date": "13340312",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_47,_Year_02,_No_01-08",
+			"wikimedia_hash": "ba"
+		},
+		{
+			"number": 48,
+			"date": "13340314",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_48,_Year_02,_No_01-08",
+			"wikimedia_hash": "1d"
+		},
+		{
+			"number": 49,
+			"date": "13340316",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_49,_Year_02,_No_01-08",
+			"wikimedia_hash": "84"
+		},
+		{
+			"number": 50,
+			"date": "13340319",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_50,_Year_02,_No_01-08",
+			"wikimedia_hash": "62"
+		},
+		{
+			"number": 51,
+			"date": "13340321",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_51,_Year_02,_No_01-08",
+			"wikimedia_hash": "0c"
+		},
+		{
+			"number": 52,
+			"date": "13340323",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_52,_Year_02,_No_01-08",
+			"wikimedia_hash": "b8"
+		},
+		{
+			"number": 53,
+			"date": "13340326",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_53,_Year_02,_No_01-08",
+			"wikimedia_hash": "8b"
+		},
+		{
+			"number": 54,
+			"date": "13340401",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_54,_Year_02,_No_01-08",
+			"wikimedia_hash": "78"
+		},
+		{
+			"number": 55,
+			"date": "13340404",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_55,_Year_02,_No_01-08",
+			"wikimedia_hash": "ce"
+		},
+		{
+			"number": 56,
+			"date": "13340406",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_56,_Year_02,_No_01-08",
+			"wikimedia_hash": "48"
+		},
+		{
+			"number": 57,
+			"date": "13340408",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_57,_Year_02,_No_01-08",
+			"wikimedia_hash": "ce"
+		},
+		{
+			"number": 58,
+			"date": "13340411",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_58,_Year_02,_No_01-08",
+			"wikimedia_hash": "e6"
+		},
+		{
+			"number": 59,
+			"date": "13340413",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_59,_Year_02,_No_01-08",
+			"wikimedia_hash": "55"
+		},
+		{
+			"number": 60,
+			"date": "13340415",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_60,_Year_02,_No_01-08",
+			"wikimedia_hash": "33"
+		},
+		{
+			"number": 61,
+			"date": "13340418",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_61,_Year_02,_No_01-08",
+			"wikimedia_hash": "1f"
+		},
+		{
+			"number": 62,
+			"date": "13340420",
+			"volume": 2,
+			"filename_base": "Asre_jadid,_Vol_62,_Year_02,_No_01-08",
+			"wikimedia_hash": "01"
+		}
+	]
 }
 ]
