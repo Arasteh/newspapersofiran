@@ -29703,5 +29703,75 @@
 			"wikimedia_hash": "01"
 		}
 	]
+},
+{
+	"id": "Q140453366",
+	"title": "آذر",
+	"calendar_type": "hijri",
+	"issues": [
+		{
+			"number": 1,
+			"filename_base": "Azar,_Vol._1,_No._1,_1302_SH",
+			"wikimedia_hash": "62",
+			"volume": 1,
+			"date": "13420712"
+		},
+		{
+			"number": 2,
+			"filename_base": "Azar,_Vol._1,_No._2,_1302_SH",
+			"wikimedia_hash": "ba",
+			"volume": 1,
+			"date": "13420715"
+		},
+		{
+			"number": 3,
+			"filename_base": "Azar,_Vol._1,_No._3,_1302_SH",
+			"wikimedia_hash": "91",
+			"volume": 1,
+			"date": "13420719"
+		},
+		{
+			"number": 4,
+			"filename_base": "Azar,_Vol._1,_No._4,_1302_SH",
+			"wikimedia_hash": "25",
+			"volume": 1,
+			"date": "13420722"
+		},
+		{
+			"number": 5,
+			"filename_base": "Azar,_Vol._1,_No._5,_1302_SH",
+			"wikimedia_hash": "b0",
+			"volume": 1,
+			"date": "13420726"
+		},
+		{
+			"number": 6,
+			"filename_base": "Azar,_Vol._1,_No._6,_1302_SH",
+			"wikimedia_hash": "9a",
+			"volume": 1,
+			"date": "13420729"
+		},
+		{
+			"number": 7,
+			"filename_base": "Azar,_Vol._1,_No._7,_1302_SH",
+			"wikimedia_hash": "a5",
+			"volume": 1,
+			"date": "13420807"
+		},
+		{
+			"number": 8,
+			"filename_base": "Azar,_Vol._1,_No._8,_1302_SH",
+			"wikimedia_hash": "f3",
+			"volume": 1,
+			"date": "13420811"
+		},
+		{
+			"number": 9,
+			"filename_base": "Azar,_Vol._1,_No._9,_1303_SH",
+			"wikimedia_hash": "a6",
+			"volume": 1,
+			"date": "13421214"
+		}
+	]
 }
 ]
