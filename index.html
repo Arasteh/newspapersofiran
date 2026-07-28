@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>بایگانی نشریات ایران</title>
 	<style>
+		/* تمام استایل‌های قبلی بدون تغییر باقی می‌مانند */
 		body {
 			--body-bg: #f4f4f4;
 			--text-color: #333;
@@ -1211,6 +1212,9 @@
 
 			let currentLightboxNewspaperId = null;
 			let lightboxCurrentPage = 1;
+			// متغیرهای ذخیره‌سازی تصاویر پیش‌بارگذاری شده
+			let preloadedPrevImage = null;
+			let preloadedNextImage = null;
 
 			const newspaperConfigurations = {
 				ettelaat: { type: 'formula', prefix: 'Ettelaat', title: 'اطلاعات', calendar_type: 'shamsi', firstIssueDate: "13050419" },
@@ -1657,6 +1661,42 @@
 					const hash = getWikimediaHash(paper, fullFileNameWithPdf);
 					const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_');
 					return `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${page}-${width}px-${fileNameForUrlPath}.jpg`;
+				}
+			};
+
+			const getLightboxImageUrl = (paper, issue, page, width = 960) => {
+				if (paper.source === 'utlib') return null;
+				const baseFileName = paper.fileNameBase || (issue ? issue.filename_base : null);
+				if (!baseFileName) return null;
+				const fullFileNameWithPdf = `${baseFileName}.pdf`;
+				const hash = getWikimediaHash(paper, fullFileNameWithPdf);
+				const fileNameForUrlPath = fullFileNameWithPdf.replace(/ /g, '_');
+				return `https://upload.wikimedia.org/wikipedia/commons/thumb/${hash[0]}/${hash}/${fileNameForUrlPath}/page${page}-${width}px-${fileNameForUrlPath}.jpg`;
+			};
+
+			const preloadLightboxPages = (paper, currentPage, maxPages) => {
+				// پاک کردن تصاویر پیش‌بارگذاری شده قبلی
+				preloadedPrevImage = null;
+				preloadedNextImage = null;
+
+				if (!paper || paper.source === 'utlib') return;
+
+				// پیش‌بارگذاری صفحه قبل
+				if (currentPage > 1) {
+					const prevPageUrl = getLightboxImageUrl(paper, paper.currentIssue, currentPage - 1, 960);
+					if (prevPageUrl) {
+						preloadedPrevImage = new Image();
+						preloadedPrevImage.src = prevPageUrl;
+					}
+				}
+
+				// پیش‌بارگذاری صفحه بعد
+				if (maxPages === null || currentPage < maxPages) {
+					const nextPageUrl = getLightboxImageUrl(paper, paper.currentIssue, currentPage + 1, 960);
+					if (nextPageUrl) {
+						preloadedNextImage = new Image();
+						preloadedNextImage.src = nextPageUrl;
+					}
 				}
 			};
 
@@ -2146,6 +2186,9 @@
 					}
 					lightboxOverlay.classList.remove('visible');
 					currentLightboxNewspaperId = null;
+					// پاک کردن تصاویر پیش‌بارگذاری شده هنگام بستن لایت‌باکس
+					preloadedPrevImage = null;
+					preloadedNextImage = null;
 			};
 
 
@@ -2282,6 +2325,9 @@
 
 						viewLargeLink.href = viewLargeUrl;
 						viewLargeLink.style.display = 'inline-block';
+
+						// پس از بارگذاری موفق تصویر، صفحات قبل و بعد را پیش‌بارگذاری می‌کنیم
+						preloadLightboxPages(paper, lightboxCurrentPage, maxPages);
 
 					} catch (error) {
 						downloadLink.style.display = 'none';
