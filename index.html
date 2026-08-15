@@ -3,928 +3,1484 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#16a34a" media="(prefers-color-scheme: light)">
+	<meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)">
+	<meta name="description" content="بایگانی دیجیتال نشریات و روزنامه‌های تاریخی ایران">
 	<title>بایگانی نشریات ایران</title>
 	<style>
-		/* تمام استایل‌های قبلی بدون تغییر باقی می‌مانند */
-		body {
-			--body-bg: #f4f4f4;
-			--text-color: #333;
-			--control-bg: #fff;
-			--border-color: #ddd;
-			--button-bg: #28a745;
-			--button-hover-bg: #000;
-			--button-disabled-bg: #cccccc;
-			--error-color: red;
-			--status-color: #007bff;
-			--section-bg: #fff;
-			--section-title-color: #555;
-			--lightbox-bg: #fff;
-			--lightbox-text-color: #333;
-			--lightbox-button-bg: #007bff;
-			--lightbox-button-hover-bg: #000;
-			--lightbox-close-button-color: #333;
+/* Modern Iranian Publications Archive - 2025 Redesign */
+/* All class names and IDs preserved for full JS compatibility */
 
-			--highlight-color-r: 40;
-			--highlight-color-g: 167;
-			--highlight-color-b: 69;
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
 
-			--highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
-			--highlight-text-color: white;
-			--multiple-issues-color: #ffc107;
-		}
+:root {
+  --body-bg: #f0f2f5;
+  --text-color: #1a1a2e;
+  --text-secondary: #64748b;
+  --control-bg: #ffffff;
+  --border-color: #e2e8f0;
+  --border-subtle: #f1f5f9;
+  --button-bg: #16a34a;
+  --button-hover-bg: #15803d;
+  --button-disabled-bg: #cbd5e1;
+  --error-color: #ef4444;
+  --status-color: #3b82f6;
+  --section-bg: #ffffff;
+  --section-title-color: #334155;
+  --lightbox-bg: #ffffff;
+  --lightbox-text-color: #1a1a2e;
+  --lightbox-button-bg: #2563eb;
+  --lightbox-button-hover-bg: #1d4ed8;
+  --lightbox-close-button-color: #64748b;
 
-		@media (prefers-color-scheme: dark) {
-			body {
-				--body-bg: #1a1a1a;
-				--text-color: #e0e0e0;
-				--control-bg: #2a2a2a;
-				--border-color: #555;
-				--button-bg: #1e7e34;
-				--button-hover-bg: #aaa;
-				--button-disabled-bg: #555555;
-				--error-color: #ff6666;
-				--status-color: #66b3ff;
-				--section-bg: #2a2a2a;
-				--section-title-color: #cccccc;
-				--lightbox-bg: #3a3a3a;
-				--lightbox-text-color: #e0e0e0;
-				--lightbox-button-bg: #0056b3;
-				--lightbox-button-hover-bg: #aaa;
-				--lightbox-close-button-color: #e0e0e0;
+  --highlight-color-r: 22;
+  --highlight-color-g: 163;
+  --highlight-color-b: 74;
+  --highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
+  --highlight-text-color: #ffffff;
+  --multiple-issues-color: #f59e0b;
 
-				--highlight-color-r: 30;
-				--highlight-color-g: 126;
-				--highlight-color-b: 52;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04);
+  --shadow-xl: 0 20px 40px rgba(0,0,0,0.12);
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-				--highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
-				--highlight-text-color: white;
-				--multiple-issues-color: #d4a700;
-			}
-		}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --body-bg: #0f1117;
+    --text-color: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --control-bg: #1a1d27;
+    --border-color: #2d3340;
+    --border-subtle: #232733;
+    --button-bg: #16a34a;
+    --button-hover-bg: #22c55e;
+    --button-disabled-bg: #3f4654;
+    --error-color: #f87171;
+    --status-color: #60a5fa;
+    --section-bg: #1a1d27;
+    --section-title-color: #cbd5e1;
+    --lightbox-bg: #1e2230;
+    --lightbox-text-color: #e2e8f0;
+    --lightbox-button-bg: #3b82f6;
+    --lightbox-button-hover-bg: #60a5fa;
+    --lightbox-close-button-color: #94a3b8;
 
-		body {
-			font-family: system-ui;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			margin: 20px;
-			background-color: var(--body-bg);
-			color: var(--text-color);
-			transition: background-color 0.3s, color 0.3s;
-		}
-		.controls {
-			margin-bottom: 10px;
-			background-color: var(--control-bg);
-			padding: 20px;
-			border-radius: 8px;
-			box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-			display: flex;
-			gap: 15px;
-			flex-wrap: wrap;
-			justify-content: center;
-		}
-		.global-issue-nav-controls {
-			display: flex;
-			gap: 10px;
-			margin-bottom: 20px;
-			justify-content: center;
-			flex-wrap: wrap;
-		}
-		.global-issue-nav-controls button {
-			padding: 8px 15px;
-			color: white;
-			border: 2px solid transparent;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 14px;
-			transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-		}
-		.global-issue-nav-controls button {
-			background-color: var(--button-bg);
-		}
-		.global-issue-nav-controls button:hover {
-			background-color: var(--button-hover-bg);
-		}
+    --highlight-color-r: 34;
+    --highlight-color-g: 197;
+    --highlight-color-b: 94;
+    --highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
+    --highlight-text-color: #ffffff;
+    --multiple-issues-color: #fbbf24;
 
-		.global-issue-nav-controls button.shamsi-nav-btn {
-			background-color: var(--lightbox-button-bg);
-		}
-		.global-issue-nav-controls button.shamsi-nav-btn:hover {
-			background-color: var(--lightbox-button-hover-bg);
-		}
-		.global-issue-nav-controls button.hijri-nav-btn {
-			background-color: var(--button-bg);
-		}
-		.global-issue-nav-controls button.hijri-nav-btn:hover {
-			background-color: var(--button-hover-bg);
-		}
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.15);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.2);
+    --shadow-xl: 0 20px 40px rgba(0,0,0,0.4);
+  }
+}
 
-		.global-issue-nav-controls button.available-on-date {
-			 box-shadow: 0px 6px 0px 0px;
-		}
-		.global-issue-nav-controls button.hijri-nav-btn.available-on-date {
-			border-color: var(--button-hover-bg);
-			box-shadow: 0px 6px 0px 0px var(--button-hover-bg);
-		}
-		.global-issue-nav-controls button.shamsi-nav-btn.available-on-date {
-			border-color: var(--lightbox-button-hover-bg);
-			box-shadow: 0px 6px 0px 0px var(--lightbox-button-hover-bg);
-		}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 24px 16px 48px;
+  min-height: 100vh;
+  background-color: var(--body-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  font-weight: 700;
+  margin: 0 0 28px;
+  letter-spacing: -0.02em;
+  text-align: center;
+  background: linear-gradient(135deg, var(--text-color) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (prefers-color-scheme: dark) {
+  h1 {
+    background: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}
 
 
-		.global-issue-nav-controls button:disabled {
-			background-color: var(--button-disabled-bg);
-			cursor: not-allowed;
-			border-color: transparent;
-			box-shadow: none;
-		}
-		.controls label {
-			margin-left: 5px;
-		}
-		.controls select, .controls input[type="number"] {
-			padding: 8px;
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			font-size: 16px;
-			background-color: var(--control-bg);
-			color: var(--text-color);
-			font-family: system-ui;
-		}
-		.newspaper-container {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			gap: 20px;
-			width: 100%;
-			max-width: 1150px;
-		}
-		.newspaper-section {
-			flex: 1;
-			min-width: 330px;
-			max-width: 370px;
-			text-align: center;
-			background-color: var(--section-bg);
-			padding: 20px;
-			border-radius: 8px;
-			box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-		}
-		.newspaper-section.no-image {
-			min-width: 200px;
-			max-width: 250px;
-		}
-		.newspaper-section h2 {
-			margin-top: 0;
-			color: var(--section-title-color);
-			font-weight: normal;
-		}
-		.newspaper-section.available-newspaper h2 {
-			font-weight: bold;
-		}
-		.image-container {
-			max-width: 100%;
-			height: auto;
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			cursor: pointer;
-			margin: 0 auto;
-			display: block;
-			position: relative;
-		}
-		.newspaper-image {
-			max-width: 100%;
-			height: auto;
-			border-radius: 4px;
-			display: block;
-			cursor: pointer;
-		}
-		.image-placeholder {
-			width: 330px;
-			height: 500px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			background-color: #e0e0e0;
-			color: #555;
-			border-radius: 4px;
-			padding: 5px;
-			box-sizing: border-box;
-			text-align: center;
-		}
-		.newspaper-section.no-image .image-placeholder {
-			width: 200px;
-			height: 300px;
-		}
-		.utlib-download-link {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 100%;
-			height: 100%;
-			background-color: var(--lightbox-button-bg);
-			color: white;
-			border-radius: 4px;
-			text-decoration: none;
-			font-size: 1.2em;
-			padding: 10px;
-			box-sizing: border-box;
-		}
-		.utlib-download-text {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 100%;
-			height: 100%;
-			color: var(--text-color);
-			padding: 10px;
-			box-sizing: border-box;
-			font-size: 1.2em;
-			font-weight: bold;
-		}
-		.error-message {
-			color: var(--error-color);
-			margin-top: 10px;
-			text-align: center;
-			width: 100%;
-		}
-		.status-message {
-			color: var(--status-color);
-			margin-top: 10px;
-			text-align: center;
-			width: 100%;
-		}
-		.pagination-controls {
-			margin-top: 15px;
-			display: flex;
-			align-items: center;
-			gap: 10px;
-		}
-		.pagination-controls button {
-			padding: 8px 15px;
-			background-color: var(--button-bg);
-			color: white;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 14px;
-			transition: background-color 0.3s ease;
-		}
-		.pagination-controls button:hover {
-			background-color: var(--button-hover-bg);
-		}
-		.pagination-controls button:disabled {
-			background-color: var(--button-disabled-bg);
-			cursor: not-allowed;
-		}
-		.pagination-controls input[type="number"] {
-			width: 60px;
-			text-align: center;
-			background-color: var(--control-bg);
-			color: var(--text-color);
-		}
+/* ========== App layout: sidebar + main ========== */
+.app-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+  max-width: 1560px;
+}
 
-		button
-		{
-			font-family: system-ui;
-		}
+.sidebar-filters {
+  width: 380px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 20px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 24px;
+}
 
-		.all-issues-modal-overlay {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.8);
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			z-index: 1001;
-			opacity: 0;
-			visibility: hidden;
-			transition: opacity 0.3s ease, visibility 0.3s ease;
-		}
-		.all-issues-modal-overlay.visible {
-			opacity: 1;
-			visibility: visible;
-		}
-		.all-issues-modal-content {
-			position: relative;
-			background-color: var(--lightbox-bg);
-			padding: 20px;
-			border-radius: 8px;
-			box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-			color: var(--lightbox-text-color);
-			max-width: 90%;
-			max-height: 95vh;
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-			overflow-y: auto;
-		}
-		h2#allIssuesModalNewspaperTitle {
-			text-align: center;
-			margin-top: 0;
-			margin-bottom: 15px;
-		}
-		.all-issues-modal-close-button {
-			position: absolute;
-			top: 10px;
-			right: 10px;
-			background: none;
-			border: none;
-			font-size: 24px;
-			cursor: pointer;
-			color: var(--lightbox-close-button-color);
-		}
-		.calendar-modal-close-button {
-			position: absolute;
-			top: 20px;
-			right: 20px;
-			background: none;
-			border: none;
-			font-size: 28px;
-			cursor: pointer;
-			color: var(--lightbox-close-button-color);
-		}
-		.newspaper-selection-container {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 10px;
-			margin-bottom: 20px;
-			justify-content: center;
-			padding-bottom: 10px;
-			border-bottom: 1px solid var(--border-color);
-			max-height: 20vh;
-		}
-		.newspaper-selection-container button {
-			padding: 8px 15px;
-			background-color: #6c757d;
-			color: white;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 15px;
-			transition: background-color 0.3s ease;
-			white-space: nowrap;
-		}
-		.newspaper-selection-container button.selected {
-			background-color: #007bff;
-		}
+.sidebar-filters .controls {
+  flex-direction: column;
+  align-items: stretch;
+  max-width: none;
+  width: 100%;
+  margin-bottom: 0;
+  gap: 12px;
+  padding: 16px;
+}
 
-		.issues-list-container {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 8px;
-			margin-top: 15px;
-			padding-right: 10px;
-			overflow-y: auto;
-			flex-grow: 1;
-			align-content: flex-start;
-		}
-		.issues-list-container .issue-item-button {
-			padding: 8px 12px;
-			background-color: var(--button-bg);
-			color: white;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 14px;
-			transition: background-color 0.3s ease;
-			white-space: nowrap;
-			text-decoration: none;
-		}
-		.issues-list-container .issue-item-button:hover {
-			background-color: var(--button-hover-bg);
-		}
-		.global-all-issues-btn {
-			margin-right: 10px;
-			padding: 8px 15px;
-			background-color: var(--lightbox-button-bg);
-			color: white;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 14px;
-			transition: background-color 0.3s ease;
-		}
-		.global-all-issues-btn:hover {
-			background-color: var(--lightbox-button-hover-bg);
-		}
-		.view-all-issues-btn {
-			margin-top: 10px;
-			padding: 8px 15px;
-			background-color: var(--lightbox-button-bg);
-			color: white;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 14px;
-			transition: background-color 0.3s ease;
-		}
-		.view-all-issues-btn:hover {
-			background-color: var(--lightbox-button-hover-bg);
-		}
+.sidebar-filters .calendar-selection {
+  width: 100%;
+  justify-content: stretch;
+}
 
-		.modal-controls {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: 8px;
-			margin-bottom: 10px;
-			flex-wrap: wrap;
-		}
-		.modal-controls input[type="checkbox"] {
-			width: 18px;
-			height: 18px;
-			cursor: pointer;
-			accent-color: var(--button-bg);
-		}
-		.modal-controls label {
-			font-size: 16px;
-			color: var(--text-color);
-		}
+.sidebar-filters .calendar-selection label {
+  flex: 1;
+  text-align: center;
+}
 
-		/* New styles for image grid */
-		.issues-image-grid-container {
-			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-			gap: 10px;
-			margin-top: 15px;
-			padding-right: 10px;
-			overflow-y: auto;
-			flex-grow: 1;
-			align-content: flex-start;
-			justify-items: center;
-		}
+/* Date fields: single row */
+.sidebar-filters #shamsiDateControls,
+.sidebar-filters #hijriDateControls {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
 
-		.issue-thumbnail-item {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			text-align: center;
-			cursor: pointer;
-			background-color: var(--control-bg);
-			border-radius: 8px;
-			padding: 8px;
-			box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-			transition: transform 0.2s ease, box-shadow 0.2s ease;
-			width: 120px;
-			box-sizing: border-box;
-		}
+.sidebar-filters #shamsiDateControls label,
+.sidebar-filters #hijriDateControls label {
+  display: none;
+}
 
-		.issue-thumbnail-item:hover {
-			transform: translateY(-3px);
-			box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-		}
+.sidebar-filters #shamsiDateControls select,
+.sidebar-filters #hijriDateControls select {
+  flex: 1;
+  min-width: 0;
+  padding: 7px 6px;
+  font-size: 0.85rem;
+}
 
-		.issue-thumbnail-image {
-			width: 100%;
-			height: auto;
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			margin-bottom: 5px;
-			object-fit: contain;
-			max-height: 180px;
-		}
-		.newspaper-image-placeholder {
-			width: 100%;
-			height: 180px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			background-color: #e0e0e0;
-			color: #555;
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			padding: 5px;
-			box-sizing: border-box;
-			text-align: center;
-		}
-		.lightbox-image-placeholder {
-			width: 800px;
-			height: 1200px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			background-color: #e0e0e0;
-			color: #555;
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			padding: 20px;
-			box-sizing: border-box;
-			text-align: center;
-			font-size: 1.5em;
-		}
+/* Calendar + all-issues buttons: one row */
+.sidebar-filters .controls-action-row {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  width: 100%;
+}
 
-		.issue-thumbnail-text {
-			font-size: 0.85em;
-			color: var(--text-color);
-			word-break: break-word;
-		}
-		.issue-thumbnail-link-only {
-			padding: 5px;
-			text-decoration: none;
-			color: var(--text-color);
-			font-weight: bold;
-		}
-		.issue-thumbnail-link-only:hover {
-			text-decoration: underline;
-		}
+.sidebar-filters .global-all-issues-btn {
+  flex: 1;
+  width: auto;
+  margin: 0;
+  text-align: center;
+  padding: 9px 10px;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
 
-		.volume-header {
-			width: 100%;
-			text-align: center;
-			margin-top: 15px;
-			margin-bottom: 10px;
-			font-size: 1.2em;
-			font-weight: bold;
-			color: var(--section-title-color);
-			padding: 5px 0;
-			border-bottom: 1px solid var(--border-color);
-		}
+.sidebar-filters .newspapers-list-wrapper {
+  width: 100%;
+  max-width: none;
+}
 
-		.lightbox-overlay {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.8);
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			z-index: 1000;
-			opacity: 0;
-			visibility: hidden;
-			transition: opacity 0.3s ease, visibility 0.3s ease;
-		}
-		.lightbox-overlay.visible {
-			opacity: 1;
-			visibility: visible;
-		}
-		.lightbox-content {
-			position: relative;
-			max-width: 90%;
-			max-height: 90vh;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			background-color: var(--lightbox-bg);
-			padding: 20px;
-			border-radius: 8px;
-			box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-			color: var(--lightbox-text-color);
-			overflow-y: auto;
-		}
-		.lightbox-image {
-			max-width: 100%;
-			max-height: calc(90vh - 200px);
-			height: auto;
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			cursor: pointer;
-			margin: 0 auto;
-			display: block;
-		}
-		.lightbox-controls {
-			display: flex;
-			justify-content: center;
-			flex-wrap: wrap;
-			width: 100%;
-			margin-top: 15px;
-			gap: 10px;
-		}
-		.lightbox-controls .page-nav,
-		.lightbox-controls .newspaper-nav,
-		.lightbox-controls .issue-nav-lightbox {
-			display: flex;
-			align-items: center;
-			gap: 5px;
-		}
-		.lightbox-controls button {
-			padding: 10px 20px;
-			background-color: var(--lightbox-button-bg);
-			color: white;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 16px;
-			transition: background-color 0.3s ease;
-		}
-		.lightbox-controls button:hover {
-			background-color: var(--lightbox-button-hover-bg);
-		}
-		.lightbox-controls button:disabled {
-			background-color: var(--button-disabled-bg);
-			cursor: not-allowed;
-		}
-		.lightbox-controls input[type="number"] {
-			width: 70px;
-			text-align: center;
-			padding: 8px;
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			font-size: 16px;
-			background-color: var(--control-bg);
-			color: var(--text-color);
-		}
-		.lightbox-controls .view-all-issues-btn {
-			background-color: #6c757d;
-		}
-		.lightbox-controls .view-all-issues-btn:hover {
-			background-color: #5a6268;
-		}
+.sidebar-filters .global-issue-nav-controls {
+  max-width: none;
+  width: 100%;
+  margin-bottom: 0;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.sidebar-filters .global-issue-nav-controls h3 {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+}
+
+.sidebar-filters .global-issue-nav-controls button {
+  width: auto;
+  flex: 0 1 auto;
+  text-align: center;
+  padding: 5px 9px;
+  font-size: 0.75rem;
+  border-radius: var(--radius-sm);
+  line-height: 1.3;
+}
+
+.sidebar-filters .pagination-controls {
+  margin-top: 0;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-content .newspaper-container {
+  max-width: none;
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  .app-layout {
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  .sidebar-filters {
+    width: 100%;
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .sidebar-filters .controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sidebar-filters .global-issue-nav-controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .sidebar-filters .global-issue-nav-controls button {
+    width: auto;
+  }
+
+  .sidebar-filters .global-all-issues-btn {
+    width: auto;
+  }
+}
+
+/* ========== Controls ========== */
+.controls {
+  margin-bottom: 20px;
+  background-color: var(--control-bg);
+  padding: 20px 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  max-width: 960px;
+  width: 100%;
+}
+
+.controls label {
+  margin-left: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.controls select,
+.controls input[type="number"] {
+  padding: 9px 12px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  background-color: var(--body-bg);
+  color: var(--text-color);
+  font-family: inherit;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  min-width: 70px;
+}
+
+.controls select:focus,
+.controls input[type="number"]:focus {
+  outline: none;
+  border-color: var(--button-bg);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+}
+
+/* Calendar selection pills */
+.calendar-selection {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  background: var(--body-bg);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.calendar-selection label {
+  cursor: pointer;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all var(--transition);
+  margin: 0 !important;
+  color: var(--text-secondary);
+}
+
+.calendar-selection input[type="radio"] {
+  display: none;
+}
+
+.calendar-selection input[type="radio"]:checked + label {
+  color: white;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.calendar-selection input[type="radio"]#shamsiCalendar:checked + label {
+  background-color: var(--lightbox-button-bg);
+}
+
+.calendar-selection input[type="radio"]#hijriCalendar:checked + label {
+  background-color: var(--button-bg);
+}
+
+/* Global nav buttons */
+.global-issue-nav-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.global-issue-nav-controls h3 {
+  width: 100%;
+  text-align: center;
+  margin: 16px 0 8px;
+  color: var(--section-title-color);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.global-issue-nav-controls button {
+  padding: 9px 16px;
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.global-issue-nav-controls button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.global-issue-nav-controls button.shamsi-nav-btn {
+  background-color: var(--lightbox-button-bg);
+}
+
+.global-issue-nav-controls button.shamsi-nav-btn:hover:not(:disabled) {
+  background-color: var(--lightbox-button-hover-bg);
+}
+
+.global-issue-nav-controls button.hijri-nav-btn {
+  background-color: var(--button-bg);
+}
+
+.global-issue-nav-controls button.hijri-nav-btn:hover:not(:disabled) {
+  background-color: var(--button-hover-bg);
+}
+
+.global-issue-nav-controls button.available-on-date {
+  box-shadow: 0 0 0 2px var(--body-bg), 0 0 0 4px currentColor;
+}
+
+.global-issue-nav-controls button:disabled {
+  background-color: var(--button-disabled-bg);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+/* Global action buttons */
+.global-all-issues-btn {
+  margin-right: 0;
+  padding: 10px 18px;
+  background-color: var(--lightbox-button-bg);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.global-all-issues-btn:hover {
+  background-color: var(--lightbox-button-hover-bg);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ========== Newspaper Cards ========== */
+.newspaper-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.newspaper-section {
+  flex: 1;
+  min-width: 300px;
+  max-width: 360px;
+  text-align: center;
+  background-color: var(--section-bg);
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.newspaper-section:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.newspaper-section.no-image {
+  min-width: 200px;
+  max-width: 260px;
+}
+
+.newspaper-section h2 {
+  margin: 0 0 14px;
+  color: var(--section-title-color);
+  font-weight: 500;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+
+.newspaper-section.available-newspaper h2 {
+  font-weight: 700;
+}
+
+.image-container {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background: var(--body-bg);
+  transition: box-shadow var(--transition);
+}
+
+.image-container:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.newspaper-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  display: block;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.image-container:hover .newspaper-image {
+  transform: scale(1.02);
+}
+
+.image-placeholder {
+  width: 100%;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, var(--border-subtle), var(--body-bg));
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.newspaper-section.no-image .image-placeholder {
+  min-height: 280px;
+}
+
+.utlib-download-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 280px;
+  background: linear-gradient(135deg, var(--lightbox-button-bg), #1d4ed8);
+  color: white;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.utlib-download-link:hover {
+  opacity: 0.92;
+  transform: scale(1.01);
+}
+
+.utlib-download-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--text-color);
+  padding: 16px;
+  box-sizing: border-box;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.error-message {
+  color: var(--error-color);
+  margin-top: 12px;
+  text-align: center;
+  width: 100%;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.status-message {
+  color: var(--status-color);
+  margin-top: 12px;
+  text-align: center;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+/* Pagination */
+.pagination-controls {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--control-bg);
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.pagination-controls label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.pagination-controls button {
+  padding: 8px 16px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all var(--transition);
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  background-color: var(--button-hover-bg);
+}
+
+.pagination-controls button:disabled {
+  background-color: var(--button-disabled-bg);
+  cursor: not-allowed;
+}
+
+.pagination-controls input[type="number"] {
+  width: 64px;
+  text-align: center;
+  background-color: var(--body-bg);
+  color: var(--text-color);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+/* Issue navigation inside cards */
+.issue-navigation-controls {
+  margin-top: 14px;
+  display: none;
+  text-align: center;
+  width: 100%;
+}
+
+.issue-navigation-controls > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.issue-navigation-controls button {
+  padding: 6px 10px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 500;
+  transition: all var(--transition);
+}
+
+.issue-navigation-controls button:hover:not(:disabled) {
+  background-color: var(--button-hover-bg);
+}
+
+.issue-navigation-controls button:disabled {
+  background-color: var(--button-disabled-bg);
+  cursor: not-allowed;
+}
+
+.issue-navigation-controls input[type="number"] {
+  width: 64px;
+  padding: 8px;
+  text-align: center;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--body-bg);
+  color: var(--text-color);
+  font-family: inherit;
+}
+
+.view-all-issues-btn {
+  margin-top: 12px;
+  padding: 9px 16px;
+  background-color: var(--lightbox-button-bg);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+
+.view-all-issues-btn:hover {
+  background-color: var(--lightbox-button-hover-bg);
+  transform: translateY(-1px);
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ========== Modals (shared) ========== */
+.all-issues-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 17, 23, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.all-issues-modal-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.all-issues-modal-content {
+  position: relative;
+  background-color: var(--lightbox-bg);
+  padding: 28px 24px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  color: var(--lightbox-text-color);
+  max-width: 96%;
+  max-height: 92vh;
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+h2#allIssuesModalNewspaperTitle,
+h2#calendarModalTitle,
+h2#shamsiCalendarModalTitle {
+  text-align: center;
+  margin: 0 0 18px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.all-issues-modal-close-button,
+.calendar-modal-close-button {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: var(--body-bg);
+  border: 1px solid var(--border-color);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--lightbox-close-button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  z-index: 2;
+}
+
+.all-issues-modal-close-button:hover,
+.calendar-modal-close-button:hover {
+  background: var(--error-color);
+  color: white;
+  border-color: var(--error-color);
+}
+
+.newspaper-selection-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+  justify-content: center;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-color);
+  max-height: 42vh;
+  overflow-y: auto;
+}
+
+.newspaper-selection-container button {
+  padding: 8px 14px;
+  background-color: var(--text-secondary);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.newspaper-selection-container button:hover {
+  opacity: 0.9;
+}
+
+.newspaper-selection-container button.selected {
+  background-color: var(--lightbox-button-bg);
+  box-shadow: 0 0 0 2px var(--body-bg), 0 0 0 4px var(--lightbox-button-bg);
+}
+
+.issues-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  padding-right: 4px;
+  overflow-y: auto;
+  flex-grow: 1;
+  align-content: flex-start;
+}
+
+.issues-list-container .issue-item-button {
+  padding: 9px 14px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all var(--transition);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.issues-list-container .issue-item-button:hover {
+  background-color: var(--button-hover-bg);
+  transform: translateY(-1px);
+}
+
+.modal-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.modal-controls input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--button-bg);
+}
+
+.modal-controls label {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Image grid in modal */
+.issues-image-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+  padding-right: 4px;
+  overflow-y: auto;
+  flex-grow: 1;
+  align-content: flex-start;
+  justify-items: center;
+}
+
+.issue-thumbnail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--control-bg);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+  width: 130px;
+  box-sizing: border-box;
+}
+
+.issue-thumbnail-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.issue-thumbnail-image {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+  object-fit: contain;
+  max-height: 180px;
+}
+
+.newspaper-image-placeholder {
+  width: 100%;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--body-bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.issue-thumbnail-text {
+  font-size: 0.8rem;
+  color: var(--text-color);
+  word-break: break-word;
+  font-weight: 500;
+}
+
+.issue-thumbnail-link-only {
+  padding: 6px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.issue-thumbnail-link-only:hover {
+  text-decoration: underline;
+}
+
+.volume-header {
+  width: 100%;
+  text-align: center;
+  margin-top: 16px;
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--section-title-color);
+  padding: 6px 0;
+  border-bottom: 2px solid var(--border-color);
+  letter-spacing: -0.01em;
+}
+
+/* ========== Lightbox ========== */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 17, 23, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.lightbox-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 92%;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--lightbox-bg);
+  padding: 28px 24px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  color: var(--lightbox-text-color);
+  overflow-y: auto;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: calc(90vh - 220px);
+  height: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  box-shadow: var(--shadow-md);
+}
+
+.lightbox-image-placeholder {
+  width: min(800px, 90vw);
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--body-bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.lightbox-controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 18px;
+  gap: 12px;
+}
+
+.lightbox-controls .page-nav,
+.lightbox-controls .newspaper-nav,
+.lightbox-controls .issue-nav-lightbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lightbox-controls button {
+  padding: 10px 18px;
+  background-color: var(--lightbox-button-bg);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+
+.lightbox-controls button:hover:not(:disabled) {
+  background-color: var(--lightbox-button-hover-bg);
+  transform: translateY(-1px);
+}
+
+.lightbox-controls button:disabled {
+  background-color: var(--button-disabled-bg);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.lightbox-controls input[type="number"] {
+  width: 72px;
+  text-align: center;
+  padding: 9px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  background-color: var(--body-bg);
+  color: var(--text-color);
+  font-family: inherit;
+}
+
+.lightbox-controls .view-all-issues-btn {
+  background-color: #64748b;
+}
+
+.lightbox-controls .view-all-issues-btn:hover {
+  background-color: #475569;
+}
+
+.lightbox-issue-nav-btn {
+  font-size: 0.72rem !important;
+  padding: 6px 10px !important;
+}
+
+.lightbox-close-button {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: var(--body-bg);
+  border: 1px solid var(--border-color);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--lightbox-close-button-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+
+.lightbox-close-button:hover {
+  background: var(--error-color);
+  color: white;
+  border-color: var(--error-color);
+}
+
+.lightbox-links {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.lightbox-links a {
+  padding: 9px 18px;
+  background-color: var(--button-bg);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.lightbox-links a:hover {
+  background-color: var(--button-hover-bg);
+  transform: translateY(-1px);
+}
+
+/* ========== Calendar ========== */
+.calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.calendar-nav button {
+  padding: 9px 16px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+
+.calendar-nav button:hover:not(:disabled) {
+  background-color: var(--button-hover-bg);
+}
+
+.calendar-nav button:disabled {
+  background-color: var(--button-disabled-bg);
+  cursor: not-allowed;
+}
+
+#calendarYearSelect,
+#shamsiCalendarYearSelect {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-color);
+  background-color: var(--body-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.calendar-grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  width: 100%;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.calendar-month {
+  background-color: var(--control-bg);
+  padding: 12px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-month h3 {
+  margin: 0 0 10px;
+  color: var(--section-title-color);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  width: 100%;
+}
+
+.calendar-day-btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.calendar-day-btn:hover:not(:disabled) {
+  background-color: var(--border-color);
+  transform: scale(1.08);
+}
+
+.calendar-day-btn.has-issue {
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.calendar-day-btn.issue-count-1 {
+  background-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.18);
+}
+
+.calendar-day-btn.issue-count-2 {
+  background-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.45);
+  color: white;
+}
+
+.calendar-day-btn.issue-count-3plus {
+  background-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
+  color: white;
+}
+
+.calendar-day-btn.selected-day {
+  background-color: var(--multiple-issues-color) !important;
+  color: #1a1a2e !important;
+  font-weight: 700;
+  box-shadow: 0 0 0 2px var(--body-bg), 0 0 0 4px var(--multiple-issues-color);
+}
+
+.calendar-day-btn:disabled {
+  background-color: transparent;
+  cursor: not-allowed;
+  color: #888;
+  opacity: 0.45;
+}
 
 
-		.lightbox-close-button {
-			position: absolute;
-			top: 10px;
-			right: 10px;
-			background: none;
-			border: none;
-			font-size: 24px;
-			cursor: pointer;
-			color: var(--lightbox-close-button-color);
-		}
-		.lightbox-links {
-			margin-top: 15px;
-			display: flex;
-			gap: 15px;
-			justify-content: center;
-			flex-wrap: wrap;
-		}
-		.lightbox-links a {
-			padding: 8px 15px;
-			background-color: #4CAF50;
-			color: white;
-			text-decoration: none;
-			border-radius: 4px;
-			transition: background-color 0.3s ease;
-		}
-		.lightbox-links a:hover {
-			background-color: #45a049;
-		}
-		.calendar-selection {
-			display: flex;
-			gap: 15px;
-			justify-content: center;
-			align-items: center;
-		}
-		.calendar-selection label {
-			cursor: pointer;
-			padding: 8px 15px;
-			border-radius: 5px;
-			border: 1px solid var(--border-color);
-			background-color: var(--control-bg);
-			transition: background-color 0.3s, border-color 0.3s;
-		}
-		.calendar-selection input[type="radio"] {
-			display: none;
-		}
-		.calendar-selection input[type="radio"]:checked + label {
-			color: white;
-		}
-		.calendar-selection input[type="radio"]#shamsiCalendar:checked + label {
-			background-color: var(--lightbox-button-bg);
-			border-color: var(--lightbox-button-bg);
-		}
-		.calendar-selection input[type="radio"]#hijriCalendar:checked + label {
-			background-color: var(--button-bg);
-			border-color: var(--button-bg);
-		}
-		.issue-navigation-controls {
-			margin-top: 10px;
-			display: none;
-			text-align: center;
-			width: 100%;
-		}
-		.issue-navigation-controls > div {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			gap: 10px;
-		}
-		.issue-navigation-controls button {
-			padding: 8px 15px;
-			background-color: var(--button-bg);
-			color: white;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-		}
-		 .issue-navigation-controls button:hover {
-			background-color: var(--button-hover-bg);
-		}
-		.issue-navigation-controls button:disabled {
-			background-color: var(--button-disabled-bg);
-			cursor: not-allowed;
-		}
-		.issue-navigation-controls input[type="number"] {
-			width: 60px;
-			padding: 8px;
-			text-align: center;
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			background-color: var(--control-bg);
-			color: var(--text-color);
-		}
+/* Newspapers list mobile collapse */
+.toggle-newspapers-list-btn {
+  display: none;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 12px;
+  padding: 12px 18px;
+  background-color: var(--control-bg);
+  color: var(--text-color);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  text-align: center;
+}
 
-		button
-		{
-			font-family: system-ui;
-		}
+.toggle-newspapers-list-btn:hover {
+  border-color: var(--button-bg);
+  background-color: var(--body-bg);
+}
 
-		/* Calendar specific styles */
-		h2#calendarModalTitle{
-			text-align: center;
-			margin-top: 0;
-		}
-		h2#shamsiCalendarModalTitle{
-			text-align: center;
-			margin-top: 0;
-		}
-		.calendar-nav {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			width: 100%;
-			margin-bottom: 20px;
-		}
-		.calendar-nav button {
-			padding: 8px 15px;
-			background-color: var(--button-bg);
-			color: white;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 14px;
-			transition: background-color 0.3s ease;
-		}
-		.calendar-nav button:hover {
-			background-color: var(--button-hover-bg);
-		}
-		.calendar-nav button:disabled {
-			background-color: var(--button-disabled-bg);
-			cursor: not-allowed;
-		}
-		#calendarYearSelect {
-			font-size: 1.2em;
-			font-weight: bold;
-			color: var(--text-color);
-			background-color: var(--control-bg);
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			padding: 5px 10px;
-			font-family: system-ui;
-		}
-		#shamsiCalendarYearSelect {
-			font-size: 1.2em;
-			font-weight: bold;
-			color: var(--text-color);
-			background-color: var(--control-bg);
-			border: 1px solid var(--border-color);
-			border-radius: 4px;
-			padding: 5px 10px;
-			font-family: system-ui;
-		}
-		.calendar-grid-container {
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			gap: 10px;
-			width: 100%;
-			overflow-y: auto;
-			flex-grow: 1;
-		}
-		.calendar-month {
-			background-color: var(--control-bg);
-			padding: 5px;
-			border-radius: 8px;
-			box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-		}
-		.calendar-month h3 {
-			margin-top: 0;
-			margin-bottom: 10px;
-			color: var(--section-title-color);
-			font-size: 1.1em;
-		}
-		.calendar-days {
-			display: grid;
-			grid-template-columns: repeat(7, 1fr);
-			gap: 5px;
-			width: 100%;
-		}
-		.calendar-day-btn {
-			width: 28px;
-			height: 28px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			padding: 0;
-			border: none;
-			border-radius: 20px;
-			color: var(--section-title-color);
-			font-size: 0.8em;
-			cursor: pointer;
-			transition: background-color 0.2s, transform 0.1s;
-			box-sizing: border-box;
-			background: none;
-		}
+.newspapers-list-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-		.calendar-day-btn:hover {
-			background-color: var(--border-color);
-			transform: scale(1.05);
-		}
-		.calendar-day-btn.has-issue {
-			color: var(--text-color);
-			font-weight: normal;
-			border-color: var(--highlight-color);
-		}
-		.calendar-day-btn.issue-count-1 {
-			background-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.2);
-		}
-		.calendar-day-btn.issue-count-2 {
-			background-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.5);
-		}
-		.calendar-day-btn.issue-count-3plus {
-			background-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
-		}
+@media (max-width: 768px) {
+  .toggle-newspapers-list-btn {
+    display: block;
+  }
 
-		.calendar-day-btn.selected-day {
-			background-color: var(--multiple-issues-color);
-		}
-		@media (prefers-color-scheme: dark) {
-			.calendar-day-btn.selected-day {
-					border: 2px solid var(--multiple-issues-color);
-					background-color: var(--multiple-issues-color);
-					color: black;
-			}
-		}
+  .newspapers-list-collapsible {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-bottom: 0 !important;
+    transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.25s ease;
+    pointer-events: none;
+  }
 
-		.calendar-day-btn:disabled {
-			background-color: var(--button-disabled-bg);
-			cursor: not-allowed;
-			color: #888;
-			border-color: #888;
-			opacity: 1;
-		}
+  .newspapers-list-wrapper.expanded .newspapers-list-collapsible {
+    max-height: 3000px;
+    opacity: 1;
+    margin-bottom: 24px !important;
+    pointer-events: auto;
+  }
+}
 
-		@media (max-width: 768px) {
-			.calendar-grid-container {
-				grid-template-columns: repeat(2, 1fr);
-			}
-			/* Hide labels for year, month, day on mobile */
-			#shamsiDateControls label[for="shamsiYear"],
-			#shamsiDateControls label[for="shamsiMonth"],
-			#shamsiDateControls label[for="shamsiDay"],
-			#hijriDateControls label[for="hijriYear"],
-			#hijriDateControls label[for="hijriMonth"],
-			#hijriDateControls label[for="hijriDay"] {
-				display: none;
-			}
-			#shamsiDateControls, #hijriDateControls {
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				justify-content: center;
-				flex-wrap: wrap;
-			}
-			/* Swap order of Day and Year */
-			#shamsiDateControls #shamsiDay,
-			#hijriDateControls #hijriDay {
-				order: 1;
-			}
-			#shamsiDateControls #shamsiMonth,
-			#hijriDateControls #hijriMonth {
-				order: 2;
-			}
-			#shamsiDateControls #shamsiYear,
-			#hijriDateControls #hijriYear {
-				order: 3;
-			}
-		}
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+  body {
+    padding: 16px 12px 40px;
+  }
 
-		@media (max-width: 480px) {
-			.calendar-grid-container {
-				grid-template-columns: repeat(2, 1fr);
-				gap: 5px;
-			}
-			.calendar-day-btn {
-				width: 21px;
-				height: 21px;
-				font-size: 0.85em;
-			}
-		}
+  .controls {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .calendar-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #shamsiDateControls label[for="shamsiYear"],
+  #shamsiDateControls label[for="shamsiMonth"],
+  #shamsiDateControls label[for="shamsiDay"],
+  #hijriDateControls label[for="hijriYear"],
+  #hijriDateControls label[for="hijriMonth"],
+  #hijriDateControls label[for="hijriDay"] {
+    display: none;
+  }
+
+  #shamsiDateControls,
+  #hijriDateControls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  #shamsiDateControls #shamsiDay,
+  #hijriDateControls #hijriDay {
+    order: 1;
+  }
+  #shamsiDateControls #shamsiMonth,
+  #hijriDateControls #hijriMonth {
+    order: 2;
+  }
+  #shamsiDateControls #shamsiYear,
+  #hijriDateControls #hijriYear {
+    order: 3;
+  }
+
+  .newspaper-section {
+    min-width: 260px;
+  }
+
+  .all-issues-modal-content,
+  .lightbox-content {
+    padding: 20px 16px;
+    max-width: 96%;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-grid-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .calendar-day-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 0.75rem;
+  }
+
+  .newspaper-section {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  h1 {
+    font-size: 1.45rem;
+    margin-bottom: 20px;
+  }
+}
+
+/* Focus visible for accessibility */
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--button-bg);
+  outline-offset: 2px;
+}
 
 	</style>
 </head>
 <body>
 	<h1>بایگانی نشریات ایران</h1>
 
+	<div class="app-layout">
+	<aside class="sidebar-filters">
 	<div class="controls">
 		<div class="calendar-selection">
 			<input type="radio" id="hijriCalendar" name="calendar" value="hijri">
@@ -933,7 +1489,7 @@
 			<label for="shamsiCalendar">شمسی</label>
 		</div>
 
-		<div id="shamsiDateControls" style="display: block;">
+		<div id="shamsiDateControls" style="display: flex;">
 			<label for="shamsiDay">روز:</label>
 			<select id="shamsiDay"></select>
 			<label for="shamsiMonth">ماه:</label>
@@ -976,21 +1532,33 @@
 			<label for="hijriYear">سال:</label>
 			<select id="hijriYear"></select>
 		</div>
-		<button id="openCalendarModalBtn" class="global-all-issues-btn">تقویم</button>
-		<button id="openAllNewspapersIssuesModalBtn" class="global-all-issues-btn">فهرست شماره‌های نشریات</button>
+		<div class="controls-action-row">
+			<button id="openCalendarModalBtn" class="global-all-issues-btn">تقویم</button>
+			<button id="openAllNewspapersIssuesModalBtn" class="global-all-issues-btn">فهرست شماره‌های نشریات</button>
+		</div>
 	</div>
-	<div id="globalGoToFirstIssueControls" class="global-issue-nav-controls">
+	<div class="newspapers-list-wrapper" id="newspapersListWrapper">
+		<button type="button" id="toggleNewspapersListBtn" class="toggle-newspapers-list-btn" aria-expanded="false" aria-controls="globalGoToFirstIssueControls">
+			<span class="toggle-label-expand">نمایش فهرست نشریات</span>
+			<span class="toggle-label-collapse" hidden>بستن فهرست نشریات</span>
+		</button>
+		<div id="globalGoToFirstIssueControls" class="global-issue-nav-controls newspapers-list-collapsible">
+		</div>
 	</div>
 
+	<div class="pagination-controls">
+		<label for="mainPageNumberInput">صفحه اصلی:</label>
+		<input type="number" id="mainPageNumberInput" value="1" min="1">
+	</div>
+	</aside>
+
+	<main class="main-content">
 	<p id="mainErrorMessage" class="error-message" style="display: none;"></p>
 	<p id="mainStatusMessage" class="status-message">در حال بارگذاری نشریات...</p>
 
 	<div class="newspaper-container">
 	</div>
-
-	<div class="pagination-controls" style="margin-top: 20px;">
-		<label for="mainPageNumberInput">صفحه اصلی:</label>
-		<input type="number" id="mainPageNumberInput" value="1" min="1">
+	</main>
 	</div>
 
 	<div id="lightboxOverlay" class="lightbox-overlay">
@@ -1121,8 +1689,20 @@
 				return decodeURIComponent(results[2].replace(/\+/g, ' '));
 			};
 			const updateUrlParameters = (calendar, year, month, day) => {
-				const newUrl = `${window.location.pathname}?calendar=${calendar}&year=${year}&month=${month}&day=${day}`;
-				window.history.pushState({}, '', newUrl);
+				try {
+					const url = new URL(window.location.href);
+					// Normalize path: collapse multiple slashes (e.g. /// -> /)
+					let path = url.pathname.replace(/\/{2,}/g, '/') || '/';
+					if (!path.startsWith('/')) path = '/' + path;
+					url.pathname = path;
+					url.searchParams.set('calendar', String(calendar));
+					url.searchParams.set('year', String(year));
+					url.searchParams.set('month', String(month));
+					url.searchParams.set('day', String(day));
+					window.history.pushState({}, '', url.pathname + url.search);
+				} catch (e) {
+					console.warn('Could not update URL parameters:', e);
+				}
 			};
 
 			const parseDateString = (dateStr) => {
@@ -2132,8 +2712,8 @@
 			};
 
 			const handleCalendarChange = (targetDate = null) => {
-				shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'block' : 'none';
-				hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'block' : 'none';
+				shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'flex' : 'none';
+				hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'flex' : 'none';
 
 				if (targetDate) {
 					if (currentCalendarMode === 'shamsi') {
@@ -3287,6 +3867,21 @@
 					}
 				}
 			});
+
+			const toggleNewspapersListBtn = document.getElementById('toggleNewspapersListBtn');
+			const newspapersListWrapper = document.getElementById('newspapersListWrapper');
+			if (toggleNewspapersListBtn && newspapersListWrapper) {
+				toggleNewspapersListBtn.addEventListener('click', () => {
+					const expanded = newspapersListWrapper.classList.toggle('expanded');
+					toggleNewspapersListBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+					const expandLabel = toggleNewspapersListBtn.querySelector('.toggle-label-expand');
+					const collapseLabel = toggleNewspapersListBtn.querySelector('.toggle-label-collapse');
+					if (expandLabel && collapseLabel) {
+						expandLabel.hidden = expanded;
+						collapseLabel.hidden = !expanded;
+					}
+				});
+			}
 
 			openAllNewspapersIssuesModalBtn.addEventListener('click', () => {
 				openAllNewspapersIssuesModal();
