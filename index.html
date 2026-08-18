@@ -1328,6 +1328,27 @@ h2#shamsiCalendarModalTitle {
   opacity: 0.45;
 }
 
+.calendar-weekday-header {
+  margin-bottom: 2px;
+}
+
+.calendar-weekday-label {
+  width: 30px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.calendar-day-empty {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
 
 /* Newspapers list mobile collapse */
 .toggle-newspapers-list-btn {
@@ -1787,6 +1808,8 @@ a:focus-visible {
 			const maxCalendarYear = 1361;
 			const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
 			const shamsiMonthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
+			// ترتیب هفتهٔ ایرانی: شنبه تا جمعه (اندیس ۰ تا ۶)، هم‌راستا با SHAMSI_NOWRUZ_WEEKDAY_TABLE
+			const shamsiWeekdayShortNames = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
 			const availableHijriDates = new Map();
 			const availableShamsiDates = new Map();
 
@@ -1812,9 +1835,39 @@ a:focus-visible {
 
 			let newspaperData = {};
 
+			// روز هفتهٔ اول فروردین هر سال شمسی، از سال ۱۳۰۵ تا ۱۴۰۵ (۱۰۱ سال).
+			// هر رقم عدد روز هفته است: شنبه=۰، یکشنبه=۱، دوشنبه=۲، سه‌شنبه=۳، چهارشنبه=۴، پنجشنبه=۵، جمعه=۶.
+			// این جدول مبنای محاسبهٔ دقیق کبیسه بودن سال و چیدمان روزهای هفته در تقویم است؛
+			// چون فاصلهٔ روز هفتهٔ دو نوروز پیاپی، ۱ روز برای سال عادی (۳۶۵ روز) و ۲ روز برای سال کبیسه (۳۶۶ روز) است.
+			const SHAMSI_TABLE_START_YEAR = 1305;
+			const SHAMSI_NOWRUZ_WEEKDAY_TABLE = "23456123460124560234501235601345612345012356013456123460124560234501234601245602345012356013456123460";
+
+			function getShamsiYearStartWeekday(year) {
+				const idx = year - SHAMSI_TABLE_START_YEAR;
+				if (idx < 0 || idx >= SHAMSI_NOWRUZ_WEEKDAY_TABLE.length) return null;
+				return parseInt(SHAMSI_NOWRUZ_WEEKDAY_TABLE[idx], 10);
+			}
+
 			function isShamsiLeapYear(year) {
-				const rem = year % 33;
-				return rem === 1 || rem === 5 || rem === 9 || rem === 13 || rem === 17 || rem === 22 || rem === 26 || rem === 30;
+				const w1 = getShamsiYearStartWeekday(year);
+				const w2 = getShamsiYearStartWeekday(year + 1);
+				if (w1 === null || w2 === null) {
+					// خارج از بازهٔ جدول: بازگشت به تقریب چرخهٔ ۳۳ ساله
+					const rem = year % 33;
+					return rem === 1 || rem === 5 || rem === 9 || rem === 13 || rem === 17 || rem === 22 || rem === 26 || rem === 30;
+				}
+				return (w2 - w1 + 7) % 7 === 2;
+			}
+
+			// روز هفتهٔ اولین روز یک ماه شمسی خاص (۰ تا ۶، شنبه تا جمعه)
+			function getShamsiMonthStartWeekday(year, month) {
+				const yearStartWeekday = getShamsiYearStartWeekday(year);
+				if (yearStartWeekday === null) return null;
+				let daysBeforeMonth = 0;
+				for (let m = 1; m < month; m++) {
+					daysBeforeMonth += shamsiDaysInMonth(year, m);
+				}
+				return (yearStartWeekday + daysBeforeMonth) % 7;
 			}
 
 			function shamsiDaysInMonth(year, month) {
@@ -3694,10 +3747,29 @@ a:focus-visible {
 					monthTitle.textContent = shamsiMonthNames[month - 1];
 					monthDiv.appendChild(monthTitle);
 
+					const weekdayHeaderRow = document.createElement('div');
+					weekdayHeaderRow.classList.add('calendar-days', 'calendar-weekday-header');
+					shamsiWeekdayShortNames.forEach(label => {
+						const headerCell = document.createElement('span');
+						headerCell.classList.add('calendar-weekday-label');
+						headerCell.textContent = label;
+						weekdayHeaderRow.appendChild(headerCell);
+					});
+					monthDiv.appendChild(weekdayHeaderRow);
+
 					const daysGrid = document.createElement('div');
 					daysGrid.classList.add('calendar-days');
 
 					const daysInMonth = shamsiDaysInMonth(year, month);
+					const monthStartWeekday = getShamsiMonthStartWeekday(year, month);
+
+					if (monthStartWeekday !== null) {
+						for (let i = 0; i < monthStartWeekday; i++) {
+							const emptyCell = document.createElement('span');
+							emptyCell.classList.add('calendar-day-empty');
+							daysGrid.appendChild(emptyCell);
+						}
+					}
 
 					for (let day = 1; day <= daysInMonth; day++) {
 						const dayBtn = document.createElement('button');
