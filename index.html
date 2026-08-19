@@ -90,8 +90,50 @@
   box-sizing: border-box;
 }
 
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
+  outline-offset: 2px;
+}
+
 html {
   scroll-behavior: smooth;
+}
+
+/* Refined scrollbars across the app */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-secondary);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 body {
@@ -105,6 +147,9 @@ body {
   padding: 24px 16px 48px;
   min-height: 100vh;
   background-color: var(--body-bg);
+  background-image: radial-gradient(circle at 15% 0%, rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.06), transparent 45%),
+                     radial-gradient(circle at 85% 8%, rgba(59, 130, 246, 0.05), transparent 40%);
+  background-attachment: fixed;
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
   -webkit-font-smoothing: antialiased;
@@ -114,13 +159,23 @@ body {
 h1 {
   font-size: clamp(1.6rem, 4vw, 2.1rem);
   font-weight: 700;
-  margin: 0 0 28px;
+  margin: 0 0 12px;
   letter-spacing: -0.02em;
   text-align: center;
   background: linear-gradient(135deg, var(--text-color) 0%, var(--text-secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+h1::after {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin: 14px auto 28px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b)), var(--lightbox-button-bg));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -505,6 +560,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   transition: transform var(--transition), box-shadow var(--transition);
+  animation: fadeInUp 0.45s ease both;
 }
 
 .newspaper-section:hover {
@@ -1046,6 +1102,26 @@ h2#shamsiCalendarModalTitle {
   border: 1px solid var(--border-color);
   color: var(--lightbox-text-color);
   overflow-y: auto;
+  animation: popIn 0.28s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.lightbox-weekday-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  margin-bottom: 8px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--highlight-text-color);
+  background: linear-gradient(135deg, rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b)), var(--lightbox-button-bg));
+  box-shadow: var(--shadow-sm);
+  letter-spacing: 0.01em;
+}
+
+.lightbox-content h2 {
+  margin: 0 0 4px;
 }
 
 .lightbox-image {
@@ -1165,6 +1241,7 @@ h2#shamsiCalendarModalTitle {
   background: var(--error-color);
   color: white;
   border-color: var(--error-color);
+  transform: rotate(90deg);
 }
 
 .lightbox-links {
@@ -1255,6 +1332,12 @@ h2#shamsiCalendarModalTitle {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: box-shadow var(--transition), border-color var(--transition);
+}
+
+.calendar-month:hover {
+  box-shadow: var(--shadow-md);
+  border-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.35);
 }
 
 .calendar-month h3 {
@@ -1329,7 +1412,9 @@ h2#shamsiCalendarModalTitle {
 }
 
 .calendar-weekday-header {
-  margin-bottom: 2px;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--border-color);
 }
 
 .calendar-weekday-label {
@@ -1585,6 +1670,7 @@ a:focus-visible {
 	<div id="lightboxOverlay" class="lightbox-overlay">
 		<div class="lightbox-content">
 			<button id="lightboxCloseButton" class="lightbox-close-button">&times;</button>
+			<span id="lightboxWeekday" class="lightbox-weekday-badge" style="display: none;"></span>
 			<h2 id="lightboxNewspaperTitle"></h2>
 			<div class="image-container">
 				<img id="lightboxImage" src="" alt="تصویر نشریه در لایت‌باکس" class="lightbox-image">
@@ -1750,6 +1836,7 @@ a:focus-visible {
 			const lightboxOverlay = document.getElementById('lightboxOverlay');
 			const lightboxCloseButton = document.getElementById('lightboxCloseButton');
 			const lightboxNewspaperTitle = document.getElementById('lightboxNewspaperTitle');
+			const lightboxWeekday = document.getElementById('lightboxWeekday');
 			const lightboxImage = document.getElementById('lightboxImage');
 			const lightboxImagePlaceholder = document.getElementById('lightboxImagePlaceholder');
 			const lightboxStatusMessage = document.getElementById('lightboxStatusMessage');
@@ -1810,6 +1897,7 @@ a:focus-visible {
 			const shamsiMonthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
 			// ترتیب هفتهٔ ایرانی: شنبه تا جمعه (اندیس ۰ تا ۶)، هم‌راستا با SHAMSI_NOWRUZ_WEEKDAY_TABLE
 			const shamsiWeekdayShortNames = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
+			const shamsiWeekdayFullNames = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه"];
 			const availableHijriDates = new Map();
 			const availableShamsiDates = new Map();
 
@@ -1868,6 +1956,17 @@ a:focus-visible {
 					daysBeforeMonth += shamsiDaysInMonth(year, m);
 				}
 				return (yearStartWeekday + daysBeforeMonth) % 7;
+			}
+
+			// روز هفتهٔ یک تاریخ شمسی مشخص (۰ تا ۶، شنبه تا جمعه)
+			function getShamsiWeekday(year, month, day) {
+				const yearStartWeekday = getShamsiYearStartWeekday(year);
+				if (yearStartWeekday === null) return null;
+				let daysBeforeMonth = 0;
+				for (let m = 1; m < month; m++) {
+					daysBeforeMonth += shamsiDaysInMonth(year, m);
+				}
+				return (yearStartWeekday + daysBeforeMonth + day - 1) % 7;
 			}
 
 			function shamsiDaysInMonth(year, month) {
@@ -2835,6 +2934,7 @@ a:focus-visible {
 				const paper = newspaperData[id];
 				let year, month, day;
 				lightboxImagePlaceholder.style.display = 'none';
+				lightboxWeekday.style.display = 'none';
 
 				if (paper.currentIssue) {
 					const issueDateParsed = parseDateString(paper.currentIssue.date);
@@ -2892,6 +2992,12 @@ a:focus-visible {
 							formattedDate = `${persianMonthName} ${englishToPersianDigits(year)}`;
 						} else {
 							formattedDate = `${englishToPersianDigits(pad(day))} ${persianMonthName} ${englishToPersianDigits(year)}`;
+
+							const weekdayIndex = getShamsiWeekday(year, month, day);
+							if (weekdayIndex !== null) {
+								lightboxWeekday.textContent = shamsiWeekdayFullNames[weekdayIndex];
+								lightboxWeekday.style.display = 'inline-flex';
+							}
 						}
 					} else {
 						formattedDate = `${englishToPersianDigits(pad(day))}/${englishToPersianDigits(pad(month))}/${englishToPersianDigits(year)}`;
