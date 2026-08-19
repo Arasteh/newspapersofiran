@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#16a34a" media="(prefers-color-scheme: light)">
-	<meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)">
+	<meta name="theme-color" content="#0d9488" media="(prefers-color-scheme: light)">
+	<meta name="theme-color" content="#12141a" media="(prefers-color-scheme: dark)">
 	<meta name="description" content="بایگانی دیجیتال نشریات و روزنامه‌های تاریخی ایران">
 	<title>بایگانی نشریات ایران</title>
 	<style>
@@ -14,75 +14,75 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --body-bg: #f0f2f5;
-  --text-color: #1a1a2e;
-  --text-secondary: #64748b;
-  --control-bg: #ffffff;
-  --border-color: #e2e8f0;
-  --border-subtle: #f1f5f9;
-  --button-bg: #16a34a;
-  --button-hover-bg: #15803d;
-  --button-disabled-bg: #cbd5e1;
-  --error-color: #ef4444;
-  --status-color: #3b82f6;
-  --section-bg: #ffffff;
-  --section-title-color: #334155;
-  --lightbox-bg: #ffffff;
-  --lightbox-text-color: #1a1a2e;
-  --lightbox-button-bg: #2563eb;
-  --lightbox-button-hover-bg: #1d4ed8;
-  --lightbox-close-button-color: #64748b;
+  --body-bg: #f4f1ea;
+  --text-color: #1c1917;
+  --text-secondary: #57534e;
+  --control-bg: #fffcf7;
+  --border-color: #e7e0d4;
+  --border-subtle: #f0ebe3;
+  --button-bg: #0d9488;
+  --button-hover-bg: #0f766e;
+  --button-disabled-bg: #d6d3d1;
+  --error-color: #dc2626;
+  --status-color: #2563eb;
+  --section-bg: #fffcf7;
+  --section-title-color: #292524;
+  --lightbox-bg: #fffcf7;
+  --lightbox-text-color: #1c1917;
+  --lightbox-button-bg: #1d4ed8;
+  --lightbox-button-hover-bg: #1e40af;
+  --lightbox-close-button-color: #57534e;
 
-  --highlight-color-r: 22;
-  --highlight-color-g: 163;
-  --highlight-color-b: 74;
+  --highlight-color-r: 13;
+  --highlight-color-g: 148;
+  --highlight-color-b: 136;
   --highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
   --highlight-text-color: #ffffff;
-  --multiple-issues-color: #f59e0b;
+  --multiple-issues-color: #d97706;
 
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-xl: 20px;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
-  --shadow-lg: 0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04);
-  --shadow-xl: 0 20px 40px rgba(0,0,0,0.12);
+  --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.05);
+  --shadow-md: 0 4px 14px rgba(28, 25, 23, 0.07), 0 1px 3px rgba(28, 25, 23, 0.04);
+  --shadow-lg: 0 12px 28px rgba(28, 25, 23, 0.1), 0 4px 10px rgba(28, 25, 23, 0.05);
+  --shadow-xl: 0 24px 48px rgba(28, 25, 23, 0.14);
   --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --body-bg: #0f1117;
-    --text-color: #e2e8f0;
-    --text-secondary: #94a3b8;
-    --control-bg: #1a1d27;
-    --border-color: #2d3340;
-    --border-subtle: #232733;
-    --button-bg: #16a34a;
-    --button-hover-bg: #22c55e;
+    --body-bg: #12141a;
+    --text-color: #f5f5f4;
+    --text-secondary: #a8a29e;
+    --control-bg: #1c1f28;
+    --border-color: #2e3340;
+    --border-subtle: #252933;
+    --button-bg: #14b8a6;
+    --button-hover-bg: #2dd4bf;
     --button-disabled-bg: #3f4654;
     --error-color: #f87171;
     --status-color: #60a5fa;
-    --section-bg: #1a1d27;
-    --section-title-color: #cbd5e1;
+    --section-bg: #1c1f28;
+    --section-title-color: #e7e5e4;
     --lightbox-bg: #1e2230;
-    --lightbox-text-color: #e2e8f0;
+    --lightbox-text-color: #f5f5f4;
     --lightbox-button-bg: #3b82f6;
     --lightbox-button-hover-bg: #60a5fa;
-    --lightbox-close-button-color: #94a3b8;
+    --lightbox-close-button-color: #a8a29e;
 
-    --highlight-color-r: 34;
-    --highlight-color-g: 197;
-    --highlight-color-b: 94;
+    --highlight-color-r: 45;
+    --highlight-color-g: 212;
+    --highlight-color-b: 191;
     --highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
-    --highlight-text-color: #ffffff;
+    --highlight-text-color: #0f172a;
     --multiple-issues-color: #fbbf24;
 
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.15);
-    --shadow-lg: 0 10px 25px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.2);
-    --shadow-xl: 0 20px 40px rgba(0,0,0,0.4);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.25);
+    --shadow-md: 0 4px 14px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.18);
+    --shadow-lg: 0 12px 28px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.22);
+    --shadow-xl: 0 24px 48px rgba(0,0,0,0.45);
   }
 }
 
@@ -144,46 +144,16 @@ body {
   flex-direction: column;
   align-items: center;
   margin: 0;
-  padding: 24px 16px 48px;
+  padding: 16px 16px 40px;
   min-height: 100vh;
   background-color: var(--body-bg);
-  background-image: radial-gradient(circle at 15% 0%, rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.06), transparent 45%),
+  background-image: radial-gradient(circle at 15% 0%, rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.07), transparent 45%),
                      radial-gradient(circle at 85% 8%, rgba(59, 130, 246, 0.05), transparent 40%);
   background-attachment: fixed;
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-h1 {
-  font-size: clamp(1.6rem, 4vw, 2.1rem);
-  font-weight: 700;
-  margin: 0 0 12px;
-  letter-spacing: -0.02em;
-  text-align: center;
-  background: linear-gradient(135deg, var(--text-color) 0%, var(--text-secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-h1::after {
-  content: '';
-  display: block;
-  width: 56px;
-  height: 4px;
-  margin: 14px auto 28px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b)), var(--lightbox-button-bg));
-}
-
-@media (prefers-color-scheme: dark) {
-  h1 {
-    background: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-  }
 }
 
 
@@ -201,13 +171,14 @@ h1::after {
   width: 380px;
   flex-shrink: 0;
   position: sticky;
-  top: 20px;
-  max-height: calc(100vh - 40px);
+  top: 12px;
+  max-height: calc(100vh - 24px);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding-bottom: 24px;
+  gap: 10px;
+  padding-top: 4px;
+  padding-bottom: 12px;
 }
 
 .sidebar-filters .controls {
@@ -453,7 +424,7 @@ h1::after {
 .controls input[type="number"]:focus {
   outline: none;
   border-color: var(--button-bg);
-  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18);
 }
 
 /* Calendar selection pills */
@@ -699,7 +670,7 @@ h1::after {
   justify-content: center;
   width: 100%;
   min-height: 280px;
-  background: linear-gradient(135deg, var(--lightbox-button-bg), #1d4ed8);
+  background: linear-gradient(135deg, var(--lightbox-button-bg), #1e40af);
   color: white;
   border-radius: var(--radius-md);
   text-decoration: none;
@@ -1328,17 +1299,31 @@ h2#shamsiCalendarModalTitle {
 }
 
 /* ========== Calendar ========== */
+.calendar-modal-content {
+  position: relative;
+}
+
 .calendar-nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 20px;
-  gap: 12px;
+  margin-bottom: 16px;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-inline-end: 44px; /* room for close button on same row (desktop) */
+}
+
+.calendar-nav-label,
+.calendar-nav-suffix {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--section-title-color);
+  white-space: nowrap;
 }
 
 .calendar-nav button {
-  padding: 9px 16px;
+  padding: 8px 14px;
   background-color: var(--button-bg);
   color: white;
   border: none;
@@ -1348,6 +1333,7 @@ h2#shamsiCalendarModalTitle {
   font-weight: 500;
   font-family: inherit;
   transition: all var(--transition);
+  flex-shrink: 0;
 }
 
 .calendar-nav button:hover:not(:disabled) {
@@ -1361,15 +1347,36 @@ h2#shamsiCalendarModalTitle {
 
 #calendarYearSelect,
 #shamsiCalendarYearSelect {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-color);
   background-color: var(--body-bg);
   border: 1.5px solid var(--border-color);
   border-radius: var(--radius-sm);
-  padding: 8px 14px;
+  padding: 7px 12px;
   font-family: inherit;
   cursor: pointer;
+}
+
+/* Desktop: hide modal title; close sits on nav row */
+@media (min-width: 769px) {
+  .calendar-modal-heading {
+    display: none;
+  }
+  .calendar-modal-content .calendar-modal-close-button {
+    top: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .calendar-nav {
+    padding-inline-end: 0;
+    gap: 8px;
+  }
+  .calendar-nav-label,
+  .calendar-nav-suffix {
+    font-size: 0.85rem;
+  }
 }
 
 .calendar-grid-container {
@@ -1637,21 +1644,16 @@ h2#shamsiCalendarModalTitle {
     min-width: 100%;
     max-width: 100%;
   }
-
-  h1 {
-    font-size: 1.45rem;
-    margin-bottom: 20px;
-  }
 }
 
 
-/* Selected date display under title */
+/* Selected date display */
 .current-date-display {
   text-align: center;
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--section-title-color);
-  margin: -8px 0 20px;
+  margin: 0;
   letter-spacing: -0.01em;
   min-height: 1.5em;
 }
@@ -1680,7 +1682,7 @@ h2#shamsiCalendarModalTitle {
 .newspaper-search-box input[type="search"]:focus {
   outline: none;
   border-color: var(--button-bg);
-  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18);
 }
 .newspaper-search-box input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
@@ -1726,7 +1728,7 @@ h2#shamsiCalendarModalTitle {
   justify-content: center;
   flex-wrap: wrap;
   gap: 6px;
-  margin: -4px 0 20px;
+  margin: 0 0 16px;
   width: 100%;
   max-width: 720px;
 }
@@ -1969,13 +1971,6 @@ h2#shamsiCalendarModalTitle {
   body {
     padding: 10px 8px 24px !important;
   }
-  h1 {
-    margin: 0 0 4px !important;
-    font-size: 1.35rem !important;
-  }
-  h1::after {
-    margin: 8px auto 12px !important;
-  }
   .date-nav-bar {
     margin: 0 0 10px !important;
     gap: 4px !important;
@@ -2091,7 +2086,6 @@ a:focus-visible {
 	</style>
 </head>
 <body>
-	<h1>بایگانی نشریات ایران</h1>
 	<div class="date-nav-bar" id="dateNavBar">
 		<div class="date-nav-group date-nav-prev">
 			<button type="button" class="date-nav-btn" id="dateNavPrevYear" title="سال قبل" aria-label="سال قبل">&lt;&lt;&lt;</button>
@@ -2195,10 +2189,6 @@ a:focus-visible {
 	<div id="lightboxOverlay" class="lightbox-overlay">
 		<div class="lightbox-content">
 			<button id="lightboxCloseButton" class="lightbox-close-button">&times;</button>
-<<<<<<< HEAD
-			<span id="lightboxWeekday" class="lightbox-weekday-badge" style="display: none;"></span>
-			<h2 id="lightboxNewspaperTitle"></h2>
-=======
 			<div class="lightbox-header">
 				<img id="lightboxLogo" class="lightbox-logo hidden" alt="" src="">
 				<div class="lightbox-header-text">
@@ -2207,7 +2197,6 @@ a:focus-visible {
 				</div>
 			</div>
 			<span id="lightboxWeekday" class="lightbox-weekday-badge" style="display: none;"></span>
->>>>>>> d575780fbf9539a81e539182f847549a54477144
 			<div class="image-container">
 				<img id="lightboxImage" src="" alt="تصویر نشریه در لایت‌باکس" class="lightbox-image">
 				<div id="lightboxImagePlaceholder" class="lightbox-image-placeholder" style="display: none;">تصویر در دسترس نیست</div>
@@ -2261,12 +2250,14 @@ a:focus-visible {
 	</div>
 
 	<div id="calendarModalOverlay" class="all-issues-modal-overlay">
-		<div class="all-issues-modal-content">
+		<div class="all-issues-modal-content calendar-modal-content">
 			<button id="calendarModalCloseButton" class="calendar-modal-close-button">&times;</button>
-			<h2 id="calendarModalTitle">تقویم قمری</h2>
+			<h2 id="calendarModalTitle" class="calendar-modal-heading">تقویم قمری</h2>
 			<div class="calendar-nav">
 				<button id="prevYearBtn">&lt; سال قبل</button>
+				<span class="calendar-nav-label">تقویم سال</span>
 				<select id="calendarYearSelect"></select>
+				<span class="calendar-nav-suffix">هجری قمری</span>
 				<button id="nextYearBtn">سال بعد &gt;</button>
 			</div>
 			<div id="calendarGridContainer" class="calendar-grid-container">
@@ -2277,12 +2268,14 @@ a:focus-visible {
 
 	<!-- New Shamsi Calendar Modal -->
 	<div id="shamsiCalendarModalOverlay" class="all-issues-modal-overlay">
-		<div class="all-issues-modal-content">
+		<div class="all-issues-modal-content calendar-modal-content">
 			<button id="shamsiCalendarModalCloseButton" class="calendar-modal-close-button">&times;</button>
-			<h2 id="shamsiCalendarModalTitle">تقویم شمسی</h2>
+			<h2 id="shamsiCalendarModalTitle" class="calendar-modal-heading">تقویم شمسی</h2>
 			<div class="calendar-nav">
 				<button id="shamsiPrevYearBtn">&lt; سال قبل</button>
+				<span class="calendar-nav-label">تقویم سال</span>
 				<select id="shamsiCalendarYearSelect"></select>
+				<span class="calendar-nav-suffix">هجری شمسی</span>
 				<button id="shamsiNextYearBtn">سال بعد &gt;</button>
 			</div>
 			<div id="shamsiCalendarGridContainer" class="calendar-grid-container">
@@ -3799,8 +3792,6 @@ a:focus-visible {
 				let year, month, day;
 				lightboxImagePlaceholder.style.display = 'none';
 				lightboxWeekday.style.display = 'none';
-<<<<<<< HEAD
-=======
 
 				const lightboxLogoEl = document.getElementById('lightboxLogo');
 				if (lightboxLogoEl) {
@@ -3814,7 +3805,6 @@ a:focus-visible {
 						lightboxLogoEl.removeAttribute('src');
 					}
 				}
->>>>>>> d575780fbf9539a81e539182f847549a54477144
 
 				if (paper.currentIssue) {
 					const issueDateParsed = parseDateString(paper.currentIssue.date);
@@ -3888,11 +3878,7 @@ a:focus-visible {
 						if (paper.type === 'database' && paper.frequency === 'monthly') {
 							formattedDate = `${persianMonthName} ${englishToPersianDigits(year)}`;
 						} else {
-<<<<<<< HEAD
-							formattedDate = `${englishToPersianDigits(pad(day))} ${persianMonthName} ${englishToPersianDigits(year)}`;
-=======
 							formattedDate = `${englishToPersianDigits(String(day))} ${persianMonthName} ${englishToPersianDigits(year)}`;
->>>>>>> d575780fbf9539a81e539182f847549a54477144
 
 							const weekdayIndex = getShamsiWeekday(year, month, day);
 							if (weekdayIndex !== null) {
@@ -3934,8 +3920,6 @@ a:focus-visible {
 					lightboxStatusMessage.textContent = 'در حال بارگذاری...';
 					lightboxStatusMessage.style.display = 'block';
 					lightboxImage.style.display = 'none';
-					downloadLink.style.display = 'none';
-					viewLargeLink.style.display = 'none';
 
 					const issue = paper.currentIssue;
 					const maxPages = issue.pages || null;
@@ -3944,12 +3928,22 @@ a:focus-visible {
 						lightboxStatusMessage.style.display = 'none';
 						lightboxErrorMessage.textContent = `اطلاعات فایل نشریه برای نمایش در لایت‌باکس یافت نشد.`;
 						lightboxErrorMessage.style.display = 'block';
+						downloadLink.style.display = 'none';
+						viewLargeLink.style.display = 'none';
 						return;
 					}
 
 					const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${issue.hash[0]}/${issue.hash}/${issue.filename_for_url}/page${lightboxCurrentPage}-960px-${issue.filename_for_url}.jpg`;
 					const downloadUrl = `https://upload.wikimedia.org/wikipedia/commons/${issue.hash[0]}/${issue.hash}/${issue.filename_for_url}?download`;
 					const viewLargeUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${issue.hash[0]}/${issue.hash}/${issue.filename_for_url}/page${lightboxCurrentPage}-1920px-${issue.filename_for_url}.jpg`;
+
+					// لینک‌ها از همان ابتدا در دسترس‌اند (نشریه در نتایج دیده شده)
+					downloadLink.href = downloadUrl;
+					downloadLink.textContent = 'دانلود نشریه';
+					downloadLink.style.display = 'inline-block';
+					viewLargeLink.href = viewLargeUrl;
+					viewLargeLink.textContent = 'تصویر بزرگتر';
+					viewLargeLink.style.display = 'inline-block';
 					
 					lightboxImage.src = imageUrl;
 
@@ -3977,19 +3971,12 @@ a:focus-visible {
 								resolve(true);
 							};
 						});
-						downloadLink.href = downloadUrl;
-						downloadLink.textContent = 'دانلود نشریه';
-						downloadLink.style.display = 'inline-block';
-
-						viewLargeLink.href = viewLargeUrl;
-						viewLargeLink.style.display = 'inline-block';
 
 						// پس از بارگذاری موفق تصویر، صفحات قبل و بعد را پیش‌بارگذاری می‌کنیم
 						preloadLightboxPages(paper, lightboxCurrentPage, maxPages);
 
 					} catch (error) {
-						downloadLink.style.display = 'none';
-						viewLargeLink.style.display = 'none';
+						// لینک‌ها همچنان نمایش داده می‌شوند
 					}
 
 					lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
@@ -4676,7 +4663,7 @@ a:focus-visible {
 				prevYearBtn.disabled = currentCalendarYear <= minCalendarYear;
 				nextYearBtn.disabled = currentCalendarYear >= maxCalendarYear;
 
-				calendarModalTitle.textContent = `تقویم قمری سال ${englishToPersianDigits(currentCalendarYear)}`;
+				calendarModalTitle.textContent = `تقویم قمری`;
 
 				const selectedHijriYear = parseInt(hijriYearInput.value, 10);
 				const selectedHijriMonth = parseInt(hijriMonthSelect.value, 10);
@@ -4758,7 +4745,7 @@ a:focus-visible {
 				shamsiPrevYearBtn.disabled = year <= 1305;
 				shamsiNextYearBtn.disabled = year >= 1373;
 
-				shamsiCalendarModalTitle.textContent = `تقویم شمسی سال ${englishToPersianDigits(year)}`;
+				shamsiCalendarModalTitle.textContent = `تقویم شمسی`;
 
 				const selectedShamsiYear = parseInt(shamsiYearInput.value, 10);
 				const selectedShamsiMonth = parseInt(shamsiMonthSelect.value, 10);
