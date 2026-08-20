@@ -8,9 +8,6 @@
 	<meta name="description" content="بایگانی دیجیتال نشریات و روزنامه‌های تاریخی ایران">
 	<title>بایگانی نشریات ایران</title>
 	<style>
-/* Modern Iranian Publications Archive - 2025 Redesign */
-/* All class names and IDs preserved for full JS compatibility */
-
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
 
 :root {
@@ -32,14 +29,12 @@
   --lightbox-button-bg: #1d4ed8;
   --lightbox-button-hover-bg: #1e40af;
   --lightbox-close-button-color: #57534e;
-
   --highlight-color-r: 13;
   --highlight-color-g: 148;
   --highlight-color-b: 136;
   --highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
   --highlight-text-color: #ffffff;
   --multiple-issues-color: #d97706;
-
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
@@ -52,38 +47,48 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --body-bg: #12141a;
-    --text-color: #f5f5f4;
-    --text-secondary: #a8a29e;
-    --control-bg: #1c1f28;
-    --border-color: #2e3340;
-    --border-subtle: #252933;
-    --button-bg: #14b8a6;
-    --button-hover-bg: #2dd4bf;
-    --button-disabled-bg: #3f4654;
-    --error-color: #f87171;
-    --status-color: #60a5fa;
-    --section-bg: #1c1f28;
-    --section-title-color: #e7e5e4;
-    --lightbox-bg: #1e2230;
-    --lightbox-text-color: #f5f5f4;
-    --lightbox-button-bg: #3b82f6;
-    --lightbox-button-hover-bg: #60a5fa;
-    --lightbox-close-button-color: #a8a29e;
+:root {
+  --body-bg: #12141a;
+  --text-color: #f5f5f4;
+  --text-secondary: #a8a29e;
+  --control-bg: #1c1f28;
+  --border-color: #2e3340;
+  --border-subtle: #252933;
+  --button-bg: #0f766e;
+  --button-hover-bg: #14b8a6;
+  --button-disabled-bg: #3f4654;
+  --error-color: #f87171;
+  --status-color: #60a5fa;
+  --section-bg: #1c1f28;
+  --section-title-color: #e7e5e4;
+  --lightbox-bg: #1e2230;
+  --lightbox-text-color: #f5f5f4;
+  --lightbox-button-bg: #1d4ed8;
+  --lightbox-button-hover-bg: #3b82f6;
+  --lightbox-close-button-color: #a8a29e;
+  --highlight-color-r: 20;
+  --highlight-color-g: 160;
+  --highlight-color-b: 145;
+  --highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
+  --highlight-text-color: #f5f5f4;
+  --multiple-issues-color: #d97706;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.25);
+  --shadow-md: 0 4px 14px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.18);
+  --shadow-lg: 0 12px 28px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.22);
+  --shadow-xl: 0 24px 48px rgba(0,0,0,0.45);
+}
+}
 
-    --highlight-color-r: 45;
-    --highlight-color-g: 212;
-    --highlight-color-b: 191;
-    --highlight-color: rgb(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b));
-    --highlight-text-color: #0f172a;
-    --multiple-issues-color: #fbbf24;
+@media (prefers-color-scheme: dark) {
+.newspaper-logo,
+	.lightbox-logo {
+  filter: invert(1) brightness(1.2);
+}
 
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.25);
-    --shadow-md: 0 4px 14px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.18);
-    --shadow-lg: 0 12px 28px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.22);
-    --shadow-xl: 0 24px 48px rgba(0,0,0,0.45);
-  }
+.newspaper-logo[src*="dark"],
+	.lightbox-logo[src*="dark"] {
+  filter: none;
+}
 }
 
 *, *::before, *::after {
@@ -102,7 +107,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Refined scrollbars across the app */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--border-color) transparent;
@@ -127,13 +131,27 @@ html {
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+to {
+  opacity: 1;
+  transform: translateY(0);
+}
 }
 
 @keyframes popIn {
-  from { opacity: 0; transform: scale(0.96) translateY(8px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+from {
+  opacity: 0;
+  transform: scale(0.96) translateY(8px);
+}
+
+to {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
 }
 
 body {
@@ -147,8 +165,7 @@ body {
   padding: 16px 16px 40px;
   min-height: 100vh;
   background-color: var(--body-bg);
-  background-image: radial-gradient(circle at 15% 0%, rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.07), transparent 45%),
-                     radial-gradient(circle at 85% 8%, rgba(59, 130, 246, 0.05), transparent 40%);
+  background-image: radial-gradient(circle at 15% 0%, rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.07), transparent 45%), radial-gradient(circle at 85% 8%, rgba(59, 130, 246, 0.05), transparent 40%);
   background-attachment: fixed;
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
@@ -156,8 +173,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-/* ========== App layout: sidebar + main ========== */
 .app-layout {
   display: flex;
   flex-direction: row;
@@ -174,16 +189,17 @@ body {
   top: 12px;
   max-height: calc(100vh - 24px);
   overflow-y: auto;
+  overflow-x: visible;
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding-top: 4px;
-  padding-bottom: 12px;
+  padding-bottom: 48px;
 }
 
 .sidebar-filters .controls {
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
   max-width: none;
   width: 100%;
@@ -211,32 +227,85 @@ body {
   justify-content: center;
 }
 
+.calendar-selection input[type="radio"]#miladiCalendar:checked + label {
+  background-color: #0369a1;
+}
+
 .sidebar-filters #shamsiDateControls,
 .sidebar-filters #hijriDateControls {
   flex: 1;
   min-width: 0;
 }
 
-/* Date fields: single row */
+.calendar-switcher {
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  background: var(--body-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.cal-switch-btn {
+  padding: 5px 12px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all var(--transition);
+}
+
+.cal-switch-btn.active {
+  background: var(--button-bg);
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 0 0 2px var(--body-bg), 0 0 0 4px var(--button-bg);
+  transform: scale(1.04);
+}
+
+.cal-switch-btn[data-target="shamsi"].active {
+  background: var(--lightbox-button-bg);
+  box-shadow: 0 0 0 2px var(--body-bg), 0 0 0 4px var(--lightbox-button-bg);
+}
+
+.cal-switch-btn[data-target="miladi"].active {
+  background: #0369a1;
+  box-shadow: 0 0 0 2px var(--body-bg), 0 0 0 4px #0369a1;
+}
+
+.cal-switch-btn:hover:not(.active) {
+  background: var(--border-subtle);
+}
+
 .sidebar-filters #shamsiDateControls,
-.sidebar-filters #hijriDateControls {
+.sidebar-filters #hijriDateControls,
+.sidebar-filters #miladiDateControls {
   flex-direction: row;
   flex-wrap: nowrap;
   gap: 6px;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: auto;
   flex: 1 1 auto;
   min-width: 0;
 }
 
 .sidebar-filters #shamsiDateControls label,
-.sidebar-filters #hijriDateControls label {
+.sidebar-filters #hijriDateControls label,
+.sidebar-filters #miladiDateControls label,
+.calendar-selection input[type="radio"],
+.newspaper-logo.hidden,
+.lightbox-logo.hidden {
   display: none;
 }
 
 .sidebar-filters #shamsiDateControls select,
-.sidebar-filters #hijriDateControls select {
+.sidebar-filters #hijriDateControls select,
+.sidebar-filters #miladiDateControls select {
   padding: 7px 6px;
   font-size: 0.85rem;
   width: max-content;
@@ -245,34 +314,21 @@ body {
   flex: 0 0 auto;
 }
 
-/* Day: fit content */
 .sidebar-filters #shamsiDay,
-.sidebar-filters #hijriDay {
-  flex: 0 0 auto;
-  width: max-content;
-  field-sizing: content;
-  min-width: 0;
-}
-
-/* Month: fit content but naturally wider due to text */
+.sidebar-filters #hijriDay,
+.sidebar-filters #miladiDay,
 .sidebar-filters #shamsiMonth,
-.sidebar-filters #hijriMonth {
-  flex: 0 0 auto;
-  width: max-content;
-  field-sizing: content;
-  min-width: 0;
-}
-
-/* Year: fit content */
+.sidebar-filters #hijriMonth,
+.sidebar-filters #miladiMonth,
 .sidebar-filters #shamsiYear,
-.sidebar-filters #hijriYear {
+.sidebar-filters #hijriYear,
+.sidebar-filters #miladiYear {
   flex: 0 0 auto;
   width: max-content;
   field-sizing: content;
   min-width: 0;
 }
 
-/* Calendar + all-issues buttons: one row */
 .sidebar-filters .controls-action-row {
   display: flex;
   flex-direction: row;
@@ -323,16 +379,17 @@ body {
   line-height: 1.3;
 }
 
-.sidebar-filters .pagination-controls {
+.sidebar-filters .preview-page-controls {
   margin-top: 0;
   width: 100%;
   justify-content: center;
   flex-wrap: wrap;
 }
+
 @media (max-width: 768px) {
-  .pagination-controls {
-    display: none !important;
-  }
+.preview-page-controls {
+  display: none !important;
+}
 }
 
 .main-content {
@@ -349,41 +406,37 @@ body {
 }
 
 @media (max-width: 960px) {
-  .app-layout {
-    flex-direction: column;
-    max-width: 100%;
-  }
-
-  .sidebar-filters {
-    width: 100%;
-    position: static;
-    max-height: none;
-    overflow: visible;
-  }
-
-  .sidebar-filters .controls {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .sidebar-filters .global-issue-nav-controls {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .sidebar-filters .global-issue-nav-controls button {
-    width: auto;
-  }
-
-  .sidebar-filters .global-all-issues-btn {
-    width: auto;
-  }
+.app-layout {
+  flex-direction: column;
+  max-width: 100%;
 }
 
-/* ========== Controls ========== */
+.sidebar-filters {
+  width: 100%;
+  position: static;
+  max-height: none;
+  overflow: visible;
+}
+
+.sidebar-filters .controls {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar-filters .global-issue-nav-controls {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sidebar-filters .global-issue-nav-controls button,
+.sidebar-filters .global-all-issues-btn {
+  width: auto;
+}
+}
+
 .controls {
   margin-bottom: 20px;
   background-color: var(--control-bg);
@@ -421,13 +474,13 @@ body {
 }
 
 .controls select:focus,
-.controls input[type="number"]:focus {
+.controls input[type="number"]:focus,
+.newspaper-search-box input[type="search"]:focus {
   outline: none;
   border-color: var(--button-bg);
   box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18);
 }
 
-/* Calendar selection pills */
 .calendar-selection {
   display: flex;
   gap: 0;
@@ -458,25 +511,22 @@ body {
   text-align: center;
 }
 
-.calendar-selection input[type="radio"] {
-  display: none;
-}
-
 .calendar-selection input[type="radio"]:checked + label {
   color: white;
   font-weight: 600;
   box-shadow: var(--shadow-sm);
 }
 
-.calendar-selection input[type="radio"]#shamsiCalendar:checked + label {
+.calendar-selection input[type="radio"]#shamsiCalendar:checked + label,
+.global-issue-nav-controls button.shamsi-nav-btn {
   background-color: var(--lightbox-button-bg);
 }
 
-.calendar-selection input[type="radio"]#hijriCalendar:checked + label {
+.calendar-selection input[type="radio"]#hijriCalendar:checked + label,
+.global-issue-nav-controls button.hijri-nav-btn {
   background-color: var(--button-bg);
 }
 
-/* Global nav buttons */
 .global-issue-nav-controls {
   display: flex;
   gap: 10px;
@@ -515,19 +565,13 @@ body {
   box-shadow: var(--shadow-md);
 }
 
-.global-issue-nav-controls button.shamsi-nav-btn {
-  background-color: var(--lightbox-button-bg);
-}
-
 .global-issue-nav-controls button.shamsi-nav-btn:hover:not(:disabled) {
   background-color: var(--lightbox-button-hover-bg);
 }
 
-.global-issue-nav-controls button.hijri-nav-btn {
-  background-color: var(--button-bg);
-}
-
-.global-issue-nav-controls button.hijri-nav-btn:hover:not(:disabled) {
+.global-issue-nav-controls button.hijri-nav-btn:hover:not(:disabled),
+.issue-navigation-controls button:hover:not(:disabled),
+.calendar-nav button:hover:not(:disabled) {
   background-color: var(--button-hover-bg);
 }
 
@@ -543,7 +587,6 @@ body {
   opacity: 0.6;
 }
 
-/* Global action buttons */
 .global-all-issues-btn {
   margin-right: 0;
   padding: 10px 18px;
@@ -559,13 +602,13 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
-.global-all-issues-btn:hover {
+.global-all-issues-btn:hover,
+.open-calendar-from-error-btn:hover {
   background-color: var(--lightbox-button-hover-bg);
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
 
-/* ========== Newspaper Cards ========== */
 .newspaper-container {
   display: flex;
   flex-wrap: wrap;
@@ -612,6 +655,54 @@ body {
 
 .newspaper-section.available-newspaper h2 {
   font-weight: 700;
+}
+
+a.newspaper-title-link,
+a.lightbox-title-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+a.newspaper-title-link:hover,
+a.lightbox-title-link:hover {
+  color: var(--button-bg);
+  border-bottom-color: rgba(var(--highlight-color-r), var(--highlight-color-g), var(--highlight-color-b), 0.45);
+}
+
+a.newspaper-title-link:focus-visible,
+a.lightbox-title-link:focus-visible {
+  outline: 2px solid var(--button-bg);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.open-calendar-from-error-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 9px 18px;
+  background-color: var(--lightbox-button-bg);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.calendar-nav {
+  flex-wrap: wrap;
+  row-gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-nav .calendar-switcher {
+  flex-shrink: 0;
 }
 
 .image-container {
@@ -716,48 +807,23 @@ body {
   font-size: 0.9rem;
 }
 
-/* Pagination */
-.pagination-controls {
-  margin-top: 28px;
+.preview-page-controls {
+  margin-top: 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: var(--control-bg);
-  padding: 12px 20px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
-.pagination-controls label {
+.preview-page-controls label {
   font-weight: 500;
   font-size: 0.9rem;
   color: var(--text-secondary);
 }
 
-.pagination-controls button {
-  padding: 8px 16px;
-  background-color: var(--button-bg);
-  color: white;
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-size: 0.875rem;
-  font-family: inherit;
-  font-weight: 500;
-  transition: all var(--transition);
-}
-
-.pagination-controls button:hover:not(:disabled) {
-  background-color: var(--button-hover-bg);
-}
-
-.pagination-controls button:disabled {
-  background-color: var(--button-disabled-bg);
-  cursor: not-allowed;
-}
-
-.pagination-controls input[type="number"] {
+.preview-page-controls input[type="number"] {
   width: 64px;
   text-align: center;
   background-color: var(--body-bg);
@@ -769,7 +835,12 @@ body {
   font-size: 0.95rem;
 }
 
-/* Issue navigation inside cards */
+.issue-navigation-controls button:disabled,
+.calendar-nav button:disabled {
+  background-color: var(--button-disabled-bg);
+  cursor: not-allowed;
+}
+
 .issue-navigation-controls {
   margin-top: 14px;
   display: none;
@@ -798,15 +869,6 @@ body {
   transition: all var(--transition);
 }
 
-.issue-navigation-controls button:hover:not(:disabled) {
-  background-color: var(--button-hover-bg);
-}
-
-.issue-navigation-controls button:disabled {
-  background-color: var(--button-disabled-bg);
-  cursor: not-allowed;
-}
-
 .issue-navigation-controls input[type="number"] {
   width: 64px;
   padding: 8px;
@@ -819,7 +881,6 @@ body {
 }
 
 .view-all-issues-btn {
-  margin-top: 12px;
   padding: 9px 16px;
   background-color: var(--lightbox-button-bg);
   color: white;
@@ -832,7 +893,8 @@ body {
   transition: all var(--transition);
 }
 
-.view-all-issues-btn:hover {
+.view-all-issues-btn:hover,
+.lightbox-controls button:hover:not(:disabled) {
   background-color: var(--lightbox-button-hover-bg);
   transform: translateY(-1px);
 }
@@ -841,7 +903,6 @@ button {
   font-family: inherit;
 }
 
-/* ========== Modals (shared) ========== */
 .all-issues-modal-overlay {
   position: fixed;
   inset: 0;
@@ -857,7 +918,8 @@ button {
   transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
-.all-issues-modal-overlay.visible {
+.all-issues-modal-overlay.visible,
+.lightbox-overlay.visible {
   opacity: 1;
   visibility: visible;
 }
@@ -878,9 +940,76 @@ button {
   overflow-y: auto;
 }
 
+@media (min-width: 900px) {
+.all-issues-modal-content:not(.calendar-modal-content) {
+  width: min(1280px, 96vw);
+  max-height: 90vh;
+  padding: 32px 32px 28px;
+  gap: 4px;
+}
+
+.all-issues-modal-content:not(.calendar-modal-content) h2#allIssuesModalNewspaperTitle {
+  margin: 0 0 14px;
+  padding-inline-end: 48px;
+  font-size: 1.4rem;
+}
+
+.all-issues-modal-content:not(.calendar-modal-content) .modal-controls {
+  margin-bottom: 16px;
+  padding: 10px 16px;
+  background: var(--control-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  gap: 16px;
+}
+
+.all-issues-modal-content:not(.calendar-modal-content) .newspaper-selection-container {
+  max-height: 28vh;
+  padding: 12px 8px 14px;
+  margin-bottom: 14px;
+  gap: 10px;
+  background: var(--body-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+@media (max-width: 768px) {
+  .all-issues-modal-content:not(.calendar-modal-content) .newspaper-selection-container {
+    max-height: none;
+    overflow-y: visible;
+  }
+  .all-issues-modal-content:not(.calendar-modal-content) .newspaper-selection-container.is-collapsed {
+    max-height: 4.5em;
+    overflow: hidden;
+  }
+}
+
+.all-issues-modal-content:not(.calendar-modal-content) .issues-list-container,
+  .all-issues-modal-content:not(.calendar-modal-content) .issues-image-grid-container {
+  min-height: 200px;
+  padding: 8px 4px 12px;
+}
+
+.all-issues-modal-content:not(.calendar-modal-content) .volume-header {
+  margin-top: 20px;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: var(--control-bg);
+  border-radius: var(--radius-sm);
+  border-bottom: none;
+  border: 1px solid var(--border-color);
+}
+
+.all-issues-modal-content:not(.calendar-modal-content) .issue-item-button {
+  padding: 10px 16px;
+  font-size: 0.88rem;
+}
+}
+
 h2#allIssuesModalNewspaperTitle,
 h2#calendarModalTitle,
-h2#shamsiCalendarModalTitle {
+h2#shamsiCalendarModalTitle,
+h2#miladiCalendarModalTitle {
   text-align: center;
   margin: 0 0 18px;
   font-size: 1.35rem;
@@ -910,10 +1039,41 @@ h2#shamsiCalendarModalTitle {
 }
 
 .all-issues-modal-close-button:hover,
-.calendar-modal-close-button:hover {
+.calendar-modal-close-button:hover,
+#clearNewspaperSearch:hover {
   background: var(--error-color);
   color: white;
   border-color: var(--error-color);
+}
+
+.newspaper-selection-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.newspaper-selection-toggle {
+  display: none;
+  flex-shrink: 0;
+  padding: 6px 12px;
+  background: var(--control-bg);
+  color: var(--text-color);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all var(--transition);
+  line-height: 1.2;
+}
+
+.newspaper-selection-toggle:hover {
+  border-color: var(--button-bg);
+  background: var(--body-bg);
 }
 
 .newspaper-selection-container {
@@ -930,25 +1090,69 @@ h2#shamsiCalendarModalTitle {
 
 .newspaper-selection-container button {
   padding: 8px 14px;
-  background-color: var(--text-secondary);
-  color: white;
+  background-color: #475569;
+  color: #f8fafc;
   border: none;
   border-radius: 999px;
   cursor: pointer;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   font-family: inherit;
   transition: all var(--transition);
   white-space: nowrap;
 }
 
 .newspaper-selection-container button:hover {
-  opacity: 0.9;
+  background-color: #334155;
 }
 
 .newspaper-selection-container button.selected {
   background-color: var(--lightbox-button-bg);
+  color: #ffffff;
   box-shadow: 0 0 0 2px var(--body-bg), 0 0 0 4px var(--lightbox-button-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .newspaper-selection-container button {
+    background-color: #64748b;
+    color: #f8fafc;
+  }
+  .newspaper-selection-container button:hover {
+    background-color: #94a3b8;
+    color: #0f172a;
+  }
+  .newspaper-selection-container button.selected {
+    background-color: var(--lightbox-button-bg);
+    color: #ffffff;
+  }
+}
+
+@media (max-width: 768px) {
+  .newspaper-selection-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .all-issues-modal-content:not(.calendar-modal-content) .newspaper-selection-container,
+  .newspaper-selection-container {
+    max-height: none;
+    overflow-y: visible;
+  }
+  .newspaper-selection-container.is-collapsed {
+    max-height: 4.5em;
+    overflow: hidden;
+    position: relative;
+  }
+  .newspaper-selection-container.is-collapsed::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1.8em;
+    background: linear-gradient(to bottom, transparent, var(--lightbox-bg));
+    pointer-events: none;
+  }
 }
 
 .issues-list-container {
@@ -977,7 +1181,8 @@ h2#shamsiCalendarModalTitle {
   text-decoration: none;
 }
 
-.issues-list-container .issue-item-button:hover {
+.issues-list-container .issue-item-button:hover,
+.lightbox-links a:hover {
   background-color: var(--button-hover-bg);
   transform: translateY(-1px);
 }
@@ -1005,7 +1210,6 @@ h2#shamsiCalendarModalTitle {
   cursor: pointer;
 }
 
-/* Image grid in modal */
 .issues-image-grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -1096,7 +1300,6 @@ h2#shamsiCalendarModalTitle {
   letter-spacing: -0.01em;
 }
 
-/* ========== Lightbox ========== */
 .lightbox-overlay {
   position: fixed;
   inset: 0;
@@ -1110,11 +1313,6 @@ h2#shamsiCalendarModalTitle {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.25s ease, visibility 0.25s ease;
-}
-
-.lightbox-overlay.visible {
-  opacity: 1;
-  visibility: visible;
 }
 
 .lightbox-content {
@@ -1153,16 +1351,43 @@ h2#shamsiCalendarModalTitle {
   margin: 0 0 4px;
 }
 
+.lightbox-zoom-viewport {
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: calc(90vh - 220px);
+  border-radius: var(--radius-md);
+  background: var(--body-bg);
+  border: 1px solid var(--border-color);
+  cursor: default;
+  touch-action: none;
+  position: relative;
+}
+.lightbox-zoom-viewport.is-zoomed {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
 .lightbox-image {
   max-width: 100%;
   max-height: calc(90vh - 220px);
   height: auto;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  cursor: default;
   margin: 0 auto;
   display: block;
-  box-shadow: var(--shadow-md);
+  box-shadow: none;
+  transform-origin: 0 0;
+  transition: opacity 0.35s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: auto;
+}
+.lightbox-zoom-viewport.is-zoomed .lightbox-image {
+  margin: 0;
 }
 
 .lightbox-image-placeholder {
@@ -1190,6 +1415,160 @@ h2#shamsiCalendarModalTitle {
   gap: 12px;
 }
 
+#lightboxIssueNumberInput,
+.lightbox-weekday-badge {
+  display: none !important;
+}
+
+#shamsiYear.year-out-of-archive,
+#shamsiMonth.year-out-of-archive,
+#shamsiDay.year-out-of-archive {
+  color: #dc2626 !important;
+  border-color: #f87171 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+#shamsiYear.year-out-of-archive,
+  #shamsiMonth.year-out-of-archive,
+  #shamsiDay.year-out-of-archive {
+  color: #f87171 !important;
+  border-color: #ef4444 !important;
+}
+}
+
+.shamsi-date-out {
+  color: #dc2626 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+.shamsi-date-out {
+  color: #f87171 !important;
+}
+}
+
+@media (min-width: 900px) {
+.lightbox-content {
+  direction: ltr;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  grid-template-rows: auto auto auto 1fr auto auto;
+  max-width: min(1480px, 98vw);
+  width: 98vw;
+  max-height: 96vh;
+  align-items: stretch;
+  gap: 10px 20px;
+  padding: 18px 20px 18px 16px;
+  overflow: hidden;
+}
+
+.lightbox-close-button {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  top: 0;
+  right: 0;
+  justify-self: end;
+  z-index: 2;
+}
+
+.lightbox-header {
+  direction: rtl;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: stretch;
+  align-self: start;
+  padding-inline-end: 44px;
+  margin-bottom: 0;
+}
+
+.lightbox-weekday-badge {
+  direction: rtl;
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: start;
+}
+
+#lightboxStatusMessage,
+  #lightboxErrorMessage {
+  direction: rtl;
+  grid-column: 2;
+  grid-row: 3;
+  margin-top: 0;
+}
+
+.lightbox-content > .image-container,
+  .lightbox-content > .lightbox-zoom-viewport {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  align-self: stretch;
+  max-height: calc(96vh - 36px);
+  height: calc(96vh - 36px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: auto;
+  margin: 0;
+  cursor: default;
+}
+
+.lightbox-content > .lightbox-zoom-viewport.is-zoomed {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.lightbox-content > .lightbox-zoom-viewport.is-panning {
+  cursor: grabbing;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: calc(96vh - 48px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transform-origin: 0 0;
+}
+
+.lightbox-image-placeholder {
+  width: 100%;
+  max-width: none;
+  min-height: 280px;
+  height: 100%;
+}
+
+.lightbox-controls {
+  direction: rtl;
+  grid-column: 2;
+  grid-row: 5;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 0;
+  gap: 10px;
+}
+
+.lightbox-links {
+  direction: rtl;
+  grid-column: 2;
+  grid-row: 6;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 0;
+  gap: 8px;
+}
+
+.lightbox-links a {
+  text-align: center;
+  display: block;
+}
+
+.lightbox-controls .page-nav,
+  .lightbox-controls .newspaper-nav,
+  .lightbox-controls .issue-nav-lightbox {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+}
+
 .lightbox-controls .page-nav,
 .lightbox-controls .newspaper-nav,
 .lightbox-controls .issue-nav-lightbox {
@@ -1209,11 +1588,6 @@ h2#shamsiCalendarModalTitle {
   font-weight: 500;
   font-family: inherit;
   transition: all var(--transition);
-}
-
-.lightbox-controls button:hover:not(:disabled) {
-  background-color: var(--lightbox-button-hover-bg);
-  transform: translateY(-1px);
 }
 
 .lightbox-controls button:disabled {
@@ -1293,12 +1667,6 @@ h2#shamsiCalendarModalTitle {
   box-shadow: var(--shadow-sm);
 }
 
-.lightbox-links a:hover {
-  background-color: var(--button-hover-bg);
-  transform: translateY(-1px);
-}
-
-/* ========== Calendar ========== */
 .calendar-modal-content {
   position: relative;
 }
@@ -1311,7 +1679,7 @@ h2#shamsiCalendarModalTitle {
   margin-bottom: 16px;
   gap: 10px;
   flex-wrap: wrap;
-  padding-inline-end: 44px; /* room for close button on same row (desktop) */
+  padding-inline-end: 44px;
 }
 
 .calendar-nav-label,
@@ -1336,17 +1704,9 @@ h2#shamsiCalendarModalTitle {
   flex-shrink: 0;
 }
 
-.calendar-nav button:hover:not(:disabled) {
-  background-color: var(--button-hover-bg);
-}
-
-.calendar-nav button:disabled {
-  background-color: var(--button-disabled-bg);
-  cursor: not-allowed;
-}
-
 #calendarYearSelect,
-#shamsiCalendarYearSelect {
+#shamsiCalendarYearSelect,
+#miladiCalendarYearSelect {
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-color);
@@ -1358,25 +1718,103 @@ h2#shamsiCalendarModalTitle {
   cursor: pointer;
 }
 
-/* Desktop: hide modal title; close sits on nav row */
 @media (min-width: 769px) {
-  .calendar-modal-heading {
-    display: none;
-  }
-  .calendar-modal-content .calendar-modal-close-button {
-    top: 18px;
-  }
+.calendar-modal-heading {
+  display: none;
+}
+
+.calendar-modal-content .calendar-modal-close-button {
+  top: 18px;
+}
 }
 
 @media (max-width: 768px) {
-  .calendar-nav {
-    padding-inline-end: 0;
-    gap: 8px;
-  }
-  .calendar-nav-label,
+.calendar-nav {
+  padding-inline-end: 0;
+  gap: 8px;
+}
+
+.calendar-nav-label,
   .calendar-nav-suffix {
-    font-size: 0.85rem;
-  }
+  font-size: 0.85rem;
+}
+
+.calendar-year-nav-btn .cal-nav-text {
+  display: none;
+}
+
+.calendar-year-nav-btn {
+  min-width: 36px;
+  padding: 8px 10px;
+}
+}
+
+@media (min-width: 769px) {
+.mobile-only {
+  display: none !important;
+}
+
+.date-controls-row {
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  width: 100%;
+}
+
+.date-controls-row label {
+  font-size: 0.85rem;
+  margin-left: 2px;
+}
+
+.date-controls-row select {
+  padding: 6px 8px;
+  font-size: 0.85rem;
+}
+
+.shamsi-row {
+  order: 1;
+}
+
+.hijri-row {
+  order: 2;
+}
+
+.miladi-row {
+  order: 3;
+}
+}
+
+@media (max-width: 768px) {
+.mobile-only {
+  display: flex !important;
+}
+
+.date-controls-row {
+  display: none !important;
+}
+
+.date-controls-row.active-mobile {
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  padding: 6px 0;
+}
+
+.date-controls-row select {
+  padding: 5px 6px;
+  font-size: 0.8rem;
+}
+
+.date-controls-row label {
+  font-size: 0.8rem;
+  margin-left: 2px;
+}
 }
 
 .calendar-grid-container {
@@ -1447,17 +1885,19 @@ h2#shamsiCalendarModalTitle {
   color: var(--text-color);
   font-weight: 600;
 }
-.calendar-day-btn.is-friday,
-.calendar-day-btn.is-friday.has-issue,
-.calendar-day-btn.is-friday.issue-count-1,
-.calendar-day-btn.is-friday.issue-count-2,
-.calendar-day-btn.is-friday.issue-count-3plus {
+
+#shamsiCalendarGridContainer .calendar-day-btn.is-friday,
+#shamsiCalendarGridContainer .calendar-day-btn.is-friday.has-issue,
+#shamsiCalendarGridContainer .calendar-day-btn.is-friday.issue-count-1,
+#shamsiCalendarGridContainer .calendar-day-btn.is-friday.issue-count-2,
+#shamsiCalendarGridContainer .calendar-day-btn.is-friday.issue-count-3plus {
   color: #dc2626 !important;
   font-weight: 600;
   background-color: transparent !important;
   box-shadow: none !important;
 }
-.calendar-day-btn.is-friday.selected-day {
+
+#shamsiCalendarGridContainer .calendar-day-btn.is-friday.selected-day {
   color: #dc2626 !important;
   background-color: var(--multiple-issues-color) !important;
   box-shadow: 0 0 0 2px var(--body-bg), 0 0 0 4px var(--multiple-issues-color) !important;
@@ -1514,8 +1954,6 @@ h2#shamsiCalendarModalTitle {
   display: block;
 }
 
-
-/* Newspapers list mobile collapse */
 .toggle-newspapers-list-btn {
   display: none;
   width: 100%;
@@ -1549,105 +1987,104 @@ h2#shamsiCalendarModalTitle {
 }
 
 @media (max-width: 768px) {
-  .toggle-newspapers-list-btn {
-    display: block;
-  }
-
-  .newspapers-list-collapsible {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    margin-bottom: 0 !important;
-    transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.25s ease;
-    pointer-events: none;
-  }
-
-  .newspapers-list-wrapper.expanded .newspapers-list-collapsible {
-    max-height: 3000px;
-    opacity: 1;
-    margin-bottom: 24px !important;
-    pointer-events: auto;
-  }
+.toggle-newspapers-list-btn {
+  display: block;
 }
 
-/* ========== Responsive ========== */
+.newspapers-list-collapsible {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-bottom: 0 !important;
+  transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.25s ease;
+  pointer-events: none;
+}
+
+.newspapers-list-wrapper.expanded .newspapers-list-collapsible {
+  max-height: 3000px;
+  opacity: 1;
+  margin-bottom: 24px !important;
+  pointer-events: auto;
+}
+}
+
 @media (max-width: 768px) {
-  body {
-    padding: 16px 12px 40px;
-  }
+body {
+  padding: 16px 12px 40px;
+}
 
-  .controls {
-    padding: 16px;
-    gap: 12px;
-  }
+.controls {
+  padding: 16px;
+  gap: 12px;
+}
 
-  .calendar-grid-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.calendar-grid-container {
+  grid-template-columns: repeat(2, 1fr);
+}
 
-  #shamsiDateControls label[for="shamsiYear"],
+#shamsiDateControls label[for="shamsiYear"],
   #shamsiDateControls label[for="shamsiMonth"],
   #shamsiDateControls label[for="shamsiDay"],
   #hijriDateControls label[for="hijriYear"],
   #hijriDateControls label[for="hijriMonth"],
   #hijriDateControls label[for="hijriDay"] {
-    display: none;
-  }
+  display: none;
+}
 
-  #shamsiDateControls,
+#shamsiDateControls,
   #hijriDateControls {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
-  #shamsiDateControls #shamsiDay,
+#shamsiDateControls #shamsiDay,
   #hijriDateControls #hijriDay {
-    order: 1;
-  }
-  #shamsiDateControls #shamsiMonth,
+  order: 1;
+}
+
+#shamsiDateControls #shamsiMonth,
   #hijriDateControls #hijriMonth {
-    order: 2;
-  }
-  #shamsiDateControls #shamsiYear,
+  order: 2;
+}
+
+#shamsiDateControls #shamsiYear,
   #hijriDateControls #hijriYear {
-    order: 3;
-  }
+  order: 3;
+}
 
-  .newspaper-section {
-    min-width: 260px;
-  }
+.newspaper-section {
+  min-width: 260px;
+}
 
-  .all-issues-modal-content,
+.all-issues-modal-content,
   .lightbox-content {
-    padding: 20px 16px;
-    max-width: 96%;
-  }
+  padding: 20px 16px;
+  max-width: 96%;
+}
 }
 
 @media (max-width: 480px) {
-  .calendar-grid-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .calendar-day-btn {
-    width: 26px;
-    height: 26px;
-    font-size: 0.75rem;
-  }
-
-  .newspaper-section {
-    min-width: 100%;
-    max-width: 100%;
-  }
+.calendar-grid-container {
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
 
+.calendar-day-btn {
+  width: 26px;
+  height: 26px;
+  font-size: 0.75rem;
+}
 
-/* Selected date display */
+.newspaper-section {
+  min-width: 100%;
+  max-width: 100%;
+}
+}
+
 .current-date-display {
   text-align: center;
   font-size: 1.05rem;
@@ -1658,7 +2095,6 @@ h2#shamsiCalendarModalTitle {
   min-height: 1.5em;
 }
 
-/* Newspaper search box */
 .newspaper-search-box {
   display: flex;
   align-items: center;
@@ -1667,6 +2103,7 @@ h2#shamsiCalendarModalTitle {
   margin-bottom: 8px;
   position: relative;
 }
+
 .newspaper-search-box input[type="search"] {
   flex: 1;
   padding: 9px 12px;
@@ -1679,15 +2116,12 @@ h2#shamsiCalendarModalTitle {
   min-width: 0;
   transition: border-color var(--transition), box-shadow var(--transition);
 }
-.newspaper-search-box input[type="search"]:focus {
-  outline: none;
-  border-color: var(--button-bg);
-  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18);
-}
+
 .newspaper-search-box input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
   appearance: none;
 }
+
 #clearNewspaperSearch {
   flex-shrink: 0;
   width: 36px;
@@ -1705,23 +2139,18 @@ h2#shamsiCalendarModalTitle {
   transition: all var(--transition);
   padding: 0;
 }
-#clearNewspaperSearch:hover {
-  background: var(--error-color);
-  color: white;
-  border-color: var(--error-color);
-}
+
 #clearNewspaperSearch:disabled {
   opacity: 0.4;
   cursor: default;
 }
+
 #clearNewspaperSearch:disabled:hover {
   background: var(--body-bg);
   color: var(--text-secondary);
   border-color: var(--border-color);
 }
 
-
-/* Date navigation around current date display */
 .date-nav-bar {
   display: flex;
   align-items: center;
@@ -1730,8 +2159,9 @@ h2#shamsiCalendarModalTitle {
   gap: 6px;
   margin: 0 0 16px;
   width: 100%;
-  max-width: 720px;
+  max-width: 960px;
 }
+
 .date-nav-bar .current-date-display {
   margin: 0;
   min-width: 12em;
@@ -1742,10 +2172,12 @@ h2#shamsiCalendarModalTitle {
   border-radius: var(--radius-sm);
   transition: background-color var(--transition);
 }
+
 .date-nav-bar .current-date-display:hover {
   background-color: var(--border-subtle);
   color: var(--button-bg);
 }
+
 .date-nav-btn {
   padding: 6px 10px;
   min-width: 36px;
@@ -1761,46 +2193,113 @@ h2#shamsiCalendarModalTitle {
   transition: all var(--transition);
   box-shadow: var(--shadow-sm);
 }
+
 .date-nav-btn:hover:not(:disabled) {
   border-color: var(--button-bg);
   background: var(--body-bg);
   transform: translateY(-1px);
 }
+
 .date-nav-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
+
 .date-nav-group {
   display: flex;
   gap: 4px;
   align-items: center;
 }
 
-/* Search row: search box + optional toggle on mobile */
 .newspaper-search-row {
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 0px;
+  margin-top: 10px;
 }
+
 @media (min-width: 769px) {
-  .toggle-newspapers-list-btn {
-    display: none !important;
-  }
-  .newspaper-search-row {
-    flex-direction: column;
-  }
-  .newspapers-list-collapsible {
-    max-height: none !important;
-    overflow: visible !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-  }
+.toggle-newspapers-list-btn {
+  display: none !important;
 }
 
+.newspaper-search-row {
+  flex-direction: column;
+}
 
-/* Newspaper logo in cards */
+.newspapers-list-collapsible {
+  max-height: none !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+}
+
+@media (min-width: 769px) {
+.desktop-hidden {
+  display: none !important;
+}
+
+.date-controls-row {
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  width: 100%;
+}
+
+#shamsiDateControls, #hijriDateControls, #miladiDateControls {
+  display: flex !important;
+}
+
+#shamsiDateControls {
+  order: 1;
+}
+
+#hijriDateControls {
+  order: 2;
+}
+
+#miladiDateControls {
+  order: 3;
+}
+
+.date-controls-row label {
+  display: inline-block !important;
+  font-size: 0.8rem;
+  min-width: 2.2em;
+  margin-left: 2px;
+  color: var(--text-secondary);
+}
+
+.date-controls-row select {
+  padding: 6px 8px;
+  font-size: 0.85rem;
+  flex: 0 0 auto;
+}
+}
+
+@media (max-width: 768px) {
+.desktop-hidden,
+.date-controls-row.active-mobile,
+	#shamsiDateControls.active-mobile,
+	#hijriDateControls.active-mobile,
+	#miladiDateControls.active-mobile {
+  display: flex !important;
+}
+
+.date-controls-row,
+#shamsiDateControls,
+	#hijriDateControls,
+	#miladiDateControls {
+  display: none !important;
+}
+}
+
 .newspaper-logo {
   max-width: 72px;
   max-height: 48px;
@@ -1811,38 +2310,40 @@ h2#shamsiCalendarModalTitle {
   display: block;
   border-radius: 4px;
 }
-.newspaper-logo.hidden {
-  display: none;
-}
 
-
-/* Lightbox header: logo + title + subtitle */
 .lightbox-header {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   gap: 12px;
   flex-wrap: wrap;
   width: 100%;
   margin-bottom: 8px;
   text-align: center;
 }
+
 .lightbox-header-text {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
   min-width: 0;
+  margin-top: 50px;
 }
+
 .lightbox-header .lightbox-logo {
   margin: 0;
   flex-shrink: 0;
+  margin-top: 50px;
 }
+
 .lightbox-header h2#lightboxNewspaperTitle {
   margin: 0;
   font-size: 1.35rem;
   font-weight: 700;
 }
+
 .lightbox-subtitle {
   margin: 0;
   font-size: 0.9rem;
@@ -1850,11 +2351,7 @@ h2#shamsiCalendarModalTitle {
   color: var(--text-secondary);
   letter-spacing: -0.01em;
 }
-.lightbox-weekday-badge {
-  display: none !important; /* weekday now embedded in subtitle */
-}
 
-/* Logo in lightbox */
 .lightbox-logo {
   max-width: 100px;
   max-height: 56px;
@@ -1865,195 +2362,231 @@ h2#shamsiCalendarModalTitle {
   display: block;
   border-radius: 4px;
 }
-.lightbox-logo.hidden {
-  display: none;
-}
 
-/* Calendar fit improvements - 4 cols desktop to fit viewport height */
 .calendar-grid-container {
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
 }
+
 .calendar-month {
   padding: 6px 4px;
 }
+
 .calendar-month h3 {
   font-size: 0.82rem;
   margin: 0 0 4px;
 }
+
 .calendar-day-btn {
   width: 24px;
   height: 24px;
   font-size: 0.68rem;
 }
+
 .calendar-weekday-label {
   width: 24px;
   height: 16px;
   font-size: 0.6rem;
 }
+
 .calendar-day-empty {
   width: 24px;
   height: 24px;
 }
 
 @media (max-width: 1100px) {
-  .calendar-grid-container {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
+.calendar-grid-container {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
 }
 
 @media (max-width: 700px) {
-  .calendar-grid-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
-  }
-  .calendar-day-btn {
-    width: 24px;
-    height: 24px;
-    font-size: 0.7rem;
-  }
-  .calendar-weekday-label {
-    width: 24px;
-  }
-  .calendar-day-empty {
-    width: 24px;
-    height: 24px;
-  }
+.calendar-grid-container {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
 }
 
-/* Mobile: search + expand button row; list collapsible until expanded or search has text */
+.calendar-day-btn {
+  width: 24px;
+  height: 24px;
+  font-size: 0.7rem;
+}
+
+.calendar-weekday-label {
+  width: 24px;
+}
+
+.calendar-day-empty {
+  width: 24px;
+  height: 24px;
+}
+}
+
 @media (max-width: 768px) {
-  .newspaper-search-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    margin-bottom: 8px;
-  }
-  .newspaper-search-box {
-    flex: 1;
-    margin-bottom: 0;
-    min-width: 0;
-  }
-  .toggle-newspapers-list-btn {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    max-width: none;
-    margin: 0;
-    padding: 9px 12px;
-    white-space: nowrap;
-    flex-shrink: 0;
-    font-size: 0.85rem;
-  }
-  .newspapers-list-wrapper:not(.expanded) .newspapers-list-collapsible {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    margin-bottom: 0 !important;
-    pointer-events: none;
-  }
-  .newspapers-list-wrapper.expanded .newspapers-list-collapsible,
+.newspaper-search-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.newspaper-search-box {
+  flex: 1;
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+.toggle-newspapers-list-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 9px 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-size: 0.85rem;
+}
+
+.newspapers-list-wrapper:not(.expanded) .newspapers-list-collapsible {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-bottom: 0 !important;
+  pointer-events: none;
+}
+
+.newspapers-list-wrapper.expanded .newspapers-list-collapsible,
   .newspapers-list-wrapper.search-active .newspapers-list-collapsible {
-    max-height: 3000px;
-    opacity: 1;
-    margin-bottom: 12px !important;
-    pointer-events: auto;
-  }
+  max-height: 3000px;
+  opacity: 1;
+  margin-bottom: 12px !important;
+  pointer-events: auto;
+}
 }
 
-
-
 @media (max-width: 768px) {
-  body {
-    padding: 10px 8px 24px !important;
-  }
-  .date-nav-bar {
-    margin: 0 0 10px !important;
-    gap: 4px !important;
-  }
-  .date-nav-btn {
-    padding: 4px 7px !important;
-    min-width: 30px !important;
-    font-size: 0.75rem !important;
-  }
-  .date-nav-bar .current-date-display {
-    font-size: 0.9rem !important;
-    min-width: 0 !important;
-    padding: 4px 6px !important;
-  }
-  .app-layout {
-    gap: 12px !important;
-  }
-  .sidebar-filters {
-    gap: 8px !important;
-    padding-bottom: 8px !important;
-  }
-  .sidebar-filters .controls {
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    align-items: center !important;
-    gap: 4px !important;
-    padding: 8px !important;
-  }
-  .sidebar-filters .calendar-selection {
-    flex-shrink: 0;
-    width: auto !important;
-    padding: 2px !important;
-    gap: 0 !important;
-  }
-  .sidebar-filters .calendar-selection label {
-    flex: 0 0 auto !important;
-    padding: 5px 9px !important;
-    font-size: 0.78rem !important;
-  }
-  .sidebar-filters #shamsiDateControls,
+body {
+  padding: 10px 8px 24px !important;
+}
+
+.date-nav-bar {
+  margin: 0 0 10px !important;
+  gap: 6px !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas: "date date date" "prev spacer next";
+  align-items: center;
+  max-width: 100% !important;
+}
+
+.date-nav-bar .current-date-display {
+  grid-area: date;
+  font-size: 0.9rem !important;
+  min-width: 0 !important;
+  padding: 4px 6px !important;
+  width: 100%;
+}
+
+.date-nav-group.date-nav-prev {
+  grid-area: prev;
+  justify-self: start;
+}
+
+.date-nav-group.date-nav-next {
+  grid-area: next;
+  justify-self: end;
+}
+
+.date-nav-btn {
+  padding: 4px 7px !important;
+  min-width: 30px !important;
+  font-size: 0.75rem !important;
+}
+
+.app-layout,
+.main-content .newspaper-container {
+  gap: 12px !important;
+}
+
+.sidebar-filters {
+  gap: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.sidebar-filters .controls {
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 8px !important;
+}
+
+.sidebar-filters .calendar-selection {
+  flex-shrink: 0;
+  width: auto !important;
+  padding: 2px !important;
+  gap: 0 !important;
+}
+
+.sidebar-filters .calendar-selection label {
+  flex: 0 0 auto !important;
+  padding: 5px 9px !important;
+  font-size: 0.78rem !important;
+}
+
+.sidebar-filters #shamsiDateControls,
   .sidebar-filters #hijriDateControls {
-    flex: 0 1 auto !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    gap: 3px !important;
-    min-width: 0 !important;
-    width: auto !important;
-  }
-  .sidebar-filters #shamsiDateControls select,
+  flex: 0 1 auto !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 3px !important;
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+.sidebar-filters #shamsiDateControls select,
   .sidebar-filters #hijriDateControls select {
-    padding: 5px 4px !important;
-    font-size: 0.75rem !important;
-    flex: 0 0 auto !important;
-    width: max-content !important;
-    field-sizing: content;
-    min-width: 0 !important;
-  }
-  .sidebar-filters #shamsiDay,
+  padding: 5px 4px !important;
+  font-size: 0.75rem !important;
+  flex: 0 0 auto !important;
+  width: max-content !important;
+  field-sizing: content;
+  min-width: 0 !important;
+}
+
+.sidebar-filters #shamsiDay,
   .sidebar-filters #hijriDay,
+  .sidebar-filters #miladiDay,
   .sidebar-filters #shamsiMonth,
   .sidebar-filters #hijriMonth,
+  .sidebar-filters #miladiMonth,
   .sidebar-filters #shamsiYear,
-  .sidebar-filters #hijriYear {
-    flex: 0 0 auto !important;
-    width: max-content !important;
-    min-width: 0 !important;
-  }
-  .newspaper-search-row {
-    margin-bottom: 6px !important;
-    gap: 6px !important;
-  }
-  .newspaper-search-box input[type="search"] {
-    padding: 7px 8px !important;
-    font-size: 0.85rem !important;
-  }
-  .main-content .newspaper-container {
-    gap: 12px !important;
-  }
-  .newspaper-section {
-    padding: 14px !important;
-  }
+  .sidebar-filters #hijriYear,
+  .sidebar-filters #miladiYear {
+  flex: 0 0 auto !important;
+  width: max-content !important;
+  min-width: 0 !important;
 }
 
+.newspaper-search-row {
+  margin-bottom: 6px !important;
+  gap: 6px !important;
+}
+
+.newspaper-search-box input[type="search"] {
+  padding: 7px 8px !important;
+  font-size: 0.85rem !important;
+}
+
+.newspaper-section {
+  padding: 14px !important;
+}
+}
 
 .list-count-meta {
   font-size: 0.78em;
@@ -2061,20 +2594,106 @@ h2#shamsiCalendarModalTitle {
   color: var(--text-secondary);
 }
 
-
 .toggle-newspapers-list-btn .toggle-arrow {
   font-size: 1.1rem;
   line-height: 1;
   display: block;
 }
+
 @media (max-width: 768px) {
-  .toggle-newspapers-list-btn {
-    padding: 7px 10px !important;
-    min-width: 36px;
-  }
+.toggle-newspapers-list-btn {
+  padding: 7px 10px !important;
+  min-width: 36px;
+}
 }
 
-/* Focus visible for accessibility */
+.global-issue-nav-controls.has-available-on-date button {
+  opacity: 0.68;
+  filter: saturate(0.8);
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.global-issue-nav-controls.has-available-on-date button.available-on-date {
+  opacity: 1;
+  filter: none;
+}
+
+.list-legend-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-inline-start: 6px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-color);
+  background: var(--body-bg);
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: help;
+  position: relative;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.list-legend-tip:hover,
+.list-legend-tip:focus {
+  border-color: var(--button-bg);
+  color: var(--button-bg);
+  outline: none;
+}
+
+.list-legend-tip .list-legend-popup {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 50%;
+  transform: translateX(50%);
+  min-width: 220px;
+  max-width: 280px;
+  padding: 10px 12px;
+  background: var(--control-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  color: var(--text-color);
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.55;
+  text-align: right;
+  z-index: 50;
+  white-space: normal;
+}
+
+.list-legend-tip:hover .list-legend-popup,
+.list-legend-tip:focus .list-legend-popup,
+.list-legend-tip:focus-within .list-legend-popup {
+  display: block;
+}
+
+.list-legend-popup .legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.list-legend-popup .legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.list-legend-popup .legend-swatch.hijri {
+  background: var(--button-bg);
+}
+
+.list-legend-popup .legend-swatch.shamsi {
+  background: var(--lightbox-button-bg);
+}
+
 button:focus-visible,
 select:focus-visible,
 input:focus-visible,
@@ -2082,8 +2701,7 @@ a:focus-visible {
   outline: 2px solid var(--button-bg);
   outline-offset: 2px;
 }
-
-	</style>
+</style>
 </head>
 <body>
 	<div class="date-nav-bar" id="dateNavBar">
@@ -2103,14 +2721,8 @@ a:focus-visible {
 	<div class="app-layout">
 	<aside class="sidebar-filters">
 	<div class="controls">
-		<div class="calendar-selection">
-			<input type="radio" id="hijriCalendar" name="calendar" value="hijri">
-			<label for="hijriCalendar">قمری</label>
-			<input type="radio" id="shamsiCalendar" name="calendar" value="shamsi" checked>
-			<label for="shamsiCalendar">شمسی</label>
-		</div>
 
-		<div id="shamsiDateControls" style="display: flex;">
+		<div class="date-controls-row shamsi-row" id="shamsiDateControls">
 			<label for="shamsiDay">روز:</label>
 			<select id="shamsiDay"></select>
 			<label for="shamsiMonth">ماه:</label>
@@ -2132,7 +2744,7 @@ a:focus-visible {
 			<select id="shamsiYear"></select>
 		</div>
 
-		<div id="hijriDateControls" style="display: none;">
+		<div class="date-controls-row hijri-row" id="hijriDateControls" style="display: none;">
 			<label for="hijriDay">روز:</label>
 			<select id="hijriDay"></select>
 			<label for="hijriMonth">ماه:</label>
@@ -2153,8 +2765,39 @@ a:focus-visible {
 			<label for="hijriYear">سال:</label>
 			<select id="hijriYear"></select>
 		</div>
+
+		<div class="date-controls-row miladi-row" id="miladiDateControls" style="display: none;">
+			<label for="miladiDay">روز:</label>
+			<select id="miladiDay"></select>
+			<label for="miladiMonth">ماه:</label>
+			<select id="miladiMonth">
+				<option value="1">ژانویه</option>
+				<option value="2">فوریه</option>
+				<option value="3">مارس</option>
+				<option value="4">آوریل</option>
+				<option value="5">مه</option>
+				<option value="6">ژوئن</option>
+				<option value="7">ژوئیه</option>
+				<option value="8">اوت</option>
+				<option value="9">سپتامبر</option>
+				<option value="10">اکتبر</option>
+				<option value="11">نوامبر</option>
+				<option value="12">دسامبر</option>
+			</select>
+			<label for="miladiYear">سال:</label>
+			<select id="miladiYear"></select>
+		</div>
+
+		<div class="calendar-selection mobile-only">
+			<input type="radio" id="hijriCalendar" name="calendar" value="hijri">
+			<label for="hijriCalendar">قمری</label>
+			<input type="radio" id="shamsiCalendar" name="calendar" value="shamsi" checked>
+			<label for="shamsiCalendar">شمسی</label>
+			<input type="radio" id="miladiCalendar" name="calendar" value="miladi">
+			<label for="miladiCalendar">میلادی</label>
+		</div>
 	</div>
-	
+
 	<div class="newspaper-search-row">
 		<div class="newspaper-search-box">
 			<input type="search" id="newspaperSearchInput" placeholder="جستجوی نشریه..." autocomplete="off" enterkeyhint="search">
@@ -2168,17 +2811,20 @@ a:focus-visible {
 	<div class="newspapers-list-wrapper" id="newspapersListWrapper">
 		<div id="globalGoToFirstIssueControls" class="global-issue-nav-controls newspapers-list-collapsible">
 		</div>
-		<button id="openAllNewspapersIssuesModalBtn" class="global-all-issues-btn newspapers-list-collapsible" style="width:100%;margin-top:10px;">فهرست شماره‌های نشریات</button>
+		<button id="openAllNewspapersIssuesModalBtn" class="global-all-issues-btn newspapers-list-collapsible" style="width:100%;margin-top:20px;">فهرست شماره‌های نشریات</button>
 	</div>
 
-	<div class="pagination-controls">
-		<label for="mainPageNumberInput">صفحه اصلی:</label>
+	<div class="preview-page-controls">
+		<label for="mainPageNumberInput">صفحهٔ پیش‌نمایش‌ها:</label>
 		<input type="number" id="mainPageNumberInput" value="1" min="1">
 	</div>
 	</aside>
 
 	<main class="main-content">
-	<p id="mainErrorMessage" class="error-message" style="display: none;"></p>
+	<div id="mainErrorWrap" style="display: none; text-align: center; width: 100%; max-width: 480px;">
+		<p id="mainErrorMessage" class="error-message" style="display: none; margin-bottom: 4px;"></p>
+		<button type="button" id="openCalendarFromErrorBtn" class="open-calendar-from-error-btn" style="display: none;">مشاهدهٔ تقویم</button>
+	</div>
 	<p id="mainStatusMessage" class="status-message">در حال بارگذاری نشریات...</p>
 
 	<div class="newspaper-container">
@@ -2197,17 +2843,12 @@ a:focus-visible {
 				</div>
 			</div>
 			<span id="lightboxWeekday" class="lightbox-weekday-badge" style="display: none;"></span>
-			<div class="image-container">
+			<div class="image-container lightbox-zoom-viewport" id="lightboxZoomViewport">
 				<img id="lightboxImage" src="" alt="تصویر نشریه در لایت‌باکس" class="lightbox-image">
 				<div id="lightboxImagePlaceholder" class="lightbox-image-placeholder" style="display: none;">تصویر در دسترس نیست</div>
 			</div>
 			<p id="lightboxStatusMessage" class="status-message" style="display: none;"></p>
 			<p id="lightboxErrorMessage" class="error-message" style="display: none;"></p>
-
-			<div class="lightbox-links">
-				<a id="downloadLink" href="#" target="_blank" style="display: none;">دانلود نشریه</a>
-				<a id="viewLargeLink" href="#" target="_blank" style="display: none;">تصویر بزرگتر</a>
-			</div>
 
 			<div class="lightbox-controls">
 				<div class="page-nav">
@@ -2217,7 +2858,7 @@ a:focus-visible {
 				</div>
 				<div class="issue-nav-lightbox" style="display: none;">
 					<button id="lightboxPrevIssueButton" class="lightbox-issue-nav-btn">&lt; شماره قبل</button>
-					<input type="number" id="lightboxIssueNumberInput" value="" min="1" disabled>
+					<input type="number" id="lightboxIssueNumberInput" value="" min="1" disabled hidden aria-hidden="true">
 					<button id="lightboxNextIssueButton" class="lightbox-issue-nav-btn">شماره بعد &gt;</button>
 					<button id="lightboxViewAllIssuesButton" class="lightbox-issue-nav-btn view-all-issues-btn">مشاهده تمام شماره‌ها</button>
 				</div>
@@ -2225,6 +2866,12 @@ a:focus-visible {
 					<button id="lightboxPrevNewspaperButton" style="display: none;">نشریه قبل</button>
 					<button id="lightboxNextNewspaperButton" style="display: none;">نشریه بعد</button>
 				</div>
+			</div>
+
+			<div class="lightbox-links">
+				<a id="viewLargeLink" href="#" target="_blank" style="display: none;">تصویر بزرگتر این صفحه</a>
+				<a id="downloadLink" href="#" target="_blank" style="display: none;">دانلود فایل این شماره</a>
+				<a id="viewSourceLink" href="#" target="_blank" style="display: none;">مشاهدهٔ نشریه در منبع</a>
 			</div>
 		</div>
 	</div>
@@ -2236,6 +2883,7 @@ a:focus-visible {
 			<div class="modal-controls">
 				<input type="checkbox" id="showDatesCheckbox">
 				<label for="showDatesCheckbox">نمایش تاریخ‌ها</label>
+				<button type="button" id="newspaperSelectionToggleBtn" class="newspaper-selection-toggle" aria-expanded="true" aria-controls="newspaperSelectionContainer" title="جمع/باز کردن فهرست نشریات">جمع کردن ▲</button>
 				<input type="checkbox" id="showImagesCheckbox">
 				<label for="showImagesCheckbox">نمایش تصاویر</label>
 			</div>
@@ -2253,12 +2901,17 @@ a:focus-visible {
 		<div class="all-issues-modal-content calendar-modal-content">
 			<button id="calendarModalCloseButton" class="calendar-modal-close-button">&times;</button>
 			<h2 id="calendarModalTitle" class="calendar-modal-heading">تقویم قمری</h2>
+
 			<div class="calendar-nav">
-				<button id="prevYearBtn">&lt; سال قبل</button>
-				<span class="calendar-nav-label">تقویم سال</span>
+				<button id="prevYearBtn" class="calendar-year-nav-btn" aria-label="سال قبل"><span class="cal-nav-arrow">&lt;</span><span class="cal-nav-text"> سال قبل</span></button>
+				<span class="calendar-nav-label">سال</span>
 				<select id="calendarYearSelect"></select>
-				<span class="calendar-nav-suffix">هجری قمری</span>
-				<button id="nextYearBtn">سال بعد &gt;</button>
+				<div class="calendar-switcher">
+					<button class="cal-switch-btn active" data-target="hijri" onclick="switchCalendarModal('hijri')">قمری</button>
+					<button class="cal-switch-btn" data-target="shamsi" onclick="switchCalendarModal('shamsi')">شمسی</button>
+					<button class="cal-switch-btn" data-target="miladi" onclick="switchCalendarModal('miladi')">میلادی</button>
+				</div>
+				<button id="nextYearBtn" class="calendar-year-nav-btn" aria-label="سال بعد"><span class="cal-nav-text">سال بعد </span><span class="cal-nav-arrow">&gt;</span></button>
 			</div>
 			<div id="calendarGridContainer" class="calendar-grid-container">
 			</div>
@@ -2266,21 +2919,45 @@ a:focus-visible {
 		</div>
 	</div>
 
-	<!-- New Shamsi Calendar Modal -->
 	<div id="shamsiCalendarModalOverlay" class="all-issues-modal-overlay">
 		<div class="all-issues-modal-content calendar-modal-content">
 			<button id="shamsiCalendarModalCloseButton" class="calendar-modal-close-button">&times;</button>
 			<h2 id="shamsiCalendarModalTitle" class="calendar-modal-heading">تقویم شمسی</h2>
 			<div class="calendar-nav">
-				<button id="shamsiPrevYearBtn">&lt; سال قبل</button>
-				<span class="calendar-nav-label">تقویم سال</span>
+				<button id="shamsiPrevYearBtn" class="calendar-year-nav-btn" aria-label="سال قبل"><span class="cal-nav-arrow">&lt;</span><span class="cal-nav-text"> سال قبل</span></button>
+				<span class="calendar-nav-label">سال</span>
 				<select id="shamsiCalendarYearSelect"></select>
-				<span class="calendar-nav-suffix">هجری شمسی</span>
-				<button id="shamsiNextYearBtn">سال بعد &gt;</button>
+				<div class="calendar-switcher">
+					<button class="cal-switch-btn" data-target="hijri" onclick="switchCalendarModal('hijri')">قمری</button>
+					<button class="cal-switch-btn active" data-target="shamsi" onclick="switchCalendarModal('shamsi')">شمسی</button>
+					<button class="cal-switch-btn" data-target="miladi" onclick="switchCalendarModal('miladi')">میلادی</button>
+				</div>
+				<button id="shamsiNextYearBtn" class="calendar-year-nav-btn" aria-label="سال بعد"><span class="cal-nav-text">سال بعد </span><span class="cal-nav-arrow">&gt;</span></button>
 			</div>
 			<div id="shamsiCalendarGridContainer" class="calendar-grid-container">
 			</div>
 			<p id="shamsiCalendarModalErrorMessage" class="error-message" style="display: none;"></p>
+		</div>
+	</div>
+
+	<div id="miladiCalendarModalOverlay" class="all-issues-modal-overlay">
+		<div class="all-issues-modal-content calendar-modal-content">
+			<button id="miladiCalendarModalCloseButton" class="calendar-modal-close-button">&times;</button>
+			<h2 id="miladiCalendarModalTitle" class="calendar-modal-heading">تقویم میلادی</h2>
+			<div class="calendar-nav">
+				<button id="miladiPrevYearBtn" class="calendar-year-nav-btn" aria-label="سال قبل"><span class="cal-nav-arrow">&lt;</span><span class="cal-nav-text"> سال قبل</span></button>
+				<span class="calendar-nav-label">سال</span>
+				<select id="miladiCalendarYearSelect"></select>
+				<div class="calendar-switcher">
+					<button class="cal-switch-btn" data-target="hijri" onclick="switchCalendarModal('hijri')">قمری</button>
+					<button class="cal-switch-btn" data-target="shamsi" onclick="switchCalendarModal('shamsi')">شمسی</button>
+					<button class="cal-switch-btn active" data-target="miladi" onclick="switchCalendarModal('miladi')">میلادی</button>
+				</div>
+				<button id="miladiNextYearBtn" class="calendar-year-nav-btn" aria-label="سال بعد"><span class="cal-nav-text">سال بعد </span><span class="cal-nav-arrow">&gt;</span></button>
+			</div>
+			<div id="miladiCalendarGridContainer" class="calendar-grid-container">
+			</div>
+			<p id="miladiCalendarModalErrorMessage" class="error-message" style="display: none;"></p>
 		</div>
 	</div>
 
@@ -2289,7 +2966,7 @@ a:focus-visible {
 
 		document.addEventListener('DOMContentLoaded', async () => {
 			const pad = (num) => num.toString().padStart(2, '0');
-			// Corrected Persian to English digit conversion, added regex for better handling of non-digit chars
+
 			const persianToEnglishDigits = (str) => {
 				if (typeof str !== 'string' && typeof str !== 'number') return str;
 				str = String(str);
@@ -2316,13 +2993,12 @@ a:focus-visible {
 				}).join('');
 			};
 
-
 			const getCommonsLogoUrl = (filename, width = 120) => {
 				if (!filename) return null;
-				// Normalize: strip File: prefix, use spaces as in Commons (Redirect handles both)
+
 				let name = String(filename).replace(/^File:/i, '').trim();
 				if (!name) return null;
-				// Prefer Special:Redirect which reliably serves resized files
+
 				return `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/${encodeURIComponent(name)}&width=${width}`;
 			};
 
@@ -2331,7 +3007,7 @@ a:focus-visible {
 				const qid = String(wikidataId).trim().replace(/^Q/i, '');
 				if (!qid || !/^\d+$/.test(qid)) return null;
 				try {
-					// Prefer P154 (logo image); fall back to P18 (image)
+
 					const props = ['P154', 'P18'];
 					for (const prop of props) {
 						const apiUrl = `https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=Q${qid}&property=${prop}&format=json&origin=*`;
@@ -2353,40 +3029,107 @@ a:focus-visible {
 			};
 
 			const formatSelectedDateDisplay = () => {
-				const el = document.getElementById('currentDateDisplay');
-				if (!el) return;
-				let year, month, day, weekdayName = '';
-				if (currentCalendarMode === 'shamsi') {
-					year = parseInt(shamsiYearInput.value, 10);
-					month = parseInt(shamsiMonthSelect.value, 10);
-					day = parseInt(shamsiDayInput.value, 10);
-					const wd = getShamsiWeekday(year, month, day);
-					if (wd !== null) weekdayName = shamsiWeekdayFullNames[wd];
-					const monthName = shamsiMonthNames[month - 1] || '';
-					const dayStr = englishToPersianDigits(String(day)); // no leading zero
-					const yearStr = englishToPersianDigits(year);
-					el.textContent = weekdayName
-						? `${weekdayName}، ${dayStr} ${monthName} ${yearStr}`
-						: `${dayStr} ${monthName} ${yearStr}`;
-				} else {
-					year = parseInt(hijriYearInput.value, 10);
-					month = parseInt(hijriMonthSelect.value, 10);
-					day = parseInt(hijriDayInput.value, 10);
-					const monthName = hijriMonthNames[month - 1] || '';
-					const dayStr = englishToPersianDigits(String(day));
-					const yearStr = englishToPersianDigits(year);
-					el.textContent = `${dayStr} ${monthName} ${yearStr} (قمری)`;
-				}
-			};
+			const el = document.getElementById('currentDateDisplay');
+			if (!el) return;
 
+			let jdn = null;
+
+			try {
+				const abs = (typeof resolveAbsoluteDate === 'function') ? resolveAbsoluteDate() : null;
+				if (abs && abs.jdn && abs.jdn > 0) {
+					jdn = abs.jdn;
+				}
+			} catch (e) {}
+
+			if (!jdn) {
+				if (currentCalendarMode === 'shamsi') {
+					const y = parseInt(document.getElementById('shamsiYear').value, 10);
+					const m = parseInt(document.getElementById('shamsiMonth').value, 10);
+					const d = parseInt(document.getElementById('shamsiDay').value, 10);
+					if (!isNaN(y) && !isNaN(m) && !isNaN(d)) jdn = shamsiToJdn(y, m, d);
+				} else if (currentCalendarMode === 'hijri') {
+					const y = parseInt(document.getElementById('hijriYear').value, 10);
+					const m = parseInt(document.getElementById('hijriMonth').value, 10);
+					const d = parseInt(document.getElementById('hijriDay').value, 10);
+					if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+						const islamicJdn = IranianIslamicDateConverter.toJdn(y, m, d);
+						jdn = islamicJdn >= 0 ? islamicJdn - ISLAMIC_JDN_OFFSET : hijriToJdn(y, m, d);
+					}
+				} else if (currentCalendarMode === 'miladi') {
+					const y = parseInt(document.getElementById('miladiYear').value, 10);
+					const m = parseInt(document.getElementById('miladiMonth').value, 10);
+					const d = parseInt(document.getElementById('miladiDay').value, 10);
+					if (!isNaN(y) && !isNaN(m) && !isNaN(d)) jdn = gregorianToJdn(y, m, d);
+				}
+			}
+
+			if (!jdn || jdn < 0) {
+				el.textContent = '—';
+				return;
+			}
+
+			const weekday = getAbsoluteWeekday(jdn);
+			const gDate = jdnToGregorian(jdn);
+			const miladiStr = `${englishToPersianDigits(gDate.day)} ${miladiMonthNames[gDate.month - 1]} ${englishToPersianDigits(gDate.year)} میلادی`;
+
+			let hDate = IranianIslamicDateConverter.fromJdn(jdn + ISLAMIC_JDN_OFFSET);
+			if (!hDate) hDate = jdnToHijri(jdn);
+			const hijriStr = hDate ? `${englishToPersianDigits(hDate.day)} ${hijriMonthNames[hDate.month - 1]} ${englishToPersianDigits(hDate.year)} قمری` : '';
+
+			const sDate = jdnToShamsi(jdn);
+			let shamsiStr = '';
+			if (sDate) {
+				const shamsiText = `${englishToPersianDigits(sDate.day)} ${shamsiMonthNames[sDate.month - 1]} ${englishToPersianDigits(sDate.year)} شمسی`;
+				shamsiStr = (sDate.year < 1304)
+					? `<span class="shamsi-date-out">${shamsiText}</span>`
+					: shamsiText;
+			}
+
+			el.innerHTML = `${weekday}، ${shamsiStr} · ${miladiStr} · ${hijriStr}`;
+			if (typeof updateShamsiYearWarning === 'function') updateShamsiYearWarning();
+		};
+
+			const ANCHOR_HIJRI_YEAR = 1264;
+
+			const ANCHOR_JDN = 2396005;
+
+			const miladiMonthNames = ["ژانویه", "فوریه", "مارس", "آوریل", "مه", "ژوئن", "ژوئیه", "اوت", "سپتامبر", "اکتبر", "نوامبر", "دسامبر"];
+
+			function gregorianToJdn(year, month, day) {
+				const a = Math.floor((14 - month) / 12);
+				const y = year + 4800 - a;
+				const m = month + 12 * a - 3;
+				return day + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+			}
+
+			function jdnToGregorian(jdn) {
+				let a = jdn + 32044;
+				let b = Math.floor((4 * a + 3) / 146097);
+				let c = a - Math.floor((146097 * b) / 4);
+				let d = Math.floor((4 * c + 3) / 1461);
+				let e = c - Math.floor((1461 * d) / 4);
+				let m = Math.floor((5 * e + 2) / 153);
+				const day = e - Math.floor((153 * m + 2) / 5) + 1;
+				const month = m + 3 - 12 * Math.floor(m / 10);
+				const year = 100 * b + d - 4800 + Math.floor(m / 10);
+				return { year, month, day };
+			}
+
+			function getAbsoluteWeekday(jdn) {
+				const persianWeekdays = ["شنبه", "یک‌شنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه"];
+				let dayIndex = Math.floor(jdn + 2) % 7;
+				if (dayIndex < 0) dayIndex += 7;
+				return persianWeekdays[dayIndex];
+			}
 
 			const clampDayToMonth = (year, month, day, isShamsi) => {
 				let maxDay;
 				if (isShamsi) {
 					maxDay = shamsiDaysInMonth(year, month);
 				} else {
-					// Hijri: most months 29/30; use 30 as safe upper bound for navigation
-					maxDay = 30;
+					maxDay = (typeof IranianIslamicDateConverter !== 'undefined')
+						? IranianIslamicDateConverter.daysInMonth(year, month)
+						: 30;
 				}
 				return Math.max(1, Math.min(day, maxDay));
 			};
@@ -2415,10 +3158,10 @@ a:focus-visible {
 						while (day < 1) {
 							month -= 1;
 							if (month < 1) { month = 12; year -= 1; }
-							day += 30;
+							day += IranianIslamicDateConverter.daysInMonth(year, month);
 						}
-						while (day > 30) {
-							day -= 30;
+						while (day > IranianIslamicDateConverter.daysInMonth(year, month)) {
+							day -= IranianIslamicDateConverter.daysInMonth(year, month);
 							month += 1;
 							if (month > 12) { month = 1; year += 1; }
 						}
@@ -2433,14 +3176,13 @@ a:focus-visible {
 					day = clampDayToMonth(year, month, day, isShamsi);
 				}
 
-				// Clamp year to available dropdown ranges
 				if (isShamsi) {
-					year = Math.max(1305, Math.min(1373, year));
+					year = Math.max(1239, Math.min(1373, year));
 					shamsiYearInput.value = year;
 					shamsiMonthSelect.value = month;
 					shamsiDayInput.value = day;
 				} else {
-					year = Math.max(1277, Math.min(1361, year));
+					year = Math.max(1277, Math.min(1415, year));
 					hijriYearInput.value = year;
 					hijriMonthSelect.value = month;
 					hijriDayInput.value = day;
@@ -2464,8 +3206,6 @@ a:focus-visible {
 				});
 			};
 
-
-
 			const getUrlParameter = (name) => {
 				name = name.replace(/[\[\]]/g, '\\$&');
 				const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
@@ -2477,7 +3217,7 @@ a:focus-visible {
 			const updateUrlParameters = (calendar, year, month, day) => {
 				try {
 					const url = new URL(window.location.href);
-					// Normalize path: collapse multiple slashes (e.g. /// -> /)
+
 					let path = url.pathname.replace(/\/{2,}/g, '/') || '/';
 					if (!path.startsWith('/')) path = '/' + path;
 					url.pathname = path;
@@ -2509,8 +3249,30 @@ a:focus-visible {
 			const hijriYearInput = document.getElementById('hijriYear');
 			const hijriMonthSelect = document.getElementById('hijriMonth');
 			const hijriDayInput = document.getElementById('hijriDay');
+			const miladiYearInput = document.getElementById('miladiYear');
+			const miladiMonthSelect = document.getElementById('miladiMonth');
+			const miladiDayInput = document.getElementById('miladiDay');
+			const miladiDateControls = document.getElementById('miladiDateControls');
 			const mainErrorMessage = document.getElementById('mainErrorMessage');
+			const mainErrorWrap = document.getElementById('mainErrorWrap');
+			const openCalendarFromErrorBtn = document.getElementById('openCalendarFromErrorBtn');
 			const mainStatusMessage = document.getElementById('mainStatusMessage');
+
+			const showMainError = (text, { showCalendarBtn = false } = {}) => {
+				if (mainErrorMessage) {
+					mainErrorMessage.textContent = text;
+					mainErrorMessage.style.display = 'block';
+				}
+				if (mainErrorWrap) mainErrorWrap.style.display = 'block';
+				if (openCalendarFromErrorBtn) {
+					openCalendarFromErrorBtn.style.display = showCalendarBtn ? 'inline-block' : 'none';
+				}
+			};
+			const hideMainError = () => {
+				if (mainErrorMessage) mainErrorMessage.style.display = 'none';
+				if (mainErrorWrap) mainErrorWrap.style.display = 'none';
+				if (openCalendarFromErrorBtn) openCalendarFromErrorBtn.style.display = 'none';
+			};
 			const mainPageNumberInput = document.getElementById('mainPageNumberInput');
 			const lightboxOverlay = document.getElementById('lightboxOverlay');
 			const lightboxCloseButton = document.getElementById('lightboxCloseButton');
@@ -2527,6 +3289,7 @@ a:focus-visible {
 			const lightboxNextNewspaperButton = document.getElementById('lightboxNextNewspaperButton');
 			const downloadLink = document.getElementById('downloadLink');
 			const viewLargeLink = document.getElementById('viewLargeLink');
+			const viewSourceLink = document.getElementById('viewSourceLink');
 			const newspaperContainer = document.querySelector('.newspaper-container');
 			const globalGoToFirstIssueControls = document.getElementById('globalGoToFirstIssueControls');
 
@@ -2535,7 +3298,6 @@ a:focus-visible {
 			const lightboxIssueNumberInput = document.getElementById('lightboxIssueNumberInput');
 			const lightboxNextIssueButton = document.getElementById('lightboxNextIssueButton');
 			const lightboxViewAllIssuesButton = document.getElementById('lightboxViewAllIssuesButton');
-
 
 			const openAllNewspapersIssuesModalBtn = document.getElementById('openAllNewspapersIssuesModalBtn');
 			const allIssuesModalOverlay = document.getElementById('allIssuesModalOverlay');
@@ -2547,8 +3309,17 @@ a:focus-visible {
 			const allIssuesModalErrorMessage = document.getElementById('allIssuesModalErrorMessage');
 			const showDatesCheckbox = document.getElementById('showDatesCheckbox');
 			const showImagesCheckbox = document.getElementById('showImagesCheckbox');
+			const newspaperSelectionToggleBtn = document.getElementById('newspaperSelectionToggleBtn');
 
-						const calendarModalOverlay = document.getElementById('calendarModalOverlay');
+			if (newspaperSelectionToggleBtn && newspaperSelectionContainer) {
+				newspaperSelectionToggleBtn.addEventListener('click', () => {
+					const collapsed = newspaperSelectionContainer.classList.toggle('is-collapsed');
+					newspaperSelectionToggleBtn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+					newspaperSelectionToggleBtn.textContent = collapsed ? 'باز کردن ▼' : 'جمع کردن ▲';
+				});
+			}
+
+			const calendarModalOverlay = document.getElementById('calendarModalOverlay');
 			const calendarModalCloseButton = document.getElementById('calendarModalCloseButton');
 			const calendarModalTitle = document.getElementById('calendarModalTitle');
 			const prevYearBtn = document.getElementById('prevYearBtn');
@@ -2566,22 +3337,127 @@ a:focus-visible {
 			const shamsiCalendarGridContainer = document.getElementById('shamsiCalendarGridContainer');
 			const shamsiCalendarModalErrorMessage = document.getElementById('shamsiCalendarModalErrorMessage');
 
-
 			let currentCalendarMode = 'shamsi';
 			let currentCalendarYear = parseInt(hijriYearInput.value, 10);
 			const minCalendarYear = 1277;
-			const maxCalendarYear = 1361;
+			const maxCalendarYear = 1415;
 			const hijriMonthNames = ["محرم", "صفر", "ربیع‌الاول", "ربیع‌الثانی", "جمادی‌الاول", "جمادی‌الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذی‌القعده", "ذی‌الحجه"];
 			const shamsiMonthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
-			// ترتیب هفتهٔ ایرانی: شنبه تا جمعه (اندیس ۰ تا ۶)، هم‌راستا با SHAMSI_NOWRUZ_WEEKDAY_TABLE
+
 			const shamsiWeekdayShortNames = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
 			const shamsiWeekdayFullNames = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه"];
 			const availableHijriDates = new Map();
 			const availableShamsiDates = new Map();
+			const availableByJdn = new Map();
+			const availableMiladiDates = new Map();
+
+			const miladiCalendarModalOverlay = document.getElementById('miladiCalendarModalOverlay');
+			const miladiCalendarModalCloseButton = document.getElementById('miladiCalendarModalCloseButton');
+			const miladiCalendarYearSelect = document.getElementById('miladiCalendarYearSelect');
+			const miladiCalendarGridContainer = document.getElementById('miladiCalendarGridContainer');
+			const miladiPrevYearBtn = document.getElementById('miladiPrevYearBtn');
+			const miladiNextYearBtn = document.getElementById('miladiNextYearBtn');
+			const miladiCalendarModalErrorMessage = document.getElementById('miladiCalendarModalErrorMessage');
+			const minMiladiCalendarYear = 1860;
+			const maxMiladiCalendarYear = 1995;
+
+			const switchCalendarModal = (type) => {
+
+				let sourceType = null;
+				let sourceYear = null;
+				const overlays = [calendarModalOverlay, shamsiCalendarModalOverlay, miladiCalendarModalOverlay].filter(Boolean);
+				const alreadyOpen = overlays.some(el => el.classList.contains('visible'));
+
+				if (calendarModalOverlay.classList.contains('visible')) {
+					sourceType = 'hijri';
+					sourceYear = parseInt(calendarYearSelect && calendarYearSelect.value, 10);
+				} else if (shamsiCalendarModalOverlay.classList.contains('visible')) {
+					sourceType = 'shamsi';
+					sourceYear = parseInt(shamsiCalendarYearSelect && shamsiCalendarYearSelect.value, 10);
+				} else if (miladiCalendarModalOverlay && miladiCalendarModalOverlay.classList.contains('visible')) {
+					sourceType = 'miladi';
+					sourceYear = parseInt(miladiCalendarYearSelect && miladiCalendarYearSelect.value, 10);
+				}
+
+				if (alreadyOpen) {
+					overlays.forEach(el => { el.style.transition = 'none'; });
+				}
+
+				calendarModalOverlay.classList.remove('visible');
+				shamsiCalendarModalOverlay.classList.remove('visible');
+				if (miladiCalendarModalOverlay) miladiCalendarModalOverlay.classList.remove('visible');
+
+				const yearFromSource = (targetType) => {
+					if (!sourceType || !sourceYear || isNaN(sourceYear)) return null;
+					try {
+						let jdn = -1;
+						if (sourceType === 'shamsi') {
+							jdn = (typeof jalaliToJdn === 'function') ? jalaliToJdn(sourceYear, 6, 15) : shamsiToJdn(sourceYear, 6, 15);
+						} else if (sourceType === 'hijri') {
+							const islamicJdn = IranianIslamicDateConverter.toJdn(sourceYear, 6, 15);
+							jdn = islamicJdn >= 0 ? islamicJdn - ISLAMIC_JDN_OFFSET : (typeof hijriToJdn === 'function' ? hijriToJdn(sourceYear, 6, 15) : -1);
+						} else if (sourceType === 'miladi') {
+							jdn = gregorianToJdn(sourceYear, 6, 15);
+						}
+						if (!(jdn > 0)) return null;
+						if (targetType === 'shamsi') {
+							const s = (typeof jdnToJalali === 'function') ? jdnToJalali(jdn) : jdnToShamsi(jdn);
+							return s ? s.year : null;
+						}
+						if (targetType === 'hijri') {
+							let h = null;
+							try { h = IranianIslamicDateConverter.fromJdn(jdn + ISLAMIC_JDN_OFFSET); } catch (e) {}
+							if (!h && typeof jdnToHijri === 'function') h = jdnToHijri(jdn);
+							return h ? h.year : null;
+						}
+						if (targetType === 'miladi') {
+							const g = jdnToGregorian(jdn);
+							return g ? g.year : null;
+						}
+					} catch (e) {}
+					return null;
+				};
+
+				if (type === 'shamsi') {
+					shamsiCalendarModalOverlay.classList.add('visible');
+					let y = yearFromSource('shamsi');
+					if (y == null) y = parseInt(shamsiYearInput.value, 10) || 1350;
+					if (shamsiCalendarYearSelect) shamsiCalendarYearSelect.value = String(y);
+					renderShamsiCalendar(y);
+				} else if (type === 'hijri') {
+					calendarModalOverlay.classList.add('visible');
+					let y = yearFromSource('hijri');
+					if (y == null) y = parseInt(hijriYearInput.value, 10) || 1325;
+					if (calendarYearSelect) calendarYearSelect.value = String(y);
+					renderCalendar(y);
+				} else if (type === 'miladi') {
+					if (miladiCalendarModalOverlay) {
+						miladiCalendarModalOverlay.classList.add('visible');
+						let y = yearFromSource('miladi');
+						if (y == null) y = parseInt(miladiYearInput.value, 10) || 1925;
+						if (miladiCalendarYearSelect) miladiCalendarYearSelect.value = String(y);
+						renderMiladiCalendar(y);
+					}
+				}
+				document.querySelectorAll('.cal-switch-btn').forEach(btn => {
+					btn.classList.toggle('active', btn.dataset.target === type);
+				});
+
+				if (alreadyOpen) {
+
+					requestAnimationFrame(() => {
+						requestAnimationFrame(() => {
+							overlays.forEach(el => { el.style.transition = ''; });
+						});
+					});
+				}
+			};
+
+			window.switchCalendarModal = switchCalendarModal;
 
 			let currentLightboxNewspaperId = null;
 			let lightboxCurrentPage = 1;
-			// متغیرهای ذخیره‌سازی تصاویر پیش‌بارگذاری شده
+
 			let preloadedPrevImage = null;
 			let preloadedNextImage = null;
 
@@ -2594,17 +3470,13 @@ a:focus-visible {
 				zaneRooz: { type: 'formula', prefix: 'ZaneRooz', title: 'زن روز', calendar_type: 'shamsi', firstIssueDate: "13461017" },
 				babashamal: { type: 'formula', prefix: 'BabaShamal', title: 'باباشمل', calendar_type: 'shamsi', firstIssueDate: "13220125" },
 				tamasha: { type: 'formula', prefix: 'Tamasha', title: 'تماشا', calendar_type: 'shamsi', firstIssueDate: "13491227" },
-				yaghma: { type: 'formula', prefix: 'Yaghma', title: 'یغما', calendar_type: 'shamsi', firstIssueDate: "13270101" },
-				negin: { type: 'formula', prefix: 'Negin', title: 'نگین', calendar_type: 'shamsi', firstIssueDate: "13440301" },
+				yaghma: { type: 'formula', prefix: 'Yaghma', title: 'یغما', calendar_type: 'shamsi', frequency: 'monthly', firstIssueDate: "13270101" },
+				negin: { type: 'formula', prefix: 'Negin', title: 'نگین', calendar_type: 'shamsi', frequency: 'monthly', firstIssueDate: "13440301" },
 				jangal_qamari: { type: 'formula', prefix: 'Jangal', title: 'جنگل', calendar_type: 'hijri', firstIssueDate: "13350819" },
 			};
 
 			let newspaperData = {};
 
-			// روز هفتهٔ اول فروردین هر سال شمسی، از سال ۱۳۰۵ تا ۱۴۰۵ (۱۰۱ سال).
-			// هر رقم عدد روز هفته است: شنبه=۰، یکشنبه=۱، دوشنبه=۲، سه‌شنبه=۳، چهارشنبه=۴، پنجشنبه=۵، جمعه=۶.
-			// این جدول مبنای محاسبهٔ دقیق کبیسه بودن سال و چیدمان روزهای هفته در تقویم است؛
-			// چون فاصلهٔ روز هفتهٔ دو نوروز پیاپی، ۱ روز برای سال عادی (۳۶۵ روز) و ۲ روز برای سال کبیسه (۳۶۶ روز) است.
 			const SHAMSI_TABLE_START_YEAR = 1305;
 			const SHAMSI_NOWRUZ_WEEKDAY_TABLE = "23456123460124560234501235601345612345012356013456123460124560234501234601245602345012356013456123460";
 
@@ -2618,33 +3490,52 @@ a:focus-visible {
 				const w1 = getShamsiYearStartWeekday(year);
 				const w2 = getShamsiYearStartWeekday(year + 1);
 				if (w1 === null || w2 === null) {
-					// خارج از بازهٔ جدول: بازگشت به تقریب چرخهٔ ۳۳ ساله
+
 					const rem = year % 33;
 					return rem === 1 || rem === 5 || rem === 9 || rem === 13 || rem === 17 || rem === 22 || rem === 26 || rem === 30;
 				}
 				return (w2 - w1 + 7) % 7 === 2;
 			}
 
-			// روز هفتهٔ اولین روز یک ماه شمسی خاص (۰ تا ۶، شنبه تا جمعه)
-			function getShamsiMonthStartWeekday(year, month) {
-				const yearStartWeekday = getShamsiYearStartWeekday(year);
-				if (yearStartWeekday === null) return null;
-				let daysBeforeMonth = 0;
-				for (let m = 1; m < month; m++) {
-					daysBeforeMonth += shamsiDaysInMonth(year, m);
-				}
-				return (yearStartWeekday + daysBeforeMonth) % 7;
+			function weekdayIndexFromJdn(jdn) {
+				if (!(jdn > 0)) return null;
+				let dayIndex = Math.floor(jdn + 2) % 7;
+				if (dayIndex < 0) dayIndex += 7;
+				return dayIndex;
 			}
 
-			// روز هفتهٔ یک تاریخ شمسی مشخص (۰ تا ۶، شنبه تا جمعه)
+			function getShamsiMonthStartWeekday(year, month) {
+				const yearStartWeekday = getShamsiYearStartWeekday(year);
+				if (yearStartWeekday !== null) {
+					let daysBeforeMonth = 0;
+					for (let m = 1; m < month; m++) {
+						daysBeforeMonth += shamsiDaysInMonth(year, m);
+					}
+					return (yearStartWeekday + daysBeforeMonth) % 7;
+				}
+				try {
+					const jdn = (typeof jalaliToJdn === 'function') ? jalaliToJdn(year, month, 1) : shamsiToJdn(year, month, 1);
+					return weekdayIndexFromJdn(jdn);
+				} catch (e) {
+					return null;
+				}
+			}
+
 			function getShamsiWeekday(year, month, day) {
 				const yearStartWeekday = getShamsiYearStartWeekday(year);
-				if (yearStartWeekday === null) return null;
-				let daysBeforeMonth = 0;
-				for (let m = 1; m < month; m++) {
-					daysBeforeMonth += shamsiDaysInMonth(year, m);
+				if (yearStartWeekday !== null) {
+					let daysBeforeMonth = 0;
+					for (let m = 1; m < month; m++) {
+						daysBeforeMonth += shamsiDaysInMonth(year, m);
+					}
+					return (yearStartWeekday + daysBeforeMonth + day - 1) % 7;
 				}
-				return (yearStartWeekday + daysBeforeMonth + day - 1) % 7;
+				try {
+					const jdn = (typeof jalaliToJdn === 'function') ? jalaliToJdn(year, month, day) : shamsiToJdn(year, month, day);
+					return weekdayIndexFromJdn(jdn);
+				} catch (e) {
+					return null;
+				}
 			}
 
 			function shamsiDaysInMonth(year, month) {
@@ -2666,28 +3557,516 @@ a:focus-visible {
 				return totalDays;
 			}
 
+			const hijriToGregorianApprox = (hYear, hMonth, hDay) => {
+
+				const baseHijriJdn = hijriToJdn(1277, 2, 19);
+				const baseGregorian = { year: 1860, month: 9, day: 6 };
+				const targetJdn = hijriToJdn(hYear, hMonth, hDay);
+				const diff = targetJdn - baseHijriJdn;
+				const gDate = jdnToGregorian(baseGregorianToJdn(1860, 9, 6) + diff);
+				return gDate;
+			};
+
+			function baseGregorianToJdn(year, month, day) {
+				return gregorianToJdn(year, month, day);
+			}
+
+			const IranianIslamicDateConverter = (() => {
+				const SUPPORTED_START_JDN = 2396005;
+				const SUPPORTED_START_YEAR = 1264;
+
+				const hijriMonthsBits = [
+					 2711, 2730, 2773, 1428, 2986, 1461,
+					 1206, 2647, 1323, 1699, 1745, 2793,
+					 1386, 2669, 1325, 3221, 3658, 3749,
+					 1716, 2490, 1339, 603, 1323, 2645,
+					 2730, 2905, 1396, 2426, 1210, 2650,
+					 3380, 3761, 1752, 2796, 1372, 2670,
+					 1334, 2726, 2898, 2985, 948, 2522,
+					 1370, 2730, 3402, 3749, 1874, 2921,
+					 1460, 2733, 1622, 3366, 3730, 3913,
+					 1876, 2906, 2459, 1179, 2379, 2853,
+					 3410, 3434, 1389, 694, 2615, 1179,
+					 1613, 1706, 2901, 860, 2414, 1199,
+					 599, 811, 1429, 938, 1497, 730,
+					 2397, 683, 1365, 1737, 1764, 2922,
+					 1461, 694, 2454, 3402, 3525, 1874,
+					 1957, 874, 2477, 1357, 2709, 3401,
+					 3493, 1458, 2773, 1366, 2647, 1323,
+					 1685, 2890, 2917, 1387, 685, 1358,
+					 3223, 1355, 1701, 1746, 2777, 1245,
+					 599, 2349, 2709, 2898, 2921, 884,
+					 2422, 1207, 599, 1355, 1701, 1746,
+					 2794, 1261, 621, 2357, 3365, 3409,
+					 2985, 1492, 2741, 1334, 2711, 1610,
+					 3749, 1874, 2985, 1461, 693, 2646,
+					 3366, 3667, 1705, 3412, 3414, 2647,
+					 1191, 3143, 3366, 3668, 3494, 1383,
+					 694, 2359, 1175, 1621, 2730, 2917,
+					 748, 2421, 1134, 2614, 3238, 3410,
+					 3538, 1493, 730, 1373, 1195, 1683,
+					 1865, 1956, 2994, 1461, 694, 1626,
+					 3370, 3732, 3793, 1768, 2794, 2396,
+				]
+
+				const supportedYears = hijriMonthsBits.length;
+				const months = new Int32Array(supportedYears * 12);
+				let jd = 0;
+				for (let m = 0; m < supportedYears * 12; m++) {
+					months[m] = jd;
+					const bits = hijriMonthsBits[Math.floor(m / 12)];
+					const bit = (bits >> (11 - (m % 12))) & 1;
+					jd += bit === 1 ? 30 : 29;
+				}
+				const jdSupportEnd = jd + SUPPORTED_START_JDN;
+
+				function toJdn(year, month, day) {
+					const yearIndex = year - SUPPORTED_START_YEAR;
+					if (yearIndex < 0 || yearIndex >= supportedYears) return -1;
+					return months[yearIndex * 12 + month - 1] + day + SUPPORTED_START_JDN - 1;
+				}
+				function fromJdn(jdn) {
+					if (jdn < SUPPORTED_START_JDN || jdn >= jdSupportEnd) return null;
+					const days = (jdn - SUPPORTED_START_JDN) | 0;
+					let index = Math.floor(days / 30);
+					while (index + 1 < months.length && months[index + 1] <= days) index++;
+					const yearIndex = Math.floor(index / 12);
+					const month = index % 12;
+					const day = days - months[index];
+					return {
+						year: yearIndex + SUPPORTED_START_YEAR,
+						month: month + 1,
+						day: day + 1,
+					};
+				}
+				function daysInMonth(year, month) {
+					const yearIndex = year - SUPPORTED_START_YEAR;
+					if (yearIndex < 0 || yearIndex >= supportedYears || month < 1 || month > 12) return 30;
+					const bits = hijriMonthsBits[yearIndex];
+					return ((bits >> (11 - (month - 1))) & 1) === 1 ? 30 : 29;
+				}
+				return { toJdn, fromJdn, daysInMonth, SUPPORTED_START_YEAR, supportedYears, latestYear: SUPPORTED_START_YEAR + supportedYears - 1 };
+			})();
+
+			const _div = (a, b) => Math.floor(a / b);
+			const _mod = (a, b) => a - Math.floor(a / b) * b;
+
+			function jalaliToJdn(jy, jm, jd) {
+				const epbase = jy - (jy >= 0 ? 474 : 473);
+				const epyear = 474 + _mod(epbase, 2820);
+				return (
+					jd +
+					(jm <= 7 ? (jm - 1) * 31 : (jm - 1) * 30 + 6) +
+					_div(epyear * 682 - 110, 2816) +
+					(epyear - 1) * 365 +
+					_div(epbase, 2820) * 1029983 +
+					1948320
+				);
+			}
+
+			function jdnToJalali(jdn) {
+				const depoch = jdn - jalaliToJdn(475, 1, 1);
+				const cycle = _div(depoch, 1029983);
+				const cyear = _mod(depoch, 1029983);
+				let ycycle;
+				if (cyear === 1029982) {
+					ycycle = 2820;
+				} else {
+					const aux1 = _div(cyear, 366);
+					const aux2 = _mod(cyear, 366);
+					ycycle = _div(2134 * aux1 + 2816 * aux2 + 2815, 1028522) + aux1 + 1;
+				}
+				let year = ycycle + 2820 * cycle + 474;
+				if (year <= 0) year--;
+				const yday = jdn - jalaliToJdn(year, 1, 1) + 1;
+				const month = yday <= 186 ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
+				const day = jdn - jalaliToJdn(year, month, 1) + 1;
+				return { year, month, day };
+			}
+
+			const shamsiToJdn = jalaliToJdn;
+			const jdnToShamsi = jdnToJalali;
+
+			const ISLAMIC_JDN_OFFSET = 0;
+
+			function resolveAbsoluteDate() {
+				let shamsi = null, hijri = null, miladi = null, jdn = -1;
+				if (currentCalendarMode === 'shamsi') {
+					const y = parseInt(shamsiYearInput.value, 10);
+					const m = parseInt(shamsiMonthSelect.value, 10);
+					const d = parseInt(shamsiDayInput.value, 10);
+					if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+						shamsi = { year: y, month: m, day: d };
+						jdn = jalaliToJdn(y, m, d);
+						hijri = IranianIslamicDateConverter.fromJdn(jdn + ISLAMIC_JDN_OFFSET);
+						miladi = jdnToGregorian(jdn);
+					}
+				} else if (currentCalendarMode === 'hijri') {
+					const y = parseInt(hijriYearInput.value, 10);
+					const m = parseInt(hijriMonthSelect.value, 10);
+					const d = parseInt(hijriDayInput.value, 10);
+					if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+						hijri = { year: y, month: m, day: d };
+						const islamicJdn = IranianIslamicDateConverter.toJdn(y, m, d);
+						if (islamicJdn >= 0) {
+							jdn = islamicJdn - ISLAMIC_JDN_OFFSET;
+							shamsi = jdnToJalali(jdn);
+							miladi = jdnToGregorian(jdn);
+						}
+					}
+				} else if (currentCalendarMode === 'miladi') {
+					const y = parseInt(miladiYearInput.value, 10);
+					const m = parseInt(miladiMonthSelect.value, 10);
+					const d = parseInt(miladiDayInput.value, 10);
+					if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+						miladi = { year: y, month: m, day: d };
+						jdn = gregorianToJdn(y, m, d);
+						shamsi = jdnToJalali(jdn);
+						hijri = IranianIslamicDateConverter.fromJdn(jdn + ISLAMIC_JDN_OFFSET);
+					}
+				}
+				return { shamsi, hijri, miladi, jdn };
+			}
+
+			function syncOtherCalendarControls() {
+				const abs = resolveAbsoluteDate();
+				if (!abs || abs.jdn < 0) return;
+
+				if (abs.shamsi && currentCalendarMode !== 'shamsi') {
+					if (shamsiYearInput.querySelector(`option[value="${abs.shamsi.year}"]`)) {
+						shamsiYearInput.value = String(abs.shamsi.year);
+					}
+					shamsiMonthSelect.value = String(abs.shamsi.month);
+					const maxD = shamsiDaysInMonth(abs.shamsi.year, abs.shamsi.month);
+					shamsiDayInput.value = String(Math.min(abs.shamsi.day, maxD));
+				}
+				if (abs.hijri && currentCalendarMode !== 'hijri') {
+					if (hijriYearInput.querySelector(`option[value="${abs.hijri.year}"]`)) {
+						hijriYearInput.value = String(abs.hijri.year);
+					}
+					hijriMonthSelect.value = String(abs.hijri.month);
+					const maxD = IranianIslamicDateConverter.daysInMonth(abs.hijri.year, abs.hijri.month);
+					hijriDayInput.value = String(Math.min(abs.hijri.day, maxD));
+				}
+				if (abs.miladi && currentCalendarMode !== 'miladi' && miladiYearInput) {
+					if (miladiYearInput.querySelector(`option[value="${abs.miladi.year}"]`)) {
+						miladiYearInput.value = String(abs.miladi.year);
+					}
+					miladiMonthSelect.value = String(abs.miladi.month);
+					miladiDayInput.value = String(abs.miladi.day);
+				}
+			}
+
+			function getDaysInHijriMonth(year, month) {
+
+				const hijriMonths = [
+					 0b1_0_1_0_1_0_0_1_0_1_1_1,
+					 0b1_0_1_0_1_0_1_0_1_0_1_0,
+					 0b1_0_1_0_1_1_0_1_0_1_0_1,
+					 0b0_1_0_1_1_0_0_1_0_1_0_0,
+					 0b1_0_1_1_1_0_1_0_1_0_1_0,
+					 0b0_1_0_1_1_0_1_1_0_1_0_1,
+					 0b0_1_0_0_1_0_1_1_0_1_1_0,
+					 0b1_0_1_0_0_1_0_1_0_1_1_1,
+					 0b0_1_0_1_0_0_1_0_1_0_1_1,
+					 0b0_1_1_0_1_0_1_0_0_0_1_1,
+					 0b0_1_1_0_1_1_0_1_0_0_0_1,
+					 0b1_0_1_0_1_1_1_0_1_0_0_1,
+					 0b0_1_0_1_0_1_1_0_1_0_1_0,
+					 0b1_0_1_0_0_1_1_0_1_1_0_1,
+					 0b0_1_0_1_0_0_1_0_1_1_0_1,
+					 0b1_1_0_0_1_0_0_1_0_1_0_1,
+					 0b1_1_1_0_0_1_0_0_1_0_1_0,
+					 0b1_1_1_0_1_0_1_0_0_1_0_1,
+					 0b0_1_1_0_1_0_1_1_0_1_0_0,
+					 0b1_0_0_1_1_0_1_1_1_0_1_0,
+					 0b0_1_0_1_0_0_1_1_1_0_1_1,
+					 0b0_0_1_0_0_1_0_1_1_0_1_1,
+					 0b0_1_0_1_0_0_1_0_1_0_1_1,
+					 0b1_0_1_0_0_1_0_1_0_1_0_1,
+					 0b1_0_1_0_1_0_1_0_1_0_1_0,
+					 0b1_0_1_1_0_1_0_1_1_0_0_1,
+					 0b0_1_0_1_0_1_1_1_0_1_0_0,
+					 0b1_0_0_1_0_1_1_1_1_0_1_0,
+					 0b0_1_0_0_1_0_1_1_1_0_1_0,
+					 0b1_0_1_0_0_1_0_1_1_0_1_0,
+					 0b1_1_0_1_0_0_1_1_0_1_0_0,
+					 0b1_1_1_0_1_0_1_1_0_0_0_1,
+					 0b0_1_1_0_1_1_0_1_1_0_0_0,
+					 0b1_0_1_0_1_1_1_0_1_1_0_0,
+					 0b0_1_0_1_0_1_0_1_1_1_0_0,
+					 0b1_0_1_0_0_1_1_0_1_1_1_0,
+					 0b0_1_0_1_0_0_1_1_0_1_1_0,
+					 0b1_0_1_0_1_0_1_0_0_1_1_0,
+					 0b1_0_1_1_0_1_0_1_0_0_1_0,
+					 0b1_0_1_1_1_0_1_0_1_0_0_1,
+					 0b0_0_1_1_1_0_1_1_0_1_0_0,
+					 0b1_0_0_1_1_1_0_1_1_0_1_0,
+					 0b0_1_0_1_0_1_0_1_1_0_1_0,
+					 0b1_0_1_0_1_0_1_0_1_0_1_0,
+					 0b1_1_0_1_0_1_0_0_1_0_1_0,
+					 0b1_1_1_0_1_0_1_0_0_1_0_1,
+					 0b0_1_1_1_0_1_0_1_0_0_1_0,
+					 0b1_0_1_1_0_1_1_0_1_0_0_1,
+					 0b0_1_0_1_1_0_1_1_0_1_0_0,
+					 0b1_0_1_0_1_0_1_0_1_1_0_1,
+					 0b0_1_1_0_0_1_0_1_0_1_1_0,
+					 0b1_1_0_1_0_0_1_0_0_1_1_0,
+					 0b1_1_1_0_1_0_0_1_0_0_1_0,
+					 0b1_1_1_1_0_1_0_0_1_0_0_1,
+					 0b0_1_1_1_0_1_0_1_0_1_0_0,
+					 0b1_0_1_1_0_1_0_1_1_0_1_0,
+					 0b1_0_0_1_1_0_0_1_1_0_1_1,
+					 0b0_1_0_0_1_0_0_1_1_0_1_1,
+					 0b1_0_0_1_0_1_0_0_1_0_1_1,
+					 0b1_0_1_1_0_0_1_0_0_1_0_1,
+					 0b1_1_0_1_0_1_0_1_0_0_1_0,
+					 0b1_1_0_1_0_1_1_0_1_0_1_0,
+					 0b0_1_0_1_0_1_1_0_1_1_0_1,
+					 0b0_0_1_0_1_0_1_1_0_1_1_0,
+					 0b1_0_1_0_0_0_1_1_0_1_1_1,
+					 0b0_1_0_0_1_0_0_1_1_0_1_1,
+					 0b0_1_1_0_0_1_0_0_1_1_0_1,
+					 0b0_1_1_0_1_0_1_0_1_0_1_0,
+					 0b1_0_1_1_0_1_0_1_0_1_0_1,
+					 0b0_0_1_1_0_1_0_1_1_1_0_0,
+					 0b1_0_0_1_0_1_1_0_1_1_1_0,
+					 0b0_1_0_0_1_0_1_0_1_1_1_1,
+					 0b0_0_1_0_0_1_0_1_0_1_1_1,
+					 0b0_0_1_1_0_0_1_0_1_0_1_1,
+					 0b0_1_0_1_1_0_0_1_0_1_0_1,
+					 0b0_0_1_1_1_0_1_0_1_0_1_0,
+					 0b0_1_0_1_1_1_0_1_1_0_0_1,
+					 0b0_0_1_0_1_1_0_1_1_0_1_0,
+					 0b1_0_0_1_0_1_0_1_1_1_0_1,
+					 0b0_0_1_0_1_0_1_0_1_0_1_1,
+					 0b0_1_0_1_0_1_0_1_0_1_0_1,
+					 0b0_1_1_0_1_1_0_0_1_0_0_1,
+					 0b0_1_1_0_1_1_1_0_0_1_0_0,
+					 0b1_0_1_1_0_1_1_0_1_0_1_0,
+					 0b0_1_0_1_1_0_1_1_0_1_0_1,
+					 0b0_0_1_0_1_0_1_1_0_1_1_0,
+					 0b1_0_0_1_1_0_0_1_0_1_1_0,
+					 0b1_1_0_1_0_1_0_0_1_0_1_0,
+					 0b1_1_0_1_1_1_0_0_0_1_0_1,
+					 0b0_1_1_1_0_1_0_1_0_0_1_0,
+					 0b0_1_1_1_1_0_1_0_0_1_0_1,
+					 0b0_0_1_1_0_1_1_0_1_0_1_0,
+					 0b1_0_0_1_1_0_1_0_1_1_0_1,
+					 0b0_1_0_1_0_1_0_0_1_1_0_1,
+					 0b1_0_1_0_1_0_0_1_0_1_0_1,
+					 0b1_1_0_1_0_1_0_0_1_0_0_1,
+					 0b1_1_0_1_1_0_1_0_0_1_0_1,
+					 0b0_1_0_1_1_0_1_1_0_0_1_0,
+					 0b1_0_1_0_1_1_0_1_0_1_0_1,
+					 0b0_1_0_1_0_1_0_1_0_1_1_0,
+					 0b1_0_1_0_0_1_0_1_0_1_1_1,
+					 0b0_1_0_1_0_0_1_0_1_0_1_1,
+					 0b0_1_1_0_1_0_0_1_0_1_0_1,
+					 0b1_0_1_1_0_1_0_0_1_0_1_0,
+					 0b1_0_1_1_0_1_1_0_0_1_0_1,
+					 0b0_1_0_1_0_1_1_0_1_0_1_1,
+					 0b0_0_1_0_1_0_1_0_1_1_0_1,
+					 0b0_1_0_1_0_1_0_0_1_1_1_0,
+					 0b1_1_0_0_1_0_0_1_0_1_1_1,
+					 0b0_1_0_1_0_1_0_0_1_0_1_1,
+					 0b0_1_1_0_1_0_1_0_0_1_0_1,
+					 0b0_1_1_0_1_1_0_1_0_0_1_0,
+					 0b1_0_1_0_1_1_0_1_1_0_0_1,
+					 0b0_1_0_0_1_1_0_1_1_1_0_1,
+					 0b0_0_1_0_0_1_0_1_0_1_1_1,
+					 0b1_0_0_1_0_0_1_0_1_1_0_1,
+					 0b1_0_1_0_1_0_0_1_0_1_0_1,
+					 0b1_0_1_1_0_1_0_1_0_0_1_0,
+					 0b1_0_1_1_0_1_1_0_1_0_0_1,
+					 0b0_0_1_1_0_1_1_1_0_1_0_0,
+					 0b1_0_0_1_0_1_1_1_0_1_1_0,
+					 0b0_1_0_0_1_0_1_1_0_1_1_1,
+					 0b0_0_1_0_0_1_0_1_0_1_1_1,
+					 0b0_1_0_1_0_1_0_0_1_0_1_1,
+					 0b0_1_1_0_1_0_1_0_0_1_0_1,
+					 0b0_1_1_0_1_1_0_1_0_0_1_0,
+					 0b1_0_1_0_1_1_1_0_1_0_1_0,
+					 0b0_1_0_0_1_1_1_0_1_1_0_1,
+					 0b0_0_1_0_0_1_1_0_1_1_0_1,
+					 0b1_0_0_1_0_0_1_1_0_1_0_1,
+					 0b1_1_0_1_0_0_1_0_0_1_0_1,
+					 0b1_1_0_1_0_1_0_1_0_0_0_1,
+					 0b1_0_1_1_1_0_1_0_1_0_0_1,
+					 0b0_1_0_1_1_1_0_1_0_1_0_0,
+					 0b1_0_1_0_1_0_1_1_0_1_0_1,
+					 0b0_1_0_1_0_0_1_1_0_1_1_0,
+					 0b1_0_1_0_1_0_0_1_0_1_1_1,
+					 0b0_1_1_0_0_1_0_0_1_0_1_0,
+					 0b1_1_1_0_1_0_1_0_0_1_0_1,
+					 0b0_1_1_1_0_1_0_1_0_0_1_0,
+					 0b1_0_1_1_1_0_1_0_1_0_0_1,
+					 0b0_1_0_1_1_0_1_1_0_1_0_1,
+					 0b0_0_1_0_1_0_1_1_0_1_0_1,
+					 0b1_0_1_0_0_1_0_1_0_1_1_0,
+					 0b1_1_0_1_0_0_1_0_0_1_1_0,
+					 0b1_1_1_0_0_1_0_1_0_0_1_1,
+					 0b0_1_1_0_1_0_1_0_1_0_0_1,
+					 0b1_1_0_1_0_1_0_1_0_1_0_0,
+					 0b1_1_0_1_0_1_0_1_0_1_1_0,
+					 0b1_0_1_0_0_1_0_1_0_1_1_1,
+					 0b0_1_0_0_1_0_1_0_0_1_1_1,
+					 0b1_1_0_0_0_1_0_0_0_1_1_1,
+					 0b1_1_0_1_0_0_1_0_0_1_1_0,
+					 0b1_1_1_0_0_1_0_1_0_1_0_0,
+					 0b1_1_0_1_1_0_1_0_0_1_1_0,
+					 0b0_1_0_1_0_1_1_0_0_1_1_1,
+					 0b0_0_1_0_1_0_1_1_0_1_1_0,
+					 0b1_0_0_1_0_0_1_1_0_1_1_1,
+					 0b0_1_0_0_1_0_0_1_0_1_1_1,
+					 0b0_1_1_0_0_1_0_1_0_1_0_1,
+					 0b1_0_1_0_1_0_1_0_1_0_1_0,
+					 0b1_0_1_1_0_1_1_0_0_1_0_1,
+					 0b0_0_1_0_1_1_1_0_1_1_0_0,
+					 0b1_0_0_1_0_1_1_1_0_1_0_1,
+					 0b0_1_0_0_0_1_1_0_1_1_1_0,
+					 0b1_0_1_0_0_0_1_1_0_1_1_0,
+					 0b1_1_0_0_1_0_1_0_0_1_1_0,
+					 0b1_1_0_1_0_1_0_1_0_0_1_0,
+					 0b1_1_0_1_1_1_0_1_0_0_1_0,
+					 0b0_1_0_1_1_1_0_1_0_1_0_1,
+					 0b0_0_1_0_1_1_0_1_1_0_1_0,
+					 0b0_1_0_1_0_1_0_1_1_1_0_1,
+					 0b0_1_0_0_1_0_1_0_1_0_1_1,
+					 0b0_1_1_0_1_0_0_1_0_0_1_1,
+					 0b0_1_1_1_0_1_0_0_1_0_0_1,
+					 0b0_1_1_1_1_0_1_0_0_1_0_0,
+					 0b1_0_1_1_1_0_1_1_0_0_1_0,
+					 0b0_1_0_1_1_0_1_1_0_1_0_1,
+					 0b0_0_1_0_1_0_1_1_0_1_1_0,
+					 0b0_1_1_0_0_1_0_1_1_0_1_0,
+					 0b1_1_0_1_0_0_1_0_1_0_1_0,
+					 0b1_1_1_0_1_0_0_1_0_1_0_0,
+					 0b1_1_1_0_1_1_0_1_0_0_0_1,
+					 0b0_1_1_0_1_1_1_0_1_0_0_0,
+					 0b1_0_1_0_1_1_1_0_1_0_1_0,
+					 0b1_0_0_1_0_1_0_1_1_1_0_0
+				];
+				const startYear = 1264;
+				const yearIndex = year - startYear;
+
+				if (yearIndex >= 0 && yearIndex < hijriMonths.length && month >= 1 && month <= 12) {
+					const yearData = hijriMonths[yearIndex];
+					const bitShift = 12 - month;
+					const is30Days = (yearData >> bitShift) & 1;
+					return is30Days ? 30 : 29;
+				}
+
+				const isLeapYear = (((11 * year) + 14) % 30) < 11;
+				if (month % 2 === 1) return 30;
+				if (month === 12 && isLeapYear) return 30;
+				return 29;
+			}
+
+			function hijriToJdn(year, month, day) {
+				let jdn = ANCHOR_JDN;
+				if (year >= ANCHOR_HIJRI_YEAR) {
+					for (let y = ANCHOR_HIJRI_YEAR; y < year; y++) {
+						for (let m = 1; m <= 12; m++) jdn += getDaysInHijriMonth(y, m);
+					}
+					for (let m = 1; m < month; m++) jdn += getDaysInHijriMonth(year, m);
+					jdn += (day - 1);
+				} else {
+					for (let y = ANCHOR_HIJRI_YEAR - 1; y >= year; y--) {
+						for (let m = 12; m >= 1; m--) jdn -= getDaysInHijriMonth(y, m);
+					}
+					for (let m = 1; m < month; m++) jdn += getDaysInHijriMonth(year, m);
+					jdn += (day - 1);
+				}
+				return jdn;
+			}
+
+			function jdnToHijri(jdn) {
+				let currentJdn = ANCHOR_JDN;
+				let y = ANCHOR_HIJRI_YEAR;
+				if (jdn >= ANCHOR_JDN) {
+					while (true) {
+						let daysInYear = 0;
+						for (let m = 1; m <= 12; m++) daysInYear += getDaysInHijriMonth(y, m);
+						if (currentJdn + daysInYear > jdn) break;
+						currentJdn += daysInYear;
+						y++;
+					}
+					let m = 1;
+					while (true) {
+						let daysInMonth = getDaysInHijriMonth(y, m);
+						if (currentJdn + daysInMonth > jdn) break;
+						currentJdn += daysInMonth;
+						m++;
+					}
+					return { year: y, month: m, day: jdn - currentJdn + 1 };
+				} else {
+					while (true) {
+						y--;
+						let daysInYear = 0;
+						for (let m = 1; m <= 12; m++) daysInYear += getDaysInHijriMonth(y, m);
+						if (currentJdn - daysInYear <= jdn) {
+							currentJdn -= daysInYear;
+							break;
+						}
+						currentJdn -= daysInYear;
+					}
+					let m = 1;
+					while (true) {
+						let daysInMonth = getDaysInHijriMonth(y, m);
+						if (currentJdn + daysInMonth > jdn) break;
+						currentJdn += daysInMonth;
+						m++;
+					}
+					return { year: y, month: m, day: jdn - currentJdn + 1 };
+				}
+			}
+
 			const populateDateDropdowns = () => {
-				for (let year = 1305; year <= 1373; year++) {
+
+				for (let year = 1239; year <= 1373; year++) {
 					const option = new Option(englishToPersianDigits(year), year);
 					shamsiYearInput.add(option);
-					shamsiCalendarYearSelect.add(option.cloneNode(true));
+					if (shamsiCalendarYearSelect) shamsiCalendarYearSelect.add(option.cloneNode(true));
 				}
 				shamsiYearInput.value = "1350";
-				shamsiCalendarYearSelect.value = "1350";
+				if (shamsiCalendarYearSelect) shamsiCalendarYearSelect.value = "1350";
 
-				for (let year = 1277; year <= 1361; year++) {
+				for (let year = 1277; year <= 1415; year++) {
 					const option = new Option(englishToPersianDigits(year), year);
 					hijriYearInput.add(option);
+					if (calendarYearSelect) calendarYearSelect.add(option.cloneNode(true));
 				}
 				hijriYearInput.value = "1325";
+				if (calendarYearSelect) calendarYearSelect.value = "1325";
+
+				for (let year = 1860; year <= 1995; year++) {
+					const option = new Option(englishToPersianDigits(year), year);
+					miladiYearInput.add(option);
+					if (miladiCalendarYearSelect) miladiCalendarYearSelect.add(option.cloneNode(true));
+				}
+				miladiYearInput.value = "1925";
+				if (miladiCalendarYearSelect) miladiCalendarYearSelect.value = "1925";
 
 				for (let day = 1; day <= 31; day++) {
 					const option = new Option(englishToPersianDigits(day), day);
 					shamsiDayInput.add(option);
 					hijriDayInput.add(option.cloneNode(true));
+					miladiDayInput.add(option.cloneNode(true));
 				}
 				shamsiDayInput.value = "4";
 				hijriDayInput.value = "21";
+				miladiDayInput.value = "6";
+
+				updateShamsiYearWarning();
+			};
+
+			const updateShamsiYearWarning = () => {
+				const y = parseInt(shamsiYearInput && shamsiYearInput.value, 10);
+				const out = !isNaN(y) && y <= 1303;
+				[shamsiYearInput, shamsiMonthSelect, shamsiDayInput].forEach(el => {
+					if (el) el.classList.toggle('year-out-of-archive', out);
+				});
 			};
 
 			const generateNewspaperSectionsAndButtons = () => {
@@ -2711,10 +4090,6 @@ a:focus-visible {
 						<div id="${id}Navigation" class="issue-navigation-controls" style="display: none;">
 							<div>
 								<button id="prev${id}Issue">&lt; شماره قبل</button>
-								<div>
-									<span>شماره:</span>
-									<input type="number" id="${id}IssueNumber">
-								</div>
 								<button id="next${id}Issue">شماره بعد &gt;</button>
 							</div>
 						</div>
@@ -2839,10 +4214,6 @@ a:focus-visible {
 								<div id="${paperId}Navigation" class="issue-navigation-controls" style="display: none;">
 									<div>
 										<button id="prev${paperId}Issue">&lt; شماره قبل</button>
-										<div>
-											<span>شماره:</span>
-											<input type="number" id="${paperId}IssueNumber">
-										</div>
 										<button id="next${paperId}Issue">شماره بعد &gt;</button>
 								</div>
 							</div>
@@ -2887,7 +4258,7 @@ a:focus-visible {
 
 						newspaperData[paperId].firstIssueDate = calculatedFirstIssueDate;
 						newspaperData[paperId].issues = dbPaper.issues;
-						// Primary source: paper id itself is often the Wikidata QID (e.g. "Q134006001")
+
 						let wdRaw = dbPaper.wikidata_id || dbPaper.wikidata || dbPaper.qid || dbPaper.wikidataId || dbPaper.Wikidata || dbPaper.wd || dbPaper.wikidata_qid || null;
 						if (!wdRaw && paperId && /^Q\d+$/i.test(String(paperId).trim())) {
 							wdRaw = paperId;
@@ -2902,7 +4273,7 @@ a:focus-visible {
 						} else {
 							newspaperData[paperId].wikidata_id = null;
 						}
-						
+
 						newspaperData[paperId].navState = {
 							issuesArray: sortedIssues,
 							currentIndex: -1,
@@ -2915,20 +4286,52 @@ a:focus-visible {
 						const navState = newspaperData[paperId].navState;
 						if (navState.prevIssueBtn) navState.prevIssueBtn.addEventListener('click', () => goToPrevNewspaperIssue(paperId));
 						if (navState.nextIssueBtn) navState.nextIssueBtn.addEventListener('click', () => goToNextNewspaperIssue(paperId));
-						// The original code had a bug here, issueNumberInput change event listener needs to be fixed.
-						// It was trying to parse Persian numerals with parseInt, which returns NaN.
+
 						if (navState.issueNumberInput) navState.issueNumberInput.addEventListener('change', () => goToNewspaperIssueByNumber(paperId));
 
 						if (dbPaper.calendar_type === 'hijri') {
 							dbPaper.issues.forEach(issue => {
 								if (issue.date) {
 									availableHijriDates.set(issue.date, (availableHijriDates.get(issue.date) || 0) + 1);
+									const parsed = parseDateString(issue.date);
+									if (parsed) {
+										const islamicJdn = IranianIslamicDateConverter.toJdn(parsed.year, parsed.month, parsed.day);
+										const jdn = islamicJdn >= 0 ? islamicJdn - ISLAMIC_JDN_OFFSET : hijriToJdn(parsed.year, parsed.month, parsed.day);
+										if (jdn > 0) {
+											availableByJdn.set(jdn, (availableByJdn.get(jdn) || 0) + 1);
+											const g = jdnToGregorian(jdn);
+											const mKey = `${g.year}${pad(g.month)}${pad(g.day)}`;
+											availableMiladiDates.set(mKey, (availableMiladiDates.get(mKey) || 0) + 1);
+											const sDate = (typeof jdnToJalali === 'function') ? jdnToJalali(jdn) : (typeof jdnToShamsi === 'function' ? jdnToShamsi(jdn) : null);
+											if (sDate) {
+												const sKey = `${sDate.year}${pad(sDate.month)}${pad(sDate.day)}`;
+												availableShamsiDates.set(sKey, (availableShamsiDates.get(sKey) || 0) + 1);
+											}
+										}
+									}
 								}
 							});
 						} else if (dbPaper.calendar_type === 'shamsi') {
 							dbPaper.issues.forEach(issue => {
 								if (issue.date) {
 									availableShamsiDates.set(issue.date, (availableShamsiDates.get(issue.date) || 0) + 1);
+									const parsed = parseDateString(issue.date);
+									if (parsed) {
+										const jdn = (typeof jalaliToJdn === 'function') ? jalaliToJdn(parsed.year, parsed.month, parsed.day) : shamsiToJdn(parsed.year, parsed.month, parsed.day);
+										if (jdn > 0) {
+											availableByJdn.set(jdn, (availableByJdn.get(jdn) || 0) + 1);
+											const g = jdnToGregorian(jdn);
+											const mKey = `${g.year}${pad(g.month)}${pad(g.day)}`;
+											availableMiladiDates.set(mKey, (availableMiladiDates.get(mKey) || 0) + 1);
+
+											let hDate = IranianIslamicDateConverter.fromJdn(jdn + ISLAMIC_JDN_OFFSET);
+											if (!hDate && typeof jdnToHijri === 'function') hDate = jdnToHijri(jdn);
+											if (hDate) {
+												const hKey = `${hDate.year}${pad(hDate.month)}${pad(hDate.day)}`;
+												availableHijriDates.set(hKey, (availableHijriDates.get(hKey) || 0) + 1);
+											}
+										}
+									}
 								}
 							});
 						}
@@ -2949,111 +4352,56 @@ a:focus-visible {
 
 				} catch (error) {
 					console.error("Error loading db.json:", error);
-					mainErrorMessage.textContent = "خطا در بارگذاری دیتابیس نشریات.";
-					mainErrorMessage.style.display = 'block';
+					showMainError("خطا در بارگذاری دیتابیس نشریات.");
 					mainStatusMessage.style.display = 'none';
 				}
 			};
 
-			const sortAndRenderGlobalFirstIssueButtons = () => {
-				const allPapers = Object.values(newspaperData);
-				const sortablePapers = allPapers.filter(paper => paper.firstIssueDate);
+const sortAndRenderGlobalFirstIssueButtons = () => {
+	const allPapers = Object.values(newspaperData);
+	const sortablePapers = allPapers.filter(paper => paper.firstIssueDate);
 
-				const shamsiPapers = sortablePapers.filter(p => p.calendar_type === 'shamsi');
-				const hijriPapers = sortablePapers.filter(p => p.calendar_type === 'hijri');
+	sortablePapers.sort((a, b) => {
+		const dateA = parseInt(a.firstIssueDate, 10);
+		const dateB = parseInt(b.firstIssueDate, 10);
+		if (dateA !== dateB) return dateA - dateB;
+		return a.title.localeCompare(b.title, 'fa');
+	});
 
-				const shamsiNewspaperCount = shamsiPapers.length;
-				const shamsiIssueCount = shamsiPapers.reduce((sum, paper) => sum + (paper.navState.issuesArray?.length || 0), 0);
+	const totalNewspapers = sortablePapers.length;
+	const totalIssues = sortablePapers.reduce((sum, paper) => sum + (paper.navState.issuesArray?.length || 0), 0);
 
-				const hijriNewspaperCount = hijriPapers.length;
-				const hijriIssueCount = hijriPapers.reduce((sum, paper) => sum + (paper.navState.issuesArray?.length || 0), 0);
+	globalGoToFirstIssueControls.innerHTML = '';
 
-				shamsiPapers.sort((a, b) => {
-					const yearA = parseInt(a.firstIssueDate.substring(0, 4), 10);
-					const yearB = parseInt(b.firstIssueDate.substring(0, 4), 10);
-					if (yearA !== yearB) return yearA - yearB;
-					return a.title.localeCompare(b.title, 'fa');
-				});
+	if (sortablePapers.length > 0) {
+		const heading = document.createElement('h3');
+		heading.style.width = '100%';
+		heading.style.textAlign = 'center';
+		heading.style.marginTop = '0px';
+		heading.style.marginBottom = '5px';
+		heading.style.color = 'var(--section-title-color)';
+		heading.style.fontSize = '1.1em';
+		heading.innerHTML = `فهرست نشریات <span class="list-count-meta">(${englishToPersianDigits(totalNewspapers)} نشریه، ${englishToPersianDigits(totalIssues)} شمارهٔ نمایه‌شده)</span><span class="list-legend-tip" tabindex="0" role="img" aria-label="راهنمای رنگ و علامت نشریات">؟<span class="list-legend-popup"><strong>راهنما</strong><div class="legend-row"><span class="legend-swatch shamsi"></span>آبی: تاریخ اصلی شمسی</div><div class="legend-row"><span class="legend-swatch hijri"></span>سبز: تاریخ اصلی قمری</div><div class="legend-row"><span style="font-weight:700;min-width:12px;text-align:center;">*</span>فایل از کتابخانهٔ مرکزی دانشگاه تهران</div></span></span>`;
+		globalGoToFirstIssueControls.appendChild(heading);
 
-				hijriPapers.sort((a, b) => {
-					const dateA = parseInt(a.firstIssueDate, 10);
-					const dateB = parseInt(b.firstIssueDate, 10);
-					if (dateA !== dateB) return dateA - dateB;
-					return a.title.localeCompare(b.title, 'fa');
-				});
+		sortablePapers.forEach(paper => {
+			if (paper.globalFirstIssueBtn) {
+				globalGoToFirstIssueControls.appendChild(paper.globalFirstIssueBtn);
+				paper.globalFirstIssueBtn.style.display = 'inline-block';
+			}
+		});
+	}
+	if (typeof applyNewspaperSearchFilter === 'function') applyNewspaperSearchFilter();
+};
 
-				globalGoToFirstIssueControls.innerHTML = '';
-
-				if (hijriPapers.length > 0) {
-					const heading = document.createElement('h3');
-					heading.style.width = '100%';
-					heading.style.textAlign = 'center';
-					heading.style.marginTop = '15px';
-					heading.style.marginBottom = '5px';
-					heading.style.color = 'var(--section-title-color)';
-					heading.style.fontSize = '1.1em';
-					heading.innerHTML = `نشریات قمری <span class="list-count-meta">(${englishToPersianDigits(hijriNewspaperCount)} نشریه، ${englishToPersianDigits(hijriIssueCount)} شمارهٔ نمایه‌شده)</span>`;
-					globalGoToFirstIssueControls.appendChild(heading);
-					hijriPapers.forEach(paper => {
-						if (paper.globalFirstIssueBtn) {
-							globalGoToFirstIssueControls.appendChild(paper.globalFirstIssueBtn);
-							paper.globalFirstIssueBtn.style.display = 'inline-block';
-						}
-					});
-				}
-
-				if (shamsiPapers.length > 0) {
-					const heading = document.createElement('h3');
-					heading.style.width = '100%';
-					heading.style.textAlign = 'center';
-					heading.style.marginTop = '15px';
-					heading.style.marginBottom = '5px';
-					heading.style.color = 'var(--section-title-color)';
-					heading.style.fontSize = '1.1em';
-					heading.innerHTML = `نشریات شمسی <span class="list-count-meta">(${englishToPersianDigits(shamsiNewspaperCount)} نشریه، ${englishToPersianDigits(shamsiIssueCount)} شمارهٔ نمایه‌شده)</span>`;
-					globalGoToFirstIssueControls.appendChild(heading);
-					shamsiPapers.forEach(paper => {
-						if (paper.globalFirstIssueBtn) {
-							globalGoToFirstIssueControls.appendChild(paper.globalFirstIssueBtn);
-							paper.globalFirstIssueBtn.style.display = 'inline-block';
-						}
-					});
-				}
-				if (typeof applyNewspaperSearchFilter === 'function') applyNewspaperSearchFilter();
-			};
-
-
-			
-			
 			const applyNewspaperSearchFilter = () => {
 				const input = document.getElementById('newspaperSearchInput');
-				const clearBtn = document.getElementById('clearNewspaperSearch');
-				const listWrapper = document.getElementById('newspapersListWrapper');
 				if (!input) return;
 				const query = (input.value || '').trim().toLowerCase();
-				if (clearBtn) clearBtn.disabled = query.length === 0;
-
-				// On mobile: expand list when search has text so matches are visible
-				if (listWrapper) {
-					if (query.length > 0) {
-						listWrapper.classList.add('search-active');
-						listWrapper.classList.add('expanded');
-						const toggleBtn = document.getElementById('toggleNewspapersListBtn');
-						if (toggleBtn) {
-							toggleBtn.setAttribute('aria-expanded', 'true');
-							const expandLabel = toggleBtn.querySelector('.toggle-label-expand');
-							const collapseLabel = toggleBtn.querySelector('.toggle-label-collapse');
-							if (expandLabel) expandLabel.hidden = true;
-							if (collapseLabel) collapseLabel.hidden = false;
-						}
-					} else {
-						listWrapper.classList.remove('search-active');
-					}
-				}
 
 				const allButtons = globalGoToFirstIssueControls.querySelectorAll('button');
-				let visibleShamsi = 0, visibleHijri = 0;
-				let issueCountShamsi = 0, issueCountHijri = 0;
+				let visibleCount = 0;
+				let issueCount = 0;
 
 				allButtons.forEach(btn => {
 					const paperId = Object.keys(newspaperData).find(id => newspaperData[id].globalFirstIssueBtn === btn);
@@ -3062,28 +4410,16 @@ a:focus-visible {
 					const match = !query || title.includes(query);
 					btn.style.display = match ? 'inline-block' : 'none';
 					if (match && paper) {
-						if (paper.calendar_type === 'shamsi') {
-							visibleShamsi++;
-							issueCountShamsi += (paper.navState?.issuesArray?.length || 0);
-						} else if (paper.calendar_type === 'hijri') {
-							visibleHijri++;
-							issueCountHijri += (paper.navState?.issuesArray?.length || 0);
-						}
+						visibleCount++;
+						issueCount += (paper.navState?.issuesArray?.length || 0);
 					}
 				});
 
-				// Update heading counts
-				const headings = globalGoToFirstIssueControls.querySelectorAll('h3');
-				headings.forEach(h => {
-					const text = h.textContent || '';
-					if (text.includes('قمری')) {
-						h.innerHTML = `نشریات قمری <span class="list-count-meta">(${englishToPersianDigits(visibleHijri)} نشریه، ${englishToPersianDigits(issueCountHijri)} شمارهٔ نمایه‌شده)</span>`;
-						h.style.display = visibleHijri > 0 || !query ? '' : 'none';
-					} else if (text.includes('شمسی')) {
-						h.innerHTML = `نشریات شمسی <span class="list-count-meta">(${englishToPersianDigits(visibleShamsi)} نشریه، ${englishToPersianDigits(issueCountShamsi)} شمارهٔ نمایه‌شده)</span>`;
-						h.style.display = visibleShamsi > 0 || !query ? '' : 'none';
-					}
-				});
+				const heading = globalGoToFirstIssueControls.querySelector('h3');
+				if (heading) {
+					heading.innerHTML = `فهرست نشریات <span class="list-count-meta">(${englishToPersianDigits(visibleCount)} نشریه، ${englishToPersianDigits(issueCount)} شمارهٔ نمایه‌شده)</span><span class="list-legend-tip" tabindex="0" role="img" aria-label="راهنمای رنگ و علامت نشریات">؟<span class="list-legend-popup"><strong>راهنما</strong><div class="legend-row"><span class="legend-swatch shamsi"></span>آبی: تاریخ اصلی شمسی</div><div class="legend-row"><span class="legend-swatch hijri"></span>سبز: تاریخ اصلی قمری</div><div class="legend-row"><span style="font-weight:700;min-width:12px;text-align:center;">*</span>فایل از کتابخانهٔ مرکزی دانشگاه تهران</div></span></span>`;
+					heading.style.display = visibleCount > 0 || !query ? '' : 'none';
+				}
 			};
 
 			const setupNewspaperSearch = () => {
@@ -3101,7 +4437,6 @@ a:focus-visible {
 					});
 				}
 			};
-
 
 			const loadNewspaperLogos = async () => {
 				const papersWithWd = Object.values(newspaperData).filter(p => p.wikidata_id);
@@ -3133,9 +4468,6 @@ a:focus-visible {
 				}));
 			};
 
-
-			
-			// Approximate Gregorian → Shamsi (Jalali) conversion for "today"
 			const gregorianToShamsi = (gy, gm, gd) => {
 				const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
 				let gy2 = (gm > 2) ? (gy + 1) : gy;
@@ -3162,7 +4494,7 @@ a:focus-visible {
 			const setRandomYearTodayShamsi = () => {
 				const now = new Date();
 				const today = gregorianToShamsi(now.getFullYear(), now.getMonth() + 1, now.getDate());
-				// Random year in [1305, 1373], keep today's month/day (clamped to that year)
+
 				const randomYear = 1305 + Math.floor(Math.random() * (1373 - 1305 + 1));
 				const maxDay = shamsiDaysInMonth(randomYear, today.month);
 				const day = Math.min(today.day, maxDay);
@@ -3174,7 +4506,6 @@ a:focus-visible {
 				updateUrlParameters('shamsi', randomYear, today.month, day);
 			};
 
-
 			const initializeApp = async () => {
 				populateDateDropdowns();
 
@@ -3184,7 +4515,7 @@ a:focus-visible {
 
 				sortAndRenderGlobalFirstIssueButtons();
 
-				loadNewspaperLogos(); // non-blocking
+				loadNewspaperLogos();
 				setupNewspaperSearch();
 				setupDateNavButtons();
 
@@ -3215,12 +4546,38 @@ a:focus-visible {
 						});
 					}
 				} else {
-					// No URL params: show today's month/day in a random Shamsi year (1305–1373)
+
 					setRandomYearTodayShamsi();
 					loadImage('date');
 				}
 				updateGlobalGoToFirstIssueButtonsVisibility();
 				formatSelectedDateDisplay();
+
+				if (window.innerWidth > 768) {
+					['shamsiDateControls', 'hijriDateControls', 'miladiDateControls'].forEach(id => {
+						const el = document.getElementById(id);
+						if (el) {
+							el.style.display = 'flex';
+							el.classList.add('active-mobile');
+						}
+					});
+				} else {
+					document.querySelectorAll('.date-controls-row').forEach(row => {
+						row.classList.remove('active-mobile');
+						row.style.display = 'none';
+					});
+					const activeRow = document.querySelector(`.${currentCalendarMode}-row`);
+					if (activeRow) {
+						activeRow.classList.add('active-mobile');
+						activeRow.style.display = 'flex';
+					}
+				}
+
+				if (openCalendarFromErrorBtn) {
+					openCalendarFromErrorBtn.addEventListener('click', () => {
+						if (typeof openCalendarModal === 'function') openCalendarModal();
+					});
+				}
 			};
 
 			const getWikimediaHash = (paper, fullFileNameWithPdf) => {
@@ -3262,13 +4619,12 @@ a:focus-visible {
 			};
 
 			const preloadLightboxPages = (paper, currentPage, maxPages) => {
-				// پاک کردن تصاویر پیش‌بارگذاری شده قبلی
+
 				preloadedPrevImage = null;
 				preloadedNextImage = null;
 
 				if (!paper || paper.source === 'utlib') return;
 
-				// پیش‌بارگذاری صفحه قبل
 				if (currentPage > 1) {
 					const prevPageUrl = getLightboxImageUrl(paper, paper.currentIssue, currentPage - 1, 960);
 					if (prevPageUrl) {
@@ -3277,7 +4633,6 @@ a:focus-visible {
 					}
 				}
 
-				// پیش‌بارگذاری صفحه بعد
 				if (maxPages === null || currentPage < maxPages) {
 					const nextPageUrl = getLightboxImageUrl(paper, paper.currentIssue, currentPage + 1, 960);
 					if (nextPageUrl) {
@@ -3296,16 +4651,12 @@ a:focus-visible {
 
 				let fileNameBase;
 				let maxPages = null;
-				let shouldDisplaySectionBasedOnModeAndType = false;
+				let shouldDisplaySectionBasedOnModeAndType = true;
 				let issueExistsForDate = false;
 				let foundIssueForDate = null;
-				
-				if (currentCalendarMode === paper.calendar_type) {
-					shouldDisplaySectionBasedOnModeAndType = true;
-				}
 
 				if (paper.viewAllIssuesBtn) {
-					if (paper.type === 'database' && paper.issues && paper.issues.length > 0 && shouldDisplaySectionBasedOnModeAndType) {
+					if (paper.type === 'database' && paper.issues && paper.issues.length > 0) {
 						paper.viewAllIssuesBtn.style.display = 'block';
 					} else {
 						paper.viewAllIssuesBtn.style.display = 'none';
@@ -3318,7 +4669,12 @@ a:focus-visible {
 					if (paper.source === 'utlib') {
 						newTitle += ' *';
 					}
-					titleElement.textContent = newTitle;
+					if (paper.wikidata_id) {
+						const qid = String(paper.wikidata_id).replace(/^Q/i, '');
+						titleElement.innerHTML = `<a class="newspaper-title-link" href="https://www.wikidata.org/wiki/Q${qid}" target="_blank" rel="noopener noreferrer" title="مشاهده در ویکی‌داده">${newTitle}</a>`;
+					} else {
+						titleElement.textContent = newTitle;
+					}
 				}
 
 				paper.sectionElement.style.display = shouldDisplaySectionBasedOnModeAndType ? 'flex' : 'none';
@@ -3333,7 +4689,7 @@ a:focus-visible {
 
 				paper.errorElement.style.display = 'none';
 				paper.statusElement.style.display = 'none';
-				
+
 				if (paper.type === 'formula') {
 					if (id === 'jangal_qamari') {
 						fileNameBase = `${paper.prefix} ${year}${month}${day} AH`;
@@ -3381,16 +4737,16 @@ a:focus-visible {
 						fileNameBase = `${paper.prefix}${year}${month}${day}${paper.calendar_type === 'hijri' ? ' AH' : ''}`;
 						issueExistsForDate = true;
 					}
+					const issueDay = (paper.frequency === 'monthly') ? '01' : day;
 					paper.currentIssue = {
 						filename_base: fileNameBase,
 						pages: null,
 						wikimedia_hash: getWikimediaHash(paper, `${fileNameBase}.pdf`),
-						date: `${year}${pad(month)}${pad(day)}`
+						date: `${year}${pad(month)}${pad(issueDay)}`
 					};
 				} else if (paper.type === 'database') {
 					const selectedDateShamsi = { year: parseInt(year), month: parseInt(month), day: parseInt(day) };
-					
-					// Find issue for database papers
+
 					foundIssueForDate = paper.issues.find(issue => {
 						if (issue.date) {
 							const issueDateParsed = parseDateString(issue.date);
@@ -3408,9 +4764,6 @@ a:focus-visible {
 						paper.currentIssue = foundIssueForDate;
 						issueExistsForDate = true;
 
-						// The original code had a bug here. When finding the index, it was not robust
-						// to non-numeric issue numbers, and the logic was not fully correct.
-						// This corrected logic ensures we find the issue correctly based on its unique identifier.
 						const foundIssueIdentifier = foundIssueForDate.filename_base || foundIssueForDate.file_id;
 						if (paper.navState && foundIssueIdentifier) {
 							paper.navState.currentIndex = paper.navState.issuesArray.findIndex(issue =>
@@ -3418,22 +4771,22 @@ a:focus-visible {
 								(issue.file_id && issue.file_id === foundIssueIdentifier)
 							);
 						} else {
-							paper.navState.currentIndex = -1; // Not found
+							paper.navState.currentIndex = -1;
 						}
-						
+
 						if (titleElement) {
 							let baseTitle = paper.title;
 							if (paper.source === 'utlib') {
 								baseTitle += ' *';
 							}
+
+							let displayTitle = baseTitle;
 							if (foundIssueForDate.number) {
-								titleText = `${baseTitle} (شماره ${englishToPersianDigits(foundIssueForDate.number)})`;
-								titleElement.textContent = titleText;
-							} else {
-								titleElement.textContent = baseTitle;
+								displayTitle = `${baseTitle} (شماره ${englishToPersianDigits(foundIssueForDate.number)})`;
 							}
+							titleElement.textContent = displayTitle;
 						}
-						
+
 					} else {
 						paper.errorElement.textContent = 'نشریه در این تاریخ موجود نیست';
 						paper.errorElement.style.display = 'block';
@@ -3451,14 +4804,13 @@ a:focus-visible {
 					console.warn("Unknown paper type for:", id);
 					return Promise.resolve(false);
 				}
-				
+
 				if (!paper.currentIssue) {
 					paper.available = false;
 					paper.hasImage = false;
 					return Promise.resolve(false);
 				}
-				
-				// Ensure filename and hash are present for non-utlib papers
+
 				if (paper.source !== 'utlib') {
 					if (!paper.currentIssue.filename_base) {
 						paper.errorElement.textContent = 'اطلاعات نام فایل نشریه موجود نیست.';
@@ -3470,7 +4822,6 @@ a:focus-visible {
 					paper.currentIssue.hash = getWikimediaHash(paper, paper.currentIssue.full_filename);
 					paper.currentIssue.filename_for_url = paper.currentIssue.full_filename.replace(/ /g, '_');
 				}
-
 
 				if (!issueExistsForDate) {
 					paper.available = false;
@@ -3490,7 +4841,6 @@ a:focus-visible {
 				imageContainer.innerHTML = '';
 
 				return new Promise((resolve, reject) => {
-					// UTLib papers don't have images, so we directly display a download link
 					if (paper.source === 'utlib') {
 						const downloadUrl = getIssueFileUrl(paper, paper.currentIssue);
 						const downloadLinkElement = document.createElement('a');
@@ -3500,7 +4850,7 @@ a:focus-visible {
 						downloadLinkElement.textContent = 'دانلود PDF';
 						imageContainer.appendChild(downloadLinkElement);
 						paper.sectionElement.classList.add('no-image');
-						
+
 						paper.statusElement.style.display = 'none';
 						paper.errorElement.style.display = 'none';
 						paper.available = true;
@@ -3511,8 +4861,7 @@ a:focus-visible {
 						resolve(true);
 						return;
 					}
-					
-					// Create and append the download link as a fallback ONLY for database papers
+
 					if (paper.type === 'database') {
 						const downloadLinkUrl = `https://upload.wikimedia.org/wikipedia/commons/${paper.currentIssue.hash[0]}/${paper.currentIssue.hash}/${paper.currentIssue.filename_for_url}?download`;
 						const downloadLinkPlaceholder = document.createElement('a');
@@ -3526,7 +4875,6 @@ a:focus-visible {
 						paper.available = true;
 					}
 
-					// Now try to load the image
 					const imgElement = document.createElement('img');
 					imgElement.id = `${id}NewspaperImage`;
 					imgElement.alt = `تصویر ${paper.title}`;
@@ -3534,7 +4882,6 @@ a:focus-visible {
 					imgElement.style.display = 'none';
 
 					imgElement.onload = () => {
-						// Image loaded successfully, replace the link with the image
 						const downloadLinkPlaceholder = imageContainer.querySelector('.utlib-download-link');
 						if(downloadLinkPlaceholder) downloadLinkPlaceholder.remove();
 						imageContainer.appendChild(imgElement);
@@ -3554,7 +4901,6 @@ a:focus-visible {
 						paper.statusElement.style.display = 'none';
 						imgElement.style.display = 'none';
 
-						// Different error handling for database vs formula papers
 						if (paper.type === 'database') {
 							const downloadLinkPlaceholder = imageContainer.querySelector('.utlib-download-link');
 							if(downloadLinkPlaceholder) downloadLinkPlaceholder.textContent = 'دانلود نشریه';
@@ -3562,12 +4908,11 @@ a:focus-visible {
 							paper.errorElement.style.display = 'block';
 							paper.available = true;
 							paper.hasImage = false;
-						} else { // Formula papers
+						} else {
 							paper.errorElement.textContent = 'نشریه در این تاریخ موجود نیست.';
 							paper.errorElement.style.display = 'block';
 							paper.available = false;
 							paper.hasImage = false;
-							// Hide the entire card
 							paper.sectionElement.style.display = 'none';
 						}
 
@@ -3581,9 +4926,21 @@ a:focus-visible {
 			};
 
 			const loadImage = async (source = 'initial') => {
-				let year, month, day;
+				syncOtherCalendarControls();
+				const abs = resolveAbsoluteDate();
+				const shamsiYmd = abs.shamsi;
+				const hijriYmd = abs.hijri;
 
-				if (currentCalendarMode === 'shamsi') {
+				let year, month, day;
+				if (currentCalendarMode === 'shamsi' && shamsiYmd) {
+					year = String(shamsiYmd.year);
+					month = pad(shamsiYmd.month);
+					day = pad(shamsiYmd.day);
+				} else if (hijriYmd) {
+					year = String(hijriYmd.year);
+					month = pad(hijriYmd.month);
+					day = pad(hijriYmd.day);
+				} else if (currentCalendarMode === 'shamsi') {
 					year = shamsiYearInput.value;
 					month = pad(shamsiMonthSelect.value);
 					day = pad(shamsiDayInput.value);
@@ -3606,7 +4963,7 @@ a:focus-visible {
 					});
 					mainStatusMessage.textContent = 'در حال بارگذاری نشریات...';
 					mainStatusMessage.style.display = 'block';
-					mainErrorMessage.style.display = 'none';
+					hideMainError();
 				} else if (source === 'pageInput') {
 					Object.values(newspaperData).forEach(paper => {
 						if(paper) paper.currentPage = targetPage;
@@ -3614,8 +4971,7 @@ a:focus-visible {
 				}
 
 				if (!year || !month || !day) {
-					mainErrorMessage.textContent = 'لطفا تاریخ کامل را وارد کنید.';
-					mainErrorMessage.style.display = 'block';
+					showMainError('لطفا تاریخ کامل را وارد کنید.');
 					mainStatusMessage.style.display = 'none';
 					Object.values(newspaperData).forEach(paper => {
 						if(paper && paper.sectionElement) paper.sectionElement.style.display = 'none';
@@ -3627,7 +4983,7 @@ a:focus-visible {
 				}
 
 				if (source !== 'date') {
-					mainErrorMessage.style.display = 'none';
+					hideMainError();
 					if (mainStatusMessage.style.display === 'none') {
 						mainStatusMessage.textContent = 'در حال بارگذاری نشریات...';
 						mainStatusMessage.style.display = 'block';
@@ -3644,9 +5000,25 @@ a:focus-visible {
 					}
 				});
 
-				const loadPromises = Object.keys(newspaperData).map(id =>
-					checkAndLoadNewspaper(id, year, month, day, newspaperData[id] ? newspaperData[id].currentPage : 1)
-				);
+				const loadPromises = Object.keys(newspaperData).map(id => {
+					const paper = newspaperData[id];
+					let y = year, m = month, d = day;
+					if (paper && paper.calendar_type === 'shamsi' && shamsiYmd) {
+						y = String(shamsiYmd.year);
+						m = pad(shamsiYmd.month);
+						d = pad(shamsiYmd.day);
+					} else if (paper && paper.calendar_type === 'hijri' && hijriYmd) {
+						y = String(hijriYmd.year);
+						m = pad(hijriYmd.month);
+						d = pad(hijriYmd.day);
+					} else if (paper && paper.calendar_type === 'shamsi' && !shamsiYmd) {
+
+						return Promise.resolve(false);
+					} else if (paper && paper.calendar_type === 'hijri' && !hijriYmd) {
+						return Promise.resolve(false);
+					}
+					return checkAndLoadNewspaper(id, y, m, d, paper ? paper.currentPage : 1);
+				});
 				const results = await Promise.all(loadPromises.map(p => p.catch(e => e)));
 				mainStatusMessage.style.display = 'none';
 
@@ -3687,11 +5059,8 @@ a:focus-visible {
 				newspaperKeys.forEach(key => {
 					const paper = newspaperData[key];
 					if (paper && paper.sectionElement) {
-						let displayThisInContainer = paper.available &&
-							((currentCalendarMode === 'hijri' && paper.calendar_type === 'hijri') ||
-							 (currentCalendarMode === 'shamsi' && paper.calendar_type === 'shamsi'));
-							
-						// A card should not be displayed if it has no image and is not a utlib paper
+
+						let displayThisInContainer = !!paper.available;
 						if (!paper.hasImage && paper.source !== 'utlib' && paper.type !== 'database') {
 							displayThisInContainer = false;
 						}
@@ -3711,51 +5080,65 @@ a:focus-visible {
 				updateGlobalGoToFirstIssueButtonsVisibility();
 				formatSelectedDateDisplay();
 
-				if (!results.some(loaded => loaded) && (currentCalendarMode === 'shamsi' || currentCalendarMode === 'hijri')) {
-					mainErrorMessage.textContent = 'نشریه‌ای برای این تاریخ یافت نشد.';
-					mainErrorMessage.style.display = 'block';
+				if (!results.some(loaded => loaded)) {
+					showMainError('نشریه‌ای برای این تاریخ یافت نشد.', { showCalendarBtn: true });
 				} else {
-					mainErrorMessage.style.display = 'none';
+					hideMainError();
 				}
 			};
 
 			const handleCalendarChange = (targetDate = null) => {
-				shamsiDateControls.style.display = currentCalendarMode === 'shamsi' ? 'flex' : 'none';
-				hijriDateControls.style.display = currentCalendarMode === 'hijri' ? 'flex' : 'none';
+				const isMobile = window.innerWidth <= 768;
+
+				if (isMobile) {
+					document.querySelectorAll('.date-controls-row').forEach(row => {
+						row.classList.remove('active-mobile');
+						row.style.display = 'none';
+					});
+					const activeRow = document.querySelector(`.${currentCalendarMode}-row`);
+					if (activeRow) {
+						activeRow.classList.add('active-mobile');
+						activeRow.style.display = 'flex';
+					}
+				} else {
+					document.querySelectorAll('.date-controls-row').forEach(row => {
+						row.classList.add('active-mobile');
+						row.style.display = 'flex';
+					});
+				}
 
 				if (targetDate) {
-					if (currentCalendarMode === 'shamsi') {
+					const cal = targetDate.calendar_type || currentCalendarMode;
+					if (cal === 'shamsi') {
 						shamsiYearInput.value = targetDate.year;
 						shamsiMonthSelect.value = targetDate.month;
 						shamsiDayInput.value = targetDate.day;
-					} else if (targetDate.calendar_type === 'hijri') {
+					} else if (cal === 'hijri') {
 						hijriYearInput.value = targetDate.year;
 						hijriMonthSelect.value = targetDate.month;
 						hijriDayInput.value = targetDate.day;
+					} else if (cal === 'miladi' && miladiYearInput) {
+						miladiYearInput.value = targetDate.year;
+						miladiMonthSelect.value = targetDate.month;
+						miladiDayInput.value = targetDate.day;
 					}
 					mainPageNumberInput.value = 1;
 					Object.values(newspaperData).forEach(p => { if(p) p.currentPage = 1; });
 				}
 
 				if (currentCalendarMode === 'shamsi') {
-					updateUrlParameters(
-						'shamsi',
-						shamsiYearInput.value,
-						shamsiMonthSelect.value,
-						shamsiDayInput.value
-					);
-				} else {
-					updateUrlParameters(
-						'hijri',
-						hijriYearInput.value,
-						hijriMonthSelect.value,
-						hijriDayInput.value
-					);
+					updateUrlParameters('shamsi', shamsiYearInput.value, shamsiMonthSelect.value, shamsiDayInput.value);
+				} else if (currentCalendarMode === 'hijri') {
+					updateUrlParameters('hijri', hijriYearInput.value, hijriMonthSelect.value, hijriDayInput.value);
+				} else if (currentCalendarMode === 'miladi' && miladiYearInput) {
+					updateUrlParameters('miladi', miladiYearInput.value, miladiMonthSelect.value, miladiDayInput.value);
 				}
 
 				loadImage('date');
 				formatSelectedDateDisplay();
 			};
+
+			let lightboxOpenFromCard = false;
 
 			const openLightbox = async (id) => {
 				currentLightboxNewspaperId = id;
@@ -3765,8 +5148,233 @@ a:focus-visible {
 					return;
 				}
 				lightboxCurrentPage = paper.currentPage;
+				lightboxOpenFromCard = true;
+				resetLightboxZoom();
+				setupLightboxZoom();
 				lightboxOverlay.classList.add('visible');
 				await updateLightboxContent();
+			};
+
+			let lightboxZoom = 1;
+			let lightboxPanState = null;
+			let lightboxBaseSize = { w: 0, h: 0 };
+			let lightboxImageQuality = 960;
+			let lightboxHiResLoading = false;
+
+			const isLightboxDesktop = () => window.matchMedia('(min-width: 900px)').matches;
+
+			const getLightboxPageImageUrl = (issue, page, widthPx) => {
+				if (!issue || !issue.hash || !issue.filename_for_url) return '';
+				return `https://upload.wikimedia.org/wikipedia/commons/thumb/${issue.hash[0]}/${issue.hash}/${issue.filename_for_url}/page${page}-${widthPx}px-${issue.filename_for_url}.jpg`;
+			};
+
+			const getViewportScrollRatio = (vp) => {
+				if (!vp) return { rx: 0, ry: 0 };
+				const maxX = Math.max(1, vp.scrollWidth - vp.clientWidth);
+				const maxY = Math.max(1, vp.scrollHeight - vp.clientHeight);
+				return {
+					rx: vp.scrollLeft / maxX,
+					ry: vp.scrollTop / maxY,
+				};
+			};
+
+			const applyViewportScrollRatio = (vp, ratio) => {
+				if (!vp || !ratio) return;
+				const maxX = Math.max(0, vp.scrollWidth - vp.clientWidth);
+				const maxY = Math.max(0, vp.scrollHeight - vp.clientHeight);
+				vp.scrollLeft = ratio.rx * maxX;
+				vp.scrollTop = ratio.ry * maxY;
+			};
+
+			const maybeUpgradeLightboxImageQuality = () => {
+				if (!isLightboxDesktop() || lightboxZoom <= 2 || lightboxImageQuality >= 1920 || lightboxHiResLoading) return;
+				const id = currentLightboxNewspaperId;
+				const paper = id && newspaperData[id];
+				const issue = paper && paper.currentIssue;
+				if (!issue || paper.source === 'utlib') return;
+				const hiUrl = getLightboxPageImageUrl(issue, lightboxCurrentPage, 1920);
+				if (!hiUrl) return;
+				lightboxHiResLoading = true;
+				const vp = document.getElementById('lightboxZoomViewport');
+				const ratio = getViewportScrollRatio(vp);
+				const pre = new Image();
+				pre.onload = () => {
+					lightboxImageQuality = 1920;
+					const onDone = () => {
+						lightboxHiResLoading = false;
+						requestAnimationFrame(() => {
+							captureLightboxBaseSize();
+							applyLightboxImageSize();
+							requestAnimationFrame(() => applyViewportScrollRatio(vp, ratio));
+						});
+					};
+					lightboxImage.onload = onDone;
+					lightboxImage.onerror = () => { lightboxHiResLoading = false; };
+					lightboxImage.src = hiUrl;
+				};
+				pre.onerror = () => { lightboxHiResLoading = false; };
+				pre.src = hiUrl;
+			};
+
+			const captureLightboxBaseSize = () => {
+				if (!lightboxImage || !lightboxImage.naturalWidth) return;
+				const prevZoom = lightboxZoom;
+				const prevW = lightboxImage.style.width;
+				const prevH = lightboxImage.style.height;
+				const prevMaxW = lightboxImage.style.maxWidth;
+				const prevMaxH = lightboxImage.style.maxHeight;
+
+				lightboxImage.style.transform = 'none';
+				lightboxImage.style.width = '';
+				lightboxImage.style.height = '';
+				lightboxImage.style.maxWidth = '100%';
+				lightboxImage.style.maxHeight = isLightboxDesktop() ? 'calc(96vh - 48px)' : 'calc(90vh - 220px)';
+				const r = lightboxImage.getBoundingClientRect();
+				lightboxBaseSize = { w: r.width || lightboxImage.clientWidth, h: r.height || lightboxImage.clientHeight };
+
+				if (prevZoom > 1 && prevW) {
+					lightboxImage.style.width = prevW;
+					lightboxImage.style.height = prevH;
+					lightboxImage.style.maxWidth = prevMaxW;
+					lightboxImage.style.maxHeight = prevMaxH;
+				}
+			};
+
+			const applyLightboxImageSize = () => {
+				if (!lightboxImage || !lightboxBaseSize.w) return;
+				const vp = document.getElementById('lightboxZoomViewport');
+				const w = lightboxBaseSize.w * lightboxZoom;
+				const h = lightboxBaseSize.h * lightboxZoom;
+				lightboxImage.style.maxWidth = 'none';
+				lightboxImage.style.maxHeight = 'none';
+				lightboxImage.style.width = w + 'px';
+				lightboxImage.style.height = h + 'px';
+				lightboxImage.style.transform = 'none';
+				lightboxImage.style.cursor = lightboxZoom > 1 ? 'grab' : (isLightboxDesktop() ? 'default' : 'pointer');
+				if (vp) {
+					vp.classList.toggle('is-zoomed', lightboxZoom > 1);
+					if (lightboxZoom <= 1) {
+						lightboxImage.style.margin = '';
+					} else {
+						lightboxImage.style.margin = '0';
+					}
+				}
+			};
+
+			const resetLightboxZoom = () => {
+				lightboxZoom = 1;
+				lightboxPanState = null;
+				const vp = document.getElementById('lightboxZoomViewport');
+				if (vp) {
+					vp.scrollLeft = 0;
+					vp.scrollTop = 0;
+					vp.classList.remove('is-panning');
+					vp.classList.remove('is-zoomed');
+				}
+				if (lightboxImage) {
+					if (lightboxBaseSize.w) applyLightboxImageSize();
+					else {
+						lightboxImage.style.width = '';
+						lightboxImage.style.height = '';
+						lightboxImage.style.maxWidth = '';
+						lightboxImage.style.maxHeight = '';
+						lightboxImage.style.transform = 'none';
+						lightboxImage.style.margin = '';
+						lightboxImage.style.cursor = isLightboxDesktop() ? 'default' : 'pointer';
+					}
+				}
+			};
+
+			const applyLightboxZoom = (delta, clientX, clientY) => {
+				const vp = document.getElementById('lightboxZoomViewport');
+				if (!lightboxImage || !vp) return;
+				if (!lightboxBaseSize.w) captureLightboxBaseSize();
+				if (!lightboxBaseSize.w) return;
+
+				const prev = lightboxZoom;
+				const next = Math.min(5, Math.max(1, Math.round((lightboxZoom + delta) * 100) / 100));
+				if (next === prev) return;
+
+				const rect = vp.getBoundingClientRect();
+				const mx = (clientX != null) ? (clientX - rect.left) : rect.width / 2;
+				const my = (clientY != null) ? (clientY - rect.top) : rect.height / 2;
+				const contentX = (vp.scrollLeft + mx) / prev;
+				const contentY = (vp.scrollTop + my) / prev;
+
+				lightboxZoom = next;
+				applyLightboxImageSize();
+
+				requestAnimationFrame(() => {
+					vp.scrollLeft = contentX * lightboxZoom - mx;
+					vp.scrollTop = contentY * lightboxZoom - my;
+				});
+
+				if (lightboxZoom > 2) maybeUpgradeLightboxImageQuality();
+			};
+
+			const setupLightboxZoom = () => {
+				const vp = document.getElementById('lightboxZoomViewport');
+				if (!vp || vp.dataset.zoomBound) return;
+				vp.dataset.zoomBound = '1';
+
+				vp.addEventListener('wheel', (e) => {
+					if (!lightboxOverlay.classList.contains('visible')) return;
+					e.preventDefault();
+					const step = e.deltaY > 0 ? -0.2 : 0.2;
+					applyLightboxZoom(step, e.clientX, e.clientY);
+				}, { passive: false });
+
+				lightboxImage.addEventListener('dblclick', (e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					if (lightboxZoom > 1) resetLightboxZoom();
+					else applyLightboxZoom(1, e.clientX, e.clientY);
+				});
+
+				const onPointerDown = (e) => {
+					if (lightboxZoom <= 1) return;
+					if (e.button !== undefined && e.button !== 0) return;
+					lightboxPanState = {
+						x: e.clientX,
+						y: e.clientY,
+						sl: vp.scrollLeft,
+						st: vp.scrollTop,
+					};
+					vp.classList.add('is-panning');
+					lightboxImage.style.cursor = 'grabbing';
+					e.preventDefault();
+				};
+				const onPointerMove = (e) => {
+					if (!lightboxPanState) return;
+					const dx = e.clientX - lightboxPanState.x;
+					const dy = e.clientY - lightboxPanState.y;
+					vp.scrollLeft = lightboxPanState.sl - dx;
+					vp.scrollTop = lightboxPanState.st - dy;
+				};
+				const onPointerUp = () => {
+					if (!lightboxPanState) return;
+					lightboxPanState = null;
+					vp.classList.remove('is-panning');
+					if (lightboxImage) lightboxImage.style.cursor = lightboxZoom > 1 ? 'grab' : (isLightboxDesktop() ? 'default' : 'pointer');
+				};
+
+				vp.addEventListener('mousedown', onPointerDown);
+				window.addEventListener('mousemove', onPointerMove);
+				window.addEventListener('mouseup', onPointerUp);
+				vp.addEventListener('touchstart', (e) => {
+					if (lightboxZoom <= 1 || e.touches.length !== 1) return;
+					const t = e.touches[0];
+					lightboxPanState = { x: t.clientX, y: t.clientY, sl: vp.scrollLeft, st: vp.scrollTop };
+					vp.classList.add('is-panning');
+				}, { passive: true });
+				vp.addEventListener('touchmove', (e) => {
+					if (!lightboxPanState || e.touches.length !== 1) return;
+					const t = e.touches[0];
+					vp.scrollLeft = lightboxPanState.sl - (t.clientX - lightboxPanState.x);
+					vp.scrollTop = lightboxPanState.st - (t.clientY - lightboxPanState.y);
+					e.preventDefault();
+				}, { passive: false });
+				vp.addEventListener('touchend', onPointerUp);
 			};
 
 			const closeLightbox = () => {
@@ -3775,11 +5383,11 @@ a:focus-visible {
 					}
 					lightboxOverlay.classList.remove('visible');
 					currentLightboxNewspaperId = null;
-					// پاک کردن تصاویر پیش‌بارگذاری شده هنگام بستن لایت‌باکس
+					resetLightboxZoom();
+
 					preloadedPrevImage = null;
 					preloadedNextImage = null;
 			};
-
 
 			const updateLightboxContent = async () => {
 				const id = currentLightboxNewspaperId;
@@ -3830,7 +5438,12 @@ a:focus-visible {
                     } else if (paper.currentIssue.year_shamsi !== undefined) {
                         displayYearLightbox = englishToPersianDigits(paper.currentIssue.year_shamsi);
                     }
-					lightboxNewspaperTitle.textContent = paper.title;
+					if (paper.wikidata_id) {
+						const qid = String(paper.wikidata_id).replace(/^Q/i, '');
+						lightboxNewspaperTitle.innerHTML = `<a class="lightbox-title-link" href="https://www.wikidata.org/wiki/Q${qid}" target="_blank" rel="noopener noreferrer" title="مشاهده در ویکی‌داده">${paper.title}</a>`;
+					} else {
+						lightboxNewspaperTitle.textContent = paper.title;
+					}
 					{
 						const subParts = [];
 						if (paper.currentIssue.number != null && paper.currentIssue.number !== '') {
@@ -3855,10 +5468,11 @@ a:focus-visible {
 					lightboxImage.onclick = null;
 
 					downloadLink.href = getIssueFileUrl(paper, paper.currentIssue);
-					downloadLink.textContent = 'دانلود PDF';
+					downloadLink.textContent = 'دانلود فایل این شماره';
 					downloadLink.style.display = 'inline-block';
 
 					viewLargeLink.style.display = 'none';
+					if (viewSourceLink) viewSourceLink.style.display = 'none';
 
 					lightboxPrevPageButton.disabled = true;
 					lightboxNextPageButton.disabled = true;
@@ -3868,51 +5482,175 @@ a:focus-visible {
 					lightboxErrorMessage.style.display = 'none';
 				} else {
 					let displayDayForDate = (id === 'yaghma' || id === 'negin') && paper.calendar_type === 'shamsi' ? '01' : day;
+					const isMonthly = paper.frequency === 'monthly';
+					const yNum = parseInt(year, 10);
+					const mNum = parseInt(month, 10);
+					const dNum = parseInt(day, 10);
+
+					const formatMonthSpan = (startMonth, startYear, endMonth, endYear, monthNames, suffix) => {
+						if (!startMonth || !endMonth) return '';
+						const sm = monthNames[startMonth - 1];
+						const em = monthNames[endMonth - 1];
+						if (startYear === endYear && startMonth === endMonth) {
+							return `${sm} ${englishToPersianDigits(startYear)}${suffix ? ' ' + suffix : ''}`;
+						}
+						if (startYear === endYear) {
+							return `${sm}-${em} ${englishToPersianDigits(startYear)}${suffix ? ' ' + suffix : ''}`;
+						}
+						return `${sm} ${englishToPersianDigits(startYear)}-${em} ${englishToPersianDigits(endYear)}${suffix ? ' ' + suffix : ''}`;
+					};
+
+					const hijriFromJdnSafe = (jdn) => {
+						try {
+							let h = IranianIslamicDateConverter.fromJdn(jdn + ISLAMIC_JDN_OFFSET);
+							if (!h && typeof jdnToHijri === 'function') h = jdnToHijri(jdn);
+							return h;
+						} catch (e) {
+							try { return typeof jdnToHijri === 'function' ? jdnToHijri(jdn) : null; } catch (e2) { return null; }
+						}
+					};
 
 					if (paper.calendar_type === 'hijri') {
-						const hijriMonthName = hijriMonthNames[month - 1];
-						formattedDate = `${englishToPersianDigits(String(day))} ${hijriMonthName} ${englishToPersianDigits(year)} (قمری)`;
+						const hijriMonthName = hijriMonthNames[mNum - 1];
+						if (isMonthly) {
+							formattedDate = `${hijriMonthName} ${englishToPersianDigits(yNum)} قمری`;
+						} else {
+							formattedDate = `${englishToPersianDigits(String(day))} ${hijriMonthName} ${englishToPersianDigits(year)} (قمری)`;
+						}
 					} else if (paper.calendar_type === 'shamsi') {
-						const persianMonthName = shamsiMonthNames[month - 1];
-
-						if (paper.type === 'database' && paper.frequency === 'monthly') {
-							formattedDate = `${persianMonthName} ${englishToPersianDigits(year)}`;
+						const persianMonthName = shamsiMonthNames[mNum - 1];
+						if (isMonthly) {
+							formattedDate = `${persianMonthName} ${englishToPersianDigits(yNum)}`;
 						} else {
 							formattedDate = `${englishToPersianDigits(String(day))} ${persianMonthName} ${englishToPersianDigits(year)}`;
-
-							const weekdayIndex = getShamsiWeekday(year, month, day);
-							if (weekdayIndex !== null) {
-								lightboxWeekday.textContent = shamsiWeekdayFullNames[weekdayIndex];
-								lightboxWeekday.style.display = 'inline-flex';
-							}
 						}
 					} else {
 						formattedDate = `${englishToPersianDigits(pad(day))}/${englishToPersianDigits(pad(month))}/${englishToPersianDigits(year)}`;
 					}
 
-					lightboxNewspaperTitle.textContent = paper.title;
-					{
-						const subParts = [];
-						if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.number != null && paper.currentIssue.number !== '') {
-							subParts.push(`شمارهٔ ${englishToPersianDigits(paper.currentIssue.number)}`);
-						}
-						// Weekday + date
-						let dateWithWeekday = formattedDate;
-						if (paper.calendar_type === 'shamsi' && !(paper.type === 'database' && paper.frequency === 'monthly') && year && month && day) {
-							const weekdayIndex = getShamsiWeekday(year, month, day);
-							if (weekdayIndex !== null) {
-								dateWithWeekday = `${shamsiWeekdayFullNames[weekdayIndex]}، ${formattedDate}`;
+					let convertedDatesHtml = '';
+					let weekdayName = '';
+					let jdnForIssue = null;
+					if (year && month && day) {
+						if (isMonthly) {
+							let jdnStart = -1, jdnEnd = -1;
+							if (paper.calendar_type === 'shamsi') {
+								const lastDay = shamsiDaysInMonth(yNum, mNum);
+								jdnStart = jalaliToJdn(yNum, mNum, 1);
+								jdnEnd = jalaliToJdn(yNum, mNum, lastDay);
+							} else if (paper.calendar_type === 'hijri') {
+								const lastDay = (typeof IranianIslamicDateConverter !== 'undefined')
+									? IranianIslamicDateConverter.daysInMonth(yNum, mNum) : 30;
+								const is0 = IranianIslamicDateConverter.toJdn(yNum, mNum, 1);
+								const ie0 = IranianIslamicDateConverter.toJdn(yNum, mNum, lastDay);
+								jdnStart = is0 >= 0 ? is0 - ISLAMIC_JDN_OFFSET : (typeof hijriToJdn === 'function' ? hijriToJdn(yNum, mNum, 1) : -1);
+								jdnEnd = ie0 >= 0 ? ie0 - ISLAMIC_JDN_OFFSET : (typeof hijriToJdn === 'function' ? hijriToJdn(yNum, mNum, lastDay) : -1);
+							}
+							if (jdnStart > 0 && jdnEnd > 0) {
+								jdnForIssue = jdnStart;
+								const gStart = jdnToGregorian(jdnStart);
+								const gEnd = jdnToGregorian(jdnEnd);
+								const sStart = jdnToJalali(jdnStart);
+								const sEnd = jdnToJalali(jdnEnd);
+								const hStart = hijriFromJdnSafe(jdnStart);
+								const hEnd = hijriFromJdnSafe(jdnEnd);
+
+								const secondaryParts = [];
+								if (paper.calendar_type === 'shamsi') {
+									if (hStart && hEnd) {
+										secondaryParts.push(formatMonthSpan(hStart.month, hStart.year, hEnd.month, hEnd.year, hijriMonthNames, 'قمری'));
+									}
+									secondaryParts.push(formatMonthSpan(gStart.month, gStart.year, gEnd.month, gEnd.year, miladiMonthNames, 'میلادی'));
+								} else if (paper.calendar_type === 'hijri') {
+									let shamsiSpan = formatMonthSpan(sStart.month, sStart.year, sEnd.month, sEnd.year, shamsiMonthNames, 'شمسی');
+									if (sStart.year < 1304 || sEnd.year < 1304) {
+										shamsiSpan = `<span class="shamsi-date-out">${shamsiSpan}</span>`;
+									}
+									secondaryParts.push(shamsiSpan);
+									secondaryParts.push(formatMonthSpan(gStart.month, gStart.year, gEnd.month, gEnd.year, miladiMonthNames, 'میلادی'));
+								}
+								convertedDatesHtml = secondaryParts.filter(Boolean).join(' · ');
+							}
+						} else {
+							if (paper.calendar_type === 'shamsi') {
+								jdnForIssue = jalaliToJdn(yNum, mNum, dNum);
+							} else if (paper.calendar_type === 'hijri') {
+								const islamicJdn = IranianIslamicDateConverter.toJdn(yNum, mNum, dNum);
+								jdnForIssue = islamicJdn >= 0 ? islamicJdn - ISLAMIC_JDN_OFFSET : hijriToJdn(yNum, mNum, dNum);
+							} else {
+								jdnForIssue = gregorianToJdn(yNum, mNum, dNum);
+							}
+							if (jdnForIssue && jdnForIssue > 0) {
+								weekdayName = getAbsoluteWeekday(jdnForIssue);
+								const gDate = jdnToGregorian(jdnForIssue);
+								const sDate = jdnToJalali(jdnForIssue);
+								const hDate = hijriFromJdnSafe(jdnForIssue);
+								const miladiPart = `${englishToPersianDigits(gDate.day)} ${miladiMonthNames[gDate.month - 1]} ${englishToPersianDigits(gDate.year)} میلادی`;
+								let shamsiPart = `${englishToPersianDigits(sDate.day)} ${shamsiMonthNames[sDate.month - 1]} ${englishToPersianDigits(sDate.year)} شمسی`;
+								if (sDate.year < 1304) {
+									shamsiPart = `<span class="shamsi-date-out">${shamsiPart}</span>`;
+								}
+								const hijriPart = hDate
+									? `${englishToPersianDigits(hDate.day)} ${hijriMonthNames[hDate.month - 1]} ${englishToPersianDigits(hDate.year)} قمری`
+									: '';
+
+								const secondaryParts = [];
+								if (paper.calendar_type === 'shamsi') {
+									if (hijriPart) secondaryParts.push(hijriPart);
+									secondaryParts.push(miladiPart);
+								} else if (paper.calendar_type === 'hijri') {
+									secondaryParts.push(shamsiPart);
+									secondaryParts.push(miladiPart);
+								} else {
+									secondaryParts.push(shamsiPart);
+									if (hijriPart) secondaryParts.push(hijriPart);
+								}
+								convertedDatesHtml = secondaryParts.join(' · ');
 							}
 						}
-						subParts.push(dateWithWeekday);
-						subParts.push(`ص ${englishToPersianDigits(lightboxCurrentPage)}`);
+					}
+
+					if (paper.wikidata_id) {
+						const qid = String(paper.wikidata_id).replace(/^Q/i, '');
+						lightboxNewspaperTitle.innerHTML = `<a class="lightbox-title-link" href="https://www.wikidata.org/wiki/Q${qid}" target="_blank" rel="noopener noreferrer" title="مشاهده در ویکی‌داده">${paper.title}</a>`;
+					} else {
+						lightboxNewspaperTitle.textContent = paper.title;
+					}
+
+					{
+						const line1Parts = [];
+						if (paper.type === 'database' && paper.currentIssue && paper.currentIssue.number != null && paper.currentIssue.number !== '') {
+							line1Parts.push(`شمارهٔ ${englishToPersianDigits(paper.currentIssue.number)}`);
+						}
+						line1Parts.push(`صفحهٔ ${englishToPersianDigits(lightboxCurrentPage)}`);
+
+						let line2 = formattedDate;
+						if (!isMonthly) {
+							if (weekdayName) {
+								line2 = `${weekdayName}، ${formattedDate}`;
+							} else if (paper.calendar_type === 'shamsi' && year && month && day) {
+								const weekdayIndex = getShamsiWeekday(year, month, day);
+								if (weekdayIndex !== null) {
+									line2 = `${shamsiWeekdayFullNames[weekdayIndex]}، ${formattedDate}`;
+								}
+							}
+						}
+						if (paper.calendar_type === 'shamsi' && year && parseInt(year, 10) < 1304) {
+							line2 = `<span class="shamsi-date-out">${line2}</span>`;
+						}
+
 						const subEl = document.getElementById('lightboxSubtitle');
 						if (subEl) {
-							subEl.textContent = subParts.join(' - ');
+							let html = line1Parts.join(' · ');
+							html += `<br>${line2}`;
+							if (convertedDatesHtml) {
+								html += `<br><span style="font-size:0.85rem; opacity:0.75;">${convertedDatesHtml}</span>`;
+							}
+							subEl.innerHTML = html;
 							subEl.style.display = 'block';
 						}
 					}
-					// Hide standalone weekday badge (now in subtitle)
+
 					lightboxWeekday.style.display = 'none';
 					lightboxPageNumberInput.value = lightboxCurrentPage;
 					lightboxImage.alt = `تصویر ${paper.title} در لایت‌باکس - صفحه ${englishToPersianDigits(lightboxCurrentPage)}`;
@@ -3933,50 +5671,143 @@ a:focus-visible {
 						return;
 					}
 
-					const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${issue.hash[0]}/${issue.hash}/${issue.filename_for_url}/page${lightboxCurrentPage}-960px-${issue.filename_for_url}.jpg`;
+					lightboxImageQuality = 330;
+					lightboxHiResLoading = false;
+					const thumbUrl = getLightboxPageImageUrl(issue, lightboxCurrentPage, 330);
+					const imageUrl = getLightboxPageImageUrl(issue, lightboxCurrentPage, 960);
 					const downloadUrl = `https://upload.wikimedia.org/wikipedia/commons/${issue.hash[0]}/${issue.hash}/${issue.filename_for_url}?download`;
-					const viewLargeUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${issue.hash[0]}/${issue.hash}/${issue.filename_for_url}/page${lightboxCurrentPage}-1920px-${issue.filename_for_url}.jpg`;
+					const viewLargeUrl = getLightboxPageImageUrl(issue, lightboxCurrentPage, 1920);
 
-					// لینک‌ها از همان ابتدا در دسترس‌اند (نشریه در نتایج دیده شده)
 					downloadLink.href = downloadUrl;
-					downloadLink.textContent = 'دانلود نشریه';
+					downloadLink.textContent = 'دانلود فایل این شماره';
 					downloadLink.style.display = 'inline-block';
 					viewLargeLink.href = viewLargeUrl;
-					viewLargeLink.textContent = 'تصویر بزرگتر';
+					viewLargeLink.textContent = 'تصویر بزرگتر این صفحه';
 					viewLargeLink.style.display = 'inline-block';
-					
-					lightboxImage.src = imageUrl;
 
 					const wikimediaFileLink = `https://commons.wikimedia.org/w/index.php?title=File%3A${issue.filename_for_url}&page=${lightboxCurrentPage}`;
-					lightboxImage.onclick = () => {
-						window.open(wikimediaFileLink, '_blank');
-					};
-					lightboxImage.style.cursor = 'pointer';
+					if (viewSourceLink) {
+						viewSourceLink.href = wikimediaFileLink;
+						viewSourceLink.textContent = 'مشاهدهٔ نشریه در منبع';
+						viewSourceLink.style.display = 'inline-block';
+					}
 
-					try {
-						await new Promise((resolve, reject) => {
+					if (isLightboxDesktop()) {
+						lightboxImage.onclick = null;
+						lightboxImage.style.cursor = lightboxZoom > 1 ? 'grab' : 'default';
+						lightboxImage.removeAttribute('title');
+					} else {
+						lightboxImage.onclick = () => {
+							window.open(wikimediaFileLink, '_blank');
+						};
+						lightboxImage.style.cursor = 'pointer';
+						lightboxImage.title = 'مشاهده در منبع';
+					}
+
+					const showLoadedImage = () => {
+						lightboxStatusMessage.style.display = 'none';
+						lightboxImage.style.display = 'block';
+						lightboxImagePlaceholder.style.display = 'none';
+						lightboxErrorMessage.style.display = 'none';
+						lightboxZoom = 1;
+						requestAnimationFrame(() => {
+							captureLightboxBaseSize();
+							resetLightboxZoom();
+						});
+					};
+
+					const loadUrlIntoLightbox = (url) => new Promise((resolve) => {
+						const onOk = () => {
+							lightboxImage.onload = null;
+							lightboxImage.onerror = null;
+							showLoadedImage();
+							resolve(true);
+						};
+						const onErr = () => {
+							lightboxImage.onload = null;
+							lightboxImage.onerror = null;
+							resolve(false);
+						};
+						lightboxImage.onload = onOk;
+						lightboxImage.onerror = onErr;
+						if (lightboxImage.src === url && lightboxImage.complete && lightboxImage.naturalWidth) {
+							onOk();
+						} else {
+							lightboxImage.src = url;
+						}
+					});
+
+					const upgradeToMidRes = () => {
+						if (!imageUrl || lightboxImageQuality >= 960) return;
+						const pre = new Image();
+						pre.onload = () => {
+							lightboxImage.style.opacity = '0.35';
+							const finish = () => {
+								lightboxImageQuality = 960;
+								lightboxImage.style.opacity = '1';
+								requestAnimationFrame(() => {
+									captureLightboxBaseSize();
+									applyLightboxImageSize();
+								});
+							};
 							lightboxImage.onload = () => {
-								lightboxStatusMessage.style.display = 'none';
-								lightboxImage.style.display = 'block';
-								lightboxImagePlaceholder.style.display = 'none';
-								lightboxErrorMessage.style.display = 'none';
-								resolve(true);
+								lightboxImage.onload = null;
+								finish();
 							};
 							lightboxImage.onerror = () => {
+								lightboxImage.onerror = null;
+								lightboxImage.style.opacity = '1';
+							};
+							lightboxImage.src = imageUrl;
+						};
+						pre.src = imageUrl;
+					};
+
+					try {
+						const preferThumb = lightboxOpenFromCard;
+						lightboxOpenFromCard = false;
+
+						if (preferThumb && thumbUrl) {
+							const cardImg = paper.imageElement;
+							const cardSrc = cardImg && cardImg.src ? cardImg.src : '';
+							const initialSrc = (cardSrc && lightboxCurrentPage === (paper.currentPage || 1) && cardSrc.includes('330px'))
+								? cardSrc
+								: thumbUrl;
+							lightboxImage.style.opacity = '1';
+							const ok = await loadUrlIntoLightbox(initialSrc);
+							if (!ok) {
+								const ok2 = await loadUrlIntoLightbox(imageUrl);
+								if (!ok2) {
+									lightboxStatusMessage.style.display = 'none';
+									lightboxImage.style.display = 'none';
+									lightboxImagePlaceholder.style.display = 'flex';
+									lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${englishToPersianDigits(lightboxCurrentPage)} یافت نشد.`;
+									lightboxErrorMessage.style.display = 'block';
+								} else {
+									lightboxImageQuality = 960;
+								}
+							} else {
+								lightboxImageQuality = 330;
+								upgradeToMidRes();
+							}
+						} else {
+							lightboxImage.style.opacity = '1';
+							const ok = await loadUrlIntoLightbox(imageUrl);
+							if (!ok) {
 								lightboxStatusMessage.style.display = 'none';
 								lightboxImage.style.display = 'none';
 								lightboxImagePlaceholder.style.display = 'flex';
 								lightboxErrorMessage.textContent = `تصویر برای ${paper.title} و صفحه ${englishToPersianDigits(lightboxCurrentPage)} یافت نشد.`;
 								lightboxErrorMessage.style.display = 'block';
-								resolve(true);
-							};
-						});
+							} else {
+								lightboxImageQuality = 960;
+							}
+						}
 
-						// پس از بارگذاری موفق تصویر، صفحات قبل و بعد را پیش‌بارگذاری می‌کنیم
 						preloadLightboxPages(paper, lightboxCurrentPage, maxPages);
 
 					} catch (error) {
-						// لینک‌ها همچنان نمایش داده می‌شوند
+
 					}
 
 					lightboxPrevPageButton.disabled = lightboxCurrentPage <= 1;
@@ -3984,15 +5815,13 @@ a:focus-visible {
 					lightboxPageNumberInput.disabled = false;
 				}
 
-
 				const isDatabasePaperWithIssues = paper.type === 'database' && paper.issues && paper.issues.length > 0;
 
 				if (isDatabasePaperWithIssues && paper.source !== 'utlib') {
 					issueNavLightbox.style.display = 'flex';
 					const navState = paper.navState;
 					if (navState && navState.currentIndex !== -1) {
-						// Here is the fix for the original issue.
-						// The number input needs to be populated from the `issuesArray` using the `currentIndex`.
+
 						const currentIssueInArray = navState.issuesArray[navState.currentIndex];
 						if(currentIssueInArray) {
 							const issueNumber = currentIssueInArray.number || '';
@@ -4016,18 +5845,14 @@ a:focus-visible {
 				const availableNewspapersForCurrentDate = Object.keys(newspaperData)
 					.filter(key => {
 						const p = newspaperData[key];
-						if (!p || !p.available) return false;
-						const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
-											(currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
-						return matchesMode;
+						return p && p.available;
 					});
-				
+
 				availableNewspapersForCurrentDate.sort((aId, bId) => {
 					const paperA = newspaperData[aId];
 					const paperB = newspaperData[bId];
 					return paperA.title.localeCompare(paperB.title, 'fa');
 				});
-
 
 				if (availableNewspapersForCurrentDate.length <= 1) {
 					lightboxPrevNewspaperButton.style.display = 'none';
@@ -4053,6 +5878,7 @@ a:focus-visible {
 				}
 				if (currentPageBeforeChange !== lightboxCurrentPage) {
 					paper.currentPage = lightboxCurrentPage;
+					lightboxOpenFromCard = false;
 					updateLightboxContent();
 				}
 			};
@@ -4061,18 +5887,14 @@ a:focus-visible {
 				const availableNewspapers = Object.keys(newspaperData)
 					.filter(key => {
 						const p = newspaperData[key];
-						if (!p || !p.available) return false;
-						const matchesMode = (currentCalendarMode === 'shamsi' && p.calendar_type === 'shamsi') ||
-											(currentCalendarMode === 'hijri' && p.calendar_type === 'hijri');
-						return matchesMode;
+						return p && p.available;
 					});
-				
+
 				availableNewspapers.sort((aId, bId) => {
 					const paperA = newspaperData[aId];
 					const paperB = newspaperData[bId];
 					return paperA.title.localeCompare(paperB.title, 'fa');
 				});
-
 
 				if (availableNewspapers.length <= 1) return;
 				const currentIndex = availableNewspapers.indexOf(currentLightboxNewspaperId);
@@ -4089,6 +5911,7 @@ a:focus-visible {
 				} else {
 					lightboxCurrentPage = 1;
 				}
+				lightboxOpenFromCard = !!(newPaper && newPaper.hasImage);
 				updateLightboxContent();
 			};
 
@@ -4106,14 +5929,14 @@ a:focus-visible {
 				if (!paper || !paper.navState) return;
 				const { issuesArray, issueNumberInput } = paper.navState;
 				if (index < 0 || index >= issuesArray.length) return;
-				
+
 				paper.navState.currentIndex = index;
 				paper.navState.currentIssue = issuesArray[index];
 
 				const issue = issuesArray[index];
 				if (!issueNumberInput || !issue) return;
 				issueNumberInput.value = englishToPersianDigits(issue.number) || '';
-				
+
 				let issueDateParsed = null;
 				if (issue.date) {
 					issueDateParsed = parseDateString(issue.date);
@@ -4139,7 +5962,7 @@ a:focus-visible {
 
 				loadImage('date');
 				updateIssueNavButtons(newspaperId);
-				
+
 				if (lightboxOverlay.classList.contains('visible') && currentLightboxNewspaperId === newspaperId) {
 					updateLightboxContent();
 				}
@@ -4173,7 +5996,7 @@ a:focus-visible {
 				if (!paper || !paper.navState) return;
 				const { issueNumberInput, issuesArray } = paper.navState;
 				if (!issueNumberInput) return;
-				// Fix: Correctly convert Persian numerals to English before parsing
+
 				const issueNumberText = persianToEnglishDigits(issueNumberInput.value);
 				const issueNumber = parseInt(issueNumberText);
 				if (isNaN(issueNumber)) return;
@@ -4221,7 +6044,6 @@ a:focus-visible {
 						foundIndex = issuesArray.findIndex(issue => issue.date.substring(0, 6) === selectedDateString.substring(0, 6));
 					}
 				}
-
 
 				paper.navState.currentIndex = foundIndex;
 				paper.navState.currentIssue = foundIndex >= 0 ? issuesArray[foundIndex] : null;
@@ -4296,6 +6118,7 @@ a:focus-visible {
 			};
 
 			const updateGlobalGoToFirstIssueButtonsVisibility = () => {
+				let anyAvailable = false;
 				Object.values(newspaperData).forEach(paper => {
 					if (paper.globalFirstIssueBtn) {
 						const isPermanentlyAvailable = (paper.type === 'database' && paper.issues && paper.issues.length > 0) ||
@@ -4305,6 +6128,7 @@ a:focus-visible {
 							paper.globalFirstIssueBtn.style.display = 'inline-block';
 							if (paper.available) {
 								paper.globalFirstIssueBtn.classList.add('available-on-date');
+								anyAvailable = true;
 							} else {
 								paper.globalFirstIssueBtn.classList.remove('available-on-date');
 							}
@@ -4314,6 +6138,9 @@ a:focus-visible {
 						}
 					}
 				});
+				if (globalGoToFirstIssueControls) {
+					globalGoToFirstIssueControls.classList.toggle('has-available-on-date', anyAvailable);
+				}
 			};
 
 			const openAllNewspapersIssuesModal = (initialPaperId = null) => {
@@ -4385,6 +6212,13 @@ a:focus-visible {
 						}
 					}
 				}
+				if (newspaperSelectionContainer) {
+					newspaperSelectionContainer.classList.remove('is-collapsed');
+				}
+				if (newspaperSelectionToggleBtn) {
+					newspaperSelectionToggleBtn.setAttribute('aria-expanded', 'true');
+					newspaperSelectionToggleBtn.textContent = 'جمع کردن ▲';
+				}
 				allIssuesModalOverlay.classList.add('visible');
 			};
 
@@ -4429,12 +6263,11 @@ a:focus-visible {
 
 				const displayDates = showDatesCheckbox.checked;
 				const displayImages = showImagesCheckbox.checked;
-				
+
 				const targetContainer = displayImages ? issuesImageGridContainer : issuesListContainer;
 				targetContainer.style.display = displayImages ? 'grid' : 'flex';
 				issuesListContainer.style.display = displayImages ? 'none' : 'flex';
 				issuesImageGridContainer.style.display = displayImages ? 'grid' : 'none';
-
 
 				const groupedByVolume = new Map();
 				issuesToDisplaySorted.forEach(issue => {
@@ -4503,7 +6336,20 @@ a:focus-visible {
 									if (paper.frequency === 'monthly') {
 										buttonText += `, ${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
 									} else {
-										buttonText += `, روز ${englishToPersianDigits(issueDateParsed.day)} ${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
+
+										let weekdayLabel = 'روز';
+										try {
+											if (paper.calendar_type === 'shamsi') {
+												const wd = getShamsiWeekday(issueDateParsed.year, issueDateParsed.month, issueDateParsed.day);
+												if (wd !== null && shamsiWeekdayFullNames[wd]) weekdayLabel = shamsiWeekdayFullNames[wd];
+											} else {
+												let jdn = -1;
+												const islamicJdn = IranianIslamicDateConverter.toJdn(issueDateParsed.year, issueDateParsed.month, issueDateParsed.day);
+												jdn = islamicJdn >= 0 ? islamicJdn - ISLAMIC_JDN_OFFSET : (typeof hijriToJdn === 'function' ? hijriToJdn(issueDateParsed.year, issueDateParsed.month, issueDateParsed.day) : -1);
+												if (jdn > 0) weekdayLabel = getAbsoluteWeekday(jdn);
+											}
+										} catch (e) {}
+										buttonText += `, ${weekdayLabel} ${englishToPersianDigits(issueDateParsed.day)} ${monthName} ${englishToPersianDigits(issueDateParsed.year)}`;
 									}
 								}
 							}
@@ -4512,7 +6358,7 @@ a:focus-visible {
 						if (displayImages && paper.source !== 'utlib') {
 							const thumbnailItem = document.createElement('div');
 							thumbnailItem.classList.add('issue-thumbnail-item');
-							
+
 							const link = document.createElement('a');
 							link.href = 'javascript:void(0)';
 							link.onclick = (e) => {
@@ -4525,7 +6371,7 @@ a:focus-visible {
 							link.style.display = 'flex';
 							link.style.flexDirection = 'column';
 							link.style.alignItems = 'center';
-							
+
 							const thumbnailImage = document.createElement('img');
 							thumbnailImage.classList.add('issue-thumbnail-image');
 							const fullFileNameWithPdf = `${issue.filename_base}.pdf`;
@@ -4582,7 +6428,7 @@ a:focus-visible {
 					closeAllIssuesModal();
 					return;
 				}
-				
+
 				if (!issue.date) {
 					console.error("Issue date is missing for non-utlib paper.");
 					return;
@@ -4594,7 +6440,7 @@ a:focus-visible {
 				if (paper) {
 					paper.currentIssue = issue;
 					if (paper.navState) {
-						// Fix: Ensure the index is correctly found by filename_base.
+
 						paper.navState.currentIndex = paper.navState.issuesArray.findIndex(i => i.filename_base === issue.filename_base);
 					}
 				}
@@ -4630,9 +6476,12 @@ a:focus-visible {
 			};
 
 			const populateCalendarYearDropdown = () => {
-				for (let year = minCalendarYear; year <= maxCalendarYear; year++) {
-					const option = new Option(englishToPersianDigits(year), year);
-					calendarYearSelect.add(option);
+
+				if (calendarYearSelect && calendarYearSelect.options.length === 0) {
+					for (let year = minCalendarYear; year <= maxCalendarYear; year++) {
+						const option = new Option(englishToPersianDigits(year), year);
+						calendarYearSelect.add(option);
+					}
 				}
 			};
 
@@ -4642,17 +6491,28 @@ a:focus-visible {
 					shamsiCalendarModalOverlay.classList.add('visible');
 					shamsiCalendarYearSelect.value = shamsiYearInput.value;
 					renderShamsiCalendar(parseInt(shamsiYearInput.value, 10));
+					document.querySelectorAll('.cal-switch-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.target === 'shamsi'));
+				} else if (currentCalendarMode === 'miladi') {
+					if (miladiCalendarModalErrorMessage) miladiCalendarModalErrorMessage.style.display = 'none';
+					if (miladiCalendarModalOverlay) {
+						miladiCalendarModalOverlay.classList.add('visible');
+						if (miladiCalendarYearSelect) miladiCalendarYearSelect.value = miladiYearInput.value;
+						renderMiladiCalendar(parseInt(miladiYearInput.value, 10));
+					}
+					document.querySelectorAll('.cal-switch-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.target === 'miladi'));
 				} else {
 					calendarModalErrorMessage.style.display = 'none';
 					calendarModalOverlay.classList.add('visible');
 					calendarYearSelect.value = hijriYearInput.value;
 					renderCalendar(parseInt(hijriYearInput.value, 10));
+					document.querySelectorAll('.cal-switch-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.target === 'hijri'));
 				}
 			};
 
 			const closeCalendarModal = () => {
 				calendarModalOverlay.classList.remove('visible');
 				shamsiCalendarModalOverlay.classList.remove('visible');
+				if (miladiCalendarModalOverlay) miladiCalendarModalOverlay.classList.remove('visible');
 			};
 
 			const renderCalendar = (year) => {
@@ -4669,9 +6529,6 @@ a:focus-visible {
 				const selectedHijriMonth = parseInt(hijriMonthSelect.value, 10);
 				const selectedHijriDay = parseInt(hijriDayInput.value, 10);
 
-
-				const maxDaysToDisplay = 30;
-
 				for (let month = 1; month <= 12; month++) {
 					const monthDiv = document.createElement('div');
 					monthDiv.classList.add('calendar-month');
@@ -4680,16 +6537,51 @@ a:focus-visible {
 					monthTitle.textContent = hijriMonthNames[month - 1];
 					monthDiv.appendChild(monthTitle);
 
+					const weekdayHeaderRow = document.createElement('div');
+					weekdayHeaderRow.classList.add('calendar-days', 'calendar-weekday-header');
+					shamsiWeekdayShortNames.forEach(label => {
+						const headerCell = document.createElement('span');
+						headerCell.classList.add('calendar-weekday-label');
+						headerCell.textContent = label;
+						weekdayHeaderRow.appendChild(headerCell);
+					});
+					monthDiv.appendChild(weekdayHeaderRow);
+
 					const daysGrid = document.createElement('div');
 					daysGrid.classList.add('calendar-days');
 
-					for (let day = 1; day <= maxDaysToDisplay; day++) {
+					let firstDayOffset = 0;
+					try {
+						const islamicJdn0 = IranianIslamicDateConverter.toJdn(year, month, 1);
+						const jdn0 = islamicJdn0 >= 0 ? islamicJdn0 - ISLAMIC_JDN_OFFSET : (typeof hijriToJdn === 'function' ? hijriToJdn(year, month, 1) : -1);
+						if (jdn0 > 0) {
+							firstDayOffset = Math.floor(jdn0 + 2) % 7;
+							if (firstDayOffset < 0) firstDayOffset += 7;
+						}
+					} catch (e) {}
+					for (let i = 0; i < firstDayOffset; i++) {
+						const emptyCell = document.createElement('span');
+						emptyCell.classList.add('calendar-day-empty');
+						daysGrid.appendChild(emptyCell);
+					}
+
+					const daysInThisMonth = IranianIslamicDateConverter.daysInMonth(year, month);
+					for (let day = 1; day <= daysInThisMonth; day++) {
 						const dayBtn = document.createElement('button');
 						dayBtn.textContent = englishToPersianDigits(day);
 						dayBtn.classList.add('calendar-day-btn');
 
 						const dateString = `${year}${pad(month)}${pad(day)}`;
-						const issueCount = availableHijriDates.get(dateString) || 0;
+						let issueCount = availableHijriDates.get(dateString) || 0;
+						let jdn = -1;
+						try {
+							const islamicJdn = IranianIslamicDateConverter.toJdn(year, month, day);
+							jdn = islamicJdn >= 0 ? islamicJdn - ISLAMIC_JDN_OFFSET : (typeof hijriToJdn === 'function' ? hijriToJdn(year, month, day) : -1);
+							if (jdn > 0) {
+								const byJdn = availableByJdn.get(jdn) || 0;
+								if (byJdn > issueCount) issueCount = byJdn;
+							}
+						} catch (e) {}
 
 						if (issueCount > 0) {
 							dayBtn.classList.add('has-issue');
@@ -4721,28 +6613,18 @@ a:focus-visible {
 			const goToDateFromCalendar = (year, month, day) => {
 				hijriCalendarRadio.checked = true;
 				currentCalendarMode = 'hijri';
-				handleCalendarChange();
-
 				hijriYearInput.value = year;
 				hijriMonthSelect.value = month;
 				hijriDayInput.value = day;
-
-				updateUrlParameters(
-					currentCalendarMode,
-					hijriYearInput.value,
-					hijriMonthSelect.value,
-					hijriDayInput.value
-				);
-
+				handleCalendarChange({ year, month, day, calendar_type: 'hijri' });
 				closeCalendarModal();
-				loadImage('date');
 			};
 
 			const renderShamsiCalendar = (year) => {
 				shamsiCalendarYearSelect.value = year;
 				shamsiCalendarGridContainer.innerHTML = '';
 
-				shamsiPrevYearBtn.disabled = year <= 1305;
+				shamsiPrevYearBtn.disabled = year <= 1239;
 				shamsiNextYearBtn.disabled = year >= 1373;
 
 				shamsiCalendarModalTitle.textContent = `تقویم شمسی`;
@@ -4788,14 +6670,20 @@ a:focus-visible {
 						dayBtn.textContent = englishToPersianDigits(day);
 						dayBtn.classList.add('calendar-day-btn');
 
-						// Friday (جمعه = 6) in red text without background
 						const dayWeekday = getShamsiWeekday(year, month, day);
 						if (dayWeekday === 6) {
 							dayBtn.classList.add('is-friday');
 						}
 
 						const dateString = `${year}${pad(month)}${pad(day)}`;
-						const issueCount = availableShamsiDates.get(dateString) || 0;
+						let issueCount = availableShamsiDates.get(dateString) || 0;
+						try {
+							const jdn = (typeof jalaliToJdn === 'function') ? jalaliToJdn(year, month, day) : shamsiToJdn(year, month, day);
+							if (jdn > 0) {
+								const byJdn = availableByJdn.get(jdn) || 0;
+								if (byJdn > issueCount) issueCount = byJdn;
+							}
+						} catch (e) {}
 
 						if (issueCount > 0) {
 							dayBtn.classList.add('has-issue');
@@ -4827,21 +6715,99 @@ a:focus-visible {
 			const goToDateFromShamsiCalendar = (year, month, day) => {
 				shamsiCalendarRadio.checked = true;
 				currentCalendarMode = 'shamsi';
-				handleCalendarChange();
-
 				shamsiYearInput.value = year;
 				shamsiMonthSelect.value = month;
 				shamsiDayInput.value = day;
-
-				updateUrlParameters(
-					currentCalendarMode,
-					shamsiYearInput.value,
-					shamsiMonthSelect.value,
-					shamsiDayInput.value
-				);
-
+				handleCalendarChange({ year, month, day, calendar_type: 'shamsi' });
 				closeCalendarModal();
-				loadImage('date');
+			};
+
+			const daysInGregorianMonth = (year, month) => {
+				return new Date(year, month, 0).getDate();
+			};
+
+			const renderMiladiCalendar = (year) => {
+				if (!miladiCalendarYearSelect || !miladiCalendarGridContainer) return;
+				miladiCalendarYearSelect.value = year;
+				miladiCalendarGridContainer.innerHTML = '';
+				if (miladiPrevYearBtn) miladiPrevYearBtn.disabled = year <= minMiladiCalendarYear;
+				if (miladiNextYearBtn) miladiNextYearBtn.disabled = year >= maxMiladiCalendarYear;
+
+				const selectedY = parseInt(miladiYearInput.value, 10);
+				const selectedM = parseInt(miladiMonthSelect.value, 10);
+				const selectedD = parseInt(miladiDayInput.value, 10);
+
+				for (let month = 1; month <= 12; month++) {
+					const monthDiv = document.createElement('div');
+					monthDiv.classList.add('calendar-month');
+					const monthTitle = document.createElement('h3');
+					monthTitle.textContent = miladiMonthNames[month - 1];
+					monthDiv.appendChild(monthTitle);
+
+					const weekdayHeaderRow = document.createElement('div');
+					weekdayHeaderRow.classList.add('calendar-days', 'calendar-weekday-header');
+					shamsiWeekdayShortNames.forEach(label => {
+						const headerCell = document.createElement('span');
+						headerCell.classList.add('calendar-weekday-label');
+						headerCell.textContent = label;
+						weekdayHeaderRow.appendChild(headerCell);
+					});
+					monthDiv.appendChild(weekdayHeaderRow);
+
+					const daysGrid = document.createElement('div');
+					daysGrid.classList.add('calendar-days');
+
+					let firstDayOffset = 0;
+					try {
+						const jdn0 = gregorianToJdn(year, month, 1);
+						firstDayOffset = Math.floor(jdn0 + 2) % 7;
+						if (firstDayOffset < 0) firstDayOffset += 7;
+					} catch (e) {}
+					for (let i = 0; i < firstDayOffset; i++) {
+						const emptyCell = document.createElement('span');
+						emptyCell.classList.add('calendar-day-empty');
+						daysGrid.appendChild(emptyCell);
+					}
+
+					const daysInThisMonth = daysInGregorianMonth(year, month);
+					for (let day = 1; day <= daysInThisMonth; day++) {
+						const dayBtn = document.createElement('button');
+						dayBtn.textContent = englishToPersianDigits(day);
+						dayBtn.classList.add('calendar-day-btn');
+						const dateString = `${year}${pad(month)}${pad(day)}`;
+						let issueCount = availableMiladiDates.get(dateString) || 0;
+						let jdn = -1;
+						try {
+							jdn = gregorianToJdn(year, month, day);
+							const byJdn = availableByJdn.get(jdn) || 0;
+							if (byJdn > issueCount) issueCount = byJdn;
+						} catch (e) {}
+
+						if (issueCount > 0) {
+							dayBtn.classList.add('has-issue');
+							if (issueCount === 1) dayBtn.classList.add('issue-count-1');
+							else if (issueCount === 2) { dayBtn.classList.add('issue-count-2'); dayBtn.classList.add('has-multiple-issues'); }
+							else { dayBtn.classList.add('issue-count-3plus'); dayBtn.classList.add('has-multiple-issues'); }
+						}
+						if (year === selectedY && month === selectedM && day === selectedD) {
+							dayBtn.classList.add('selected-day');
+						}
+						dayBtn.addEventListener('click', () => goToDateFromMiladiCalendar(year, month, day));
+						daysGrid.appendChild(dayBtn);
+					}
+					monthDiv.appendChild(daysGrid);
+					miladiCalendarGridContainer.appendChild(monthDiv);
+				}
+			};
+
+			const goToDateFromMiladiCalendar = (year, month, day) => {
+				if (miladiCalendarRadio) miladiCalendarRadio.checked = true;
+				currentCalendarMode = 'miladi';
+				miladiYearInput.value = year;
+				miladiMonthSelect.value = month;
+				miladiDayInput.value = day;
+				handleCalendarChange({ year, month, day, calendar_type: 'miladi' });
+				closeCalendarModal();
 			};
 
 			const setShowDatesCheckboxDefault = () => {
@@ -4852,36 +6818,94 @@ a:focus-visible {
 				showImagesCheckbox.checked = false;
 			};
 
+			const applyCalendarModeUiOnly = () => {
+				const isMobile = window.innerWidth <= 768;
+				if (isMobile) {
+					document.querySelectorAll('.date-controls-row').forEach(row => {
+						row.classList.remove('active-mobile');
+						row.style.display = 'none';
+					});
+					const activeRow = document.querySelector(`.${currentCalendarMode}-row`);
+					if (activeRow) {
+						activeRow.classList.add('active-mobile');
+						activeRow.style.display = 'flex';
+					}
+				} else {
+					document.querySelectorAll('.date-controls-row').forEach(row => {
+						row.classList.add('active-mobile');
+						row.style.display = 'flex';
+					});
+				}
+				if (currentCalendarMode === 'shamsi') {
+					updateUrlParameters('shamsi', shamsiYearInput.value, shamsiMonthSelect.value, shamsiDayInput.value);
+				} else if (currentCalendarMode === 'hijri') {
+					updateUrlParameters('hijri', hijriYearInput.value, hijriMonthSelect.value, hijriDayInput.value);
+				} else if (currentCalendarMode === 'miladi' && miladiYearInput) {
+					updateUrlParameters('miladi', miladiYearInput.value, miladiMonthSelect.value, miladiDayInput.value);
+				}
+				formatSelectedDateDisplay();
+			};
+
 			shamsiCalendarRadio.addEventListener('change', () => {
+				const abs = resolveAbsoluteDate();
 				currentCalendarMode = 'shamsi';
-				handleCalendarChange();
+				if (abs.shamsi) {
+					shamsiYearInput.value = String(abs.shamsi.year);
+					shamsiMonthSelect.value = String(abs.shamsi.month);
+					shamsiDayInput.value = String(abs.shamsi.day);
+				}
+				syncOtherCalendarControls();
+				applyCalendarModeUiOnly();
 			});
 
 			hijriCalendarRadio.addEventListener('change', () => {
+				const abs = resolveAbsoluteDate();
 				currentCalendarMode = 'hijri';
-				handleCalendarChange();
+				if (abs.hijri) {
+					hijriYearInput.value = String(abs.hijri.year);
+					hijriMonthSelect.value = String(abs.hijri.month);
+					hijriDayInput.value = String(abs.hijri.day);
+				}
+				syncOtherCalendarControls();
+				applyCalendarModeUiOnly();
 			});
 
-			[shamsiYearInput, shamsiMonthSelect, shamsiDayInput, hijriYearInput, hijriMonthSelect, hijriDayInput].forEach(el => {
-				if(el) el.addEventListener('change', () => {
-					if (currentCalendarMode === 'shamsi') {
-						updateUrlParameters(
-							'shamsi',
-							shamsiYearInput.value,
-							shamsiMonthSelect.value,
-							shamsiDayInput.value
-						);
-					} else {
-						updateUrlParameters(
-							'hijri',
-							hijriYearInput.value,
-							hijriMonthSelect.value,
-							hijriDayInput.value
-						);
+			const miladiCalendarRadio = document.getElementById('miladiCalendar');
+			if (miladiCalendarRadio) {
+				miladiCalendarRadio.addEventListener('change', () => {
+					const abs = resolveAbsoluteDate();
+					currentCalendarMode = 'miladi';
+					if (abs.miladi) {
+						miladiYearInput.value = String(abs.miladi.year);
+						miladiMonthSelect.value = String(abs.miladi.month);
+						miladiDayInput.value = String(abs.miladi.day);
 					}
+					syncOtherCalendarControls();
+					applyCalendarModeUiOnly();
+				});
+			}
+
+			const bindDateDropdown = (el, sourceMode) => {
+				if (!el) return;
+				el.addEventListener('change', () => {
+					currentCalendarMode = sourceMode;
+					if (sourceMode === 'shamsi' && shamsiCalendarRadio) shamsiCalendarRadio.checked = true;
+					else if (sourceMode === 'hijri' && hijriCalendarRadio) hijriCalendarRadio.checked = true;
+					else if (sourceMode === 'miladi' && miladiCalendarRadio) miladiCalendarRadio.checked = true;
+					syncOtherCalendarControls();
+					applyCalendarModeUiOnly();
 					loadImage('date');
 				});
-			});
+			};
+			bindDateDropdown(shamsiYearInput, 'shamsi');
+			bindDateDropdown(shamsiMonthSelect, 'shamsi');
+			bindDateDropdown(shamsiDayInput, 'shamsi');
+			bindDateDropdown(hijriYearInput, 'hijri');
+			bindDateDropdown(hijriMonthSelect, 'hijri');
+			bindDateDropdown(hijriDayInput, 'hijri');
+			bindDateDropdown(miladiYearInput, 'miladi');
+			bindDateDropdown(miladiMonthSelect, 'miladi');
+			bindDateDropdown(miladiDayInput, 'miladi');
 
 			if(mainPageNumberInput) mainPageNumberInput.addEventListener('change', () => {
 				loadImage('pageInput');
@@ -4919,6 +6943,7 @@ a:focus-visible {
 							lightboxCurrentPage = parsedInputPage;
 						}
 						paper.currentPage = lightboxCurrentPage;
+						lightboxOpenFromCard = false;
 						updateLightboxContent();
 					}
 				} else {
@@ -4939,7 +6964,6 @@ a:focus-visible {
 				closeLightbox();
 			});
 
-
 			document.addEventListener('keydown', (e) => {
 				if (lightboxOverlay.classList.contains('visible')) {
 					const paper = newspaperData[currentLightboxNewspaperId];
@@ -4956,6 +6980,31 @@ a:focus-visible {
 						closeLightbox();
 					}
 				}
+			});
+
+			document.querySelectorAll('input[name="calendar"]').forEach(radio => {
+				radio.addEventListener('change', (e) => {
+					currentCalendarMode = e.target.value;
+					const isMobile = window.innerWidth <= 768;
+					if (isMobile) {
+						document.querySelectorAll('.date-controls-row').forEach(row => {
+							row.classList.remove('active-mobile');
+							row.style.display = 'none';
+						});
+						const activeRow = document.querySelector(`.${currentCalendarMode}-row`);
+						if (activeRow) {
+							activeRow.classList.add('active-mobile');
+							activeRow.style.display = 'flex';
+						}
+					} else {
+
+						document.querySelectorAll('.date-controls-row').forEach(row => {
+							row.classList.add('active-mobile');
+							row.style.display = 'flex';
+						});
+					}
+					formatSelectedDateDisplay();
+				});
 			});
 
 			const toggleNewspapersListBtn = document.getElementById('toggleNewspapersListBtn');
@@ -5057,7 +7106,6 @@ a:focus-visible {
 				}
 			});
 
-
 			const currentDateDisplayEl = document.getElementById('currentDateDisplay');
 			if (currentDateDisplayEl) {
 				currentDateDisplayEl.addEventListener('click', () => {
@@ -5092,7 +7140,7 @@ a:focus-visible {
 			});
 			shamsiPrevYearBtn.addEventListener('click', () => {
 				const currentShamsiYear = parseInt(shamsiCalendarYearSelect.value, 10);
-				if (currentShamsiYear > 1305) {
+				if (currentShamsiYear > 1239) {
 					renderShamsiCalendar(currentShamsiYear - 1);
 				}
 			});
@@ -5109,9 +7157,34 @@ a:focus-visible {
 				}
 			});
 
+			if (miladiCalendarYearSelect) {
+				miladiCalendarYearSelect.addEventListener('change', (event) => {
+					renderMiladiCalendar(parseInt(event.target.value, 10));
+				});
+			}
+			if (miladiPrevYearBtn) {
+				miladiPrevYearBtn.addEventListener('click', () => {
+					const y = parseInt(miladiCalendarYearSelect.value, 10);
+					if (y > minMiladiCalendarYear) renderMiladiCalendar(y - 1);
+				});
+			}
+			if (miladiNextYearBtn) {
+				miladiNextYearBtn.addEventListener('click', () => {
+					const y = parseInt(miladiCalendarYearSelect.value, 10);
+					if (y < maxMiladiCalendarYear) renderMiladiCalendar(y + 1);
+				});
+			}
+			if (miladiCalendarModalCloseButton) {
+				miladiCalendarModalCloseButton.addEventListener('click', closeCalendarModal);
+			}
+			if (miladiCalendarModalOverlay) {
+				miladiCalendarModalOverlay.addEventListener('click', (e) => {
+					if (e.target === miladiCalendarModalOverlay) closeCalendarModal();
+				});
+			}
 
 			document.addEventListener('keydown', (e) => {
-				if (e.key === 'Escape' && (calendarModalOverlay.classList.contains('visible') || shamsiCalendarModalOverlay.classList.contains('visible'))) {
+				if (e.key === 'Escape' && (calendarModalOverlay.classList.contains('visible') || shamsiCalendarModalOverlay.classList.contains('visible') || (miladiCalendarModalOverlay && miladiCalendarModalOverlay.classList.contains('visible')))) {
 					closeCalendarModal();
 				}
 			});
